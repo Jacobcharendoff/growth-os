@@ -176,36 +176,36 @@ function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-blue-50/50 to-red-50/20" />
-      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-bl from-red-400/8 via-blue-400/5 to-transparent rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-blue-400/8 via-red-400/3 to-transparent rounded-full blur-3xl" />
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-blue-50/50 to-purple-50/30" />
+      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-bl from-blue-400/10 via-purple-400/5 to-transparent rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-emerald-400/8 via-blue-400/5 to-transparent rounded-full blur-3xl" />
 
       {/* Floating Orbs */}
-      <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-red-400 rounded-full animate-pulse opacity-60" />
-      <div className="absolute top-1/3 right-1/3 w-3 h-3 bg-blue-400 rounded-full animate-pulse opacity-40" />
+      <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-blue-400 rounded-full animate-pulse opacity-60" />
+      <div className="absolute top-1/3 right-1/3 w-3 h-3 bg-purple-400 rounded-full animate-pulse opacity-40" />
       <div className="absolute bottom-1/3 left-1/3 w-2 h-2 bg-emerald-400 rounded-full animate-pulse opacity-50" />
 
       <div className="relative max-w-7xl mx-auto px-6 lg:px-8 pt-32 pb-20 lg:pt-40 lg:pb-32">
         <div className="text-center max-w-4xl mx-auto">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-50 border border-red-100 mb-8">
-            <MapPin className="w-4 h-4 text-red-600" />
-            <span className="text-sm font-medium text-red-700">Built for Canadian Service Businesses</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 mb-8">
+            <Sparkles className="w-4 h-4 text-blue-600" />
+            <span className="text-sm font-medium text-blue-700">Now in Beta — Free for 14 Days</span>
           </div>
 
           {/* Headline */}
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 leading-[1.1]">
-            The only CRM built
+            Stop losing leads.
             <br />
-            <span className="bg-gradient-to-r from-red-600 via-blue-600 to-red-600 bg-clip-text text-transparent">
-              for Canadian trades
+            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-clip-text text-transparent">
+              Start booking jobs.
             </span>
           </h1>
 
           {/* Subheadline */}
           <p className="mt-6 text-lg sm:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
-            GST/HST/PST calculated automatically. Bilingual templates in French and English.
-            Interac e-Transfer ready. 8 autopilot playbooks that run your business while you run your jobs.
+            New leads get a response in 60 seconds. Estimates follow up automatically.
+            Reviews roll in after every job. Your pipeline runs itself while you&apos;re on the job site.
           </p>
 
           {/* CTAs */}
@@ -226,23 +226,31 @@ function Hero() {
             </Link>
           </div>
 
-          {/* Trust Signals */}
-          <div className="mt-14 flex flex-wrap items-center justify-center gap-6 text-gray-400">
-            <div className="flex items-center gap-2 px-4 py-2 bg-white/60 rounded-full border border-gray-100">
-              <Shield className="w-4 h-4 text-emerald-500" />
-              <span className="text-xs font-medium text-gray-500">PIPEDA Compliant</span>
+          {/* Social Proof */}
+          <div className="mt-14 flex flex-wrap items-center justify-center gap-8 text-gray-400">
+            <div className="flex items-center gap-1.5">
+              <div className="flex -space-x-2">
+                {[
+                  "bg-blue-500",
+                  "bg-emerald-500",
+                  "bg-purple-500",
+                  "bg-amber-500",
+                ].map((color, i) => (
+                  <div
+                    key={i}
+                    className={`w-8 h-8 rounded-full ${color} border-2 border-white flex items-center justify-center text-white text-xs font-bold`}
+                  >
+                    {["MR", "JL", "SK", "TB"][i]}
+                  </div>
+                ))}
+              </div>
+              <span className="text-sm text-gray-500 ml-2">Trusted by service businesses across Canada</span>
             </div>
-            <div className="flex items-center gap-2 px-4 py-2 bg-white/60 rounded-full border border-gray-100">
-              <Receipt className="w-4 h-4 text-blue-500" />
-              <span className="text-xs font-medium text-gray-500">CRA Invoice Ready</span>
-            </div>
-            <div className="flex items-center gap-2 px-4 py-2 bg-white/60 rounded-full border border-gray-100">
-              <Languages className="w-4 h-4 text-red-500" />
-              <span className="text-xs font-medium text-gray-500">English + Fran&ccedil;ais</span>
-            </div>
-            <div className="flex items-center gap-2 px-4 py-2 bg-white/60 rounded-full border border-gray-100">
-              <BadgeCheck className="w-4 h-4 text-amber-500" />
-              <span className="text-xs font-medium text-gray-500">WSIB/WCB Tracking</span>
+            <div className="flex items-center gap-1">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+              ))}
+              <span className="text-sm text-gray-500 ml-1.5">4.9/5 rating</span>
             </div>
           </div>
 
@@ -260,7 +268,7 @@ function Hero() {
                 <div className="flex-1 text-center">
                   <div className="inline-flex items-center gap-2 px-4 py-1 bg-slate-600/50 rounded-lg">
                     <div className="w-3 h-3 rounded-full bg-green-400/80" />
-                    <span className="text-xs text-slate-300 font-mono">app.growthos.ca</span>
+                    <span className="text-xs text-slate-300 font-mono">app.growthos.com</span>
                   </div>
                 </div>
               </div>
@@ -384,9 +392,9 @@ function StatsBanner() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
           {[
-            { value: 8, suffix: "", label: "Autopilot Playbooks", sublabel: "Pre-built & ready" },
-            { value: 10, suffix: "", label: "Provincial Tax Rates", sublabel: "GST/HST/PST/QST" },
-            { value: 12, suffix: "hrs", label: "Saved Per Week", sublabel: "Avg. time savings" },
+            { value: 40, suffix: "%", label: "More Jobs Booked", sublabel: "Average increase in 90 days" },
+            { value: 60, suffix: "sec", label: "Lead Response Time", sublabel: "With Autopilot active" },
+            { value: 12, suffix: "hrs", label: "Saved Per Week", sublabel: "On admin & follow-ups" },
             { value: 340, suffix: "%", label: "Average ROI", sublabel: "First 90 days" },
           ].map((stat) => (
             <div key={stat.label}>
@@ -408,44 +416,44 @@ function Features() {
   const features = [
     {
       icon: <Target className="w-6 h-6" />,
-      title: "3-Ring Lead Engine",
+      title: "Never Miss a Lead Again",
       description:
-        "Harvest existing customers (Ring 1), amplify through referrals and reviews (Ring 2), and acquire new leads through paid channels (Ring 3). A proven growth framework for the trades.",
+        "Every call, form, and referral lands in one place. The average plumber misses 30-40% of inbound calls — Growth OS makes sure every lead gets a response, even when you're under a sink.",
       gradient: "from-emerald-500 to-teal-600",
     },
     {
       icon: <Layers className="w-6 h-6" />,
-      title: "Visual Pipeline",
+      title: "See Every Job at a Glance",
       description:
-        "Drag-and-drop Kanban board tracks every job from new lead to invoiced. 8 pipeline stages designed for how service businesses actually work. See your entire operation at a glance.",
+        "Drag-and-drop pipeline shows every deal from first call to final invoice. No more sticky notes, no more spreadsheets. Know exactly where every job stands in 3 seconds.",
       gradient: "from-blue-500 to-indigo-600",
     },
     {
-      icon: <Receipt className="w-6 h-6" />,
-      title: "Canadian Tax Engine",
+      icon: <Bot className="w-6 h-6" />,
+      title: "Follow-Ups That Run Themselves",
       description:
-        "Auto-calculates GST, HST, PST, and QST by province. CRA-compliant invoices with registration numbers. No more spreadsheet tax math — just enter the postal code.",
-      gradient: "from-red-500 to-rose-600",
-    },
-    {
-      icon: <Languages className="w-6 h-6" />,
-      title: "Bilingual Templates",
-      description:
-        "Every email, SMS, and invoice template in English and French. Bill 96 ready for Quebec businesses. Auto-detects language preference so your customers feel at home.",
+        "8 pre-built playbooks handle the busywork — speed-to-lead responses, estimate nudges, review requests, payment reminders. One click to activate. You never think about it again.",
       gradient: "from-purple-500 to-violet-600",
     },
     {
-      icon: <Bot className="w-6 h-6" />,
-      title: "Autopilot Playbooks",
+      icon: <FileText className="w-6 h-6" />,
+      title: "Estimates That Close",
       description:
-        "8 pre-built automation sequences that run your business while you run your jobs. Speed-to-lead, review collection, estimate follow-ups, payment reminders — all on autopilot.",
+        "Good/Better/Best pricing on every estimate. Customers pick the option that fits. Businesses using tiered pricing see 30% higher average tickets. Growth OS makes it automatic.",
       gradient: "from-amber-500 to-orange-600",
     },
     {
-      icon: <FileText className="w-6 h-6" />,
-      title: "Good/Better/Best Estimates",
+      icon: <TrendingUp className="w-6 h-6" />,
+      title: "Know What\u2019s Working",
       description:
-        "Present three pricing options on every estimate, just like the pros. Customers pick the tier that fits their budget. Average ticket size increases 30% overnight.",
+        "Real-time dashboard shows which lead sources bring in the most revenue, which jobs are most profitable, and where deals stall. Make decisions with data, not gut feelings.",
+      gradient: "from-rose-500 to-pink-600",
+    },
+    {
+      icon: <Receipt className="w-6 h-6" />,
+      title: "Get Paid Faster",
+      description:
+        "Send professional invoices the moment a job is done. Automated payment reminders at 3, 7, and 14 days chase the money so you don\u2019t have to. Provincial taxes calculated automatically.",
       gradient: "from-slate-500 to-gray-600",
     },
   ];
@@ -458,13 +466,14 @@ function Features() {
             <span className="text-xs font-semibold text-blue-600 uppercase tracking-wider">Features</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight">
-            Everything Canadian trades{" "}
-            <span className="bg-gradient-to-r from-blue-600 to-red-600 bg-clip-text text-transparent">
-              actually need
+            Six tools in one.{" "}
+            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              Zero learning curve.
             </span>
           </h2>
           <p className="mt-4 text-lg text-gray-500">
-            Not another generic US-built CRM with Canadian tax tables bolted on. Growth OS was built from the ground up for how Canadian service businesses operate.
+            Replace your spreadsheets, sticky notes, and that CRM you never log into.
+            Growth OS handles leads, pipeline, estimates, invoicing, follow-ups, and analytics — purpose-built for the trades.
           </p>
         </div>
 
@@ -522,7 +531,7 @@ function AutopilotSection() {
     },
     {
       name: "Customer Reactivation",
-      description: "Re-engage customers who haven&apos;t booked in 60+ days with personalized offers. Win back dormant revenue.",
+      description: "Re-engage customers who haven't booked in 60+ days with personalized offers. Win back dormant revenue.",
       category: "Retention",
       color: "bg-rose-500",
     },
@@ -591,39 +600,39 @@ function WhyCanada() {
   const canadianFeatures = [
     {
       icon: <DollarSign className="w-5 h-5" />,
-      title: "Provincial Tax Engine",
-      description: "Auto-calculates the right tax for every province. HST in Ontario, GST+QST in Quebec, GST+PST in BC. No more manual math.",
-      detail: "All 10 provinces supported",
+      title: "Taxes? Handled.",
+      description: "Invoices go out with the right provincial tax every time — HST, GST+QST, GST+PST. You enter the job, we do the math.",
+      detail: "All 10 provinces",
     },
     {
       icon: <Languages className="w-5 h-5" />,
-      title: "Bill 96 Ready",
-      description: "Full French-language support for Quebec businesses. Templates, invoices, and customer communications in both official languages.",
-      detail: "English + Fran\u00E7ais",
+      title: "Fran\u00E7ais + English",
+      description: "Your Quebec clients get emails, estimates, and invoices in French. Everyone else gets English. It switches automatically.",
+      detail: "Bill 96 ready",
     },
     {
       icon: <Receipt className="w-5 h-5" />,
-      title: "CRA-Compliant Invoices",
-      description: "Invoices auto-format per CRA rules. GST/HST registration numbers on invoices over $150. Audit-ready from day one.",
-      detail: "CRA compliant",
+      title: "CRA-Ready Invoices",
+      description: "Registration numbers, line-item tax breakdowns, proper formatting — your invoices are audit-ready without you thinking about it.",
+      detail: "Compliant by default",
     },
     {
       icon: <BadgeCheck className="w-5 h-5" />,
-      title: "WSIB/WCB Tracking",
-      description: "Track trade licenses and workers' compensation across provinces. Get renewal reminders 90 days before expiry.",
+      title: "License Reminders",
+      description: "Track your trade licenses and WSIB/WCB status. Get a nudge 90 days before anything expires. No surprise lapses.",
       detail: "Province-specific",
     },
     {
       icon: <Globe className="w-5 h-5" />,
-      title: "HomeStars Integration",
-      description: "The review platform Canadian homeowners actually use. Auto-request HomeStars reviews alongside Google after every job.",
-      detail: "Canada's #1 review site",
+      title: "HomeStars + Google Reviews",
+      description: "Auto-request reviews on the platforms Canadian homeowners actually check. More reviews means more calls. Simple.",
+      detail: "Auto-request after every job",
     },
     {
       icon: <DollarSign className="w-5 h-5" />,
       title: "Interac e-Transfer",
-      description: "Your customers' preferred payment method, built right in. Get paid faster with native Interac e-Transfer support.",
-      detail: "CAD native",
+      description: "Your customers already use it. Now they can pay invoices with it. Faster than cheques, simpler than credit cards.",
+      detail: "Get paid how Canadians pay",
     },
   ];
 
@@ -637,14 +646,14 @@ function WhyCanada() {
             <span className="text-xs font-semibold text-red-600 uppercase tracking-wider">Canada First</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight">
-            Not US-built with{" "}
+            And it just works{" "}
             <span className="bg-gradient-to-r from-red-600 to-red-500 bg-clip-text text-transparent">
-              Canadian flags taped on
+              for your Canadian business
             </span>
           </h2>
           <p className="mt-4 text-lg text-gray-500">
-            Every CRM you&apos;ve tried was built for American businesses and retrofitted for Canada.
-            Growth OS was designed from day one for Canadian tax codes, Canadian compliance, and Canadian payment methods.
+            No manual tax calculations. No English-only templates for your Quebec clients.
+            No workarounds. Everything your business needs to stay compliant and get paid — built in from day one.
           </p>
         </div>
 
@@ -758,9 +767,9 @@ function CompetitorComparison() {
             <span className="text-xs font-semibold text-blue-600 uppercase tracking-wider">Compare</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight">
-            See why Canadian trades{" "}
+            More features.{" "}
             <span className="bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent">
-              are switching
+              Less money. No contracts.
             </span>
           </h2>
         </div>
@@ -841,9 +850,9 @@ function Testimonials() {
             <span className="text-xs font-semibold text-amber-600 uppercase tracking-wider">Testimonials</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight">
-            Loved by Canadian{" "}
+            Real results from real{" "}
             <span className="bg-gradient-to-r from-amber-500 to-orange-500 bg-clip-text text-transparent">
-              service businesses
+              service businesses.
             </span>
           </h2>
         </div>
@@ -941,9 +950,9 @@ function Pricing() {
             <span className="text-xs font-semibold text-emerald-600 uppercase tracking-wider">Pricing</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight">
-            Simple, honest{" "}
+            One price. Everything{" "}
             <span className="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">
-              pricing in CAD
+              included.
             </span>
           </h2>
           <p className="mt-4 text-lg text-gray-500">
@@ -1012,7 +1021,8 @@ function Pricing() {
         {/* Competitor price anchoring */}
         <div className="mt-12 text-center">
           <p className="text-sm text-gray-400">
-            ServiceTitan charges $200+/mo. GoHighLevel charges $97–$497/mo. Growth OS gives you more, for less, built for Canada.
+            ServiceTitan charges $200+/mo with annual contracts. Housecall Pro keeps raising prices.
+            Growth OS gives you more for less — and you can cancel anytime.
           </p>
         </div>
       </div>
@@ -1030,13 +1040,13 @@ function CTASection() {
       </div>
       <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
-          Ready to grow your
+          Your competitors are still
           <br />
-          Canadian service business?
+          using spreadsheets.
         </h2>
         <p className="mt-6 text-lg text-blue-200/80 max-w-2xl mx-auto">
-          Join Canadian plumbers, HVAC techs, electricians, and contractors who are booking more jobs,
-          getting paid faster, and growing on autopilot with Growth OS.
+          Every day without a system is leads lost, follow-ups missed, and revenue left on the table.
+          Growth OS takes 10 minutes to set up and starts working immediately.
         </p>
         <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
           <Link
@@ -1076,7 +1086,7 @@ function Footer() {
               </span>
             </div>
             <p className="text-sm leading-relaxed">
-              The only CRM built from the ground up for Canadian home service businesses.
+              The operating system for service business growth. Purpose-built for the trades.
             </p>
             <div className="mt-3 flex items-center gap-1.5">
               <MapPin className="w-3.5 h-3.5 text-red-400" />

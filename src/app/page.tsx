@@ -154,10 +154,10 @@ function Navigation() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-white/80 backdrop-blur-xl shadow-sm border-b border-gray-200/50"
-          : "bg-transparent"
+          ? "bg-white/90 backdrop-blur-xl shadow-sm border-b border-gray-200/50"
+          : "bg-white/0"
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -219,53 +219,161 @@ function Navigation() {
 
 // ─── Hero Section ─────────────────────────────────────────────
 function Hero() {
-  const parallaxOffset = useParallax(0.2);
+  const parallaxOffset = useParallax(0.15);
+  const [tradeIndex, setTradeIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  const trades = [
+    { name: 'plumbers', icon: <Wrench className="w-5 h-5" />, color: 'from-blue-500 to-blue-600' },
+    { name: 'HVAC technicians', icon: <Flame className="w-5 h-5" />, color: 'from-orange-500 to-red-500' },
+    { name: 'electricians', icon: <Plug className="w-5 h-5" />, color: 'from-amber-500 to-yellow-600' },
+    { name: 'landscapers', icon: <TreePine className="w-5 h-5" />, color: 'from-emerald-500 to-green-600' },
+    { name: 'roofers', icon: <Home className="w-5 h-5" />, color: 'from-slate-500 to-slate-700' },
+    { name: 'cleaners', icon: <Sparkles className="w-5 h-5" />, color: 'from-purple-500 to-violet-600' },
+  ];
+
+  const personaCards = [
+    { initials: 'MR', name: 'Mike Reynolds', trade: 'Plumbing', city: 'Toronto, ON', stat: '+47% booked jobs', icon: <Wrench className="w-4 h-4" />, gradient: 'from-blue-500 to-blue-600' },
+    { initials: 'JL', name: 'Julie Lavoie', trade: 'HVAC', city: 'Montreal, QC', stat: '+$12K monthly revenue', icon: <Flame className="w-4 h-4" />, gradient: 'from-orange-500 to-red-500' },
+    { initials: 'SK', name: 'Steve Kim', trade: 'Electrical', city: 'Vancouver, BC', stat: '2x faster estimates', icon: <Plug className="w-4 h-4" />, gradient: 'from-amber-500 to-yellow-600' },
+    { initials: 'PP', name: 'Priya Patel', trade: 'Landscaping', city: 'Calgary, AB', stat: '340% ROI in 90 days', icon: <TreePine className="w-4 h-4" />, gradient: 'from-emerald-500 to-green-600' },
+    { initials: 'TD', name: 'Tom Devries', trade: 'Roofing', city: 'Ottawa, ON', stat: '0 missed leads', icon: <Home className="w-4 h-4" />, gradient: 'from-slate-500 to-slate-700' },
+    { initials: 'AR', name: 'Anna Ramos', trade: 'Cleaning', city: 'Winnipeg, MB', stat: '+89 five-star reviews', icon: <Sparkles className="w-4 h-4" />, gradient: 'from-purple-500 to-violet-600' },
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsTransitioning(true);
+      setTimeout(() => {
+        setTradeIndex((prev) => (prev + 1) % trades.length);
+        setIsTransitioning(false);
+      }, 400);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const smooth = 'cubic-bezier(0.16, 1, 0.3, 1)';
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-slate-950">
-      {/* Animated Gradient Mesh Background */}
-      <div className="absolute inset-0 gradient-mesh-dark opacity-60" />
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900/50 to-slate-950" />
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-50">
+      {/* Subtle grid background */}
+      <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
 
-      {/* Parallax Background Blobs - More vibrant for dark */}
-      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-bl from-blue-600/15 via-purple-600/10 to-transparent rounded-full blur-3xl" style={{ transform: `translateY(${parallaxOffset * 0.15}px)` }} />
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-emerald-600/12 via-blue-600/8 to-transparent rounded-full blur-3xl" style={{ transform: `translateY(${-parallaxOffset * 0.1}px)` }} />
+      {/* Soft gradient orbs */}
+      <div className="absolute top-20 right-10 w-[500px] h-[500px] bg-blue-100/40 rounded-full blur-3xl" style={{ transform: `translateY(${parallaxOffset * 0.2}px)` }} />
+      <div className="absolute bottom-20 left-10 w-[400px] h-[400px] bg-purple-100/30 rounded-full blur-3xl" style={{ transform: `translateY(${-parallaxOffset * 0.15}px)` }} />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-100/20 rounded-full blur-3xl" />
 
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-32">
-        <div className="text-center max-w-5xl mx-auto">
+      {/* Floating persona cards — desktop only */}
+      <div className="hidden lg:block absolute inset-0 pointer-events-none">
+        {personaCards.map((card, i) => {
+          const positions = [
+            { top: '12%', left: '4%', rotate: '-6deg' },
+            { top: '8%', right: '5%', rotate: '4deg' },
+            { top: '42%', left: '2%', rotate: '-3deg' },
+            { top: '38%', right: '3%', rotate: '5deg' },
+            { bottom: '18%', left: '6%', rotate: '-4deg' },
+            { bottom: '15%', right: '4%', rotate: '3deg' },
+          ];
+          const pos = positions[i];
+          const speed = [0.12, 0.08, 0.15, 0.1, 0.13, 0.09][i];
+          return (
+            <div
+              key={card.initials}
+              className="absolute bg-white/90 backdrop-blur-sm rounded-2xl p-4 shadow-lg shadow-black/5 border border-gray-100/80 w-56"
+              style={{
+                ...pos,
+                transform: `rotate(${pos.rotate}) translateY(${parallaxOffset * speed}px)`,
+                transition: `transform 0.1s linear`,
+                animation: `subtleFloat ${6 + i}s ease-in-out infinite`,
+                animationDelay: `${i * -1.2}s`,
+              }}
+            >
+              <div className="flex items-center gap-3 mb-2.5">
+                <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${card.gradient} flex items-center justify-center text-white text-xs font-bold shadow-md`}>
+                  {card.initials}
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-gray-900 leading-tight">{card.name}</p>
+                  <p className="text-[11px] text-gray-500">{card.trade} · {card.city}</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-1.5 px-2.5 py-1.5 bg-emerald-50 rounded-lg">
+                <TrendingUp className="w-3.5 h-3.5 text-emerald-600" />
+                <span className="text-xs font-semibold text-emerald-700">{card.stat}</span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Main content */}
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-24 lg:py-32 z-10">
+        <div className="text-center max-w-4xl mx-auto">
           {/* Badge */}
-          <div className="hero-reveal hero-reveal-delay-1 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-950/40 border border-blue-900/50 mb-8 backdrop-blur-sm">
-            <Sparkles className="w-4 h-4 text-blue-300" />
-            <span className="text-sm font-medium text-blue-200">Free for 14 days — no credit card needed</span>
+          <div className="hero-reveal hero-reveal-delay-1 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 mb-8">
+            <Sparkles className="w-4 h-4 text-blue-500" />
+            <span className="text-sm font-medium text-blue-700">Free for 14 days — no credit card needed</span>
           </div>
 
-          {/* Headline - Much Larger */}
-          <h1 className="hero-reveal hero-reveal-delay-2 text-6xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-white leading-[1.05] mb-4">
-            Every missed call is a
+          {/* Headline with rotating trade name */}
+          <h1 className="hero-reveal hero-reveal-delay-2 text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 leading-[1.1] mb-2">
+            The growth engine
             <br />
-            <span className="bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-400 bg-clip-text text-transparent">
-              job you lost.
+            for{' '}
+            <span className="relative inline-block">
+              <span
+                className={`inline-flex items-center gap-3 bg-gradient-to-r ${trades[tradeIndex].color} bg-clip-text text-transparent`}
+                style={{
+                  opacity: isTransitioning ? 0 : 1,
+                  transform: isTransitioning ? 'translateY(20px)' : 'translateY(0)',
+                  transition: `all 0.4s ${smooth}`,
+                }}
+              >
+                {trades[tradeIndex].name}
+              </span>
+              {/* Underline accent */}
+              <span className={`absolute -bottom-2 left-0 right-0 h-1 rounded-full bg-gradient-to-r ${trades[tradeIndex].color} opacity-30`}
+                style={{ transition: `all 0.4s ${smooth}` }}
+              />
             </span>
           </h1>
 
+          {/* Trade icon row — shows all trades, highlights current */}
+          <div className="hero-reveal hero-reveal-delay-2 flex items-center justify-center gap-2 mt-6 mb-8">
+            {trades.map((trade, i) => (
+              <div
+                key={trade.name}
+                className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-500 ${
+                  i === tradeIndex
+                    ? `bg-gradient-to-br ${trade.color} text-white shadow-lg scale-110`
+                    : 'bg-gray-100 text-gray-400 scale-100'
+                }`}
+                style={{ transition: `all 0.5s ${smooth}` }}
+              >
+                {trade.icon}
+              </div>
+            ))}
+          </div>
+
           {/* Subheadline */}
-          <p className="hero-reveal hero-reveal-delay-3 mt-8 text-xl sm:text-2xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
-            Growth OS auto-responds to new leads in 60 seconds, follows up on estimates for you,
-            and gets you paid faster. You run the jobs. It runs everything else.
+          <p className="hero-reveal hero-reveal-delay-3 text-lg sm:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
+            Auto-respond to new leads in 60 seconds. Follow up on every estimate.
+            Get paid faster. You run the jobs — Growth OS runs everything else.
           </p>
 
           {/* CTAs */}
-          <div className="hero-reveal hero-reveal-delay-4 mt-12 flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="hero-reveal hero-reveal-delay-4 mt-10 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/setup"
-              className="glow-pulse inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-base font-semibold rounded-2xl hover:from-blue-500 hover:to-blue-600 transition-all shadow-xl shadow-blue-600/50 hover:shadow-blue-500/60 hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-base font-semibold rounded-2xl hover:from-blue-500 hover:to-blue-600 transition-all shadow-lg shadow-blue-600/25 hover:shadow-blue-500/40 hover:-translate-y-0.5"
             >
-              Try Free for 14 Days
+              Start Your Free 14-Day Trial
               <ArrowRight className="w-5 h-5" />
             </Link>
             <Link
               href="/dashboard"
-              className="inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-slate-800/50 text-slate-100 text-base font-semibold rounded-2xl border border-slate-700 hover:border-slate-600 hover:bg-slate-700/50 transition-all backdrop-blur-sm"
+              className="inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-white text-gray-700 text-base font-semibold rounded-2xl border border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-all shadow-sm"
             >
               See It in Action
               <ChevronRight className="w-5 h-5" />
@@ -273,23 +381,44 @@ function Hero() {
           </div>
 
           {/* Social Proof */}
-          <div className="hero-reveal hero-reveal-delay-5 mt-16 flex flex-wrap items-center justify-center gap-8">
-            <div className="flex items-center gap-1.5">
+          <div className="hero-reveal hero-reveal-delay-5 mt-14 flex flex-wrap items-center justify-center gap-6 sm:gap-8">
+            <div className="flex items-center gap-2">
               <div className="flex -space-x-2">
-                {["bg-blue-500", "bg-emerald-500", "bg-purple-500", "bg-amber-500", "bg-rose-500"].map((color, i) => (
-                  <div key={i} className={`w-8 h-8 rounded-full ${color} border-2 border-slate-950 flex items-center justify-center text-white text-xs font-bold`}>
-                    {["MR", "JL", "SK", "PP", "TD"][i]}
+                {personaCards.slice(0, 5).map((card) => (
+                  <div key={card.initials} className={`w-8 h-8 rounded-full bg-gradient-to-br ${card.gradient} border-2 border-white flex items-center justify-center text-white text-[10px] font-bold shadow-sm`}>
+                    {card.initials}
                   </div>
                 ))}
               </div>
-              <span className="text-sm text-slate-400 ml-2">Plumbers, HVAC, electricians across Canada</span>
+              <span className="text-sm text-gray-500">Trusted across Canada</span>
             </div>
             <div className="flex items-center gap-1">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
               ))}
-              <span className="text-sm text-slate-400 ml-1.5">4.9/5 rating</span>
+              <span className="text-sm text-gray-500 ml-1.5">4.9/5 rating</span>
             </div>
+          </div>
+
+          {/* Mobile persona cards — horizontal scroll */}
+          <div className="lg:hidden mt-10 -mx-6 px-6 flex gap-3 overflow-x-auto pb-4 scrollbar-hide">
+            {personaCards.slice(0, 4).map((card) => (
+              <div key={card.initials} className="flex-shrink-0 bg-white rounded-xl p-3 shadow-md border border-gray-100 w-48">
+                <div className="flex items-center gap-2.5 mb-2">
+                  <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${card.gradient} flex items-center justify-center text-white text-[10px] font-bold`}>
+                    {card.initials}
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-gray-900">{card.name}</p>
+                    <p className="text-[10px] text-gray-500">{card.trade} · {card.city}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1 px-2 py-1 bg-emerald-50 rounded-md">
+                  <TrendingUp className="w-3 h-3 text-emerald-600" />
+                  <span className="text-[10px] font-semibold text-emerald-700">{card.stat}</span>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

@@ -1723,11 +1723,15 @@ function StatsBanner() {
 // ─── Star Fill Component ──────────────────────────────────────
 function AnimatedStars() {
   const [fillIndex, setFillIndex] = useState(-1);
+  const ref = useRef<HTMLDivElement>(null);
+  const hasAnimated = useRef(false);
 
   useEffect(() => {
+    if (!ref.current || hasAnimated.current) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && fillIndex === -1) {
+        if (entry.isIntersecting && !hasAnimated.current) {
+          hasAnimated.current = true;
           let index = 0;
           const interval = setInterval(() => {
             if (index < 5) {
@@ -1739,15 +1743,14 @@ function AnimatedStars() {
           }, 100);
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.05 }
     );
-    const el = document.getElementById(`stars-${fillIndex}`);
-    if (el) observer.observe(el);
+    observer.observe(ref.current);
     return () => observer.disconnect();
-  }, [fillIndex]);
+  }, []);
 
   return (
-    <div className="flex items-center gap-1 mb-4" id={`stars-${fillIndex}`}>
+    <div className="flex items-center gap-1 mb-4" ref={ref}>
       {[...Array(5)].map((_, i) => (
         <Star
           key={i}

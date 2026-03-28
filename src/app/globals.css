@@ -224,6 +224,20 @@ a {
   will-change: background-position;
 }
 
+.gradient-mesh-dark {
+  background: linear-gradient(
+    135deg,
+    #1e40af 0%,
+    #7c3aed 25%,
+    #0891b2 50%,
+    #1e40af 75%,
+    #7c3aed 100%
+  );
+  background-size: 400% 400%;
+  animation: gradientShift 15s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+  will-change: background-position;
+}
+
 /* 2. 3D Tilt card on hover */
 .tilt-card {
   transform-style: preserve-3d;

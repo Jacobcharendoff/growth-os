@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import {
   Zap,
@@ -217,99 +217,52 @@ function Navigation() {
 // ─── Hero Section ─────────────────────────────────────────────
 function Hero() {
   const parallaxOffset = useParallax(0.2);
-  const [kpiValues, setKpiValues] = useState({ leads: 0, jobs: 0, revenue: 0 });
-  const [pipelineWidths, setPipelineWidths] = useState([0, 0, 0, 0]);
-
-  useEffect(() => {
-    // Animate KPI counters on mount
-    const durations = [1000, 1000, 1000];
-    const targets = [23, 14, 87.5];
-    let startTime: number;
-
-    const animateKPIs = (timestamp: number) => {
-      if (!startTime) startTime = timestamp;
-      const elapsed = timestamp - startTime;
-      const progress = Math.min(elapsed / 1500, 1);
-
-      setKpiValues({
-        leads: Math.round(targets[0] * progress),
-        jobs: Math.round(targets[1] * progress),
-        revenue: Math.round(targets[2] * progress * 10) / 10,
-      });
-
-      if (progress < 1) {
-        requestAnimationFrame(animateKPIs);
-      }
-    };
-
-    requestAnimationFrame(animateKPIs);
-  }, []);
-
-  useEffect(() => {
-    // Animate pipeline bar widths on mount
-    const widths = [80, 55, 40, 30];
-    let startTime: number;
-
-    const animateBars = (timestamp: number) => {
-      if (!startTime) startTime = timestamp;
-      const elapsed = timestamp - startTime;
-      const progress = Math.min(elapsed / 1200, 1);
-
-      setPipelineWidths(widths.map(w => w * progress));
-
-      if (progress < 1) {
-        requestAnimationFrame(animateBars);
-      }
-    };
-
-    requestAnimationFrame(animateBars);
-  }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-slate-950">
       {/* Animated Gradient Mesh Background */}
-      <div className="absolute inset-0 gradient-mesh opacity-80" />
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-blue-50/50 to-purple-50/30" />
+      <div className="absolute inset-0 gradient-mesh-dark opacity-60" />
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900/50 to-slate-950" />
 
-      {/* Parallax Background Blobs */}
-      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-bl from-blue-400/10 via-purple-400/5 to-transparent rounded-full blur-3xl" style={{ transform: `translateY(${parallaxOffset * 0.15}px)` }} />
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-emerald-400/8 via-blue-400/5 to-transparent rounded-full blur-3xl" style={{ transform: `translateY(${-parallaxOffset * 0.1}px)` }} />
+      {/* Parallax Background Blobs - More vibrant for dark */}
+      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-bl from-blue-600/15 via-purple-600/10 to-transparent rounded-full blur-3xl" style={{ transform: `translateY(${parallaxOffset * 0.15}px)` }} />
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-emerald-600/12 via-blue-600/8 to-transparent rounded-full blur-3xl" style={{ transform: `translateY(${-parallaxOffset * 0.1}px)` }} />
 
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 pt-32 pb-20 lg:pt-40 lg:pb-32">
-        <div className="text-center max-w-4xl mx-auto">
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-32">
+        <div className="text-center max-w-5xl mx-auto">
           {/* Badge */}
-          <div className="hero-reveal hero-reveal-delay-1 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 mb-8">
-            <Sparkles className="w-4 h-4 text-blue-600" />
-            <span className="text-sm font-medium text-blue-700">Free for 14 days — no credit card needed</span>
+          <div className="hero-reveal hero-reveal-delay-1 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-950/40 border border-blue-900/50 mb-8 backdrop-blur-sm">
+            <Sparkles className="w-4 h-4 text-blue-300" />
+            <span className="text-sm font-medium text-blue-200">Free for 14 days — no credit card needed</span>
           </div>
 
-          {/* Headline */}
-          <h1 className="hero-reveal hero-reveal-delay-2 text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 leading-[1.1]">
+          {/* Headline - Much Larger */}
+          <h1 className="hero-reveal hero-reveal-delay-2 text-6xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-white leading-[1.05] mb-4">
             Every missed call is a
             <br />
-            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-400 bg-clip-text text-transparent">
               job you lost.
             </span>
           </h1>
 
           {/* Subheadline */}
-          <p className="hero-reveal hero-reveal-delay-3 mt-6 text-lg sm:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
+          <p className="hero-reveal hero-reveal-delay-3 mt-8 text-xl sm:text-2xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
             Growth OS auto-responds to new leads in 60 seconds, follows up on estimates for you,
             and gets you paid faster. You run the jobs. It runs everything else.
           </p>
 
           {/* CTAs */}
-          <div className="hero-reveal hero-reveal-delay-4 mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="hero-reveal hero-reveal-delay-4 mt-12 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/setup"
-              className="glow-pulse inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-base font-semibold rounded-2xl hover:from-blue-700 hover:to-blue-800 transition-all shadow-xl shadow-blue-600/25 hover:shadow-blue-700/30 hover:-translate-y-0.5"
+              className="glow-pulse inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-base font-semibold rounded-2xl hover:from-blue-500 hover:to-blue-600 transition-all shadow-xl shadow-blue-600/50 hover:shadow-blue-500/60 hover:-translate-y-0.5"
             >
               Try Free for 14 Days
               <ArrowRight className="w-5 h-5" />
             </Link>
             <Link
               href="/dashboard"
-              className="inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-white text-gray-700 text-base font-semibold rounded-2xl border border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-all shadow-sm"
+              className="inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-slate-800/50 text-slate-100 text-base font-semibold rounded-2xl border border-slate-700 hover:border-slate-600 hover:bg-slate-700/50 transition-all backdrop-blur-sm"
             >
               See It in Action
               <ChevronRight className="w-5 h-5" />
@@ -317,108 +270,22 @@ function Hero() {
           </div>
 
           {/* Social Proof */}
-          <div className="hero-reveal hero-reveal-delay-5 mt-14 flex flex-wrap items-center justify-center gap-8">
+          <div className="hero-reveal hero-reveal-delay-5 mt-16 flex flex-wrap items-center justify-center gap-8">
             <div className="flex items-center gap-1.5">
               <div className="flex -space-x-2">
                 {["bg-blue-500", "bg-emerald-500", "bg-purple-500", "bg-amber-500", "bg-rose-500"].map((color, i) => (
-                  <div key={i} className={`w-8 h-8 rounded-full ${color} border-2 border-white flex items-center justify-center text-white text-xs font-bold`}>
+                  <div key={i} className={`w-8 h-8 rounded-full ${color} border-2 border-slate-950 flex items-center justify-center text-white text-xs font-bold`}>
                     {["MR", "JL", "SK", "PP", "TD"][i]}
                   </div>
                 ))}
               </div>
-              <span className="text-sm text-gray-500 ml-2">Plumbers, HVAC, electricians across Canada</span>
+              <span className="text-sm text-slate-400 ml-2">Plumbers, HVAC, electricians across Canada</span>
             </div>
             <div className="flex items-center gap-1">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
               ))}
-              <span className="text-sm text-gray-500 ml-1.5">4.9/5 rating</span>
-            </div>
-          </div>
-
-          {/* Product Preview */}
-          <div className="scroll-scale-up mt-16 relative" style={{ transform: `translateY(${-parallaxOffset * 0.08}px)` }}>
-            <div className="absolute -inset-4 bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-blue-600/20 rounded-3xl blur-2xl opacity-60" />
-            <div className="float-animation relative bg-white rounded-2xl shadow-2xl shadow-gray-200/50 border border-gray-200/50 overflow-hidden" style={{ transform: `scale(0.95)`, animation: 'scaleIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards' }}>
-              <div className="bg-gradient-to-r from-slate-800 via-slate-700 to-slate-800 px-4 py-3 flex items-center gap-2">
-                <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-red-400" />
-                  <div className="w-3 h-3 rounded-full bg-yellow-400" />
-                  <div className="w-3 h-3 rounded-full bg-green-400" />
-                </div>
-                <div className="flex-1 text-center">
-                  <div className="inline-flex items-center gap-2 px-4 py-1 bg-slate-600/50 rounded-lg">
-                    <div className="w-3 h-3 rounded-full bg-green-400/80" />
-                    <span className="text-xs text-slate-300 font-mono">app.growthos.com</span>
-                  </div>
-                </div>
-              </div>
-              <div className="p-1 bg-slate-100">
-                <div className="bg-slate-50 flex min-h-[280px] sm:min-h-[420px]">
-                  <div className="w-48 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 p-4 hidden sm:block rounded-bl-xl">
-                    <div className="flex items-center gap-2 mb-8">
-                      <div className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center">
-                        <Zap className="w-4 h-4 text-white" />
-                      </div>
-                      <span className="text-sm font-bold text-white">Growth OS</span>
-                    </div>
-                    {["Dashboard", "Jobs", "Customers", "Autopilot", "Estimates"].map((item, i) => (
-                      <div key={item} className={`flex items-center gap-2.5 px-3 py-2.5 rounded-lg mb-1 text-sm ${i === 0 ? "bg-blue-600 text-white shadow-lg" : "text-slate-400"}`}>
-                        {[<BarChart3 key="b" className="w-4 h-4" />, <Layers key="l" className="w-4 h-4" />, <Users key="u" className="w-4 h-4" />, <Bot key="a" className="w-4 h-4" />, <FileText key="e" className="w-4 h-4" />][i]}
-                        {item}
-                      </div>
-                    ))}
-                  </div>
-                  <div className="flex-1 p-3 sm:p-6">
-                    <div className="mb-4 sm:mb-6">
-                      <h3 className="text-sm sm:text-lg font-bold text-gray-900">Dashboard</h3>
-                      <p className="text-[10px] sm:text-xs text-gray-400">Here&apos;s how your week is looking.</p>
-                    </div>
-                    <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-6">
-                      {[
-                        { label: "New Leads", value: kpiValues.leads, trend: "+12%", color: "text-emerald-500" },
-                        { label: "Jobs This Week", value: kpiValues.jobs, trend: "+24%", color: "text-emerald-500" },
-                        { label: "Revenue", value: kpiValues.revenue > 0 ? `$${kpiValues.revenue.toFixed(1)}k` : "$0", trend: "+18%", color: "text-emerald-500" },
-                      ].map((kpi) => (
-                        <div key={kpi.label} className="bg-white rounded-xl p-2 sm:p-4 shadow-sm border border-gray-100">
-                          <p className="text-[8px] sm:text-[10px] text-gray-400 uppercase tracking-wide">{kpi.label}</p>
-                          <p className="text-lg sm:text-2xl font-bold mt-1 text-gray-900">{typeof kpi.value === 'string' ? kpi.value : kpi.value}</p>
-                          <p className={`text-[8px] sm:text-[10px] mt-1 ${kpi.color} hidden sm:block`}>{kpi.trend} from last month</p>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-                        <p className="text-xs font-semibold text-gray-700 mb-3">Job Pipeline</p>
-                        {["New Leads", "Quoted", "Booked", "In Progress"].map((stage, i) => (
-                          <div key={stage} className="flex items-center gap-2 mb-2">
-                            <span className="text-[10px] text-gray-400 w-20">{stage}</span>
-                            <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
-                              <div className="h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full transition-all duration-300" style={{ width: `${pipelineWidths[i]}%` }} />
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                      <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-                        <p className="text-xs font-semibold text-gray-700 mb-3">Autopilot Active</p>
-                        {[
-                          { name: "Speed to Lead", status: "Running" },
-                          { name: "Estimate Follow-Up", status: "Running" },
-                          { name: "Review Requests", status: "Running" },
-                        ].map((p) => (
-                          <div key={p.name} className="flex items-center justify-between mb-2.5">
-                            <span className="text-[10px] text-gray-500">{p.name}</span>
-                            <div className="flex items-center gap-1.5">
-                              <div className="pulse-ring w-2 h-2 rounded-full bg-emerald-400" />
-                              <span className="text-[10px] text-emerald-600 font-medium">{p.status}</span>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <span className="text-sm text-slate-400 ml-1.5">4.9/5 rating</span>
             </div>
           </div>
         </div>
@@ -488,6 +355,219 @@ function HowItWorks() {
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">{s.title}</h3>
               <p className="text-sm text-gray-500 leading-relaxed">{s.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Product Showcase Component (Sticky Scroll Feature Showcase) ─────────────────────────────────────────
+function ProductShowcase() {
+  const [phase, setPhase] = useState(0);
+  const showcaseRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!showcaseRef.current) return;
+      const rect = showcaseRef.current.getBoundingClientRect();
+      const sectionTop = rect.top;
+      const sectionHeight = rect.height;
+      const windowHeight = window.innerHeight;
+
+      // Calculate scroll progress (0 to 1) within this section
+      const scrollProgress = Math.max(0, Math.min(1, (windowHeight - sectionTop) / (windowHeight + sectionHeight)));
+
+      // Map to 4 phases (0-3)
+      const newPhase = Math.min(3, Math.floor(scrollProgress * 4));
+      setPhase(newPhase);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const phases = [
+    {
+      title: "See every job at a glance",
+      gradient: "from-blue-600 via-blue-500 to-cyan-500",
+      content: (
+        <div className="w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden">
+          <div className="bg-gradient-to-r from-slate-800 to-slate-900 px-4 py-3 flex items-center gap-2">
+            <div className="flex gap-1.5">
+              <div className="w-3 h-3 rounded-full bg-red-400" />
+              <div className="w-3 h-3 rounded-full bg-yellow-400" />
+              <div className="w-3 h-3 rounded-full bg-green-400" />
+            </div>
+          </div>
+          <div className="p-4 bg-slate-50">
+            <div className="text-xs font-semibold text-gray-600 mb-3">PIPELINE</div>
+            <div className="flex gap-3">
+              {['New Leads', 'Quoted', 'Booked', 'In Progress'].map((stage, i) => (
+                <div key={stage} className="flex-1 bg-white rounded-lg p-3 border border-gray-200 shadow-sm">
+                  <div className="text-[10px] text-gray-500 font-semibold mb-2">{stage}</div>
+                  <div className="space-y-2">
+                    {[1, 2].map((j) => (
+                      <div key={j} className={`rounded-md p-2 text-[10px] font-medium flex items-center gap-1.5 ${
+                        i === 0 ? 'bg-blue-100 text-blue-700' :
+                        i === 1 ? 'bg-purple-100 text-purple-700' :
+                        i === 2 ? 'bg-emerald-100 text-emerald-700' :
+                        'bg-amber-100 text-amber-700'
+                      }`}>
+                        <div className="w-1 h-1 rounded-full bg-current" />
+                        Job {i}{j}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      ),
+    },
+    {
+      title: "Tiered pricing that closes deals",
+      gradient: "from-purple-600 via-purple-500 to-pink-500",
+      content: (
+        <div className="w-full max-w-lg space-y-4">
+          {[
+            { tier: 'Good', price: '$800', color: 'bg-slate-50 border-gray-200' },
+            { tier: 'Better', price: '$1,200', color: 'bg-gradient-to-br from-blue-50 to-blue-100 border-blue-400 ring-2 ring-blue-500', isHighlight: true },
+            { tier: 'Best', price: '$1,800', color: 'bg-slate-50 border-gray-200' }
+          ].map((tier) => (
+            <div key={tier.tier} className={`rounded-xl p-4 border-2 transition-all ${tier.color} ${tier.isHighlight ? 'scale-105 shadow-2xl shadow-blue-500/20' : 'shadow-lg'}`}>
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="font-semibold text-gray-900">{tier.tier}</div>
+                  <div className="text-2xl font-bold text-gray-900 mt-1">{tier.price}</div>
+                </div>
+                {tier.isHighlight && <div className="px-3 py-1 rounded-full bg-blue-500 text-white text-xs font-semibold">Recommended</div>}
+              </div>
+            </div>
+          ))}
+        </div>
+      ),
+    },
+    {
+      title: "Automations running while you sleep",
+      gradient: "from-emerald-600 via-emerald-500 to-cyan-500",
+      content: (
+        <div className="w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden">
+          <div className="bg-gradient-to-r from-slate-800 to-slate-900 px-4 py-3" />
+          <div className="p-6 space-y-4">
+            {['Speed to Lead', 'Estimate Follow-Up', 'Review Requests', 'Payment Reminders'].map((automation) => (
+              <div key={automation} className="flex items-center justify-between p-4 bg-slate-50 rounded-lg border border-gray-200">
+                <span className="text-sm font-medium text-gray-900">{automation}</span>
+                <div className="flex items-center gap-2">
+                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-lg shadow-emerald-500/50" />
+                  <span className="text-xs font-semibold text-emerald-600">Running</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ),
+    },
+    {
+      title: "Your AI growth advisor in your pocket",
+      gradient: "from-indigo-600 via-indigo-500 to-purple-500",
+      content: (
+        <div className="w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden">
+          <div className="bg-gradient-to-r from-slate-800 to-slate-900 px-4 py-3 flex items-center gap-2">
+            <div className="flex gap-1.5">
+              <div className="w-3 h-3 rounded-full bg-red-400" />
+              <div className="w-3 h-3 rounded-full bg-yellow-400" />
+              <div className="w-3 h-3 rounded-full bg-green-400" />
+            </div>
+          </div>
+          <div className="p-6 space-y-4 bg-slate-50">
+            <div className="flex gap-2">
+              <div className="max-w-xs bg-gray-200 rounded-lg p-3 text-sm">
+                What should I focus on this week?
+              </div>
+            </div>
+            <div className="flex gap-2 justify-end">
+              <div className="max-w-xs bg-indigo-500 text-white rounded-lg p-3 text-sm">
+                Your top 3 opportunities: 2 estimates pending follow-up, 1 invoice overdue, and 4 new leads to call today.
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <div className="max-w-xs bg-gray-200 rounded-lg p-3 text-sm">
+                Which customers pay the fastest?
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+    },
+  ];
+
+  return (
+    <section id="product-showcase" ref={showcaseRef} className="relative bg-slate-50">
+      {/* Desktop: sticky scroll version (400vh) */}
+      <div className="hidden lg:block" style={{ height: '400vh', position: 'relative' }}>
+        <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden transition-colors duration-500" style={{ backgroundColor: `hsl(${200 + phase * 10}, 70%, 40%)` }}>
+          <div className={`absolute inset-0 opacity-60 transition-opacity duration-500 bg-gradient-to-br ${phases[phase].gradient}`} />
+
+          <div className="relative max-w-7xl mx-auto px-6 lg:px-8 w-full h-full flex items-center">
+            <div className="grid grid-cols-2 gap-12 items-center w-full">
+              {/* Text content */}
+              <div>
+                <h2 className="text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 transition-all duration-500" style={{ opacity: 1 - Math.abs(0 - phase) * 0.2 }}>
+                  {phases[phase].title}
+                </h2>
+                <p className="text-lg text-white/80 max-w-xl transition-all duration-500">
+                  {phase === 0 && "Drag jobs between stages. Customers see updates in real-time. Nothing slips through the cracks."}
+                  {phase === 1 && "Good, Better, Best pricing increases close rates by 30%. Growth OS auto-follows up if they don't respond."}
+                  {phase === 2 && "Set it once. It runs forever. Speed to Lead, Follow-ups, Reviews, Payments — all on autopilot."}
+                  {phase === 3 && "Ask Growth Advisor anything about your business. Get AI-powered insights on what to focus on today."}
+                </p>
+              </div>
+
+              {/* Product mockup */}
+              <div className="flex items-center justify-center h-full transition-all duration-500">
+                <div className="opacity-0 transition-opacity duration-500" style={{ opacity: phase >= 0 ? 1 : 0 }}>
+                  {phases[phase].content}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Hidden scroll drivers */}
+        <div className="h-screen" />
+        <div className="h-screen" />
+        <div className="h-screen" />
+        <div className="h-screen" />
+      </div>
+
+      {/* Mobile: stacked vertical version */}
+      <div className="lg:hidden">
+        <div className="max-w-7xl mx-auto px-6 py-12">
+          {phases.map((phaseData, index) => (
+            <div key={index} className="mb-16 scroll-fade-up">
+              <div className="rounded-2xl bg-gradient-to-br from-white to-slate-100 overflow-hidden shadow-lg">
+                <div className={`h-48 flex items-center justify-center bg-gradient-to-br ${phaseData.gradient}`}>
+                  <div className="text-white text-center">
+                    <div className="text-lg font-semibold opacity-90">Feature {index + 1}</div>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">{phaseData.title}</h3>
+                  <p className="text-gray-600 mb-6">
+                    {index === 0 && "Drag jobs between stages. Customers see updates in real-time. Nothing slips through the cracks."}
+                    {index === 1 && "Good, Better, Best pricing increases close rates by 30%. Growth OS auto-follows up if they don't respond."}
+                    {index === 2 && "Set it once. It runs forever. Speed to Lead, Follow-ups, Reviews, Payments — all on autopilot."}
+                    {index === 3 && "Ask Growth Advisor anything about your business. Get AI-powered insights on what to focus on today."}
+                  </p>
+                  <div className="scale-75 origin-top-left">
+                    {phaseData.content}
+                  </div>
+                </div>
+              </div>
             </div>
           ))}
         </div>
@@ -1362,7 +1442,7 @@ export default function LandingPage() {
       <Hero />
       <ProblemSection />
       <HowItWorks />
-      <Features />
+      <ProductShowcase />
       <Testimonials />
       <AutopilotSection />
       <AdvisorDemo />

@@ -134,11 +134,22 @@ export default function Dashboard() {
     )
     .reduce((sum, d) => sum + d.value, 0);
 
+  // Use total deal value (not just invoiced) so pie chart shows meaningful data
+  const ring1Total = deals
+    .filter((d) => ['existing_customer', 'reactivation', 'cross_sell'].includes(d.source))
+    .reduce((sum, d) => sum + d.value, 0);
+  const ring2Total = deals
+    .filter((d) => ['referral', 'review', 'neighborhood'].includes(d.source))
+    .reduce((sum, d) => sum + d.value, 0);
+  const ring3Total = deals
+    .filter((d) => ['google_lsa', 'seo', 'gbp'].includes(d.source))
+    .reduce((sum, d) => sum + d.value, 0);
+
   const revenueBySourceData = [
-    { name: 'Ring 1', value: ring1Revenue || 1 },
-    { name: 'Ring 2', value: ring2Revenue || 1 },
-    { name: 'Ring 3', value: ring3Revenue || 1 },
-  ];
+    { name: 'Ring 1 (Harvest)', value: ring1Total },
+    { name: 'Ring 2 (Amplify)', value: ring2Total },
+    { name: 'Ring 3 (Acquire)', value: ring3Total },
+  ].filter((d) => d.value > 0);
 
   // Monthly revenue trend (mock 6-month data)
   const monthlyRevenueData = [
@@ -349,14 +360,17 @@ export default function Dashboard() {
           <ResponsiveContainer width="100%" height={300}>
             <BarChart
               data={pipelineData}
-              layout="horizontal"
-              margin={{ top: 5, right: 30, left: 100, bottom: 5 }}
+              margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
             >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis type="number" />
-              <YAxis type="category" dataKey="stage" width={90} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+              <XAxis dataKey="stage" tick={{ fontSize: 11 }} />
+              <YAxis allowDecimals={false} />
               <Tooltip />
-              <Bar dataKey="count" fill="#3B82F6" radius={[0, 8, 8, 0]} />
+              <Bar dataKey="count" radius={[6, 6, 0, 0]}>
+                {pipelineData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={Object.values(PIPELINE_STAGE_COLORS)[index]} />
+                ))}
+              </Bar>
             </BarChart>
           </ResponsiveContainer>
         </div>

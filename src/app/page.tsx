@@ -96,10 +96,19 @@ function useScrollReveal() {
           }
         });
       },
-      { threshold: 0.1, rootMargin: '0px 0px -60px 0px' }
+      { threshold: 0.05, rootMargin: '0px 0px -20px 0px' }
     );
     elements.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+
+    // Safety fallback: after 2 seconds, force all elements to be visible
+    const fallbackTimer = setTimeout(() => {
+      elements.forEach((el) => el.classList.add('is-visible'));
+    }, 2000);
+
+    return () => {
+      observer.disconnect();
+      clearTimeout(fallbackTimer);
+    };
   }, []);
 }
 
@@ -432,7 +441,7 @@ function ProblemSection() {
     <section className="py-20 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900">
       <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
         <h2 className="scroll-fade-up text-2xl sm:text-3xl font-bold text-white mb-8">Sound familiar?</h2>
-        <div className="stagger-children grid sm:grid-cols-2 gap-4 text-left max-w-3xl mx-auto">
+        <div className="stagger-children scroll-fade-up grid sm:grid-cols-2 gap-4 text-left max-w-3xl mx-auto">
           {[
             "You missed a call at 7am because you were already on a job",
             "That estimate you sent last week? No one followed up",
@@ -472,7 +481,7 @@ function HowItWorks() {
           </h2>
         </div>
 
-        <div className="stagger-children grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="stagger-children scroll-fade-up grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {[
             { step: "01", title: "Add Your Customers", description: "Import from a spreadsheet or add them one by one. Takes 5 minutes for most shops.", icon: <Users className="w-6 h-6" /> },
             { step: "02", title: "Turn On Autopilot", description: "Pick which automations you want running — lead responses, estimate follow-ups, review requests. One click each.", icon: <Bot className="w-6 h-6" /> },
@@ -1453,7 +1462,7 @@ function AutopilotSection() {
   ];
 
   return (
-    <section id="autopilot" className="py-24 lg:py-32 bg-white">
+    <section id="autopilot" className="py-16 lg:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="scroll-fade-up text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-purple-50 border border-purple-100 mb-6">
@@ -1688,7 +1697,7 @@ function AdvisorDemo() {
 // ─── Stats Banner ─────────────────────────────────────────────
 function StatsBanner() {
   return (
-    <section className="py-16 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900">
+    <section className="py-12 lg:py-16 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="stagger-children grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
           {[
@@ -1792,7 +1801,7 @@ function Testimonials() {
   ];
 
   return (
-    <section id="testimonials" className="py-24 lg:py-32 bg-gradient-to-b from-white to-slate-50">
+    <section id="testimonials" className="py-16 lg:py-24 bg-gradient-to-b from-white to-slate-50">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="scroll-fade-up text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-50 border border-amber-100 mb-6">
@@ -1869,7 +1878,7 @@ function CompetitorComparison() {
   };
 
   return (
-    <section id="compare" className="py-24 lg:py-32 bg-white">
+    <section id="compare" className="py-16 lg:py-24 bg-white">
       <div className="max-w-6xl mx-auto px-6 lg:px-8">
         <div className="scroll-fade-up text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-100 mb-6">
@@ -1946,7 +1955,7 @@ function CompetitorComparison() {
 // ─── Built for Canada (Closer) ───────────────────────────────
 function BuiltForCanada() {
   return (
-    <section className="py-20 bg-gradient-to-b from-slate-50 to-white">
+    <section className="py-16 lg:py-24 bg-gradient-to-b from-slate-50 to-white">
       <div className="max-w-5xl mx-auto px-6 lg:px-8">
         <div className="scroll-fade-up text-center mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-red-50 border border-red-100 mb-6">
@@ -2012,7 +2021,7 @@ function Pricing() {
   ];
 
   return (
-    <section id="pricing" className="py-24 lg:py-32 bg-white">
+    <section id="pricing" className="py-16 lg:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="scroll-fade-up text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 mb-6">
@@ -2078,7 +2087,7 @@ function FAQ() {
   ];
 
   return (
-    <section className="py-24 lg:py-32 bg-gradient-to-b from-white to-slate-50">
+    <section className="py-16 lg:py-24 bg-gradient-to-b from-white to-slate-50">
       <div className="max-w-3xl mx-auto px-6 lg:px-8">
         <div className="scroll-fade-up text-center mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-100 border border-gray-200 mb-6">
@@ -2114,7 +2123,7 @@ function FAQ() {
 // ─── CTA Section ──────────────────────────────────────────────
 function CTASection() {
   return (
-    <section className="py-24 lg:py-32 gradient-mesh relative overflow-hidden">
+    <section className="py-16 lg:py-24 gradient-mesh relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 opacity-90" />
       <div className="absolute inset-0">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl" />
@@ -2216,7 +2225,6 @@ export default function LandingPage() {
       <InteractiveExplorer />
       <Testimonials />
       <AutopilotSection />
-      <AdvisorDemo />
       <StatsBanner />
       <CompetitorComparison />
       <BuiltForCanada />

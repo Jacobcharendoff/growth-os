@@ -441,9 +441,10 @@ export const useStore = create<GrowthOSStore>()(
 
         // Add contacts
         SEED_DATA.contacts.forEach((contact, index) => {
-          const newId = generateId();
-          contactIds[index] = newId;
+          const prevLength = get().contacts.length;
           get().addContact(contact);
+          const newContact = get().contacts[prevLength];
+          contactIds[index] = newContact?.id || '';
         });
 
         // Add deals with correct contactIds
@@ -464,6 +465,12 @@ export const useStore = create<GrowthOSStore>()(
     }),
     {
       name: 'growth-os-storage',
+      version: 2,
+      migrate: () => ({
+        contacts: [],
+        deals: [],
+        activities: [],
+      }),
     }
   )
 );

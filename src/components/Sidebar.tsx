@@ -14,7 +14,7 @@ export function Sidebar() {
   const pathname = usePathname();
 
   const navItems = [
-    { href: '/', label: 'Dashboard', icon: LayoutDashboard },
+    { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/pipeline', label: 'Pipeline', icon: Kanban },
     { href: '/contacts', label: 'Contacts', icon: Users },
     { href: '/activity', label: 'Activity', icon: ActivitySquare },
@@ -39,7 +39,7 @@ export function Sidebar() {
       <nav className="flex-1 px-4 py-6 space-y-2">
         {navItems.map((item) => {
           const Icon = item.icon;
-          const isActive = pathname === item.href;
+          const isActive = pathname === item.href || (item.href === '/dashboard' && pathname === '/');
 
           return (
             <Link

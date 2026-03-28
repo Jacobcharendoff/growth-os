@@ -100,6 +100,44 @@ function useScrollReveal() {
   }, []);
 }
 
+// ─── Scroll Progress Hook ──────────────────────────────────────
+function useScrollProgress(elementId: string) {
+  const [progress, setProgress] = useState(0);
+  useEffect(() => {
+    const handleScroll = () => {
+      const el = document.getElementById(elementId);
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      const raw = (windowHeight - rect.top) / (windowHeight + rect.height);
+      setProgress(Math.max(0, Math.min(1, raw)));
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [elementId]);
+  return progress;
+}
+
+// ─── Parallax Hook ─────────────────────────────────────────────
+function useParallax(speed: number = 0.3) {
+  const [offset, setOffset] = useState(0);
+  useEffect(() => {
+    let rafId: number;
+    const handleScroll = () => {
+      rafId = requestAnimationFrame(() => {
+        setOffset(window.scrollY * speed);
+      });
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      cancelAnimationFrame(rafId);
+    };
+  }, [speed]);
+  return offset;
+}
+
 // ─── Navigation ───────────────────────────────────────────────
 function Navigation() {
   const [scrolled, setScrolled] = useState(false);
@@ -178,11 +216,64 @@ function Navigation() {
 
 // ─── Hero Section ─────────────────────────────────────────────
 function Hero() {
+  const parallaxOffset = useParallax(0.2);
+  const [kpiValues, setKpiValues] = useState({ leads: 0, jobs: 0, revenue: 0 });
+  const [pipelineWidths, setPipelineWidths] = useState([0, 0, 0, 0]);
+
+  useEffect(() => {
+    // Animate KPI counters on mount
+    const durations = [1000, 1000, 1000];
+    const targets = [23, 14, 87.5];
+    let startTime: number;
+
+    const animateKPIs = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / 1500, 1);
+
+      setKpiValues({
+        leads: Math.round(targets[0] * progress),
+        jobs: Math.round(targets[1] * progress),
+        revenue: Math.round(targets[2] * progress * 10) / 10,
+      });
+
+      if (progress < 1) {
+        requestAnimationFrame(animateKPIs);
+      }
+    };
+
+    requestAnimationFrame(animateKPIs);
+  }, []);
+
+  useEffect(() => {
+    // Animate pipeline bar widths on mount
+    const widths = [80, 55, 40, 30];
+    let startTime: number;
+
+    const animateBars = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / 1200, 1);
+
+      setPipelineWidths(widths.map(w => w * progress));
+
+      if (progress < 1) {
+        requestAnimationFrame(animateBars);
+      }
+    };
+
+    requestAnimationFrame(animateBars);
+  }, []);
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Animated Gradient Mesh Background */}
+      <div className="absolute inset-0 gradient-mesh opacity-80" />
       <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-blue-50/50 to-purple-50/30" />
-      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-bl from-blue-400/10 via-purple-400/5 to-transparent rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-emerald-400/8 via-blue-400/5 to-transparent rounded-full blur-3xl" />
+
+      {/* Parallax Background Blobs */}
+      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-bl from-blue-400/10 via-purple-400/5 to-transparent rounded-full blur-3xl" style={{ transform: `translateY(${parallaxOffset * 0.15}px)` }} />
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-emerald-400/8 via-blue-400/5 to-transparent rounded-full blur-3xl" style={{ transform: `translateY(${-parallaxOffset * 0.1}px)` }} />
 
       <div className="relative max-w-7xl mx-auto px-6 lg:px-8 pt-32 pb-20 lg:pt-40 lg:pb-32">
         <div className="text-center max-w-4xl mx-auto">
@@ -246,9 +337,9 @@ function Hero() {
           </div>
 
           {/* Product Preview */}
-          <div className="scroll-scale-up mt-16 relative">
+          <div className="scroll-scale-up mt-16 relative" style={{ transform: `translateY(${-parallaxOffset * 0.08}px)` }}>
             <div className="absolute -inset-4 bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-blue-600/20 rounded-3xl blur-2xl opacity-60" />
-            <div className="float-animation relative bg-white rounded-2xl shadow-2xl shadow-gray-200/50 border border-gray-200/50 overflow-hidden">
+            <div className="float-animation relative bg-white rounded-2xl shadow-2xl shadow-gray-200/50 border border-gray-200/50 overflow-hidden" style={{ transform: `scale(0.95)`, animation: 'scaleIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards' }}>
               <div className="bg-gradient-to-r from-slate-800 via-slate-700 to-slate-800 px-4 py-3 flex items-center gap-2">
                 <div className="flex gap-1.5">
                   <div className="w-3 h-3 rounded-full bg-red-400" />
@@ -285,13 +376,13 @@ function Hero() {
                     </div>
                     <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-6">
                       {[
-                        { label: "New Leads", value: "23", trend: "+12%", color: "text-emerald-500" },
-                        { label: "Jobs This Week", value: "14", trend: "+24%", color: "text-emerald-500" },
-                        { label: "Revenue", value: "$87.5k", trend: "+18%", color: "text-emerald-500" },
+                        { label: "New Leads", value: kpiValues.leads, trend: "+12%", color: "text-emerald-500" },
+                        { label: "Jobs This Week", value: kpiValues.jobs, trend: "+24%", color: "text-emerald-500" },
+                        { label: "Revenue", value: kpiValues.revenue > 0 ? `$${kpiValues.revenue.toFixed(1)}k` : "$0", trend: "+18%", color: "text-emerald-500" },
                       ].map((kpi) => (
                         <div key={kpi.label} className="bg-white rounded-xl p-2 sm:p-4 shadow-sm border border-gray-100">
                           <p className="text-[8px] sm:text-[10px] text-gray-400 uppercase tracking-wide">{kpi.label}</p>
-                          <p className="text-lg sm:text-2xl font-bold mt-1 text-gray-900">{kpi.value}</p>
+                          <p className="text-lg sm:text-2xl font-bold mt-1 text-gray-900">{typeof kpi.value === 'string' ? kpi.value : kpi.value}</p>
                           <p className={`text-[8px] sm:text-[10px] mt-1 ${kpi.color} hidden sm:block`}>{kpi.trend} from last month</p>
                         </div>
                       ))}
@@ -303,7 +394,7 @@ function Hero() {
                           <div key={stage} className="flex items-center gap-2 mb-2">
                             <span className="text-[10px] text-gray-400 w-20">{stage}</span>
                             <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
-                              <div className="h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full" style={{ width: `${[80, 55, 40, 30][i]}%` }} />
+                              <div className="h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full transition-all duration-300" style={{ width: `${pipelineWidths[i]}%` }} />
                             </div>
                           </div>
                         ))}
@@ -318,7 +409,7 @@ function Hero() {
                           <div key={p.name} className="flex items-center justify-between mb-2.5">
                             <span className="text-[10px] text-gray-500">{p.name}</span>
                             <div className="flex items-center gap-1.5">
-                              <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                              <div className="pulse-ring w-2 h-2 rounded-full bg-emerald-400" />
                               <span className="text-[10px] text-emerald-600 font-medium">{p.status}</span>
                             </div>
                           </div>
@@ -350,8 +441,8 @@ function ProblemSection() {
             "You invoiced a job 4 days late and waited 45 days to get paid",
             "You have no idea which ads are actually bringing in work",
             "You tried Jobber but it didn't help you grow — just schedule",
-          ].map((pain) => (
-            <div key={pain} className="scroll-fade-up flex items-start gap-3 p-4 rounded-xl bg-white/5 border border-white/10">
+          ].map((pain, index) => (
+            <div key={pain} className={`${index % 2 === 0 ? 'scroll-fade-left' : 'scroll-fade-right'} flex items-start gap-3 p-4 rounded-xl bg-white/5 border border-white/10`}>
               <X className="w-5 h-5 text-rose-400 shrink-0 mt-0.5" />
               <p className="text-sm text-slate-300">{pain}</p>
             </div>
@@ -390,7 +481,7 @@ function HowItWorks() {
             { step: "04", title: "Grow", description: "See which lead sources make you money. Double down on what works. Book more jobs. Get paid faster.", icon: <TrendingUp className="w-6 h-6" /> },
           ].map((s, i) => (
             <div key={s.step} className="scroll-fade-up relative">
-              {i < 3 && <div className="hidden lg:block absolute top-12 left-full w-full h-px bg-gradient-to-r from-blue-200 to-transparent" />}
+              {i < 3 && <div className="scroll-fade-up hidden lg:block absolute top-12 left-full w-full h-px draw-path bg-gradient-to-r from-blue-200 to-transparent" />}
               <div className="text-5xl font-black text-blue-100 mb-4">{s.step}</div>
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 text-white flex items-center justify-center mb-4 shadow-lg">
                 {s.icon}
@@ -407,6 +498,19 @@ function HowItWorks() {
 
 // ─── Features Section ─────────────────────────────────────────
 function Features() {
+  const handleTiltMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    e.currentTarget.style.setProperty('--rx', `${-y * 8}deg`);
+    e.currentTarget.style.setProperty('--ry', `${x * 8}deg`);
+  };
+
+  const handleTiltMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.currentTarget.style.setProperty('--rx', '0deg');
+    e.currentTarget.style.setProperty('--ry', '0deg');
+  };
+
   const features = [
     {
       icon: <Phone className="w-6 h-6" />,
@@ -467,7 +571,12 @@ function Features() {
 
         <div className="stagger-children grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature) => (
-            <div key={feature.title} className="scroll-fade-up group relative p-8 rounded-2xl bg-white border border-gray-100 hover:border-gray-200 hover:shadow-xl hover:shadow-gray-100/50 transition-all duration-300 hover:-translate-y-1">
+            <div
+              key={feature.title}
+              className="scroll-fade-up tilt-card group relative p-8 rounded-2xl bg-white border border-gray-100 hover:border-gray-200 hover:shadow-xl hover:shadow-gray-100/50 transition-all duration-300 hover:-translate-y-1"
+              onMouseMove={handleTiltMouseMove}
+              onMouseLeave={handleTiltMouseLeave}
+            >
               <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${feature.gradient} text-white shadow-lg mb-5`}>
                 {feature.icon}
               </div>
@@ -514,10 +623,13 @@ function AutopilotSection() {
 
         <div className="stagger-children grid md:grid-cols-2 lg:grid-cols-3 gap-5">
           {playbooks.map((p) => (
-            <div key={p.name} className="scroll-fade-up group p-6 rounded-2xl bg-white border border-gray-100 hover:border-gray-200 hover:shadow-lg transition-all duration-300">
+            <div key={p.name} className="scroll-fade-up group relative p-6 rounded-2xl bg-white border border-gray-100 hover:border-gray-200 hover:shadow-lg transition-all duration-300 overflow-hidden">
+              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-100 overflow-hidden rounded-b-2xl">
+                <div className="h-full bg-gradient-to-r from-blue-400 to-purple-500 progress-fill" style={{ width: '75%', animation: 'fillWidth 3s ease-in-out infinite' }} />
+              </div>
               <div className="flex items-center justify-between mb-4">
                 <span className={`inline-flex px-2.5 py-1 rounded-full text-[10px] font-semibold text-white ${p.color}`}>{p.category}</span>
-                <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <div className="w-2 h-2 rounded-full bg-emerald-400 pulse-ring" />
               </div>
               <h3 className="text-base font-semibold text-gray-900 mb-2">{p.name}</h3>
               <p className="text-sm text-gray-500 leading-relaxed">{p.description}</p>
@@ -748,6 +860,46 @@ function StatsBanner() {
   );
 }
 
+// ─── Star Fill Component ──────────────────────────────────────
+function AnimatedStars() {
+  const [fillIndex, setFillIndex] = useState(-1);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && fillIndex === -1) {
+          let index = 0;
+          const interval = setInterval(() => {
+            if (index < 5) {
+              setFillIndex(index);
+              index++;
+            } else {
+              clearInterval(interval);
+            }
+          }, 100);
+        }
+      },
+      { threshold: 0.1 }
+    );
+    const el = document.getElementById(`stars-${fillIndex}`);
+    if (el) observer.observe(el);
+    return () => observer.disconnect();
+  }, [fillIndex]);
+
+  return (
+    <div className="flex items-center gap-1 mb-4" id={`stars-${fillIndex}`}>
+      {[...Array(5)].map((_, i) => (
+        <Star
+          key={i}
+          className={`w-4 h-4 transition-all duration-300 ${
+            i <= fillIndex ? 'fill-amber-400 text-amber-400' : 'fill-gray-200 text-gray-200'
+          }`}
+        />
+      ))}
+    </div>
+  );
+}
+
 // ─── Testimonials ─────────────────────────────────────────────
 function Testimonials() {
   const testimonials = [
@@ -806,9 +958,7 @@ function Testimonials() {
         <div className="stagger-children grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {testimonials.slice(0, 3).map((t) => (
             <div key={t.name} className="scroll-fade-up p-8 rounded-2xl bg-white border border-gray-100 hover:shadow-lg transition-all duration-300">
-              <div className="flex items-center gap-1 mb-4">
-                {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />)}
-              </div>
+              <AnimatedStars />
               <p className="text-gray-600 leading-relaxed mb-6">&ldquo;{t.quote}&rdquo;</p>
               <div className="flex items-center gap-3">
                 <div className={`w-10 h-10 rounded-full ${t.color} flex items-center justify-center text-white text-sm font-bold`}>{t.initials}</div>
@@ -824,9 +974,7 @@ function Testimonials() {
         <div className="stagger-children grid md:grid-cols-2 gap-6 mt-6 max-w-4xl mx-auto">
           {testimonials.slice(3).map((t) => (
             <div key={t.name} className="scroll-fade-up p-8 rounded-2xl bg-white border border-gray-100 hover:shadow-lg transition-all duration-300">
-              <div className="flex items-center gap-1 mb-4">
-                {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />)}
-              </div>
+              <AnimatedStars />
               <p className="text-gray-600 leading-relaxed mb-6">&ldquo;{t.quote}&rdquo;</p>
               <div className="flex items-center gap-3">
                 <div className={`w-10 h-10 rounded-full ${t.color} flex items-center justify-center text-white text-sm font-bold`}>{t.initials}</div>
@@ -1021,7 +1169,7 @@ function Pricing() {
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight">
             One price. Everything{" "}
-            <span className="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">
+            <span className="gradient-text-shimmer bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">
               included.
             </span>
           </h2>
@@ -1033,7 +1181,7 @@ function Pricing() {
 
         <div className="stagger-children grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {plans.map((plan) => (
-            <div key={plan.name} className={`scroll-fade-up relative rounded-2xl p-6 sm:p-8 transition-all duration-300 ${plan.highlighted ? "bg-gradient-to-b from-blue-600 to-blue-700 text-white shadow-2xl shadow-blue-600/25 md:scale-105" : "bg-white border border-gray-200 hover:border-gray-300 hover:shadow-lg"}`}>
+            <div key={plan.name} className={`scroll-fade-up relative rounded-2xl p-6 sm:p-8 transition-all duration-300 ${plan.highlighted ? "bg-gradient-to-b from-blue-600 to-blue-700 text-white shadow-2xl shadow-blue-600/25 md:scale-105 shimmer-border" : "bg-white border border-gray-200 hover:border-gray-300 hover:shadow-lg"}`}>
               {plan.highlighted && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-gradient-to-r from-amber-400 to-orange-400 text-white text-xs font-bold rounded-full shadow-lg">
                   Most Popular
@@ -1115,7 +1263,8 @@ function FAQ() {
 // ─── CTA Section ──────────────────────────────────────────────
 function CTASection() {
   return (
-    <section className="py-24 lg:py-32 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 relative overflow-hidden">
+    <section className="py-24 lg:py-32 gradient-mesh relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 opacity-90" />
       <div className="absolute inset-0">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl" />
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl" />

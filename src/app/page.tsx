@@ -1930,8 +1930,13 @@ function Footer() {
           <div>
             <h4 className="text-sm font-semibold text-white mb-4">Product</h4>
             <ul className="space-y-2.5">
-              {["Features", "Autopilot", "Pricing", "Compare", "Roadmap"].map((link) => (
-                <li key={link}><a href="#" className="text-sm hover:text-white transition-colors">{link}</a></li>
+              {[
+                { label: "Features", href: "#explorer" },
+                { label: "Autopilot", href: "#autopilot" },
+                { label: "Pricing", href: "#pricing" },
+                { label: "Compare", href: "#compare" },
+              ].map((link) => (
+                <li key={link.label}><a href={link.href} className="text-sm hover:text-white transition-colors">{link.label}</a></li>
               ))}
             </ul>
           </div>
@@ -1939,8 +1944,15 @@ function Footer() {
           <div>
             <h4 className="text-sm font-semibold text-white mb-4">Built For</h4>
             <ul className="space-y-2.5">
-              {["Plumbing", "HVAC", "Electrical", "Landscaping", "Roofing", "Cleaning"].map((link) => (
-                <li key={link}><a href="#" className="text-sm hover:text-white transition-colors">{link}</a></li>
+              {[
+                { label: "Plumbing", href: "/plumbing" },
+                { label: "HVAC", href: "/hvac" },
+                { label: "Electrical", href: "/electrical" },
+                { label: "Landscaping", href: "/landscaping" },
+                { label: "Roofing", href: "/roofing" },
+                { label: "Cleaning", href: "/cleaning" },
+              ].map((link) => (
+                <li key={link.label}><Link href={link.href} className="text-sm hover:text-white transition-colors">{link.label}</Link></li>
               ))}
             </ul>
           </div>
@@ -1948,8 +1960,13 @@ function Footer() {
           <div>
             <h4 className="text-sm font-semibold text-white mb-4">Company</h4>
             <ul className="space-y-2.5">
-              {["About", "Blog", "Help Centre", "Contact", "Privacy Policy", "Terms of Service"].map((link) => (
-                <li key={link}><a href="#" className="text-sm hover:text-white transition-colors">{link}</a></li>
+              {[
+                { label: "About", href: "/about" },
+                { label: "Contact", href: "/contact" },
+                { label: "Privacy Policy", href: "/privacy" },
+                { label: "Terms of Service", href: "/terms" },
+              ].map((link) => (
+                <li key={link.label}><Link href={link.href} className="text-sm hover:text-white transition-colors">{link.label}</Link></li>
               ))}
             </ul>
           </div>

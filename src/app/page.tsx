@@ -34,6 +34,9 @@ import {
   HelpCircle,
   Globe,
   MessageSquare,
+  Plus,
+  Minus,
+  Send,
 } from "lucide-react";
 
 // ─── Animated Counter ─────────────────────────────────────────
@@ -570,6 +573,465 @@ function ProductShowcase() {
               </div>
             </div>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Interactive Explorer Section ─────────────────────────────
+function InteractiveExplorer() {
+  const [activeTab, setActiveTab] = useState<string>('dashboard');
+
+  const tabs = [
+    { id: 'dashboard', label: 'Dashboard' },
+    { id: 'pipeline', label: 'Pipeline' },
+    { id: 'estimates', label: 'Estimates' },
+    { id: 'advisor', label: 'Growth Advisor' },
+    { id: 'autopilot', label: 'Autopilot' },
+    { id: 'invoicing', label: 'Invoicing' },
+  ];
+
+  const tabInfo: { [key: string]: { title: string; description: string } } = {
+    dashboard: {
+      title: 'Your Command Center',
+      description: 'See leads, revenue, pipeline, and team activity — all in one view. Real-time metrics guide your decisions.',
+    },
+    pipeline: {
+      title: 'Drag & Drop Pipeline',
+      description: 'Drag jobs from quote to complete. Every crew member sees what\'s next and when it\'s due.',
+    },
+    estimates: {
+      title: 'Tiered Pricing',
+      description: 'Good/Better/Best tiers close 30% more deals. Customers pick the option that fits. You win either way.',
+    },
+    advisor: {
+      title: 'Growth Advisor',
+      description: 'Like texting your smartest business partner. Ask anything about your numbers and get instant insights.',
+    },
+    autopilot: {
+      title: 'Automations',
+      description: '8 automations running while you sleep. Speed to Lead, Follow-ups, Reviews — all on without lifting a finger.',
+    },
+    invoicing: {
+      title: 'Smart Invoicing',
+      description: 'Send invoices the minute a job is done. Canadian taxes calculated automatically. Get paid faster.',
+    },
+  };
+
+  // ─── Dashboard Tab Content
+  const DashboardContent = () => (
+    <div className="w-full max-w-4xl opacity-100 transition-opacity duration-300">
+      <div className="bg-slate-800 rounded-t-xl px-4 py-2.5 flex items-center gap-2">
+        <div className="flex gap-1.5">
+          <div className="w-3 h-3 rounded-full bg-red-400" />
+          <div className="w-3 h-3 rounded-full bg-yellow-400" />
+          <div className="w-3 h-3 rounded-full bg-green-400" />
+        </div>
+        <div className="flex-1 text-center">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-700/50 rounded-lg">
+            <div className="w-2 h-2 rounded-full bg-green-400" />
+            <span className="text-xs text-slate-400 font-mono">app.growthos.com/dashboard</span>
+          </div>
+        </div>
+      </div>
+      <div className="bg-slate-50 rounded-b-xl p-6">
+        <div className="grid grid-cols-4 gap-3 mb-4">
+          {[
+            { label: 'New Leads', value: '23', trend: '+12%', color: 'text-emerald-500' },
+            { label: 'Active Jobs', value: '14', trend: '+24%', color: 'text-emerald-500' },
+            { label: 'Revenue', value: '$87.4K', trend: '+18%', color: 'text-emerald-500' },
+            { label: 'Conversion', value: '68%', trend: '+5%', color: 'text-emerald-500' },
+          ].map((kpi) => (
+            <div key={kpi.label} className="bg-white rounded-lg p-3 border border-gray-200">
+              <p className="text-[10px] text-gray-500 uppercase font-semibold">{kpi.label}</p>
+              <p className="text-xl font-bold text-gray-900 mt-1">{kpi.value}</p>
+              <p className={`text-[10px] ${kpi.color} font-semibold`}>{kpi.trend} vs last month</p>
+            </div>
+          ))}
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          <div className="bg-white rounded-lg p-4 border border-gray-200">
+            <p className="text-xs font-semibold text-gray-700 mb-3">Revenue Trend</p>
+            <div className="flex items-end gap-1 h-20">
+              {[40, 55, 45, 65, 75, 85, 70, 90, 95, 80, 88, 100].map((h, i) => (
+                <div key={i} className="flex-1 bg-blue-500 rounded-t" style={{ height: `${h}%` }} />
+              ))}
+            </div>
+          </div>
+          <div className="bg-white rounded-lg p-4 border border-gray-200">
+            <p className="text-xs font-semibold text-gray-700 mb-3">Pipeline</p>
+            {['New Leads', 'Quoted', 'Booked', 'In Progress'].map((stage, i) => (
+              <div key={stage} className="flex items-center gap-2 mb-2">
+                <span className="text-[10px] text-gray-400 w-16 shrink-0">{stage}</span>
+                <div className="flex-1 h-2 bg-gray-100 rounded-full">
+                  <div className="h-full bg-blue-500 rounded-full" style={{ width: `${[80, 55, 40, 30][i]}%` }} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  // ─── Pipeline Tab Content
+  const PipelineContent = () => (
+    <div className="w-full max-w-4xl opacity-100 transition-opacity duration-300">
+      <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-lg">
+        <div className="flex gap-4 overflow-x-auto pb-4">
+          {['New Leads', 'Quoted', 'Booked', 'In Progress'].map((stage, stageIdx) => (
+            <div
+              key={stage}
+              className="flex-shrink-0 w-56 bg-slate-100 rounded-lg p-4 border border-gray-300"
+            >
+              <p className="text-xs font-bold text-gray-600 uppercase mb-4 sticky">{stage}</p>
+              <div className="space-y-3">
+                {[1, 2].map((cardIdx) => {
+                  const isFirstDrag = stageIdx === 1 && cardIdx === 1;
+                  return (
+                    <div
+                      key={`${stage}-${cardIdx}`}
+                      className={`bg-white rounded-lg p-3 border-l-4 shadow-md cursor-grab active:cursor-grabbing transition-transform ${
+                        isFirstDrag ? 'rotate-2 shadow-lg' : ''
+                      } ${
+                        stageIdx === 0
+                          ? 'border-blue-500 bg-blue-50'
+                          : stageIdx === 1
+                          ? 'border-purple-500 bg-purple-50'
+                          : stageIdx === 2
+                          ? 'border-emerald-500 bg-emerald-50'
+                          : 'border-amber-500 bg-amber-50'
+                      }`}
+                    >
+                      <p className="text-sm font-semibold text-gray-900">Customer {String.fromCharCode(65 + cardIdx - 1)}</p>
+                      <p className="text-xs text-gray-500 mt-1">
+                        {Math.floor(Math.random() * 15000 + 5000).toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'USD',
+                        })}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
+  // ─── Estimates Tab Content
+  const EstimatesContent = () => (
+    <div className="w-full max-w-4xl opacity-100 transition-opacity duration-300">
+      <div className="grid grid-cols-3 gap-4">
+        {[
+          { tier: 'Good', price: '$800', features: ['Bathroom Fixture Replacement', 'Caulking & Sealant', 'Basic Tile Work'], badge: null },
+          {
+            tier: 'Better',
+            price: '$1,200',
+            features: ['Everything in Good', 'Tile Removal & Prep', 'Grout Installation', 'Full Renovations'],
+            badge: 'Recommended',
+          },
+          { tier: 'Best', price: '$1,800', features: ['Everything in Better', 'Premium Fixtures', 'Heated Floors', 'Custom Lighting'], badge: null },
+        ].map((tier) => (
+          <div
+            key={tier.tier}
+            className={`rounded-xl p-6 border-2 transition-all ${
+              tier.badge
+                ? 'bg-gradient-to-br from-blue-50 to-blue-100 border-blue-400 ring-2 ring-blue-500 scale-105 shadow-2xl shadow-blue-500/30'
+                : 'bg-white border-gray-200 shadow-lg'
+            }`}
+          >
+            {tier.badge && (
+              <div className="inline-block px-3 py-1 rounded-full bg-blue-500 text-white text-xs font-semibold mb-4">
+                {tier.badge}
+              </div>
+            )}
+            <p className="font-semibold text-gray-900 text-lg">{tier.tier}</p>
+            <p className="text-3xl font-bold text-gray-900 mt-2 mb-4">{tier.price}</p>
+            <ul className="space-y-2">
+              {tier.features.map((feature, idx) => (
+                <li key={idx} className="flex items-start gap-2 text-sm text-gray-700">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  // ─── Growth Advisor Tab Content
+  const AdvisorContent = () => (
+    <div className="w-full max-w-2xl opacity-100 transition-opacity duration-300">
+      <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-lg max-h-96 overflow-y-auto">
+        <div className="space-y-4">
+          {/* Advisor message */}
+          <div className="flex gap-3">
+            <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-bold">
+              A
+            </div>
+            <div className="bg-gray-200 rounded-2xl rounded-tl-sm px-4 py-2 max-w-xs">
+              <p className="text-sm text-gray-900">Morning Mike 👋 You closed 8 jobs this month for $34,200. Up 18% from last month.</p>
+            </div>
+          </div>
+
+          {/* Advisor message */}
+          <div className="flex gap-3">
+            <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-bold">
+              A
+            </div>
+            <div className="bg-gray-200 rounded-2xl rounded-tl-sm px-4 py-2 max-w-xs">
+              <p className="text-sm text-gray-900">3 estimates over $5K are going stale. That's $23K sitting on the table.</p>
+            </div>
+          </div>
+
+          {/* User message */}
+          <div className="flex gap-3 justify-end">
+            <div className="bg-blue-500 text-white rounded-2xl rounded-tr-sm px-4 py-2 max-w-xs">
+              <p className="text-sm">Which ones?</p>
+            </div>
+            <div className="flex-shrink-0 w-8 h-8 rounded-full bg-slate-300 flex items-center justify-center text-white text-xs font-bold">
+              M
+            </div>
+          </div>
+
+          {/* Advisor message */}
+          <div className="flex gap-3">
+            <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-bold">
+              A
+            </div>
+            <div className="bg-gray-200 rounded-2xl rounded-tl-sm px-4 py-2 max-w-xs">
+              <p className="text-sm text-gray-900">Patel kitchen reno ($12K), Chen HVAC ($6.2K), Rodriguez bathroom ($4.8K). Want me to follow up?</p>
+            </div>
+          </div>
+
+          {/* User message */}
+          <div className="flex gap-3 justify-end">
+            <div className="bg-blue-500 text-white rounded-2xl rounded-tr-sm px-4 py-2 max-w-xs">
+              <p className="text-sm">Yes, follow up today</p>
+            </div>
+            <div className="flex-shrink-0 w-8 h-8 rounded-full bg-slate-300 flex items-center justify-center text-white text-xs font-bold">
+              M
+            </div>
+          </div>
+        </div>
+        <div className="flex gap-2 mt-4 pt-4 border-t border-gray-200">
+          <input
+            type="text"
+            placeholder="Ask anything..."
+            className="flex-1 px-4 py-2 bg-gray-100 rounded-full text-sm text-gray-900 placeholder-gray-500"
+          />
+          <button className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors">
+            <Send className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  // ─── Autopilot Tab Content
+  const AutopilotContent = () => (
+    <div className="w-full max-w-2xl opacity-100 transition-opacity duration-300">
+      <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-lg space-y-4">
+        {[
+          { name: 'Speed to Lead', status: 'Responds in 60 seconds' },
+          { name: 'Estimate Follow-Up', status: 'Days 1, 3, 7' },
+          { name: '5-Star Reviews', status: 'Auto-requests after job' },
+          { name: 'Payment Reminders', status: 'Days 3, 7, 14' },
+          { name: 'Reactivation', status: '60-day dormant customers' },
+          { name: 'Seasonal Campaigns', status: 'Fall furnace tune-ups' },
+        ].map((automation) => (
+          <div key={automation.name} className="flex items-center justify-between p-4 bg-slate-50 rounded-lg border border-gray-200">
+            <div>
+              <p className="text-sm font-semibold text-gray-900">{automation.name}</p>
+              <p className="text-xs text-gray-500 mt-1">{automation.status}</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="relative w-12 h-6 bg-emerald-500 rounded-full shadow-md shadow-emerald-500/40 flex items-center">
+                <div className="absolute right-1 w-5 h-5 rounded-full bg-white shadow-lg" />
+              </div>
+              <span className="text-xs font-semibold text-emerald-600">Running</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  // ─── Invoicing Tab Content
+  const InvoicingContent = () => (
+    <div className="w-full max-w-2xl opacity-100 transition-opacity duration-300">
+      <div className="bg-white rounded-xl p-8 border border-gray-200 shadow-lg">
+        <div className="mb-8 pb-8 border-b border-gray-200">
+          <div className="flex justify-between items-start mb-6">
+            <div>
+              <p className="text-xs text-gray-500 font-semibold">INVOICE</p>
+              <p className="text-2xl font-bold text-gray-900 mt-1">INV-2026-047</p>
+            </div>
+            <div className="text-right">
+              <p className="text-sm font-semibold text-gray-700">Patel Residence</p>
+              <p className="text-xs text-gray-500 mt-1">123 Oak Street, Toronto ON</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mb-8">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-gray-300">
+                <th className="text-left py-2 text-xs font-semibold text-gray-700">Description</th>
+                <th className="text-right py-2 text-xs font-semibold text-gray-700">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-gray-100">
+                <td className="py-3 text-gray-900">Bathroom Reno Labour</td>
+                <td className="text-right text-gray-900">$2,400.00</td>
+              </tr>
+              <tr className="border-b border-gray-100">
+                <td className="py-3 text-gray-900">Materials & Fixtures</td>
+                <td className="text-right text-gray-900">$1,800.00</td>
+              </tr>
+              <tr>
+                <td className="py-3 text-gray-900">Permits & Inspection</td>
+                <td className="text-right text-gray-900">$300.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div className="space-y-2 mb-6 pb-6 border-b border-gray-200">
+          <div className="flex justify-between text-sm">
+            <span className="text-gray-700">Subtotal</span>
+            <span className="font-semibold text-gray-900">$4,500.00</span>
+          </div>
+          <div className="flex justify-between text-sm">
+            <span className="text-gray-700">HST 13% (Ontario)</span>
+            <span className="font-semibold text-gray-900">$585.00</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="font-semibold text-gray-900">Total</span>
+            <span className="text-lg font-bold text-gray-900">$5,085.00</span>
+          </div>
+        </div>
+
+        <div className="mb-6">
+          <p className="text-xs text-gray-500 font-semibold mb-2">Payment Progress</p>
+          <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+            <div className="h-full bg-emerald-500 rounded-full" style={{ width: '60%' }} />
+          </div>
+          <p className="text-xs text-gray-600 mt-2">$3,051.00 paid · $2,034.00 remaining</p>
+        </div>
+
+        <div className="flex gap-3">
+          <button className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-lg text-sm font-semibold hover:bg-blue-600 transition-colors">
+            Send Reminder
+          </button>
+          <button className="flex-1 px-4 py-2 bg-gray-100 text-gray-900 rounded-lg text-sm font-semibold hover:bg-gray-200 transition-colors">
+            Record Payment
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case 'dashboard':
+        return <DashboardContent />;
+      case 'pipeline':
+        return <PipelineContent />;
+      case 'estimates':
+        return <EstimatesContent />;
+      case 'advisor':
+        return <AdvisorContent />;
+      case 'autopilot':
+        return <AutopilotContent />;
+      case 'invoicing':
+        return <InvoicingContent />;
+      default:
+        return <DashboardContent />;
+    }
+  };
+
+  return (
+    <section className="relative bg-slate-950 py-0">
+      {/* Section header */}
+      <div className="text-center pt-24 pb-12 px-6">
+        <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white">
+          Take a closer look.
+        </h2>
+      </div>
+
+      {/* Explorer container */}
+      <div className="max-w-7xl mx-auto px-6 pb-24">
+        {/* Mobile: Tab pills above content */}
+        <div className="lg:hidden mb-6 flex gap-2 overflow-x-auto pb-4 scrollbar-hide">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
+                activeTab === tab.id
+                  ? 'bg-white/15 text-white backdrop-blur-sm border border-white/20'
+                  : 'text-slate-400 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="relative bg-slate-900/50 rounded-3xl border border-slate-700/50 overflow-hidden" style={{ minHeight: '600px' }}>
+          {/* Desktop: Feature tabs on the left */}
+          <div className="absolute left-6 top-1/2 -translate-y-1/2 z-10 space-y-3 hidden lg:flex lg:flex-col">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                  activeTab === tab.id
+                    ? 'bg-white/15 text-white backdrop-blur-sm border border-white/20'
+                    : 'text-slate-400 hover:text-white hover:bg-white/5'
+                }`}
+              >
+                {activeTab === tab.id ? (
+                  <Minus className="w-4 h-4" />
+                ) : (
+                  <Plus className="w-4 h-4" />
+                )}
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Product view area */}
+          <div className="flex items-center justify-center h-full p-12 lg:pl-80">
+            <div className="transition-opacity duration-300">
+              {renderTabContent()}
+            </div>
+          </div>
+
+          {/* Info card — appears when a tab is active */}
+          {activeTab && (
+            <div className="absolute left-6 top-12 max-w-sm bg-slate-800/90 backdrop-blur rounded-xl p-5 border border-slate-600/50 hidden lg:block animate-fade-in">
+              <p className="text-sm font-semibold text-white">{tabInfo[activeTab].title}</p>
+              <p className="text-sm text-slate-300 mt-2">{tabInfo[activeTab].description}</p>
+            </div>
+          )}
+
+          {/* Mobile: Info card below content */}
+          {activeTab && (
+            <div className="lg:hidden bg-slate-800/90 backdrop-blur rounded-xl p-5 border border-slate-600/50 mx-6 mb-6">
+              <p className="text-sm font-semibold text-white">{tabInfo[activeTab].title}</p>
+              <p className="text-sm text-slate-300 mt-2">{tabInfo[activeTab].description}</p>
+            </div>
+          )}
         </div>
       </div>
     </section>
@@ -1443,6 +1905,7 @@ export default function LandingPage() {
       <ProblemSection />
       <HowItWorks />
       <ProductShowcase />
+      <InteractiveExplorer />
       <Testimonials />
       <AutopilotSection />
       <AdvisorDemo />

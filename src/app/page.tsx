@@ -619,105 +619,84 @@ function InteractiveExplorer() {
     },
   };
 
+  // ─── Smooth easing constant ───
+  const smooth = 'cubic-bezier(0.16, 1, 0.3, 1)';
+
   // ─── Dashboard Tab Content
   const DashboardContent = () => {
-    const [kpiPhase, setKpiPhase] = useState(0);
-    const [chartPhase, setChartPhase] = useState(0);
-    const [pipelinePhase, setPipelinePhase] = useState(0);
+    const [phase, setPhase] = useState(0);
 
     useEffect(() => {
-      const kpiIntervals = [0, 200, 400, 600].map((delay, idx) =>
-        setTimeout(() => setKpiPhase(idx + 1), delay)
-      );
-      const chartTimeout = setTimeout(() => setChartPhase(1), 1200);
-      const pipelineTimeout = setTimeout(() => setPipelinePhase(1), 2000);
-
-      return () => {
-        kpiIntervals.forEach(clearTimeout);
-        clearTimeout(chartTimeout);
-        clearTimeout(pipelineTimeout);
-      };
+      const t1 = setTimeout(() => setPhase(1), 100);   // KPIs fade in
+      const t2 = setTimeout(() => setPhase(2), 800);   // Chart bars rise
+      const t3 = setTimeout(() => setPhase(3), 1600);  // Pipeline bars fill
+      return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
     }, []);
 
-    const KpiCard = ({ label, value, trend, color, index }: any) => (
-      <div className="bg-white rounded-lg p-3 border border-gray-200 overflow-hidden">
-        <p className="text-[10px] text-gray-500 uppercase font-semibold">{label}</p>
-        <p className="text-xl font-bold text-gray-900 mt-1" style={{
-          opacity: kpiPhase > index ? 1 : 0,
-          transition: 'opacity 2s ease-out'
-        }}>
-          {kpiPhase > index ? value : '0'}
-        </p>
-        <p className={`text-[10px] ${color} font-semibold`}>{trend} vs last month</p>
-      </div>
-    );
-
-    const ChartBar = ({ height, index }: any) => {
-      const heights = [40, 55, 45, 65, 75, 85, 70, 90, 95, 80, 88, 100];
-      return (
-        <div key={index} className="flex-1 bg-blue-500 rounded-t" style={{
-          height: chartPhase ? `${heights[index]}%` : '0%',
-          transition: 'height 0.8s ease-out',
-          transitionDelay: `${index * 60}ms`
-        }} />
-      );
-    };
-
-    const PipelineBar = ({ stage, width, index }: any) => (
-      <div key={stage} className="flex items-center gap-2 mb-2">
-        <span className="text-[10px] text-gray-400 w-16 shrink-0">{stage}</span>
-        <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
-          <div
-            className="h-full bg-blue-500 rounded-full"
-            style={{
-              width: pipelinePhase ? `${width}%` : '0%',
-              transition: 'width 1s ease-out',
-              transitionDelay: `${index * 150}ms`
-            }}
-          />
-        </div>
-      </div>
-    );
+    const chartHeights = [40, 55, 45, 65, 75, 85, 70, 90, 95, 80, 88, 100];
+    const pipelineWidths = [80, 55, 40, 30];
 
     return (
-      <div className="w-full max-w-4xl opacity-100 transition-opacity duration-300">
+      <div className="w-full">
         <div className="bg-slate-800 rounded-t-xl px-4 py-2.5 flex items-center gap-2">
           <div className="flex gap-1.5">
             <div className="w-3 h-3 rounded-full bg-red-400" />
             <div className="w-3 h-3 rounded-full bg-yellow-400" />
-            <div className={`w-3 h-3 rounded-full transition-all ${chartPhase ? 'bg-green-400 animate-pulse' : 'bg-gray-400'}`} />
+            <div className="w-3 h-3 rounded-full bg-green-400" style={{ opacity: phase >= 1 ? 1 : 0.3, transition: `opacity 1.5s ${smooth}` }} />
           </div>
           <div className="flex-1 text-center">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-700/50 rounded-lg">
-              <div className={`w-2 h-2 rounded-full transition-all ${chartPhase ? 'bg-green-400 animate-pulse' : 'bg-gray-500'}`} />
+              <div className="w-2 h-2 rounded-full bg-green-400" style={{ opacity: phase >= 1 ? 1 : 0.3, transition: `opacity 1.5s ${smooth}` }} />
               <span className="text-xs text-slate-400 font-mono">app.growthos.com/dashboard</span>
             </div>
           </div>
         </div>
-        <div className="bg-slate-50 rounded-b-xl p-6">
-          <div className="grid grid-cols-4 gap-3 mb-4">
+        <div className="bg-slate-50 rounded-b-xl p-4 sm:p-6 lg:p-8">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
             {[
-              { label: 'New Leads', value: '23', trend: '+12%', color: 'text-emerald-500' },
-              { label: 'Active Jobs', value: '14', trend: '+24%', color: 'text-emerald-500' },
-              { label: 'Revenue', value: '$87.4K', trend: '+18%', color: 'text-emerald-500' },
-              { label: 'Conversion', value: '68%', trend: '+5%', color: 'text-emerald-500' },
+              { label: 'New Leads', value: '23', trend: '+12%' },
+              { label: 'Active Jobs', value: '14', trend: '+24%' },
+              { label: 'Revenue', value: '$87.4K', trend: '+18%' },
+              { label: 'Conversion', value: '68%', trend: '+5%' },
             ].map((kpi, i) => (
-              <KpiCard key={kpi.label} {...kpi} index={i} />
+              <div key={kpi.label} className="bg-white rounded-xl p-3 sm:p-4 border border-gray-100 shadow-sm" style={{
+                opacity: phase >= 1 ? 1 : 0,
+                transform: phase >= 1 ? 'translateY(0) scale(1)' : 'translateY(20px) scale(0.95)',
+                transition: `all 1s ${smooth}`,
+                transitionDelay: `${i * 120}ms`,
+              }}>
+                <p className="text-[10px] sm:text-xs text-gray-500 uppercase font-semibold">{kpi.label}</p>
+                <p className="text-lg sm:text-2xl font-bold text-gray-900 mt-1">{phase >= 1 ? kpi.value : '—'}</p>
+                <p className="text-[10px] sm:text-xs text-emerald-500 font-semibold">{kpi.trend} vs last month</p>
+              </div>
             ))}
           </div>
-          <div className="grid grid-cols-2 gap-3">
-            <div className="bg-white rounded-lg p-4 border border-gray-200">
-              <p className="text-xs font-semibold text-gray-700 mb-3">Revenue Trend</p>
-              <div className="flex items-end gap-1 h-20">
-                {[40, 55, 45, 65, 75, 85, 70, 90, 95, 80, 88, 100].map((h, i) => (
-                  <ChartBar key={i} height={h} index={i} />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="bg-white rounded-xl p-4 sm:p-5 border border-gray-100 shadow-sm">
+              <p className="text-xs font-semibold text-gray-700 mb-4">Revenue Trend</p>
+              <div className="flex items-end gap-1.5 h-24 sm:h-32">
+                {chartHeights.map((h, i) => (
+                  <div key={i} className="flex-1 rounded-t-md bg-gradient-to-t from-blue-600 to-blue-400" style={{
+                    height: phase >= 2 ? `${h}%` : '2%',
+                    transition: `height 1.2s ${smooth}`,
+                    transitionDelay: `${i * 80}ms`,
+                  }} />
                 ))}
               </div>
             </div>
-            <div className="bg-white rounded-lg p-4 border border-gray-200">
-              <p className="text-xs font-semibold text-gray-700 mb-3">Pipeline</p>
+            <div className="bg-white rounded-xl p-4 sm:p-5 border border-gray-100 shadow-sm">
+              <p className="text-xs font-semibold text-gray-700 mb-4">Pipeline</p>
               {['New Leads', 'Quoted', 'Booked', 'In Progress'].map((stage, i) => (
-                <PipelineBar key={stage} stage={stage} width={[80, 55, 40, 30][i]} index={i} />
+                <div key={stage} className="flex items-center gap-2 mb-3">
+                  <span className="text-[10px] sm:text-xs text-gray-500 w-16 sm:w-20 shrink-0">{stage}</span>
+                  <div className="flex-1 h-2.5 bg-gray-100 rounded-full overflow-hidden">
+                    <div className="h-full bg-gradient-to-r from-blue-600 to-blue-400 rounded-full" style={{
+                      width: phase >= 3 ? `${pipelineWidths[i]}%` : '0%',
+                      transition: `width 1.4s ${smooth}`,
+                      transitionDelay: `${i * 200}ms`,
+                    }} />
+                  </div>
+                </div>
               ))}
             </div>
           </div>
@@ -728,63 +707,69 @@ function InteractiveExplorer() {
 
   // ─── Pipeline Tab Content
   const PipelineContent = () => {
-    const [movePhase, setMovePhase] = useState(0);
+    const [phase, setPhase] = useState(0);
 
     useEffect(() => {
-      setTimeout(() => setMovePhase(1), 1000);
-      setTimeout(() => setMovePhase(2), 2000);
-      setTimeout(() => setMovePhase(3), 3000);
+      const t1 = setTimeout(() => setPhase(1), 300);
+      const t2 = setTimeout(() => setPhase(2), 1500);
+      const t3 = setTimeout(() => setPhase(3), 2700);
+      const t4 = setTimeout(() => setPhase(4), 3900);
+      return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); };
     }, []);
 
-    const getCardPosition = (stageIdx: number, cardIdx: number) => {
-      if (cardIdx === 0) return stageIdx;
-      if (cardIdx === 1 && movePhase >= 1) return stageIdx - 1;
-      if (cardIdx === 1 && movePhase >= 2) return stageIdx - 2;
-      if (cardIdx === 1 && movePhase >= 3) return stageIdx - 3;
-      return stageIdx;
+    const stages = ['New Leads', 'Quoted', 'Booked', 'In Progress'];
+    const colors = ['border-blue-500 bg-blue-50', 'border-purple-500 bg-purple-50', 'border-emerald-500 bg-emerald-50', 'border-amber-500 bg-amber-50'];
+    const customers = [
+      { name: 'Patel Kitchen Reno', value: '$12,400' },
+      { name: 'Chen HVAC Install', value: '$6,200' },
+      { name: 'Rodriguez Bath', value: '$4,800' },
+      { name: 'Smith Plumbing', value: '$3,100' },
+      { name: 'Lee Electrical', value: '$8,900' },
+    ];
+
+    // Card assignments per phase: [stageIdx, customerIdx][]
+    const layout: { [key: number]: number[][] } = {
+      0: [[0,0],[0,1],[0,2],[0,3],[0,4]],
+      1: [[0,0],[0,1],[0,2],[0,3],[1,4]],
+      2: [[0,0],[0,1],[0,2],[2,3],[1,4]],
+      3: [[0,0],[0,1],[3,2],[2,3],[1,4]],
+      4: [[0,0],[3,1],[3,2],[2,3],[1,4]],
     };
 
-    return (
-      <div className="w-full max-w-4xl opacity-100 transition-opacity duration-300">
-        <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-lg">
-          <div className="flex gap-4 overflow-x-auto pb-4">
-            {['New Leads', 'Quoted', 'Booked', 'In Progress'].map((stage, stageIdx) => (
-              <div
-                key={stage}
-                className="flex-shrink-0 w-56 bg-slate-100 rounded-lg p-4 border border-gray-300 min-h-64"
-              >
-                <p className="text-xs font-bold text-gray-600 uppercase mb-4">{stage}</p>
-                <div className="space-y-3 relative h-56">
-                  {[1, 2].map((cardIdx) => {
-                    const finalPos = getCardPosition(stageIdx, cardIdx);
-                    const isMoving = cardIdx === 1 && movePhase > 0 && stageIdx === 0;
-                    const shouldShow = finalPos >= 0;
+    const currentLayout = layout[phase] || layout[0];
 
-                    return shouldShow ? (
+    return (
+      <div className="w-full">
+        <div className="bg-white rounded-xl p-4 sm:p-6 lg:p-8 border border-gray-200 shadow-lg">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+            {stages.map((stage, stageIdx) => {
+              const cardsHere = currentLayout.filter(([s]) => s === stageIdx).map(([, c]) => c);
+              return (
+                <div key={stage} className="bg-slate-50 rounded-xl p-3 sm:p-4 border border-gray-200 min-h-[200px]">
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className={`w-2 h-2 rounded-full ${stageIdx === 0 ? 'bg-blue-500' : stageIdx === 1 ? 'bg-purple-500' : stageIdx === 2 ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+                    <p className="text-[10px] sm:text-xs font-bold text-gray-600 uppercase">{stage}</p>
+                    <span className="ml-auto text-[10px] text-gray-400 font-semibold">{cardsHere.length}</span>
+                  </div>
+                  <div className="space-y-2.5">
+                    {cardsHere.map((cIdx) => (
                       <div
-                        key={`${stage}-${cardIdx}`}
-                        className={`bg-white rounded-lg p-3 border-l-4 shadow-md cursor-grab active:cursor-grabbing transition-all duration-700 ${
-                          isMoving ? 'rotate-3' : 'rotate-0'
-                        } ${
-                          finalPos === 0
-                            ? 'border-blue-500 bg-blue-50'
-                            : finalPos === 1
-                            ? 'border-purple-500 bg-purple-50'
-                            : finalPos === 2
-                            ? 'border-emerald-500 bg-emerald-50'
-                            : 'border-amber-500 bg-amber-50'
-                        }`}
+                        key={`card-${cIdx}`}
+                        className={`bg-white rounded-lg p-3 border-l-4 shadow-sm ${colors[stageIdx]}`}
+                        style={{
+                          opacity: 1,
+                          transform: 'translateY(0) rotate(0deg)',
+                          transition: `all 0.9s ${smooth}`,
+                        }}
                       >
-                        <p className="text-sm font-semibold text-gray-900">Customer {String.fromCharCode(65 + cardIdx - 1)}</p>
-                        <p className="text-xs text-gray-500 mt-1">
-                          {cardIdx === 1 ? '$12,400' : '$8,900'}
-                        </p>
+                        <p className="text-xs sm:text-sm font-semibold text-gray-900">{customers[cIdx].name}</p>
+                        <p className="text-[10px] sm:text-xs text-gray-500 mt-1">{customers[cIdx].value}</p>
                       </div>
-                    ) : null;
-                  })}
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
@@ -793,96 +778,71 @@ function InteractiveExplorer() {
 
   // ─── Estimates Tab Content
   const EstimatesContent = () => {
-    const [visibleTiers, setVisibleTiers] = useState(0);
-    const [countsPhase, setCountsPhase] = useState(0);
-    const [featuresPhase, setFeaturesPhase] = useState(0);
-    const [badgePhase, setBadgePhase] = useState(0);
+    const [phase, setPhase] = useState(0);
 
     useEffect(() => {
-      const tiers = [0, 300, 600, 900].map((delay, idx) =>
-        setTimeout(() => setVisibleTiers(idx + 1), delay)
-      );
-      const countsTimeout = setTimeout(() => setCountsPhase(1), 1200);
-      const featuresTimeout = setTimeout(() => setFeaturesPhase(1), 1800);
-      const badgeTimeout = setTimeout(() => setBadgePhase(1), 2400);
-
-      return () => {
-        tiers.forEach(clearTimeout);
-        clearTimeout(countsTimeout);
-        clearTimeout(featuresTimeout);
-        clearTimeout(badgeTimeout);
-      };
+      const t1 = setTimeout(() => setPhase(1), 200);   // Cards appear
+      const t2 = setTimeout(() => setPhase(2), 1000);  // Prices + features reveal
+      const t3 = setTimeout(() => setPhase(3), 2000);  // Badge glow
+      return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
     }, []);
 
-    const TierCard = ({ tier, price, features, badge, index }: any) => {
-      const isVisible = visibleTiers > index;
-      const prices = { 'Good': 800, 'Better': 1200, 'Best': 1800 };
-      const finalPrice = prices[tier as keyof typeof prices];
-
-      return (
-        <div
-          className={`rounded-xl p-6 border-2 transition-all duration-500 ${
-            badge
-              ? 'bg-gradient-to-br from-blue-50 to-blue-100 border-blue-400 ring-2 ring-blue-500 shadow-2xl shadow-blue-500/30'
-              : 'bg-white border-gray-200 shadow-lg'
-          }`}
-          style={{
-            opacity: isVisible ? 1 : 0,
-            transform: isVisible ? 'scale(1)' : 'scale(0.9)',
-          }}
-        >
-          {badge && (
-            <div
-              className="inline-block px-3 py-1 rounded-full bg-blue-500 text-white text-xs font-semibold mb-4 transition-all"
-              style={{
-                opacity: badgePhase && isVisible ? 1 : 0,
-                animation: badgePhase && isVisible ? 'pulse 2s infinite' : 'none'
-              }}
-            >
-              {badge}
-            </div>
-          )}
-          <p className="font-semibold text-gray-900 text-lg">{tier}</p>
-          <p className="text-3xl font-bold text-gray-900 mt-2 mb-4" style={{
-            opacity: countsPhase && isVisible ? 1 : 0,
-            transition: 'opacity 0.5s'
-          }}>
-            {countsPhase && isVisible ? `$${finalPrice.toLocaleString()}` : '$0'}
-          </p>
-          <ul className="space-y-2">
-            {features.map((feature: string, idx: number) => (
-              <li
-                key={idx}
-                className="flex items-start gap-2 text-sm text-gray-700 transition-all"
-                style={{
-                  opacity: featuresPhase && isVisible ? 1 : 0,
-                  transform: featuresPhase && isVisible ? 'translateX(0)' : 'translateX(-10px)',
-                  transitionDelay: `${idx * 100}ms`
-                }}
-              >
-                <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
-                <span>{feature}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      );
-    };
+    const tiers = [
+      { tier: 'Good', price: '$800', features: ['Bathroom Fixture Replacement', 'Caulking & Sealant', 'Basic Tile Work'], badge: null },
+      { tier: 'Better', price: '$1,200', features: ['Everything in Good', 'Tile Removal & Prep', 'Grout Installation', 'Full Renovations'], badge: 'Recommended' },
+      { tier: 'Best', price: '$1,800', features: ['Everything in Better', 'Premium Fixtures', 'Heated Floors', 'Custom Lighting'], badge: null },
+    ];
 
     return (
-      <div className="w-full max-w-4xl opacity-100 transition-opacity duration-300">
-        <div className="grid grid-cols-3 gap-4">
-          {[
-            { tier: 'Good', price: '$800', features: ['Bathroom Fixture Replacement', 'Caulking & Sealant', 'Basic Tile Work'], badge: null },
-            {
-              tier: 'Better',
-              price: '$1,200',
-              features: ['Everything in Good', 'Tile Removal & Prep', 'Grout Installation', 'Full Renovations'],
-              badge: 'Recommended',
-            },
-            { tier: 'Best', price: '$1,800', features: ['Everything in Better', 'Premium Fixtures', 'Heated Floors', 'Custom Lighting'], badge: null },
-          ].map((tier, idx) => (
-            <TierCard key={tier.tier} {...tier} index={idx} />
+      <div className="w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
+          {tiers.map((t, i) => (
+            <div
+              key={t.tier}
+              className={`rounded-2xl p-5 sm:p-6 border-2 ${
+                t.badge
+                  ? 'bg-gradient-to-br from-blue-50 to-blue-100 border-blue-400 ring-2 ring-blue-500/30 shadow-xl shadow-blue-500/10'
+                  : 'bg-white border-gray-200 shadow-lg'
+              }`}
+              style={{
+                opacity: phase >= 1 ? 1 : 0,
+                transform: phase >= 1 ? 'translateY(0) scale(1)' : 'translateY(30px) scale(0.92)',
+                transition: `all 1s ${smooth}`,
+                transitionDelay: `${i * 150}ms`,
+              }}
+            >
+              {t.badge && (
+                <div className="inline-block px-3 py-1 rounded-full bg-blue-500 text-white text-xs font-semibold mb-4" style={{
+                  opacity: phase >= 3 ? 1 : 0.7,
+                  boxShadow: phase >= 3 ? '0 0 20px rgba(59,130,246,0.5)' : 'none',
+                  transition: `all 1.5s ${smooth}`,
+                }}>
+                  {t.badge}
+                </div>
+              )}
+              <p className="font-semibold text-gray-900 text-base sm:text-lg">{t.tier}</p>
+              <p className="text-2xl sm:text-3xl font-bold text-gray-900 mt-2 mb-5" style={{
+                opacity: phase >= 2 ? 1 : 0,
+                transform: phase >= 2 ? 'translateY(0)' : 'translateY(10px)',
+                transition: `all 0.8s ${smooth}`,
+                transitionDelay: `${i * 100 + 100}ms`,
+              }}>
+                {t.price}
+              </p>
+              <ul className="space-y-2.5">
+                {t.features.map((feature, idx) => (
+                  <li key={idx} className="flex items-start gap-2 text-sm text-gray-700" style={{
+                    opacity: phase >= 2 ? 1 : 0,
+                    transform: phase >= 2 ? 'translateX(0)' : 'translateX(-12px)',
+                    transition: `all 0.8s ${smooth}`,
+                    transitionDelay: `${i * 100 + idx * 80 + 200}ms`,
+                  }}>
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))}
         </div>
       </div>
@@ -891,48 +851,43 @@ function InteractiveExplorer() {
 
   // ─── Growth Advisor Tab Content
   const AdvisorContent = () => {
-    const [messagePhase, setMessagePhase] = useState(0);
+    const [phase, setPhase] = useState(0);
 
     useEffect(() => {
-      const phases = [
-        800,   // First typing
-        2000,  // Second typing
-        2700,  // User message
-        3800,  // Third typing
-        5200   // Last user message
-      ];
-
-      phases.forEach((delay, idx) => {
-        setTimeout(() => setMessagePhase(idx + 1), delay);
-      });
+      const delays = [600, 2200, 3400, 4200, 5600, 7000];
+      const timers = delays.map((d, i) => setTimeout(() => setPhase(i + 1), d));
+      return () => timers.forEach(clearTimeout);
     }, []);
 
-    const TypingIndicator = () => (
-      <div className="bg-gray-200 rounded-2xl rounded-tl-sm px-4 py-2 max-w-xs">
-        <div className="flex gap-1">
-          <div className="w-2 h-2 rounded-full bg-gray-500 animate-bounce" style={{ animationDelay: '0ms' }} />
-          <div className="w-2 h-2 rounded-full bg-gray-500 animate-bounce" style={{ animationDelay: '150ms' }} />
-          <div className="w-2 h-2 rounded-full bg-gray-500 animate-bounce" style={{ animationDelay: '300ms' }} />
+    const Dots = () => (
+      <div className="bg-gray-100 rounded-2xl rounded-tl-sm px-4 py-3">
+        <div className="flex gap-1.5">
+          {[0, 1, 2].map((i) => (
+            <div key={i} className="w-2 h-2 rounded-full bg-gray-400" style={{
+              animation: 'pulse 1.2s ease-in-out infinite',
+              animationDelay: `${i * 200}ms`,
+            }} />
+          ))}
         </div>
       </div>
     );
 
-    const Message = ({ isAdvisor, text, phase, minPhase }: any) => (
-      <div className={`flex gap-3 ${isAdvisor ? '' : 'justify-end'}`} style={{
-        opacity: phase >= minPhase ? 1 : 0,
-        transform: phase >= minPhase ? (isAdvisor ? 'translateY(0)' : 'translateX(0)') : (isAdvisor ? 'translateY(10px)' : 'translateX(10px)'),
-        transition: 'all 0.5s ease-out'
+    const Bubble = ({ advisor, text, show }: { advisor: boolean; text: string; show: boolean }) => (
+      <div className={`flex gap-3 ${advisor ? '' : 'justify-end'}`} style={{
+        opacity: show ? 1 : 0,
+        transform: show ? 'translateY(0)' : `translateY(16px)`,
+        transition: `all 0.8s ${smooth}`,
       }}>
-        {isAdvisor && (
-          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-bold">
-            A
+        {advisor && (
+          <div className="flex-shrink-0 w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white text-xs font-bold shadow-md shadow-blue-500/30">
+            AI
           </div>
         )}
-        <div className={`rounded-2xl px-4 py-2 max-w-xs ${isAdvisor ? 'bg-gray-200 rounded-tl-sm' : 'bg-blue-500 text-white rounded-tr-sm'}`}>
-          <p className={`text-sm ${isAdvisor ? 'text-gray-900' : 'text-white'}`}>{text}</p>
+        <div className={`rounded-2xl px-4 py-2.5 max-w-sm ${advisor ? 'bg-gray-100 rounded-tl-sm' : 'bg-blue-500 text-white rounded-tr-sm shadow-md shadow-blue-500/20'}`}>
+          <p className={`text-sm leading-relaxed ${advisor ? 'text-gray-900' : 'text-white'}`}>{text}</p>
         </div>
-        {!isAdvisor && (
-          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-slate-300 flex items-center justify-center text-white text-xs font-bold">
+        {!advisor && (
+          <div className="flex-shrink-0 w-9 h-9 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 text-xs font-bold">
             M
           </div>
         )}
@@ -940,34 +895,43 @@ function InteractiveExplorer() {
     );
 
     return (
-      <div className="w-full max-w-2xl opacity-100 transition-opacity duration-300">
-        <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-lg max-h-96 overflow-y-auto">
-          <div className="space-y-4">
-            {/* Message 1 with typing */}
-            {messagePhase < 1 && <div className="flex gap-3"><div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-bold">A</div><TypingIndicator /></div>}
-            {messagePhase >= 1 && <Message isAdvisor text="Morning Mike 👋 You closed 8 jobs this month for $34,200. Up 18% from last month." phase={messagePhase} minPhase={1} />}
+      <div className="w-full max-w-3xl mx-auto">
+        <div className="bg-white rounded-2xl p-5 sm:p-7 border border-gray-200 shadow-lg">
+          <div className="space-y-4 min-h-[280px]">
+            {phase >= 1 ? (
+              <Bubble advisor text="Morning Mike 👋 You closed 8 jobs this month for $34,200. Up 18% from last month." show={phase >= 1} />
+            ) : (
+              <div className="flex gap-3"><div className="flex-shrink-0 w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white text-xs font-bold shadow-md shadow-blue-500/30">AI</div><Dots /></div>
+            )}
 
-            {/* Message 2 with typing */}
-            {messagePhase < 2 && messagePhase >= 1 && <div className="flex gap-3"><div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-bold">A</div><TypingIndicator /></div>}
-            {messagePhase >= 2 && <Message isAdvisor text="3 estimates over $5K are going stale. That's $23K sitting on the table." phase={messagePhase} minPhase={2} />}
+            {phase >= 2 ? (
+              <Bubble advisor text="3 estimates over $5K are going stale. That's $23K sitting on the table." show={phase >= 2} />
+            ) : phase >= 1 ? (
+              <div className="flex gap-3" style={{ opacity: 1, transition: `opacity 0.6s ${smooth}` }}><div className="flex-shrink-0 w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white text-xs font-bold shadow-md shadow-blue-500/30">AI</div><Dots /></div>
+            ) : null}
 
-            {/* User message 1 */}
-            {messagePhase >= 3 && <Message isAdvisor={false} text="Which ones?" phase={messagePhase} minPhase={3} />}
+            {phase >= 3 && <Bubble advisor={false} text="Which ones?" show={phase >= 3} />}
 
-            {/* Message 3 with typing */}
-            {messagePhase < 4 && messagePhase >= 3 && <div className="flex gap-3"><div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-bold">A</div><TypingIndicator /></div>}
-            {messagePhase >= 4 && <Message isAdvisor text="Patel kitchen reno ($12K), Chen HVAC ($6.2K), Rodriguez bathroom ($4.8K). Want me to follow up?" phase={messagePhase} minPhase={4} />}
+            {phase >= 4 ? (
+              <Bubble advisor text="Patel kitchen reno ($12K), Chen HVAC ($6.2K), Rodriguez bathroom ($4.8K). Want me to follow up?" show={phase >= 4} />
+            ) : phase >= 3 ? (
+              <div className="flex gap-3" style={{ opacity: 1, transition: `opacity 0.6s ${smooth}` }}><div className="flex-shrink-0 w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white text-xs font-bold shadow-md shadow-blue-500/30">AI</div><Dots /></div>
+            ) : null}
 
-            {/* User message 2 */}
-            {messagePhase >= 5 && <Message isAdvisor={false} text="Yes, follow up today" phase={messagePhase} minPhase={5} />}
+            {phase >= 5 && <Bubble advisor={false} text="Yes, follow up today" show={phase >= 5} />}
+
+            {phase >= 6 && (
+              <div className="flex gap-3" style={{ opacity: phase >= 6 ? 1 : 0, transform: phase >= 6 ? 'translateY(0)' : 'translateY(16px)', transition: `all 0.8s ${smooth}` }}>
+                <div className="flex-shrink-0 w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white text-xs font-bold shadow-md shadow-blue-500/30">AI</div>
+                <div className="bg-emerald-50 border border-emerald-200 rounded-2xl rounded-tl-sm px-4 py-2.5 max-w-sm">
+                  <p className="text-sm text-emerald-800 font-medium">✓ Done. Follow-up emails sent to all 3 customers with personalized quotes attached.</p>
+                </div>
+              </div>
+            )}
           </div>
-          <div className="flex gap-2 mt-4 pt-4 border-t border-gray-200">
-            <input
-              type="text"
-              placeholder="Ask anything..."
-              className="flex-1 px-4 py-2 bg-gray-100 rounded-full text-sm text-gray-900 placeholder-gray-500 cursor-default"
-            />
-            <button className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors">
+          <div className="flex gap-2 mt-5 pt-4 border-t border-gray-100">
+            <input type="text" placeholder="Ask anything about your business..." className="flex-1 px-4 py-2.5 bg-gray-50 rounded-full text-sm text-gray-900 placeholder-gray-400 border border-gray-200 cursor-default" />
+            <button className="p-2.5 bg-blue-500 text-white rounded-full shadow-md shadow-blue-500/20">
               <Send className="w-4 h-4" />
             </button>
           </div>
@@ -978,107 +942,61 @@ function InteractiveExplorer() {
 
   // ─── Autopilot Tab Content
   const AutopilotContent = () => {
-    const [visibleRows, setVisibleRows] = useState(0);
-    const [toggleStates, setToggleStates] = useState<boolean[]>([false, false, false, false, false, false]);
-    const [counters, setCounters] = useState<number[]>([0, 0, 0, 0, 0, 0]);
+    const [phase, setPhase] = useState(0);
+    const [toggles, setToggles] = useState([false, false, false, false, false, false]);
+
+    const automations = [
+      { name: 'Speed to Lead', status: 'Responds in 60 seconds', sent: '247 sent' },
+      { name: 'Estimate Follow-Up', status: 'Days 1, 3, 7', sent: '1,204 sent' },
+      { name: '5-Star Reviews', status: 'Auto-requests after job', sent: '892 sent' },
+      { name: 'Payment Reminders', status: 'Days 3, 7, 14', sent: '541 sent' },
+      { name: 'Reactivation', status: '60-day dormant customers', sent: '365 sent' },
+      { name: 'Seasonal Campaigns', status: 'Fall furnace tune-ups', sent: '128 sent' },
+    ];
 
     useEffect(() => {
-      const automations = [
-        { name: 'Speed to Lead', status: 'Responds in 60 seconds' },
-        { name: 'Estimate Follow-Up', status: 'Days 1, 3, 7' },
-        { name: '5-Star Reviews', status: 'Auto-requests after job' },
-        { name: 'Payment Reminders', status: 'Days 3, 7, 14' },
-        { name: 'Reactivation', status: '60-day dormant customers' },
-        { name: 'Seasonal Campaigns', status: 'Fall furnace tune-ups' },
-      ];
-
-      automations.forEach((_, idx) => {
-        const rowDelay = idx * 200;
-        setTimeout(() => setVisibleRows(idx + 1), rowDelay);
-
-        const toggleDelay = rowDelay + 300;
-        setTimeout(() => {
-          setToggleStates((prev) => {
-            const newStates = [...prev];
-            newStates[idx] = true;
-            return newStates;
-          });
-        }, toggleDelay);
-
-        const countDelay = toggleDelay + 100;
-        const counts = [247, 1204, 892, 541, 365, 128];
-        let current = 0;
-        const countInterval = setInterval(() => {
-          current += Math.floor(counts[idx] / 20);
-          if (current >= counts[idx]) {
-            setCounters((prev) => {
-              const newCounters = [...prev];
-              newCounters[idx] = counts[idx];
-              return newCounters;
-            });
-            clearInterval(countInterval);
-          } else {
-            setCounters((prev) => {
-              const newCounters = [...prev];
-              newCounters[idx] = current;
-              return newCounters;
-            });
-          }
-        }, 50);
-
-        return () => clearInterval(countInterval);
+      // Stagger row reveals
+      automations.forEach((_, i) => {
+        setTimeout(() => setPhase(i + 1), 200 + i * 250);
+        setTimeout(() => setToggles(prev => { const n = [...prev]; n[i] = true; return n; }), 600 + i * 250);
       });
     }, []);
 
     return (
-      <div className="w-full max-w-2xl opacity-100 transition-opacity duration-300">
-        <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-lg space-y-4">
-          {[
-            { name: 'Speed to Lead', status: 'Responds in 60 seconds' },
-            { name: 'Estimate Follow-Up', status: 'Days 1, 3, 7' },
-            { name: '5-Star Reviews', status: 'Auto-requests after job' },
-            { name: 'Payment Reminders', status: 'Days 3, 7, 14' },
-            { name: 'Reactivation', status: '60-day dormant customers' },
-            { name: 'Seasonal Campaigns', status: 'Fall furnace tune-ups' },
-          ].map((automation, idx) => (
+      <div className="w-full max-w-3xl mx-auto">
+        <div className="bg-white rounded-2xl p-4 sm:p-6 border border-gray-200 shadow-lg space-y-3">
+          {automations.map((auto, i) => (
             <div
-              key={automation.name}
-              className="flex items-center justify-between p-4 bg-slate-50 rounded-lg border border-gray-200 transition-all"
+              key={auto.name}
+              className="flex items-center justify-between p-3 sm:p-4 bg-slate-50 rounded-xl border border-gray-100"
               style={{
-                opacity: visibleRows > idx ? 1 : 0,
-                transform: visibleRows > idx ? 'translateX(0)' : 'translateX(-20px)',
-                transitionDelay: `${idx * 200}ms`
+                opacity: phase > i ? 1 : 0,
+                transform: phase > i ? 'translateX(0)' : 'translateX(-30px)',
+                transition: `all 0.8s ${smooth}`,
+                transitionDelay: `${i * 80}ms`,
               }}
             >
-              <div>
-                <p className="text-sm font-semibold text-gray-900">{automation.name}</p>
-                <p className="text-xs text-gray-500 mt-1">{automation.status}</p>
+              <div className="min-w-0">
+                <p className="text-sm font-semibold text-gray-900">{auto.name}</p>
+                <p className="text-xs text-gray-500 mt-0.5">{auto.status}</p>
               </div>
-              <div className="flex items-center gap-3">
-                <div
-                  className={`relative w-12 h-6 rounded-full shadow-md transition-all duration-500 flex items-center ${
-                    toggleStates[idx] ? 'bg-emerald-500 shadow-emerald-500/40' : 'bg-gray-300'
-                  }`}
-                  style={{
-                    animation: toggleStates[idx] ? 'pulse 1.5s ease-in-out 2' : 'none'
-                  }}
+              <div className="flex items-center gap-3 shrink-0">
+                <div className={`relative w-11 h-6 rounded-full cursor-pointer ${toggles[i] ? 'bg-emerald-500 shadow-md shadow-emerald-500/30' : 'bg-gray-300'}`}
+                  style={{ transition: `all 0.6s ${smooth}` }}
                 >
-                  <div
-                    className="absolute w-5 h-5 rounded-full bg-white shadow-lg transition-all duration-500"
+                  <div className="absolute top-0.5 w-5 h-5 rounded-full bg-white shadow-sm"
                     style={{
-                      right: toggleStates[idx] ? '2px' : 'auto',
-                      left: !toggleStates[idx] ? '2px' : 'auto'
+                      left: toggles[i] ? 'calc(100% - 22px)' : '2px',
+                      transition: `left 0.5s ${smooth}`,
                     }}
                   />
                 </div>
-                {toggleStates[idx] && (
-                  <div className="flex items-center gap-1">
-                    <span className="text-xs font-semibold text-emerald-600">Running</span>
-                    {counters[idx] > 0 && (
-                      <span className="text-xs font-semibold text-emerald-600">{counters[idx]} sent</span>
-                    )}
-                  </div>
-                )}
+                <span className="text-xs font-medium w-20 text-right" style={{
+                  color: toggles[i] ? '#059669' : '#9ca3af',
+                  transition: `color 0.6s ${smooth}`,
+                }}>
+                  {toggles[i] ? auto.sent : 'Paused'}
+                </span>
               </div>
             </div>
           ))}
@@ -1089,74 +1007,35 @@ function InteractiveExplorer() {
 
   // ─── Invoicing Tab Content
   const InvoicingContent = () => {
-    const [headerPhase, setHeaderPhase] = useState(0);
-    const [itemsPhase, setItemsPhase] = useState(0);
-    const [totalPhase, setTotalPhase] = useState(0);
-    const [progressPhase, setProgressPhase] = useState(0);
-    const [buttonPhase, setButtonPhase] = useState(0);
+    const [phase, setPhase] = useState(0);
 
     useEffect(() => {
-      setTimeout(() => setHeaderPhase(1), 0);
-      setTimeout(() => setItemsPhase(1), 300);
-      setTimeout(() => setTotalPhase(1), 1500);
-      setTimeout(() => setProgressPhase(1), 2200);
-      setTimeout(() => setButtonPhase(1), 2800);
+      const t1 = setTimeout(() => setPhase(1), 200);   // Header
+      const t2 = setTimeout(() => setPhase(2), 700);   // Line items
+      const t3 = setTimeout(() => setPhase(3), 1800);  // Totals
+      const t4 = setTimeout(() => setPhase(4), 2600);  // Progress bar
+      const t5 = setTimeout(() => setPhase(5), 3200);  // Buttons
+      return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); clearTimeout(t5); };
     }, []);
 
-    const LineItem = ({ description, amount, delay }: any) => (
-      <tr
-        className="border-b border-gray-100 transition-all"
-        style={{
-          opacity: itemsPhase ? 1 : 0,
-          transform: itemsPhase ? 'translateY(0)' : 'translateY(-10px)',
-          transitionDelay: itemsPhase ? `${delay}ms` : '0ms'
-        }}
-      >
-        <td className="py-3 text-gray-900">{description}</td>
-        <td className="text-right text-gray-900">{amount}</td>
-      </tr>
-    );
-
-    const CountUpValue = ({ finalValue, prefix, suffix, phase }: any) => {
-      const [displayValue, setDisplayValue] = useState('0');
-
-      useEffect(() => {
-        if (!phase) {
-          setDisplayValue('0');
-          return;
-        }
-
-        let current = 0;
-        const target = parseFloat(finalValue);
-        const interval = setInterval(() => {
-          current += target / 20;
-          if (current >= target) {
-            setDisplayValue(finalValue);
-            clearInterval(interval);
-          } else {
-            setDisplayValue(String(Math.round(current * 100) / 100));
-          }
-        }, 50);
-
-        return () => clearInterval(interval);
-      }, [phase, finalValue]);
-
-      return <span>{prefix}{displayValue}{suffix}</span>;
-    };
+    const items = [
+      { desc: 'Bathroom Reno Labour', amount: '$2,400.00' },
+      { desc: 'Materials & Fixtures', amount: '$1,800.00' },
+      { desc: 'Permits & Inspection', amount: '$300.00' },
+    ];
 
     return (
-      <div className="w-full max-w-2xl opacity-100 transition-opacity duration-300">
-        <div className="bg-white rounded-xl p-8 border border-gray-200 shadow-lg">
-          <div
-            className="mb-8 pb-8 border-b border-gray-200 transition-all"
-            style={{
-              opacity: headerPhase ? 1 : 0,
-              transform: headerPhase ? 'translateY(0)' : 'translateY(-10px)'
-            }}
-          >
-            <div className="flex justify-between items-start mb-6">
+      <div className="w-full max-w-3xl mx-auto">
+        <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-lg">
+          {/* Header */}
+          <div className="mb-8 pb-8 border-b border-gray-200" style={{
+            opacity: phase >= 1 ? 1 : 0,
+            transform: phase >= 1 ? 'translateY(0)' : 'translateY(-15px)',
+            transition: `all 0.8s ${smooth}`,
+          }}>
+            <div className="flex justify-between items-start">
               <div>
-                <p className="text-xs text-gray-500 font-semibold">INVOICE</p>
+                <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider">Invoice</p>
                 <p className="text-2xl font-bold text-gray-900 mt-1">INV-2026-047</p>
               </div>
               <div className="text-right">
@@ -1166,83 +1045,77 @@ function InteractiveExplorer() {
             </div>
           </div>
 
+          {/* Line items */}
           <div className="mb-8">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-300">
-                  <th className="text-left py-2 text-xs font-semibold text-gray-700">Description</th>
-                  <th className="text-right py-2 text-xs font-semibold text-gray-700">Amount</th>
+                <tr className="border-b border-gray-200">
+                  <th className="text-left py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Description</th>
+                  <th className="text-right py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Amount</th>
                 </tr>
               </thead>
               <tbody>
-                <LineItem description="Bathroom Reno Labour" amount="$2,400.00" delay={0} />
-                <LineItem description="Materials & Fixtures" amount="$1,800.00" delay={100} />
-                <LineItem description="Permits & Inspection" amount="$300.00" delay={200} />
+                {items.map((item, i) => (
+                  <tr key={i} className="border-b border-gray-50" style={{
+                    opacity: phase >= 2 ? 1 : 0,
+                    transform: phase >= 2 ? 'translateY(0)' : 'translateY(-8px)',
+                    transition: `all 0.7s ${smooth}`,
+                    transitionDelay: `${i * 150}ms`,
+                  }}>
+                    <td className="py-3 text-gray-900">{item.desc}</td>
+                    <td className="text-right text-gray-900 font-medium">{item.amount}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
 
-          <div
-            className="space-y-2 mb-6 pb-6 border-b border-gray-200 transition-all"
-            style={{
-              opacity: totalPhase ? 1 : 0,
-              transitionDelay: totalPhase ? '200ms' : '0ms'
-            }}
-          >
+          {/* Totals */}
+          <div className="space-y-2 mb-6 pb-6 border-b border-gray-200" style={{
+            opacity: phase >= 3 ? 1 : 0,
+            transition: `all 0.8s ${smooth}`,
+          }}>
             <div className="flex justify-between text-sm">
-              <span className="text-gray-700">Subtotal</span>
-              <span className="font-semibold text-gray-900">
-                <CountUpValue finalValue="4500.00" prefix="$" suffix="" phase={totalPhase} />
-              </span>
+              <span className="text-gray-500">Subtotal</span>
+              <span className="font-semibold text-gray-900">$4,500.00</span>
             </div>
             <div className="flex justify-between text-sm">
-              <span className="text-gray-700">HST 13% (Ontario)</span>
-              <span className="font-semibold text-gray-900">
-                <CountUpValue finalValue="585.00" prefix="$" suffix="" phase={totalPhase} />
-              </span>
+              <span className="text-gray-500">HST 13% (Ontario)</span>
+              <span className="font-semibold text-gray-900">$585.00</span>
             </div>
-            <div className="flex justify-between">
-              <span className="font-semibold text-gray-900">Total</span>
-              <span className="text-lg font-bold text-gray-900">
-                <CountUpValue finalValue="5085.00" prefix="$" suffix="" phase={totalPhase} />
-              </span>
+            <div className="flex justify-between pt-2">
+              <span className="font-bold text-gray-900">Total</span>
+              <span className="text-xl font-bold text-gray-900">$5,085.00</span>
             </div>
           </div>
 
-          <div
-            className="mb-6 transition-all"
-            style={{
-              opacity: progressPhase ? 1 : 0,
-              transitionDelay: progressPhase ? '300ms' : '0ms'
-            }}
-          >
-            <p className="text-xs text-gray-500 font-semibold mb-2">Payment Progress</p>
-            <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-emerald-500 rounded-full transition-all duration-1000"
-                style={{ width: progressPhase ? '60%' : '0%' }}
-              />
+          {/* Payment Progress */}
+          <div className="mb-6" style={{
+            opacity: phase >= 4 ? 1 : 0,
+            transition: `all 0.8s ${smooth}`,
+          }}>
+            <div className="flex justify-between items-center mb-2">
+              <p className="text-xs text-gray-500 font-semibold">Payment Progress</p>
+              <p className="text-xs text-gray-500">$3,051.00 of $5,085.00</p>
             </div>
-            <p className="text-xs text-gray-600 mt-2">$3,051.00 paid · $2,034.00 remaining</p>
+            <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden">
+              <div className="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full" style={{
+                width: phase >= 4 ? '60%' : '0%',
+                transition: `width 1.6s ${smooth}`,
+              }} />
+            </div>
           </div>
 
-          <div
-            className="flex gap-3 transition-all"
-            style={{
-              opacity: buttonPhase ? 1 : 0,
-              transform: buttonPhase ? 'scale(1)' : 'scale(0.95)',
-              transitionDelay: buttonPhase ? '400ms' : '0ms'
-            }}
-          >
-            <button
-              className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-lg text-sm font-semibold hover:bg-blue-600 transition-all relative overflow-hidden"
-              style={{
-                animation: buttonPhase ? 'glow 2s ease-in-out infinite' : 'none'
-              }}
-            >
+          {/* Buttons */}
+          <div className="flex gap-3" style={{
+            opacity: phase >= 5 ? 1 : 0,
+            transform: phase >= 5 ? 'translateY(0)' : 'translateY(8px)',
+            transition: `all 0.8s ${smooth}`,
+          }}>
+            <button className="flex-1 px-4 py-2.5 bg-blue-500 text-white rounded-xl text-sm font-semibold shadow-md shadow-blue-500/20">
               Send Reminder
             </button>
-            <button className="flex-1 px-4 py-2 bg-gray-100 text-gray-900 rounded-lg text-sm font-semibold hover:bg-gray-200 transition-colors">
+            <button className="flex-1 px-4 py-2.5 bg-gray-100 text-gray-900 rounded-xl text-sm font-semibold">
               Record Payment
             </button>
           </div>
@@ -1277,79 +1150,71 @@ function InteractiveExplorer() {
     }
   };
 
+  const parallaxOffset = useParallax(0.08);
+
   return (
-    <section className="relative bg-slate-950 py-0">
-      {/* Section header */}
-      <div className="text-center pt-24 pb-12 px-6">
-        <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white">
-          Take a closer look.
-        </h2>
+    <section className="relative bg-slate-950 py-0 overflow-hidden">
+      {/* Parallax background glow */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ transform: `translateY(${parallaxOffset * 0.5}px)` }}
+      >
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-blue-500/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 left-1/4 w-[400px] h-[400px] bg-purple-500/5 rounded-full blur-3xl" />
       </div>
 
-      {/* Explorer container */}
-      <div className="max-w-7xl mx-auto px-6 pb-24">
-        {/* Mobile: Tab pills above content */}
-        <div className="lg:hidden mb-6 flex gap-2 overflow-x-auto pb-4 scrollbar-hide">
+      {/* Section header with description */}
+      <div className="relative text-center pt-24 sm:pt-32 pb-6 px-6">
+        <h2
+          className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white tracking-tight"
+          style={{ transform: `translateY(${parallaxOffset * 0.3}px)` }}
+        >
+          Take a closer look.
+        </h2>
+        {/* Description below heading — not overlapping content */}
+        <div
+          className="mt-4 max-w-xl mx-auto transition-all duration-500"
+          key={`info-${activeTab}`}
+        >
+          <p className="text-lg sm:text-xl font-semibold text-white">{tabInfo[activeTab].title}</p>
+          <p className="text-sm sm:text-base text-slate-400 mt-2">{tabInfo[activeTab].description}</p>
+        </div>
+      </div>
+
+      {/* Tab navigation — horizontal, centered */}
+      <div className="relative max-w-7xl mx-auto px-6">
+        <div className="flex gap-1 sm:gap-2 overflow-x-auto pb-4 justify-start sm:justify-center scrollbar-hide">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
+              className={`flex-shrink-0 px-4 sm:px-6 py-2.5 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
                 activeTab === tab.id
-                  ? 'bg-white/15 text-white backdrop-blur-sm border border-white/20'
-                  : 'text-slate-400 hover:text-white hover:bg-white/5'
+                  ? 'bg-white text-slate-900 shadow-lg shadow-white/10'
+                  : 'text-slate-400 hover:text-white hover:bg-white/10'
               }`}
             >
               {tab.label}
             </button>
           ))}
         </div>
+      </div>
 
-        <div className="relative bg-slate-900/50 rounded-3xl border border-slate-700/50 overflow-hidden" style={{ minHeight: '600px' }}>
-          {/* Desktop: Feature tabs on the left */}
-          <div className="absolute left-6 top-1/2 -translate-y-1/2 z-10 space-y-3 hidden lg:flex lg:flex-col">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
-                  activeTab === tab.id
-                    ? 'bg-white/15 text-white backdrop-blur-sm border border-white/20'
-                    : 'text-slate-400 hover:text-white hover:bg-white/5'
-                }`}
-              >
-                {activeTab === tab.id ? (
-                  <Minus className="w-4 h-4" />
-                ) : (
-                  <Plus className="w-4 h-4" />
-                )}
-                {tab.label}
-              </button>
-            ))}
-          </div>
-
-          {/* Product view area */}
-          <div className="flex items-center justify-center h-full p-12 lg:pl-80">
-            <div className="transition-opacity duration-300" key={activeTab}>
+      {/* Full-width visual area — large */}
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 pb-24 sm:pb-32">
+        <div
+          className="relative bg-slate-900/60 rounded-2xl sm:rounded-3xl border border-slate-700/50 overflow-hidden backdrop-blur-sm"
+          style={{
+            minHeight: '520px',
+            transform: `translateY(${parallaxOffset * 0.15}px)`,
+          }}
+        >
+          {/* Product view area — centered, full width */}
+          <div className="flex items-center justify-center w-full p-6 sm:p-10 lg:p-14">
+            <div className="w-full max-w-5xl transition-opacity duration-300" key={activeTab}>
               {renderTabContent()}
             </div>
           </div>
-
-          {/* Info card — appears when a tab is active */}
-          {activeTab && (
-            <div className="absolute left-6 top-12 max-w-sm bg-slate-800/90 backdrop-blur rounded-xl p-5 border border-slate-600/50 hidden lg:block animate-fade-in">
-              <p className="text-sm font-semibold text-white">{tabInfo[activeTab].title}</p>
-              <p className="text-sm text-slate-300 mt-2">{tabInfo[activeTab].description}</p>
-            </div>
-          )}
-
-          {/* Mobile: Info card below content */}
-          {activeTab && (
-            <div className="lg:hidden bg-slate-800/90 backdrop-blur rounded-xl p-5 border border-slate-600/50 mx-6 mb-6">
-              <p className="text-sm font-semibold text-white">{tabInfo[activeTab].title}</p>
-              <p className="text-sm text-slate-300 mt-2">{tabInfo[activeTab].description}</p>
-            </div>
-          )}
         </div>
       </div>
     </section>
@@ -2222,7 +2087,6 @@ export default function LandingPage() {
       <Hero />
       <ProblemSection />
       <HowItWorks />
-      <ProductShowcase />
       <InteractiveExplorer />
       <Testimonials />
       <AutopilotSection />

@@ -7,7 +7,9 @@ import {
   Star, Zap, FileText, CreditCard, Calendar, ArrowRight, Sparkles,
   Phone, MapPin, Globe, Camera, Plus, X, Clock, Trophy, Rocket,
   AlertCircle, PartyPopper, TrendingUp, Shield, Heart, Mail,
+  MousePointerClick,
 } from 'lucide-react';
+import { GuidedTour, TOURS } from '@/components/GuidedTour';
 
 // ============================================================
 // TYPES
@@ -181,6 +183,7 @@ export default function SetupPage() {
   const [activeStepId, setActiveStepId] = useState<string | null>(null);
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [showCelebration, setShowCelebration] = useState(false);
+  const [activeTourId, setActiveTourId] = useState<string | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -237,6 +240,17 @@ export default function SetupPage() {
 
   return (
     <div className="p-8 bg-slate-50 min-h-screen">
+      {/* Guided Tour Overlay */}
+      {activeTourId && TOURS[activeTourId] && (
+        <GuidedTour
+          tour={TOURS[activeTourId]}
+          onComplete={() => {
+            setActiveTourId(null);
+          }}
+          onClose={() => setActiveTourId(null)}
+        />
+      )}
+
       {/* Celebration Overlay */}
       {showCelebration && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-8">
@@ -478,6 +492,17 @@ export default function SetupPage() {
                         <ArrowRight className="w-4 h-4" />
                         {step.linkLabel}
                       </Link>
+                    )}
+
+                    {/* Walk Me Through It Button */}
+                    {TOURS[step.id] && (
+                      <button
+                        onClick={() => setActiveTourId(step.id)}
+                        className="flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 text-blue-700 rounded-xl font-medium hover:from-blue-100 hover:to-purple-100 transition-all mb-4 w-full justify-center text-sm"
+                      >
+                        <MousePointerClick className="w-4 h-4" />
+                        Walk me through this step-by-step
+                      </button>
                     )}
 
                     {/* Actions */}

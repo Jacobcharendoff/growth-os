@@ -154,7 +154,7 @@ export default function EstimateDetailPage({ params }: EstimateDetailPageProps) 
   if (!estimate) {
     return (
       <div className="min-h-screen bg-slate-50 flex flex-col">
-        <div className="p-6 border-b border-slate-200 bg-white">
+        <div className="p-4 sm:p-6 border-b border-slate-200 bg-white">
           <Link
             href="/estimates"
             className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium"
@@ -218,7 +218,7 @@ export default function EstimateDetailPage({ params }: EstimateDetailPageProps) 
     <div className="min-h-screen bg-slate-50">
       {/* Header */}
       <div className="border-b border-slate-200 bg-white">
-        <div className="max-w-7xl mx-auto px-6 py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
           <div className="flex items-start justify-between mb-4">
             <div>
               <Link
@@ -228,7 +228,7 @@ export default function EstimateDetailPage({ params }: EstimateDetailPageProps) 
                 <ArrowLeft className="w-4 h-4" />
                 Back to Estimates
               </Link>
-              <h1 className="text-3xl font-bold text-slate-900">Estimate #{estimate.number}</h1>
+              <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Estimate #{estimate.number}</h1>
             </div>
             <StatusBadge status={estimate.status} />
           </div>
@@ -284,9 +284,9 @@ export default function EstimateDetailPage({ params }: EstimateDetailPageProps) 
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-8">
         {/* Customer Info Card */}
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-8">
+        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-6 mb-6 sm:mb-8">
           <h2 className="text-lg font-semibold text-slate-900 mb-4">Customer Information</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <Link
@@ -345,7 +345,7 @@ export default function EstimateDetailPage({ params }: EstimateDetailPageProps) 
 
         {/* Approved State */}
         {estimate.status === 'approved' && selectedTierData && (
-          <div className="bg-emerald-50 border-2 border-emerald-200 rounded-xl p-8 mb-8">
+          <div className="bg-emerald-50 border-2 border-emerald-200 rounded-xl p-4 sm:p-8 mb-6 sm:mb-8">
             <div className="flex items-center gap-3 mb-4">
               <CheckCircle2 className="w-8 h-8 text-emerald-600" />
               <h3 className="text-2xl font-bold text-emerald-900">Estimate Approved!</h3>
@@ -364,7 +364,7 @@ export default function EstimateDetailPage({ params }: EstimateDetailPageProps) 
         )}
 
         {/* Estimate Details */}
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-6">
           <h2 className="text-lg font-semibold text-slate-900 mb-6">Estimate Details</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">

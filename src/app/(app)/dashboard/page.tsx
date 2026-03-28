@@ -219,8 +219,8 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-4 md:p-8">
       {/* Header with Date Range */}
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-slate-900 mb-2">Dashboard</h1>
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-4xl font-bold text-slate-900 mb-2">Dashboard</h1>
         <p className="text-slate-600 mb-4">
           Welcome back! Here's your business at a glance.
         </p>
@@ -270,13 +270,13 @@ export default function Dashboard() {
       </div>
 
       {/* KPI Cards Row */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-8">
         {/* Total Leads */}
-        <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-100 hover:shadow-md transition-shadow">
-          <div className="flex items-start justify-between mb-4">
+        <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-slate-100 hover:shadow-md transition-shadow">
+          <div className="flex items-start justify-between mb-3 sm:mb-4">
             <div>
-              <p className="text-sm font-medium text-slate-600">Total Leads</p>
-              <p className="text-3xl font-bold text-slate-900 mt-2">{totalLeads}</p>
+              <p className="text-xs sm:text-sm font-medium text-slate-600">Total Leads</p>
+              <p className="text-2xl sm:text-3xl font-bold text-slate-900 mt-1 sm:mt-2">{totalLeads}</p>
             </div>
             <div className="p-2 bg-blue-100 rounded-lg">
               <Target className="w-6 h-6 text-blue-600" />
@@ -301,11 +301,11 @@ export default function Dashboard() {
         </div>
 
         {/* Active Deals */}
-        <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-100 hover:shadow-md transition-shadow">
-          <div className="flex items-start justify-between mb-4">
+        <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-slate-100 hover:shadow-md transition-shadow">
+          <div className="flex items-start justify-between mb-3 sm:mb-4">
             <div>
-              <p className="text-sm font-medium text-slate-600">Active Deals</p>
-              <p className="text-3xl font-bold text-slate-900 mt-2">{activeDeals}</p>
+              <p className="text-xs sm:text-sm font-medium text-slate-600">Active Deals</p>
+              <p className="text-2xl sm:text-3xl font-bold text-slate-900 mt-1 sm:mt-2">{activeDeals}</p>
             </div>
             <div className="p-2 bg-purple-100 rounded-lg">
               <Zap className="w-6 h-6 text-purple-600" />
@@ -315,11 +315,11 @@ export default function Dashboard() {
         </div>
 
         {/* Pipeline Value */}
-        <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-100 hover:shadow-md transition-shadow">
-          <div className="flex items-start justify-between mb-4">
+        <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-slate-100 hover:shadow-md transition-shadow">
+          <div className="flex items-start justify-between mb-3 sm:mb-4">
             <div>
-              <p className="text-sm font-medium text-slate-600">Pipeline Value</p>
-              <p className="text-3xl font-bold text-slate-900 mt-2">
+              <p className="text-xs sm:text-sm font-medium text-slate-600">Pipeline Value</p>
+              <p className="text-2xl sm:text-3xl font-bold text-slate-900 mt-1 sm:mt-2">
                 ${(pipelineValue / 1000).toFixed(1)}k
               </p>
             </div>
@@ -331,11 +331,11 @@ export default function Dashboard() {
         </div>
 
         {/* Conversion Rate */}
-        <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-100 hover:shadow-md transition-shadow">
-          <div className="flex items-start justify-between mb-4">
+        <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-slate-100 hover:shadow-md transition-shadow">
+          <div className="flex items-start justify-between mb-3 sm:mb-4">
             <div>
-              <p className="text-sm font-medium text-slate-600">Conversion Rate</p>
-              <p className="text-3xl font-bold text-slate-900 mt-2">{conversionRate}%</p>
+              <p className="text-xs sm:text-sm font-medium text-slate-600">Conversion Rate</p>
+              <p className="text-2xl sm:text-3xl font-bold text-slate-900 mt-1 sm:mt-2">{conversionRate}%</p>
             </div>
             <div className="p-2 bg-orange-100 rounded-lg">
               <Activity className="w-6 h-6 text-orange-600" />
@@ -347,11 +347,11 @@ export default function Dashboard() {
         </div>
 
         {/* Avg Deal Value */}
-        <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-100 hover:shadow-md transition-shadow">
-          <div className="flex items-start justify-between mb-4">
+        <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-slate-100 hover:shadow-md transition-shadow">
+          <div className="flex items-start justify-between mb-3 sm:mb-4">
             <div>
-              <p className="text-sm font-medium text-slate-600">Avg Deal Value</p>
-              <p className="text-3xl font-bold text-slate-900 mt-2">
+              <p className="text-xs sm:text-sm font-medium text-slate-600">Avg Deal Value</p>
+              <p className="text-2xl sm:text-3xl font-bold text-slate-900 mt-1 sm:mt-2">
                 ${avgDealValue.toLocaleString()}
               </p>
             </div>
@@ -363,11 +363,11 @@ export default function Dashboard() {
         </div>
 
         {/* Total Revenue */}
-        <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-100 hover:shadow-md transition-shadow">
-          <div className="flex items-start justify-between mb-4">
+        <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-slate-100 hover:shadow-md transition-shadow">
+          <div className="flex items-start justify-between mb-3 sm:mb-4">
             <div>
-              <p className="text-sm font-medium text-slate-600">Total Revenue</p>
-              <p className="text-3xl font-bold text-slate-900 mt-2">
+              <p className="text-xs sm:text-sm font-medium text-slate-600">Total Revenue</p>
+              <p className="text-2xl sm:text-3xl font-bold text-slate-900 mt-1 sm:mt-2">
                 ${(totalRevenue / 1000).toFixed(1)}k
               </p>
             </div>
@@ -541,7 +541,7 @@ export default function Dashboard() {
       </div>
 
       {/* Floating Action Button with Menu */}
-      <div className="fixed bottom-8 right-8 z-50">
+      <div className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-50">
         {isFABExpanded && (
           <div className="absolute bottom-20 right-0 bg-white rounded-xl shadow-xl border border-slate-200 overflow-hidden animate-in fade-in slide-in-from-bottom-2 duration-200">
             <button

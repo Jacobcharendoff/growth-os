@@ -436,7 +436,7 @@ export default function AutomationsPage() {
   };
 
   return (
-    <div className="p-8 bg-slate-50 min-h-screen">
+    <div className="p-4 sm:p-8 bg-slate-50 min-h-screen">
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-2">
@@ -444,21 +444,21 @@ export default function AutomationsPage() {
             <Zap className="w-5 h-5 text-white" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">Autopilot</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Autopilot</h1>
             <p className="text-slate-600">Pre-built playbooks that run your business on autopilot. Activate with one click.</p>
           </div>
         </div>
       </div>
 
       {/* Impact Banner */}
-      <div className="bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-8 mb-8 text-white relative overflow-hidden">
+      <div className="bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-4 sm:p-8 mb-6 sm:mb-8 text-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <div className="relative">
           <div className="flex items-center justify-between flex-wrap gap-6">
             <div>
               <p className="text-slate-400 text-sm font-medium mb-1">AUTOPILOT STATUS</p>
               <div className="flex items-center gap-4">
-                <div className="text-4xl font-bold">{activeCount} / {playbooks.length}</div>
+                <div className="text-3xl sm:text-4xl font-bold">{activeCount} / {playbooks.length}</div>
                 <div className="text-slate-400">
                   <p className="text-sm">playbooks active</p>
                   <p className="text-emerald-400 text-sm font-medium">{totalImpact}</p>

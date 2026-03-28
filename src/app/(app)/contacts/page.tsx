@@ -35,10 +35,10 @@ export default function ContactsPage() {
   return (
     <div className="h-full flex flex-col bg-white">
       {/* Header */}
-      <div className="px-8 py-6 border-b border-slate-200">
-        <div className="flex items-center justify-between mb-6">
+      <div className="px-4 sm:px-8 py-4 sm:py-6 border-b border-slate-200">
+        <div className="flex items-center justify-between mb-4 sm:mb-6">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">Contacts</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Contacts</h1>
             <p className="text-slate-600 mt-1">
               {contacts.length} total contacts
             </p>

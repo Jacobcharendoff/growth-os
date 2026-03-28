@@ -138,7 +138,7 @@ export default function ContactDetailPage() {
   return (
     <div className="h-full flex flex-col bg-slate-50 overflow-y-auto">
       {/* Header */}
-      <div className="sticky top-0 bg-white border-b border-slate-200 px-8 py-6 z-10">
+      <div className="sticky top-0 bg-white border-b border-slate-200 px-4 sm:px-8 py-4 sm:py-6 z-10">
         <div className="flex items-start justify-between mb-4">
           <button
             onClick={() => router.back()}
@@ -153,7 +153,7 @@ export default function ContactDetailPage() {
         </div>
 
         <div className="flex items-baseline gap-3">
-          <h1 className="text-4xl font-bold text-slate-900">{contact.name}</h1>
+          <h1 className="text-2xl sm:text-4xl font-bold text-slate-900">{contact.name}</h1>
           <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${contactTypeColor}`}>
             {contact.type === 'customer' ? 'Customer' : 'Lead'}
           </span>
@@ -164,7 +164,7 @@ export default function ContactDetailPage() {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 px-8 py-6 space-y-6">
+      <div className="flex-1 px-4 sm:px-8 py-4 sm:py-6 space-y-6">
         {/* Contact Info Card */}
         <div className="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
           <h2 className="text-lg font-semibold text-slate-900 mb-4">Contact Information</h2>

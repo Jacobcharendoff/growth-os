@@ -56,6 +56,16 @@ a {
   background: #9ca3af;
 }
 
+/* Mobile sidebar slide-in */
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
 /* Chat message animation */
 @keyframes fadeSlideUp {
   from {

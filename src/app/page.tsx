@@ -263,7 +263,7 @@ function Hero() {
                 </div>
               </div>
               <div className="p-1 bg-slate-100">
-                <div className="bg-slate-50 flex min-h-[420px]">
+                <div className="bg-slate-50 flex min-h-[280px] sm:min-h-[420px]">
                   <div className="w-48 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 p-4 hidden sm:block rounded-bl-xl">
                     <div className="flex items-center gap-2 mb-8">
                       <div className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center">
@@ -278,25 +278,25 @@ function Hero() {
                       </div>
                     ))}
                   </div>
-                  <div className="flex-1 p-6">
-                    <div className="mb-6">
-                      <h3 className="text-lg font-bold text-gray-900">Dashboard</h3>
-                      <p className="text-xs text-gray-400">Here&apos;s how your week is looking.</p>
+                  <div className="flex-1 p-3 sm:p-6">
+                    <div className="mb-4 sm:mb-6">
+                      <h3 className="text-sm sm:text-lg font-bold text-gray-900">Dashboard</h3>
+                      <p className="text-[10px] sm:text-xs text-gray-400">Here&apos;s how your week is looking.</p>
                     </div>
-                    <div className="grid grid-cols-3 gap-3 mb-6">
+                    <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-6">
                       {[
                         { label: "New Leads", value: "23", trend: "+12%", color: "text-emerald-500" },
                         { label: "Jobs This Week", value: "14", trend: "+24%", color: "text-emerald-500" },
                         { label: "Revenue", value: "$87.5k", trend: "+18%", color: "text-emerald-500" },
                       ].map((kpi) => (
-                        <div key={kpi.label} className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-                          <p className="text-[10px] text-gray-400 uppercase tracking-wide">{kpi.label}</p>
-                          <p className="text-2xl font-bold mt-1 text-gray-900">{kpi.value}</p>
-                          <p className={`text-[10px] mt-1 ${kpi.color}`}>{kpi.trend} from last month</p>
+                        <div key={kpi.label} className="bg-white rounded-xl p-2 sm:p-4 shadow-sm border border-gray-100">
+                          <p className="text-[8px] sm:text-[10px] text-gray-400 uppercase tracking-wide">{kpi.label}</p>
+                          <p className="text-lg sm:text-2xl font-bold mt-1 text-gray-900">{kpi.value}</p>
+                          <p className={`text-[8px] sm:text-[10px] mt-1 ${kpi.color} hidden sm:block`}>{kpi.trend} from last month</p>
                         </div>
                       ))}
                     </div>
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
                         <p className="text-xs font-semibold text-gray-700 mb-3">Job Pipeline</p>
                         {["New Leads", "Quoted", "Booked", "In Progress"].map((stage, i) => (
@@ -594,9 +594,9 @@ function AdvisorDemo() {
   return (
     <section id="advisor-demo" className="py-24 lg:py-32 bg-gradient-to-b from-slate-50 to-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Left: Copy */}
-          <div className="scroll-fade-left">
+          <div className="scroll-fade-left text-center lg:text-left">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-purple-50 border border-purple-100 mb-6">
               <Sparkles className="w-3.5 h-3.5 text-purple-600" />
               <span className="text-xs font-semibold text-purple-600 uppercase tracking-wider">Growth Advisor</span>
@@ -884,7 +884,8 @@ function CompetitorComparison() {
           </h2>
         </div>
 
-        <div className="scroll-scale-up overflow-x-auto">
+        {/* Desktop table */}
+        <div className="scroll-scale-up overflow-x-auto hidden md:block">
           <table className="w-full border-collapse">
             <thead>
               <tr>
@@ -910,6 +911,29 @@ function CompetitorComparison() {
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Mobile cards */}
+        <div className="scroll-scale-up md:hidden space-y-4">
+          {competitors.map((c) => (
+            <div key={c.name} className={`rounded-2xl p-5 ${c.highlight ? "bg-blue-50 border-2 border-blue-200" : "bg-white border border-gray-200"}`}>
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <div className={`text-base font-bold ${c.highlight ? "text-blue-600" : "text-gray-900"}`}>{c.name}</div>
+                  <div className={`text-xs ${c.highlight ? "text-blue-500" : "text-gray-400"}`}>{c.price}/mo</div>
+                </div>
+                {c.highlight && <span className="px-2.5 py-1 bg-blue-600 text-white text-[10px] font-bold rounded-full">Best Value</span>}
+              </div>
+              <div className="space-y-2">
+                {featureLabels.map((feature) => (
+                  <div key={feature.key} className="flex items-center justify-between gap-3">
+                    <span className="text-xs text-gray-600 flex-1">{feature.label}</span>
+                    <div className="shrink-0">{renderCheck(c.features[feature.key as keyof typeof c.features])}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
 
         <p className="mt-8 text-center text-sm text-gray-400">
@@ -1009,7 +1033,7 @@ function Pricing() {
 
         <div className="stagger-children grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {plans.map((plan) => (
-            <div key={plan.name} className={`scroll-fade-up relative rounded-2xl p-8 transition-all duration-300 ${plan.highlighted ? "bg-gradient-to-b from-blue-600 to-blue-700 text-white shadow-2xl shadow-blue-600/25 scale-105" : "bg-white border border-gray-200 hover:border-gray-300 hover:shadow-lg"}`}>
+            <div key={plan.name} className={`scroll-fade-up relative rounded-2xl p-6 sm:p-8 transition-all duration-300 ${plan.highlighted ? "bg-gradient-to-b from-blue-600 to-blue-700 text-white shadow-2xl shadow-blue-600/25 md:scale-105" : "bg-white border border-gray-200 hover:border-gray-300 hover:shadow-lg"}`}>
               {plan.highlighted && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-gradient-to-r from-amber-400 to-orange-400 text-white text-xs font-bold rounded-full shadow-lg">
                   Most Popular

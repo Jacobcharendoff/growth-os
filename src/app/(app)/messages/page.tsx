@@ -442,7 +442,7 @@ export default function MessagesPage() {
           {composeMode ? (
             <div className="flex flex-col h-full">
               {/* Compose Header */}
-              <div className="px-8 py-6 border-b border-slate-200 flex items-center justify-between">
+              <div className="px-4 sm:px-8 py-4 sm:py-6 border-b border-slate-200 flex items-center justify-between">
                 <h2 className="text-2xl font-bold text-slate-900">Compose Message</h2>
                 <button
                   onClick={() => setComposeMode(false)}
@@ -453,7 +453,7 @@ export default function MessagesPage() {
               </div>
 
               {/* Compose Form */}
-              <div className="flex-1 overflow-y-auto px-8 py-6 space-y-5">
+              <div className="flex-1 overflow-y-auto px-4 sm:px-8 py-4 sm:py-6 space-y-5">
                 {/* To Field */}
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-2">To</label>
@@ -549,7 +549,7 @@ export default function MessagesPage() {
               </div>
 
               {/* Compose Actions */}
-              <div className="px-8 py-6 border-t border-slate-200 flex gap-4">
+              <div className="px-4 sm:px-8 py-4 sm:py-6 border-t border-slate-200 flex gap-4">
                 <button className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
                   Send Message
                 </button>
@@ -564,7 +564,7 @@ export default function MessagesPage() {
           ) : selectedMessage ? (
             <div className="flex flex-col h-full">
               {/* Message Header */}
-              <div className="px-8 py-6 border-b border-slate-200">
+              <div className="px-4 sm:px-8 py-4 sm:py-6 border-b border-slate-200">
                 <div className="flex items-start justify-between mb-4">
                   <div>
                     <h2 className="text-2xl font-bold text-slate-900">
@@ -598,7 +598,7 @@ export default function MessagesPage() {
               </div>
 
               {/* Message Content */}
-              <div className="flex-1 overflow-y-auto px-8 py-6">
+              <div className="flex-1 overflow-y-auto px-4 sm:px-8 py-4 sm:py-6">
                 <div className="bg-slate-50 rounded-xl p-6 border border-slate-200">
                   <p className="text-slate-900 whitespace-pre-wrap">
                     {selectedMessage.fullContent}
@@ -607,7 +607,7 @@ export default function MessagesPage() {
               </div>
 
               {/* Message Actions */}
-              <div className="px-8 py-6 border-t border-slate-200 flex gap-4">
+              <div className="px-4 sm:px-8 py-4 sm:py-6 border-t border-slate-200 flex gap-4">
                 <button className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center justify-center gap-2">
                   <Send className="w-4 h-4" />
                   Reply

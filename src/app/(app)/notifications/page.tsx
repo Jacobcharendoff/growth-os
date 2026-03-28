@@ -231,11 +231,11 @@ export default function NotificationsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 p-8">
+    <div className="min-h-screen bg-slate-50 p-4 sm:p-8">
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-3xl font-bold text-slate-900">Notifications</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Notifications</h1>
           {unreadCount > 0 && (
             <button className="px-4 py-2 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 text-slate-700 text-sm font-medium shadow-sm">
               Mark All Read

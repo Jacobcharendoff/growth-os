@@ -44,8 +44,8 @@ export default function ActivityPage() {
   return (
     <div className="h-full flex flex-col bg-white">
       {/* Header */}
-      <div className="px-8 py-6 border-b border-slate-200">
-        <h1 className="text-3xl font-bold text-slate-900">Activity</h1>
+      <div className="px-4 sm:px-8 py-4 sm:py-6 border-b border-slate-200">
+        <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Activity</h1>
         <p className="text-slate-600 mt-1">
           {activities.length} total activities
         </p>
@@ -53,7 +53,7 @@ export default function ActivityPage() {
 
       {/* Activity Feed */}
       <div className="flex-1 overflow-auto">
-        <div className="p-8 max-w-3xl">
+        <div className="p-4 sm:p-8 max-w-3xl">
           {sortedActivities.length > 0 ? (
             <div className="space-y-6">
               {sortedActivities.map((activity, index) => {

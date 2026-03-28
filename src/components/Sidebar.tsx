@@ -16,9 +16,15 @@ import {
   Bell,
   Rocket,
   Sparkles,
+  X,
 } from 'lucide-react';
 
-export function Sidebar() {
+interface SidebarProps {
+  mobileOpen?: boolean;
+  onClose?: () => void;
+}
+
+export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
 
   const navItems = [
@@ -36,10 +42,10 @@ export function Sidebar() {
 
   const settingsItem = { href: '/settings', label: 'Settings', icon: Settings };
 
-  return (
-    <aside className="w-64 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 border-r border-slate-700 flex flex-col h-full">
+  const sidebarContent = (
+    <>
       {/* Brand */}
-      <div className="px-6 py-6 border-b border-slate-700">
+      <div className="px-6 py-6 border-b border-slate-700 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Zap className="w-7 h-7 text-blue-400" />
           <div className="flex flex-col">
@@ -49,12 +55,19 @@ export function Sidebar() {
             <span className="text-xs text-blue-300 font-medium">™</span>
           </div>
         </div>
+        {/* Mobile close button */}
+        {onClose && (
+          <button onClick={onClose} className="lg:hidden p-1 text-slate-400 hover:text-white">
+            <X className="w-5 h-5" />
+          </button>
+        )}
       </div>
 
       {/* Get Started Banner */}
       <div className="px-4 pt-4">
         <Link
           href="/setup"
+          onClick={onClose}
           className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
             pathname === '/setup'
               ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20'
@@ -75,6 +88,7 @@ export function Sidebar() {
       <div className="px-4 pt-3">
         <Link
           href="/advisor"
+          onClick={onClose}
           className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
             pathname === '/advisor'
               ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-purple-600/20'
@@ -91,7 +105,7 @@ export function Sidebar() {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 px-4 py-6 space-y-2">
+      <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = pathname === item.href || (item.href === '/dashboard' && pathname === '/');
@@ -100,6 +114,7 @@ export function Sidebar() {
             <Link
               key={item.href}
               href={item.href}
+              onClick={onClose}
               className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
                 isActive
                   ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20'
@@ -122,6 +137,7 @@ export function Sidebar() {
           return (
             <Link
               href={settingsItem.href}
+              onClick={onClose}
               className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
                 isActive
                   ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20'
@@ -139,6 +155,30 @@ export function Sidebar() {
       <div className="px-6 py-4 border-t border-slate-700 text-center">
         <p className="text-xs text-slate-500">v2.3.0 Beta</p>
       </div>
-    </aside>
+    </>
+  );
+
+  return (
+    <>
+      {/* Desktop sidebar — always visible on lg+ */}
+      <aside className="hidden lg:flex w-64 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 border-r border-slate-700 flex-col h-full shrink-0">
+        {sidebarContent}
+      </aside>
+
+      {/* Mobile sidebar — slide-out drawer */}
+      {mobileOpen && (
+        <>
+          {/* Backdrop */}
+          <div
+            className="lg:hidden fixed inset-0 bg-black/50 z-40"
+            onClick={onClose}
+          />
+          {/* Drawer */}
+          <aside className="lg:hidden fixed inset-y-0 left-0 z-50 w-72 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 border-r border-slate-700 flex flex-col animate-[slideIn_0.2s_ease-out]">
+            {sidebarContent}
+          </aside>
+        </>
+      )}
+    </>
   );
 }

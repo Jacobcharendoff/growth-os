@@ -205,17 +205,17 @@ export default function SchedulePage() {
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <div className="p-8 bg-slate-50 min-h-screen">
+      <div className="p-4 sm:p-8 bg-slate-50 min-h-screen">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-slate-900 mb-2">Schedule</h1>
-          <p className="text-slate-600">Drag and drop jobs to schedule them for technicians</p>
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-4xl font-bold text-slate-900 mb-2">Schedule</h1>
+          <p className="text-sm sm:text-base text-slate-600">Drag and drop jobs to schedule them for technicians</p>
         </div>
 
         {/* Week Navigation */}
-        <div className="bg-white rounded-xl border border-slate-200 p-6 mb-8 shadow-sm">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
+        <div className="bg-white rounded-xl border border-slate-200 p-4 sm:p-6 mb-6 sm:mb-8 shadow-sm">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-2 sm:gap-4">
               <button
                 onClick={() => setWeekOffset(weekOffset - 1)}
                 className="p-2 hover:bg-slate-100 rounded-lg transition text-slate-600 hover:text-slate-900"
@@ -244,7 +244,7 @@ export default function SchedulePage() {
             </div>
 
             {/* Technician Filter */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
               <Filter className="w-4 h-4 text-slate-600" />
               {Object.keys(TECH_COLORS).map((tech) => (
                 <button
@@ -264,10 +264,10 @@ export default function SchedulePage() {
         </div>
 
         {/* Main Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-8">
           {/* Calendar */}
           <div className="lg:col-span-3">
-            <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+            <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-x-auto">
               {/* Day Headers */}
               <div className="grid grid-cols-7 bg-slate-50 border-b border-slate-200">
                 <div className="col-span-1 p-4" />

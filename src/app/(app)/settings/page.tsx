@@ -183,12 +183,12 @@ export default function SettingsPage() {
   ];
 
   return (
-    <div className="p-8 bg-slate-50 min-h-screen">
+    <div className="p-4 sm:p-8 bg-slate-50 min-h-screen">
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-2">
           <Settings className="w-8 h-8 text-slate-900" />
-          <h1 className="text-3xl font-bold text-slate-900">Settings</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Settings</h1>
         </div>
         <p className="text-slate-600">Manage your account and application preferences</p>
       </div>
@@ -213,7 +213,7 @@ export default function SettingsPage() {
         </div>
 
         {/* Tab Content */}
-        <div className="p-8">
+        <div className="p-4 sm:p-8">
           {/* Company Profile Tab */}
           {activeTab === 'profile' && (
             <div className="space-y-8">
@@ -588,7 +588,7 @@ export default function SettingsPage() {
           {/* Billing Tab */}
           {activeTab === 'billing' && (
             <div className="space-y-8">
-              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-8 rounded-xl border border-blue-200">
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 sm:p-8 rounded-xl border border-blue-200">
                 <div className="flex items-start justify-between mb-4">
                   <div>
                     <h3 className="text-2xl font-bold text-slate-900">Growth Plan</h3>

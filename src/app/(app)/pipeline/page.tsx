@@ -124,20 +124,21 @@ export default function PipelinePage() {
   return (
     <div className="h-full flex flex-col bg-white">
       {/* Header Section */}
-      <div className="px-8 py-6 border-b border-slate-200 bg-gradient-to-r from-slate-50 to-white">
-        <div className="flex items-center justify-between mb-6">
+      <div className="px-4 sm:px-8 py-4 sm:py-6 border-b border-slate-200 bg-gradient-to-r from-slate-50 to-white">
+        <div className="flex items-center justify-between mb-4 sm:mb-6">
           <div>
-            <h1 className="text-4xl font-bold text-slate-900">Pipeline</h1>
-            <p className="text-lg text-slate-600 mt-1 font-semibold">
+            <h1 className="text-2xl sm:text-4xl font-bold text-slate-900">Pipeline</h1>
+            <p className="text-sm sm:text-lg text-slate-600 mt-1 font-semibold">
               ${metrics.totalValue.toLocaleString()} across {metrics.totalDeals} deals
             </p>
           </div>
           <button
             onClick={() => setIsAddDealOpen(true)}
-            className="flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-all shadow-lg hover:shadow-xl font-semibold text-base"
+            className="flex items-center gap-2 bg-blue-600 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg hover:bg-blue-700 transition-all shadow-lg hover:shadow-xl font-semibold text-sm sm:text-base"
           >
             <Plus className="w-5 h-5" />
-            Add Deal
+            <span className="hidden sm:inline">Add Deal</span>
+            <span className="sm:hidden">Add</span>
           </button>
         </div>
 
@@ -230,9 +231,9 @@ export default function PipelinePage() {
 
       {/* Board View */}
       {viewMode === 'board' && (
-        <div className="flex-1 overflow-x-auto overflow-y-hidden bg-slate-50 p-6">
+        <div className="flex-1 overflow-x-auto overflow-y-hidden bg-slate-50 p-3 sm:p-6">
           <DragDropContext onDragEnd={handleDragEnd}>
-            <div className="flex gap-6 min-w-max">
+            <div className="flex gap-3 sm:gap-6 min-w-max">
               {PIPELINE_STAGES.map(({ stage, label, color }) => {
                 const stageDeals = getDealsByStage(stage);
                 const metrics = getStageMetrics(stage);
@@ -243,7 +244,7 @@ export default function PipelinePage() {
                       <div
                         ref={provided.innerRef}
                         {...provided.droppableProps}
-                        className={`flex-shrink-0 w-80 rounded-lg border-2 transition-all ${color} ${
+                        className={`flex-shrink-0 w-64 sm:w-80 rounded-lg border-2 transition-all ${color} ${
                           snapshot.isDraggingOver ? 'shadow-xl ring-2 ring-blue-400' : 'shadow'
                         }`}
                       >

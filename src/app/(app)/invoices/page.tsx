@@ -221,27 +221,27 @@ export default function InvoicesPage() {
   };
 
   return (
-    <div className="p-8 bg-slate-50 min-h-screen">
+    <div className="p-4 sm:p-8 bg-slate-50 min-h-screen">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-slate-900 mb-2">Invoices</h1>
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">Invoices</h1>
         <p className="text-slate-600">Manage invoices and track payments</p>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-          <div className="flex items-center justify-between mb-4">
-            <p className="text-sm text-slate-600 font-medium">Total Invoices</p>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8">
+        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-6">
+          <div className="flex items-center justify-between mb-3 sm:mb-4">
+            <p className="text-xs sm:text-sm text-slate-600 font-medium">Total Invoices</p>
             <CheckCircle className="w-5 h-5 text-blue-500" />
           </div>
-          <p className="text-3xl font-bold text-slate-900">{invoices.length}</p>
+          <p className="text-2xl sm:text-3xl font-bold text-slate-900">{invoices.length}</p>
           <p className="text-xs text-slate-500 mt-2">All time</p>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-          <div className="flex items-center justify-between mb-4">
-            <p className="text-sm text-slate-600 font-medium">Outstanding</p>
+        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-6">
+          <div className="flex items-center justify-between mb-3 sm:mb-4">
+            <p className="text-xs sm:text-sm text-slate-600 font-medium">Outstanding</p>
             <AlertCircle className="w-5 h-5 text-amber-500" />
           </div>
           <p className="text-3xl font-bold text-slate-900">
@@ -250,9 +250,9 @@ export default function InvoicesPage() {
           <p className="text-xs text-slate-500 mt-2">{outstandingInvoices.length + partialInvoices.length} invoices</p>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-          <div className="flex items-center justify-between mb-4">
-            <p className="text-sm text-slate-600 font-medium">Paid This Month</p>
+        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-6">
+          <div className="flex items-center justify-between mb-3 sm:mb-4">
+            <p className="text-xs sm:text-sm text-slate-600 font-medium">Paid This Month</p>
             <CheckCircle className="w-5 h-5 text-emerald-500" />
           </div>
           <p className="text-3xl font-bold text-slate-900">
@@ -261,9 +261,9 @@ export default function InvoicesPage() {
           <p className="text-xs text-slate-500 mt-2">{paidInvoices.length} paid</p>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-          <div className="flex items-center justify-between mb-4">
-            <p className="text-sm text-slate-600 font-medium">Collection Rate</p>
+        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-6">
+          <div className="flex items-center justify-between mb-3 sm:mb-4">
+            <p className="text-xs sm:text-sm text-slate-600 font-medium">Collection Rate</p>
             <TrendingUp className="w-5 h-5 text-emerald-500" />
           </div>
           <p className="text-3xl font-bold text-slate-900">{collectionPercent}%</p>

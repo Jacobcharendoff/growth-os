@@ -239,7 +239,7 @@ export default function SetupPage() {
   };
 
   return (
-    <div className="p-8 bg-slate-50 min-h-screen">
+    <div className="p-4 sm:p-8 bg-slate-50 min-h-screen">
       {/* Guided Tour Overlay */}
       {activeTourId && TOURS[activeTourId] && (
         <GuidedTour
@@ -290,14 +290,14 @@ export default function SetupPage() {
             <Rocket className="w-5 h-5 text-white" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">Get Started</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Get Started</h1>
             <p className="text-slate-600">Complete these steps to get the most out of Growth OS. We&apos;ll walk you through everything.</p>
           </div>
         </div>
       </div>
 
       {/* Progress Card */}
-      <div className="bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-8 mb-8 text-white relative overflow-hidden">
+      <div className="bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-4 sm:p-8 mb-6 sm:mb-8 text-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <div className="relative">
           <div className="flex items-center justify-between flex-wrap gap-6 mb-6">

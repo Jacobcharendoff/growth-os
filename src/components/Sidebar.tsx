@@ -15,6 +15,7 @@ import {
   MessageSquare,
   Bell,
   Rocket,
+  Sparkles,
 } from 'lucide-react';
 
 export function Sidebar() {
@@ -70,6 +71,25 @@ export function Sidebar() {
         </Link>
       </div>
 
+      {/* Growth Advisor */}
+      <div className="px-4 pt-3">
+        <Link
+          href="/advisor"
+          className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
+            pathname === '/advisor'
+              ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-purple-600/20'
+              : 'bg-gradient-to-r from-blue-500/10 to-purple-500/10 text-purple-300 hover:from-blue-500/20 hover:to-purple-500/20 border border-purple-500/20'
+          }`}
+        >
+          <Sparkles className="w-5 h-5" />
+          <div className="flex-1">
+            <span className="font-semibold text-sm">Growth Advisor</span>
+            <p className={`text-[11px] mt-0.5 ${pathname === '/advisor' ? 'text-purple-100' : 'text-purple-400'}`}>AI Business Partner</p>
+          </div>
+          <div className={`w-2 h-2 rounded-full ${pathname === '/advisor' ? 'bg-emerald-300' : 'bg-emerald-500'} animate-pulse`} />
+        </Link>
+      </div>
+
       {/* Navigation */}
       <nav className="flex-1 px-4 py-6 space-y-2">
         {navItems.map((item) => {
@@ -117,7 +137,7 @@ export function Sidebar() {
 
       {/* Footer */}
       <div className="px-6 py-4 border-t border-slate-700 text-center">
-        <p className="text-xs text-slate-500">v2.2.0 Beta</p>
+        <p className="text-xs text-slate-500">v2.3.0 Beta</p>
       </div>
     </aside>
   );

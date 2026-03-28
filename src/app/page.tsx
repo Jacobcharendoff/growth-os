@@ -620,342 +620,660 @@ function InteractiveExplorer() {
   };
 
   // ─── Dashboard Tab Content
-  const DashboardContent = () => (
-    <div className="w-full max-w-4xl opacity-100 transition-opacity duration-300">
-      <div className="bg-slate-800 rounded-t-xl px-4 py-2.5 flex items-center gap-2">
-        <div className="flex gap-1.5">
-          <div className="w-3 h-3 rounded-full bg-red-400" />
-          <div className="w-3 h-3 rounded-full bg-yellow-400" />
-          <div className="w-3 h-3 rounded-full bg-green-400" />
-        </div>
-        <div className="flex-1 text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-700/50 rounded-lg">
-            <div className="w-2 h-2 rounded-full bg-green-400" />
-            <span className="text-xs text-slate-400 font-mono">app.growthos.com/dashboard</span>
-          </div>
+  const DashboardContent = () => {
+    const [kpiPhase, setKpiPhase] = useState(0);
+    const [chartPhase, setChartPhase] = useState(0);
+    const [pipelinePhase, setPipelinePhase] = useState(0);
+
+    useEffect(() => {
+      const kpiIntervals = [0, 200, 400, 600].map((delay, idx) =>
+        setTimeout(() => setKpiPhase(idx + 1), delay)
+      );
+      const chartTimeout = setTimeout(() => setChartPhase(1), 1200);
+      const pipelineTimeout = setTimeout(() => setPipelinePhase(1), 2000);
+
+      return () => {
+        kpiIntervals.forEach(clearTimeout);
+        clearTimeout(chartTimeout);
+        clearTimeout(pipelineTimeout);
+      };
+    }, []);
+
+    const KpiCard = ({ label, value, trend, color, index }: any) => (
+      <div className="bg-white rounded-lg p-3 border border-gray-200 overflow-hidden">
+        <p className="text-[10px] text-gray-500 uppercase font-semibold">{label}</p>
+        <p className="text-xl font-bold text-gray-900 mt-1" style={{
+          opacity: kpiPhase > index ? 1 : 0,
+          transition: 'opacity 2s ease-out'
+        }}>
+          {kpiPhase > index ? value : '0'}
+        </p>
+        <p className={`text-[10px] ${color} font-semibold`}>{trend} vs last month</p>
+      </div>
+    );
+
+    const ChartBar = ({ height, index }: any) => {
+      const heights = [40, 55, 45, 65, 75, 85, 70, 90, 95, 80, 88, 100];
+      return (
+        <div key={index} className="flex-1 bg-blue-500 rounded-t" style={{
+          height: chartPhase ? `${heights[index]}%` : '0%',
+          transition: 'height 0.8s ease-out',
+          transitionDelay: `${index * 60}ms`
+        }} />
+      );
+    };
+
+    const PipelineBar = ({ stage, width, index }: any) => (
+      <div key={stage} className="flex items-center gap-2 mb-2">
+        <span className="text-[10px] text-gray-400 w-16 shrink-0">{stage}</span>
+        <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-blue-500 rounded-full"
+            style={{
+              width: pipelinePhase ? `${width}%` : '0%',
+              transition: 'width 1s ease-out',
+              transitionDelay: `${index * 150}ms`
+            }}
+          />
         </div>
       </div>
-      <div className="bg-slate-50 rounded-b-xl p-6">
-        <div className="grid grid-cols-4 gap-3 mb-4">
-          {[
-            { label: 'New Leads', value: '23', trend: '+12%', color: 'text-emerald-500' },
-            { label: 'Active Jobs', value: '14', trend: '+24%', color: 'text-emerald-500' },
-            { label: 'Revenue', value: '$87.4K', trend: '+18%', color: 'text-emerald-500' },
-            { label: 'Conversion', value: '68%', trend: '+5%', color: 'text-emerald-500' },
-          ].map((kpi) => (
-            <div key={kpi.label} className="bg-white rounded-lg p-3 border border-gray-200">
-              <p className="text-[10px] text-gray-500 uppercase font-semibold">{kpi.label}</p>
-              <p className="text-xl font-bold text-gray-900 mt-1">{kpi.value}</p>
-              <p className={`text-[10px] ${kpi.color} font-semibold`}>{kpi.trend} vs last month</p>
+    );
+
+    return (
+      <div className="w-full max-w-4xl opacity-100 transition-opacity duration-300">
+        <div className="bg-slate-800 rounded-t-xl px-4 py-2.5 flex items-center gap-2">
+          <div className="flex gap-1.5">
+            <div className="w-3 h-3 rounded-full bg-red-400" />
+            <div className="w-3 h-3 rounded-full bg-yellow-400" />
+            <div className={`w-3 h-3 rounded-full transition-all ${chartPhase ? 'bg-green-400 animate-pulse' : 'bg-gray-400'}`} />
+          </div>
+          <div className="flex-1 text-center">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-700/50 rounded-lg">
+              <div className={`w-2 h-2 rounded-full transition-all ${chartPhase ? 'bg-green-400 animate-pulse' : 'bg-gray-500'}`} />
+              <span className="text-xs text-slate-400 font-mono">app.growthos.com/dashboard</span>
             </div>
-          ))}
+          </div>
         </div>
-        <div className="grid grid-cols-2 gap-3">
-          <div className="bg-white rounded-lg p-4 border border-gray-200">
-            <p className="text-xs font-semibold text-gray-700 mb-3">Revenue Trend</p>
-            <div className="flex items-end gap-1 h-20">
-              {[40, 55, 45, 65, 75, 85, 70, 90, 95, 80, 88, 100].map((h, i) => (
-                <div key={i} className="flex-1 bg-blue-500 rounded-t" style={{ height: `${h}%` }} />
+        <div className="bg-slate-50 rounded-b-xl p-6">
+          <div className="grid grid-cols-4 gap-3 mb-4">
+            {[
+              { label: 'New Leads', value: '23', trend: '+12%', color: 'text-emerald-500' },
+              { label: 'Active Jobs', value: '14', trend: '+24%', color: 'text-emerald-500' },
+              { label: 'Revenue', value: '$87.4K', trend: '+18%', color: 'text-emerald-500' },
+              { label: 'Conversion', value: '68%', trend: '+5%', color: 'text-emerald-500' },
+            ].map((kpi, i) => (
+              <KpiCard key={kpi.label} {...kpi} index={i} />
+            ))}
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="bg-white rounded-lg p-4 border border-gray-200">
+              <p className="text-xs font-semibold text-gray-700 mb-3">Revenue Trend</p>
+              <div className="flex items-end gap-1 h-20">
+                {[40, 55, 45, 65, 75, 85, 70, 90, 95, 80, 88, 100].map((h, i) => (
+                  <ChartBar key={i} height={h} index={i} />
+                ))}
+              </div>
+            </div>
+            <div className="bg-white rounded-lg p-4 border border-gray-200">
+              <p className="text-xs font-semibold text-gray-700 mb-3">Pipeline</p>
+              {['New Leads', 'Quoted', 'Booked', 'In Progress'].map((stage, i) => (
+                <PipelineBar key={stage} stage={stage} width={[80, 55, 40, 30][i]} index={i} />
               ))}
             </div>
           </div>
-          <div className="bg-white rounded-lg p-4 border border-gray-200">
-            <p className="text-xs font-semibold text-gray-700 mb-3">Pipeline</p>
-            {['New Leads', 'Quoted', 'Booked', 'In Progress'].map((stage, i) => (
-              <div key={stage} className="flex items-center gap-2 mb-2">
-                <span className="text-[10px] text-gray-400 w-16 shrink-0">{stage}</span>
-                <div className="flex-1 h-2 bg-gray-100 rounded-full">
-                  <div className="h-full bg-blue-500 rounded-full" style={{ width: `${[80, 55, 40, 30][i]}%` }} />
+        </div>
+      </div>
+    );
+  };
+
+  // ─── Pipeline Tab Content
+  const PipelineContent = () => {
+    const [movePhase, setMovePhase] = useState(0);
+
+    useEffect(() => {
+      setTimeout(() => setMovePhase(1), 1000);
+      setTimeout(() => setMovePhase(2), 2000);
+      setTimeout(() => setMovePhase(3), 3000);
+    }, []);
+
+    const getCardPosition = (stageIdx: number, cardIdx: number) => {
+      if (cardIdx === 0) return stageIdx;
+      if (cardIdx === 1 && movePhase >= 1) return stageIdx - 1;
+      if (cardIdx === 1 && movePhase >= 2) return stageIdx - 2;
+      if (cardIdx === 1 && movePhase >= 3) return stageIdx - 3;
+      return stageIdx;
+    };
+
+    return (
+      <div className="w-full max-w-4xl opacity-100 transition-opacity duration-300">
+        <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-lg">
+          <div className="flex gap-4 overflow-x-auto pb-4">
+            {['New Leads', 'Quoted', 'Booked', 'In Progress'].map((stage, stageIdx) => (
+              <div
+                key={stage}
+                className="flex-shrink-0 w-56 bg-slate-100 rounded-lg p-4 border border-gray-300 min-h-64"
+              >
+                <p className="text-xs font-bold text-gray-600 uppercase mb-4">{stage}</p>
+                <div className="space-y-3 relative h-56">
+                  {[1, 2].map((cardIdx) => {
+                    const finalPos = getCardPosition(stageIdx, cardIdx);
+                    const isMoving = cardIdx === 1 && movePhase > 0 && stageIdx === 0;
+                    const shouldShow = finalPos >= 0;
+
+                    return shouldShow ? (
+                      <div
+                        key={`${stage}-${cardIdx}`}
+                        className={`bg-white rounded-lg p-3 border-l-4 shadow-md cursor-grab active:cursor-grabbing transition-all duration-700 ${
+                          isMoving ? 'rotate-3' : 'rotate-0'
+                        } ${
+                          finalPos === 0
+                            ? 'border-blue-500 bg-blue-50'
+                            : finalPos === 1
+                            ? 'border-purple-500 bg-purple-50'
+                            : finalPos === 2
+                            ? 'border-emerald-500 bg-emerald-50'
+                            : 'border-amber-500 bg-amber-50'
+                        }`}
+                      >
+                        <p className="text-sm font-semibold text-gray-900">Customer {String.fromCharCode(65 + cardIdx - 1)}</p>
+                        <p className="text-xs text-gray-500 mt-1">
+                          {cardIdx === 1 ? '$12,400' : '$8,900'}
+                        </p>
+                      </div>
+                    ) : null;
+                  })}
                 </div>
               </div>
             ))}
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
 
-  // ─── Pipeline Tab Content
-  const PipelineContent = () => (
-    <div className="w-full max-w-4xl opacity-100 transition-opacity duration-300">
-      <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-lg">
-        <div className="flex gap-4 overflow-x-auto pb-4">
-          {['New Leads', 'Quoted', 'Booked', 'In Progress'].map((stage, stageIdx) => (
+  // ─── Estimates Tab Content
+  const EstimatesContent = () => {
+    const [visibleTiers, setVisibleTiers] = useState(0);
+    const [countsPhase, setCountsPhase] = useState(0);
+    const [featuresPhase, setFeaturesPhase] = useState(0);
+    const [badgePhase, setBadgePhase] = useState(0);
+
+    useEffect(() => {
+      const tiers = [0, 300, 600, 900].map((delay, idx) =>
+        setTimeout(() => setVisibleTiers(idx + 1), delay)
+      );
+      const countsTimeout = setTimeout(() => setCountsPhase(1), 1200);
+      const featuresTimeout = setTimeout(() => setFeaturesPhase(1), 1800);
+      const badgeTimeout = setTimeout(() => setBadgePhase(1), 2400);
+
+      return () => {
+        tiers.forEach(clearTimeout);
+        clearTimeout(countsTimeout);
+        clearTimeout(featuresTimeout);
+        clearTimeout(badgeTimeout);
+      };
+    }, []);
+
+    const TierCard = ({ tier, price, features, badge, index }: any) => {
+      const isVisible = visibleTiers > index;
+      const prices = { 'Good': 800, 'Better': 1200, 'Best': 1800 };
+      const finalPrice = prices[tier as keyof typeof prices];
+
+      return (
+        <div
+          className={`rounded-xl p-6 border-2 transition-all duration-500 ${
+            badge
+              ? 'bg-gradient-to-br from-blue-50 to-blue-100 border-blue-400 ring-2 ring-blue-500 shadow-2xl shadow-blue-500/30'
+              : 'bg-white border-gray-200 shadow-lg'
+          }`}
+          style={{
+            opacity: isVisible ? 1 : 0,
+            transform: isVisible ? 'scale(1)' : 'scale(0.9)',
+          }}
+        >
+          {badge && (
             <div
-              key={stage}
-              className="flex-shrink-0 w-56 bg-slate-100 rounded-lg p-4 border border-gray-300"
+              className="inline-block px-3 py-1 rounded-full bg-blue-500 text-white text-xs font-semibold mb-4 transition-all"
+              style={{
+                opacity: badgePhase && isVisible ? 1 : 0,
+                animation: badgePhase && isVisible ? 'pulse 2s infinite' : 'none'
+              }}
             >
-              <p className="text-xs font-bold text-gray-600 uppercase mb-4 sticky">{stage}</p>
-              <div className="space-y-3">
-                {[1, 2].map((cardIdx) => {
-                  const isFirstDrag = stageIdx === 1 && cardIdx === 1;
-                  return (
-                    <div
-                      key={`${stage}-${cardIdx}`}
-                      className={`bg-white rounded-lg p-3 border-l-4 shadow-md cursor-grab active:cursor-grabbing transition-transform ${
-                        isFirstDrag ? 'rotate-2 shadow-lg' : ''
-                      } ${
-                        stageIdx === 0
-                          ? 'border-blue-500 bg-blue-50'
-                          : stageIdx === 1
-                          ? 'border-purple-500 bg-purple-50'
-                          : stageIdx === 2
-                          ? 'border-emerald-500 bg-emerald-50'
-                          : 'border-amber-500 bg-amber-50'
-                      }`}
-                    >
-                      <p className="text-sm font-semibold text-gray-900">Customer {String.fromCharCode(65 + cardIdx - 1)}</p>
-                      <p className="text-xs text-gray-500 mt-1">
-                        {Math.floor(Math.random() * 15000 + 5000).toLocaleString('en-US', {
-                          style: 'currency',
-                          currency: 'USD',
-                        })}
-                      </p>
-                    </div>
-                  );
-                })}
+              {badge}
+            </div>
+          )}
+          <p className="font-semibold text-gray-900 text-lg">{tier}</p>
+          <p className="text-3xl font-bold text-gray-900 mt-2 mb-4" style={{
+            opacity: countsPhase && isVisible ? 1 : 0,
+            transition: 'opacity 0.5s'
+          }}>
+            {countsPhase && isVisible ? `$${finalPrice.toLocaleString()}` : '$0'}
+          </p>
+          <ul className="space-y-2">
+            {features.map((feature: string, idx: number) => (
+              <li
+                key={idx}
+                className="flex items-start gap-2 text-sm text-gray-700 transition-all"
+                style={{
+                  opacity: featuresPhase && isVisible ? 1 : 0,
+                  transform: featuresPhase && isVisible ? 'translateX(0)' : 'translateX(-10px)',
+                  transitionDelay: `${idx * 100}ms`
+                }}
+              >
+                <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                <span>{feature}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    };
+
+    return (
+      <div className="w-full max-w-4xl opacity-100 transition-opacity duration-300">
+        <div className="grid grid-cols-3 gap-4">
+          {[
+            { tier: 'Good', price: '$800', features: ['Bathroom Fixture Replacement', 'Caulking & Sealant', 'Basic Tile Work'], badge: null },
+            {
+              tier: 'Better',
+              price: '$1,200',
+              features: ['Everything in Good', 'Tile Removal & Prep', 'Grout Installation', 'Full Renovations'],
+              badge: 'Recommended',
+            },
+            { tier: 'Best', price: '$1,800', features: ['Everything in Better', 'Premium Fixtures', 'Heated Floors', 'Custom Lighting'], badge: null },
+          ].map((tier, idx) => (
+            <TierCard key={tier.tier} {...tier} index={idx} />
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  // ─── Growth Advisor Tab Content
+  const AdvisorContent = () => {
+    const [messagePhase, setMessagePhase] = useState(0);
+
+    useEffect(() => {
+      const phases = [
+        800,   // First typing
+        2000,  // Second typing
+        2700,  // User message
+        3800,  // Third typing
+        5200   // Last user message
+      ];
+
+      phases.forEach((delay, idx) => {
+        setTimeout(() => setMessagePhase(idx + 1), delay);
+      });
+    }, []);
+
+    const TypingIndicator = () => (
+      <div className="bg-gray-200 rounded-2xl rounded-tl-sm px-4 py-2 max-w-xs">
+        <div className="flex gap-1">
+          <div className="w-2 h-2 rounded-full bg-gray-500 animate-bounce" style={{ animationDelay: '0ms' }} />
+          <div className="w-2 h-2 rounded-full bg-gray-500 animate-bounce" style={{ animationDelay: '150ms' }} />
+          <div className="w-2 h-2 rounded-full bg-gray-500 animate-bounce" style={{ animationDelay: '300ms' }} />
+        </div>
+      </div>
+    );
+
+    const Message = ({ isAdvisor, text, phase, minPhase }: any) => (
+      <div className={`flex gap-3 ${isAdvisor ? '' : 'justify-end'}`} style={{
+        opacity: phase >= minPhase ? 1 : 0,
+        transform: phase >= minPhase ? (isAdvisor ? 'translateY(0)' : 'translateX(0)') : (isAdvisor ? 'translateY(10px)' : 'translateX(10px)'),
+        transition: 'all 0.5s ease-out'
+      }}>
+        {isAdvisor && (
+          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-bold">
+            A
+          </div>
+        )}
+        <div className={`rounded-2xl px-4 py-2 max-w-xs ${isAdvisor ? 'bg-gray-200 rounded-tl-sm' : 'bg-blue-500 text-white rounded-tr-sm'}`}>
+          <p className={`text-sm ${isAdvisor ? 'text-gray-900' : 'text-white'}`}>{text}</p>
+        </div>
+        {!isAdvisor && (
+          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-slate-300 flex items-center justify-center text-white text-xs font-bold">
+            M
+          </div>
+        )}
+      </div>
+    );
+
+    return (
+      <div className="w-full max-w-2xl opacity-100 transition-opacity duration-300">
+        <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-lg max-h-96 overflow-y-auto">
+          <div className="space-y-4">
+            {/* Message 1 with typing */}
+            {messagePhase < 1 && <div className="flex gap-3"><div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-bold">A</div><TypingIndicator /></div>}
+            {messagePhase >= 1 && <Message isAdvisor text="Morning Mike 👋 You closed 8 jobs this month for $34,200. Up 18% from last month." phase={messagePhase} minPhase={1} />}
+
+            {/* Message 2 with typing */}
+            {messagePhase < 2 && messagePhase >= 1 && <div className="flex gap-3"><div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-bold">A</div><TypingIndicator /></div>}
+            {messagePhase >= 2 && <Message isAdvisor text="3 estimates over $5K are going stale. That's $23K sitting on the table." phase={messagePhase} minPhase={2} />}
+
+            {/* User message 1 */}
+            {messagePhase >= 3 && <Message isAdvisor={false} text="Which ones?" phase={messagePhase} minPhase={3} />}
+
+            {/* Message 3 with typing */}
+            {messagePhase < 4 && messagePhase >= 3 && <div className="flex gap-3"><div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-bold">A</div><TypingIndicator /></div>}
+            {messagePhase >= 4 && <Message isAdvisor text="Patel kitchen reno ($12K), Chen HVAC ($6.2K), Rodriguez bathroom ($4.8K). Want me to follow up?" phase={messagePhase} minPhase={4} />}
+
+            {/* User message 2 */}
+            {messagePhase >= 5 && <Message isAdvisor={false} text="Yes, follow up today" phase={messagePhase} minPhase={5} />}
+          </div>
+          <div className="flex gap-2 mt-4 pt-4 border-t border-gray-200">
+            <input
+              type="text"
+              placeholder="Ask anything..."
+              className="flex-1 px-4 py-2 bg-gray-100 rounded-full text-sm text-gray-900 placeholder-gray-500 cursor-default"
+            />
+            <button className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors">
+              <Send className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // ─── Autopilot Tab Content
+  const AutopilotContent = () => {
+    const [visibleRows, setVisibleRows] = useState(0);
+    const [toggleStates, setToggleStates] = useState<boolean[]>([false, false, false, false, false, false]);
+    const [counters, setCounters] = useState<number[]>([0, 0, 0, 0, 0, 0]);
+
+    useEffect(() => {
+      const automations = [
+        { name: 'Speed to Lead', status: 'Responds in 60 seconds' },
+        { name: 'Estimate Follow-Up', status: 'Days 1, 3, 7' },
+        { name: '5-Star Reviews', status: 'Auto-requests after job' },
+        { name: 'Payment Reminders', status: 'Days 3, 7, 14' },
+        { name: 'Reactivation', status: '60-day dormant customers' },
+        { name: 'Seasonal Campaigns', status: 'Fall furnace tune-ups' },
+      ];
+
+      automations.forEach((_, idx) => {
+        const rowDelay = idx * 200;
+        setTimeout(() => setVisibleRows(idx + 1), rowDelay);
+
+        const toggleDelay = rowDelay + 300;
+        setTimeout(() => {
+          setToggleStates((prev) => {
+            const newStates = [...prev];
+            newStates[idx] = true;
+            return newStates;
+          });
+        }, toggleDelay);
+
+        const countDelay = toggleDelay + 100;
+        const counts = [247, 1204, 892, 541, 365, 128];
+        let current = 0;
+        const countInterval = setInterval(() => {
+          current += Math.floor(counts[idx] / 20);
+          if (current >= counts[idx]) {
+            setCounters((prev) => {
+              const newCounters = [...prev];
+              newCounters[idx] = counts[idx];
+              return newCounters;
+            });
+            clearInterval(countInterval);
+          } else {
+            setCounters((prev) => {
+              const newCounters = [...prev];
+              newCounters[idx] = current;
+              return newCounters;
+            });
+          }
+        }, 50);
+
+        return () => clearInterval(countInterval);
+      });
+    }, []);
+
+    return (
+      <div className="w-full max-w-2xl opacity-100 transition-opacity duration-300">
+        <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-lg space-y-4">
+          {[
+            { name: 'Speed to Lead', status: 'Responds in 60 seconds' },
+            { name: 'Estimate Follow-Up', status: 'Days 1, 3, 7' },
+            { name: '5-Star Reviews', status: 'Auto-requests after job' },
+            { name: 'Payment Reminders', status: 'Days 3, 7, 14' },
+            { name: 'Reactivation', status: '60-day dormant customers' },
+            { name: 'Seasonal Campaigns', status: 'Fall furnace tune-ups' },
+          ].map((automation, idx) => (
+            <div
+              key={automation.name}
+              className="flex items-center justify-between p-4 bg-slate-50 rounded-lg border border-gray-200 transition-all"
+              style={{
+                opacity: visibleRows > idx ? 1 : 0,
+                transform: visibleRows > idx ? 'translateX(0)' : 'translateX(-20px)',
+                transitionDelay: `${idx * 200}ms`
+              }}
+            >
+              <div>
+                <p className="text-sm font-semibold text-gray-900">{automation.name}</p>
+                <p className="text-xs text-gray-500 mt-1">{automation.status}</p>
+              </div>
+              <div className="flex items-center gap-3">
+                <div
+                  className={`relative w-12 h-6 rounded-full shadow-md transition-all duration-500 flex items-center ${
+                    toggleStates[idx] ? 'bg-emerald-500 shadow-emerald-500/40' : 'bg-gray-300'
+                  }`}
+                  style={{
+                    animation: toggleStates[idx] ? 'pulse 1.5s ease-in-out 2' : 'none'
+                  }}
+                >
+                  <div
+                    className="absolute w-5 h-5 rounded-full bg-white shadow-lg transition-all duration-500"
+                    style={{
+                      right: toggleStates[idx] ? '2px' : 'auto',
+                      left: !toggleStates[idx] ? '2px' : 'auto'
+                    }}
+                  />
+                </div>
+                {toggleStates[idx] && (
+                  <div className="flex items-center gap-1">
+                    <span className="text-xs font-semibold text-emerald-600">Running</span>
+                    {counters[idx] > 0 && (
+                      <span className="text-xs font-semibold text-emerald-600">{counters[idx]} sent</span>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           ))}
         </div>
       </div>
-    </div>
-  );
-
-  // ─── Estimates Tab Content
-  const EstimatesContent = () => (
-    <div className="w-full max-w-4xl opacity-100 transition-opacity duration-300">
-      <div className="grid grid-cols-3 gap-4">
-        {[
-          { tier: 'Good', price: '$800', features: ['Bathroom Fixture Replacement', 'Caulking & Sealant', 'Basic Tile Work'], badge: null },
-          {
-            tier: 'Better',
-            price: '$1,200',
-            features: ['Everything in Good', 'Tile Removal & Prep', 'Grout Installation', 'Full Renovations'],
-            badge: 'Recommended',
-          },
-          { tier: 'Best', price: '$1,800', features: ['Everything in Better', 'Premium Fixtures', 'Heated Floors', 'Custom Lighting'], badge: null },
-        ].map((tier) => (
-          <div
-            key={tier.tier}
-            className={`rounded-xl p-6 border-2 transition-all ${
-              tier.badge
-                ? 'bg-gradient-to-br from-blue-50 to-blue-100 border-blue-400 ring-2 ring-blue-500 scale-105 shadow-2xl shadow-blue-500/30'
-                : 'bg-white border-gray-200 shadow-lg'
-            }`}
-          >
-            {tier.badge && (
-              <div className="inline-block px-3 py-1 rounded-full bg-blue-500 text-white text-xs font-semibold mb-4">
-                {tier.badge}
-              </div>
-            )}
-            <p className="font-semibold text-gray-900 text-lg">{tier.tier}</p>
-            <p className="text-3xl font-bold text-gray-900 mt-2 mb-4">{tier.price}</p>
-            <ul className="space-y-2">
-              {tier.features.map((feature, idx) => (
-                <li key={idx} className="flex items-start gap-2 text-sm text-gray-700">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
-                  <span>{feature}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-
-  // ─── Growth Advisor Tab Content
-  const AdvisorContent = () => (
-    <div className="w-full max-w-2xl opacity-100 transition-opacity duration-300">
-      <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-lg max-h-96 overflow-y-auto">
-        <div className="space-y-4">
-          {/* Advisor message */}
-          <div className="flex gap-3">
-            <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-bold">
-              A
-            </div>
-            <div className="bg-gray-200 rounded-2xl rounded-tl-sm px-4 py-2 max-w-xs">
-              <p className="text-sm text-gray-900">Morning Mike 👋 You closed 8 jobs this month for $34,200. Up 18% from last month.</p>
-            </div>
-          </div>
-
-          {/* Advisor message */}
-          <div className="flex gap-3">
-            <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-bold">
-              A
-            </div>
-            <div className="bg-gray-200 rounded-2xl rounded-tl-sm px-4 py-2 max-w-xs">
-              <p className="text-sm text-gray-900">3 estimates over $5K are going stale. That's $23K sitting on the table.</p>
-            </div>
-          </div>
-
-          {/* User message */}
-          <div className="flex gap-3 justify-end">
-            <div className="bg-blue-500 text-white rounded-2xl rounded-tr-sm px-4 py-2 max-w-xs">
-              <p className="text-sm">Which ones?</p>
-            </div>
-            <div className="flex-shrink-0 w-8 h-8 rounded-full bg-slate-300 flex items-center justify-center text-white text-xs font-bold">
-              M
-            </div>
-          </div>
-
-          {/* Advisor message */}
-          <div className="flex gap-3">
-            <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-bold">
-              A
-            </div>
-            <div className="bg-gray-200 rounded-2xl rounded-tl-sm px-4 py-2 max-w-xs">
-              <p className="text-sm text-gray-900">Patel kitchen reno ($12K), Chen HVAC ($6.2K), Rodriguez bathroom ($4.8K). Want me to follow up?</p>
-            </div>
-          </div>
-
-          {/* User message */}
-          <div className="flex gap-3 justify-end">
-            <div className="bg-blue-500 text-white rounded-2xl rounded-tr-sm px-4 py-2 max-w-xs">
-              <p className="text-sm">Yes, follow up today</p>
-            </div>
-            <div className="flex-shrink-0 w-8 h-8 rounded-full bg-slate-300 flex items-center justify-center text-white text-xs font-bold">
-              M
-            </div>
-          </div>
-        </div>
-        <div className="flex gap-2 mt-4 pt-4 border-t border-gray-200">
-          <input
-            type="text"
-            placeholder="Ask anything..."
-            className="flex-1 px-4 py-2 bg-gray-100 rounded-full text-sm text-gray-900 placeholder-gray-500"
-          />
-          <button className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors">
-            <Send className="w-4 h-4" />
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-
-  // ─── Autopilot Tab Content
-  const AutopilotContent = () => (
-    <div className="w-full max-w-2xl opacity-100 transition-opacity duration-300">
-      <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-lg space-y-4">
-        {[
-          { name: 'Speed to Lead', status: 'Responds in 60 seconds' },
-          { name: 'Estimate Follow-Up', status: 'Days 1, 3, 7' },
-          { name: '5-Star Reviews', status: 'Auto-requests after job' },
-          { name: 'Payment Reminders', status: 'Days 3, 7, 14' },
-          { name: 'Reactivation', status: '60-day dormant customers' },
-          { name: 'Seasonal Campaigns', status: 'Fall furnace tune-ups' },
-        ].map((automation) => (
-          <div key={automation.name} className="flex items-center justify-between p-4 bg-slate-50 rounded-lg border border-gray-200">
-            <div>
-              <p className="text-sm font-semibold text-gray-900">{automation.name}</p>
-              <p className="text-xs text-gray-500 mt-1">{automation.status}</p>
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="relative w-12 h-6 bg-emerald-500 rounded-full shadow-md shadow-emerald-500/40 flex items-center">
-                <div className="absolute right-1 w-5 h-5 rounded-full bg-white shadow-lg" />
-              </div>
-              <span className="text-xs font-semibold text-emerald-600">Running</span>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+    );
+  };
 
   // ─── Invoicing Tab Content
-  const InvoicingContent = () => (
-    <div className="w-full max-w-2xl opacity-100 transition-opacity duration-300">
-      <div className="bg-white rounded-xl p-8 border border-gray-200 shadow-lg">
-        <div className="mb-8 pb-8 border-b border-gray-200">
-          <div className="flex justify-between items-start mb-6">
-            <div>
-              <p className="text-xs text-gray-500 font-semibold">INVOICE</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">INV-2026-047</p>
+  const InvoicingContent = () => {
+    const [headerPhase, setHeaderPhase] = useState(0);
+    const [itemsPhase, setItemsPhase] = useState(0);
+    const [totalPhase, setTotalPhase] = useState(0);
+    const [progressPhase, setProgressPhase] = useState(0);
+    const [buttonPhase, setButtonPhase] = useState(0);
+
+    useEffect(() => {
+      setTimeout(() => setHeaderPhase(1), 0);
+      setTimeout(() => setItemsPhase(1), 300);
+      setTimeout(() => setTotalPhase(1), 1500);
+      setTimeout(() => setProgressPhase(1), 2200);
+      setTimeout(() => setButtonPhase(1), 2800);
+    }, []);
+
+    const LineItem = ({ description, amount, delay }: any) => (
+      <tr
+        className="border-b border-gray-100 transition-all"
+        style={{
+          opacity: itemsPhase ? 1 : 0,
+          transform: itemsPhase ? 'translateY(0)' : 'translateY(-10px)',
+          transitionDelay: itemsPhase ? `${delay}ms` : '0ms'
+        }}
+      >
+        <td className="py-3 text-gray-900">{description}</td>
+        <td className="text-right text-gray-900">{amount}</td>
+      </tr>
+    );
+
+    const CountUpValue = ({ finalValue, prefix, suffix, phase }: any) => {
+      const [displayValue, setDisplayValue] = useState('0');
+
+      useEffect(() => {
+        if (!phase) {
+          setDisplayValue('0');
+          return;
+        }
+
+        let current = 0;
+        const target = parseFloat(finalValue);
+        const interval = setInterval(() => {
+          current += target / 20;
+          if (current >= target) {
+            setDisplayValue(finalValue);
+            clearInterval(interval);
+          } else {
+            setDisplayValue(String(Math.round(current * 100) / 100));
+          }
+        }, 50);
+
+        return () => clearInterval(interval);
+      }, [phase, finalValue]);
+
+      return <span>{prefix}{displayValue}{suffix}</span>;
+    };
+
+    return (
+      <div className="w-full max-w-2xl opacity-100 transition-opacity duration-300">
+        <div className="bg-white rounded-xl p-8 border border-gray-200 shadow-lg">
+          <div
+            className="mb-8 pb-8 border-b border-gray-200 transition-all"
+            style={{
+              opacity: headerPhase ? 1 : 0,
+              transform: headerPhase ? 'translateY(0)' : 'translateY(-10px)'
+            }}
+          >
+            <div className="flex justify-between items-start mb-6">
+              <div>
+                <p className="text-xs text-gray-500 font-semibold">INVOICE</p>
+                <p className="text-2xl font-bold text-gray-900 mt-1">INV-2026-047</p>
+              </div>
+              <div className="text-right">
+                <p className="text-sm font-semibold text-gray-700">Patel Residence</p>
+                <p className="text-xs text-gray-500 mt-1">123 Oak Street, Toronto ON</p>
+              </div>
             </div>
-            <div className="text-right">
-              <p className="text-sm font-semibold text-gray-700">Patel Residence</p>
-              <p className="text-xs text-gray-500 mt-1">123 Oak Street, Toronto ON</p>
+          </div>
+
+          <div className="mb-8">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-gray-300">
+                  <th className="text-left py-2 text-xs font-semibold text-gray-700">Description</th>
+                  <th className="text-right py-2 text-xs font-semibold text-gray-700">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <LineItem description="Bathroom Reno Labour" amount="$2,400.00" delay={0} />
+                <LineItem description="Materials & Fixtures" amount="$1,800.00" delay={100} />
+                <LineItem description="Permits & Inspection" amount="$300.00" delay={200} />
+              </tbody>
+            </table>
+          </div>
+
+          <div
+            className="space-y-2 mb-6 pb-6 border-b border-gray-200 transition-all"
+            style={{
+              opacity: totalPhase ? 1 : 0,
+              transitionDelay: totalPhase ? '200ms' : '0ms'
+            }}
+          >
+            <div className="flex justify-between text-sm">
+              <span className="text-gray-700">Subtotal</span>
+              <span className="font-semibold text-gray-900">
+                <CountUpValue finalValue="4500.00" prefix="$" suffix="" phase={totalPhase} />
+              </span>
+            </div>
+            <div className="flex justify-between text-sm">
+              <span className="text-gray-700">HST 13% (Ontario)</span>
+              <span className="font-semibold text-gray-900">
+                <CountUpValue finalValue="585.00" prefix="$" suffix="" phase={totalPhase} />
+              </span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-semibold text-gray-900">Total</span>
+              <span className="text-lg font-bold text-gray-900">
+                <CountUpValue finalValue="5085.00" prefix="$" suffix="" phase={totalPhase} />
+              </span>
             </div>
           </div>
-        </div>
 
-        <div className="mb-8">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-gray-300">
-                <th className="text-left py-2 text-xs font-semibold text-gray-700">Description</th>
-                <th className="text-right py-2 text-xs font-semibold text-gray-700">Amount</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-b border-gray-100">
-                <td className="py-3 text-gray-900">Bathroom Reno Labour</td>
-                <td className="text-right text-gray-900">$2,400.00</td>
-              </tr>
-              <tr className="border-b border-gray-100">
-                <td className="py-3 text-gray-900">Materials & Fixtures</td>
-                <td className="text-right text-gray-900">$1,800.00</td>
-              </tr>
-              <tr>
-                <td className="py-3 text-gray-900">Permits & Inspection</td>
-                <td className="text-right text-gray-900">$300.00</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+          <div
+            className="mb-6 transition-all"
+            style={{
+              opacity: progressPhase ? 1 : 0,
+              transitionDelay: progressPhase ? '300ms' : '0ms'
+            }}
+          >
+            <p className="text-xs text-gray-500 font-semibold mb-2">Payment Progress</p>
+            <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-emerald-500 rounded-full transition-all duration-1000"
+                style={{ width: progressPhase ? '60%' : '0%' }}
+              />
+            </div>
+            <p className="text-xs text-gray-600 mt-2">$3,051.00 paid · $2,034.00 remaining</p>
+          </div>
 
-        <div className="space-y-2 mb-6 pb-6 border-b border-gray-200">
-          <div className="flex justify-between text-sm">
-            <span className="text-gray-700">Subtotal</span>
-            <span className="font-semibold text-gray-900">$4,500.00</span>
-          </div>
-          <div className="flex justify-between text-sm">
-            <span className="text-gray-700">HST 13% (Ontario)</span>
-            <span className="font-semibold text-gray-900">$585.00</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="font-semibold text-gray-900">Total</span>
-            <span className="text-lg font-bold text-gray-900">$5,085.00</span>
+          <div
+            className="flex gap-3 transition-all"
+            style={{
+              opacity: buttonPhase ? 1 : 0,
+              transform: buttonPhase ? 'scale(1)' : 'scale(0.95)',
+              transitionDelay: buttonPhase ? '400ms' : '0ms'
+            }}
+          >
+            <button
+              className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-lg text-sm font-semibold hover:bg-blue-600 transition-all relative overflow-hidden"
+              style={{
+                animation: buttonPhase ? 'glow 2s ease-in-out infinite' : 'none'
+              }}
+            >
+              Send Reminder
+            </button>
+            <button className="flex-1 px-4 py-2 bg-gray-100 text-gray-900 rounded-lg text-sm font-semibold hover:bg-gray-200 transition-colors">
+              Record Payment
+            </button>
           </div>
         </div>
 
-        <div className="mb-6">
-          <p className="text-xs text-gray-500 font-semibold mb-2">Payment Progress</p>
-          <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-            <div className="h-full bg-emerald-500 rounded-full" style={{ width: '60%' }} />
-          </div>
-          <p className="text-xs text-gray-600 mt-2">$3,051.00 paid · $2,034.00 remaining</p>
-        </div>
-
-        <div className="flex gap-3">
-          <button className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-lg text-sm font-semibold hover:bg-blue-600 transition-colors">
-            Send Reminder
-          </button>
-          <button className="flex-1 px-4 py-2 bg-gray-100 text-gray-900 rounded-lg text-sm font-semibold hover:bg-gray-200 transition-colors">
-            Record Payment
-          </button>
-        </div>
+        <style>{`
+          @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.8); }
+          }
+        `}</style>
       </div>
-    </div>
-  );
+    );
+  };
 
   const renderTabContent = () => {
     switch (activeTab) {
       case 'dashboard':
-        return <DashboardContent />;
+        return <DashboardContent key="dashboard" />;
       case 'pipeline':
-        return <PipelineContent />;
+        return <PipelineContent key="pipeline" />;
       case 'estimates':
-        return <EstimatesContent />;
+        return <EstimatesContent key="estimates" />;
       case 'advisor':
-        return <AdvisorContent />;
+        return <AdvisorContent key="advisor" />;
       case 'autopilot':
-        return <AutopilotContent />;
+        return <AutopilotContent key="autopilot" />;
       case 'invoicing':
-        return <InvoicingContent />;
+        return <InvoicingContent key="invoicing" />;
       default:
-        return <DashboardContent />;
+        return <DashboardContent key="dashboard" />;
     }
   };
 
@@ -1012,7 +1330,7 @@ function InteractiveExplorer() {
 
           {/* Product view area */}
           <div className="flex items-center justify-center h-full p-12 lg:pl-80">
-            <div className="transition-opacity duration-300">
+            <div className="transition-opacity duration-300" key={activeTab}>
               {renderTabContent()}
             </div>
           </div>

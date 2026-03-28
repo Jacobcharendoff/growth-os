@@ -14,6 +14,7 @@ import {
   Zap,
   MessageSquare,
   Bell,
+  Rocket,
 } from 'lucide-react';
 
 export function Sidebar() {
@@ -47,6 +48,26 @@ export function Sidebar() {
             <span className="text-xs text-blue-300 font-medium">™</span>
           </div>
         </div>
+      </div>
+
+      {/* Get Started Banner */}
+      <div className="px-4 pt-4">
+        <Link
+          href="/setup"
+          className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
+            pathname === '/setup'
+              ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20'
+              : 'bg-gradient-to-r from-blue-600/20 to-purple-600/20 text-blue-300 hover:from-blue-600/30 hover:to-purple-600/30 border border-blue-500/30'
+          }`}
+        >
+          <Rocket className="w-5 h-5" />
+          <div className="flex-1">
+            <span className="font-semibold text-sm">Get Started</span>
+            <div className="w-full bg-slate-700/50 rounded-full h-1.5 mt-1.5">
+              <div className="bg-emerald-400 h-1.5 rounded-full" style={{ width: '0%' }} />
+            </div>
+          </div>
+        </Link>
       </div>
 
       {/* Navigation */}

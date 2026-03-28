@@ -29,7 +29,11 @@ import {
   AlertCircle,
   CheckCircle,
   MessageSquare,
+  Rocket,
+  ArrowRight,
+  ChevronRight,
 } from 'lucide-react';
+import Link from 'next/link';
 import { Modal } from '@/components/Modal';
 import { AddDealForm } from '@/components/AddDealForm';
 
@@ -239,6 +243,29 @@ export default function Dashboard() {
               {range === 'quarter' && 'This Quarter'}
             </button>
           ))}
+        </div>
+      </div>
+
+      {/* Onboarding Banner */}
+      <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-6 mb-8 text-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/4" />
+        <div className="relative flex items-center justify-between gap-6 flex-wrap">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+              <Rocket className="w-6 h-6" />
+            </div>
+            <div>
+              <h3 className="text-lg font-bold">Finish setting up Growth OS</h3>
+              <p className="text-blue-100 text-sm">Complete your setup to unlock the full power of autopilot. Takes about 15 minutes.</p>
+            </div>
+          </div>
+          <Link
+            href="/setup"
+            className="flex items-center gap-2 px-5 py-2.5 bg-white text-blue-700 rounded-xl font-semibold hover:bg-blue-50 transition-all shrink-0 text-sm"
+          >
+            Continue Setup
+            <ChevronRight className="w-4 h-4" />
+          </Link>
         </div>
       </div>
 

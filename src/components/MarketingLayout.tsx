@@ -212,6 +212,16 @@ export function Navigation() {
                 {t('nav.whyGrowthOS')}
               </Link>
 
+              {/* Mobile Language Toggle */}
+              <button
+                onClick={() => setLocale(locale === 'en' ? 'fr' : 'en')}
+                className="flex items-center gap-2 text-sm font-medium text-gray-600"
+              >
+                <Globe className="w-4 h-4" />
+                {locale === 'en' ? 'Français' : 'English'}
+                <span className="ml-auto text-xs font-bold bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full">{locale.toUpperCase()}</span>
+              </button>
+
               <div className="border-t border-gray-100 pt-4 flex flex-col gap-3">
                 <Link
                   href="/dashboard"

@@ -16,10 +16,13 @@ export default function ElectricalPage() {
           <p className="text-xl text-gray-600 mb-8 leading-relaxed">
             Permits, licenses, inspections, invoices, follow-ups. You're juggling too much. Growth OS keeps all your electrical business organized so you can focus on wiring, not paperwork.
           </p>
-          <button className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-full transition-colors">
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-full transition-colors"
+          >
             Get started free
             <Zap className="w-5 h-5" />
-          </button>
+          </Link>
           <p className="text-sm text-gray-500 mt-4">No credit card required. 5-minute setup.</p>
         </div>
       </section>
@@ -230,10 +233,13 @@ export default function ElectricalPage() {
           <p className="text-xl text-gray-600 mb-8">
             Free trial, no credit card. Get organized in 5 minutes.
           </p>
-          <button className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-full transition-colors text-lg">
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-full transition-colors text-lg"
+          >
             Start free trial
             <Zap className="w-5 h-5" />
-          </button>
+          </Link>
         </div>
       </section>
 

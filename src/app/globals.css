@@ -626,38 +626,237 @@ select:focus-visible {
 }
 
 /* ─── DARK MODE (App Pages) ─────────────────────────────── */
+
+/* Body & root backgrounds */
 .dark body {
   background-color: #0f172a;
   color: #e2e8f0;
 }
 
+/* ── White backgrounds → dark surfaces ── */
 .dark .bg-white {
   background-color: #1e293b;
 }
 
+/* ── Slate backgrounds ── */
+.dark .bg-slate-50 {
+  background-color: #0f172a;
+}
+.dark .bg-slate-100 {
+  background-color: #1e293b;
+}
+.dark .bg-slate-200 {
+  background-color: #334155;
+}
+
+/* ── Gray backgrounds (legacy) ── */
 .dark .bg-gray-50,
 .dark .bg-gray-100 {
   background-color: #0f172a;
 }
+.dark .bg-gray-200 {
+  background-color: #334155;
+}
 
-.dark .text-gray-900 {
+/* ── Slate text ── */
+.dark .text-slate-900 {
   color: #f1f5f9;
 }
-
-.dark .text-gray-700 {
+.dark .text-slate-800 {
+  color: #e2e8f0;
+}
+.dark .text-slate-700 {
   color: #cbd5e1;
 }
-
-.dark .text-gray-500,
-.dark .text-gray-600 {
+.dark .text-slate-600 {
+  color: #94a3b8;
+}
+.dark .text-slate-500 {
+  color: #94a3b8;
+}
+.dark .text-slate-400 {
   color: #94a3b8;
 }
 
-.dark .border-gray-200,
+/* ── Gray text (legacy) ── */
+.dark .text-gray-900 {
+  color: #f1f5f9;
+}
+.dark .text-gray-800 {
+  color: #e2e8f0;
+}
+.dark .text-gray-700 {
+  color: #cbd5e1;
+}
+.dark .text-gray-600,
+.dark .text-gray-500 {
+  color: #94a3b8;
+}
+.dark .text-gray-400 {
+  color: #64748b;
+}
+
+/* ── Slate borders ── */
+.dark .border-slate-100 {
+  border-color: #1e293b;
+}
+.dark .border-slate-200 {
+  border-color: #334155;
+}
+.dark .border-slate-300 {
+  border-color: #475569;
+}
+
+/* ── Gray borders (legacy) ── */
 .dark .border-gray-100 {
+  border-color: #1e293b;
+}
+.dark .border-gray-200 {
   border-color: #334155;
 }
 
+/* ── Shadows ── */
 .dark .shadow-sm {
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+.dark .shadow {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+.dark .shadow-md {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+}
+.dark .shadow-lg {
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4);
+}
+.dark .shadow-xl {
+  box-shadow: 0 20px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* ── Blue accents (pipeline stages, buttons, badges) ── */
+.dark .bg-blue-50 {
+  background-color: rgba(59, 130, 246, 0.1);
+}
+.dark .bg-blue-100 {
+  background-color: rgba(59, 130, 246, 0.2);
+}
+
+/* ── Emerald/Green accents ── */
+.dark .bg-emerald-50 {
+  background-color: rgba(16, 185, 129, 0.1);
+}
+.dark .bg-emerald-100 {
+  background-color: rgba(16, 185, 129, 0.2);
+}
+.dark .bg-green-100 {
+  background-color: rgba(34, 197, 94, 0.2);
+}
+
+/* ── Purple accents ── */
+.dark .bg-purple-50 {
+  background-color: rgba(147, 51, 234, 0.1);
+}
+.dark .bg-purple-100 {
+  background-color: rgba(147, 51, 234, 0.2);
+}
+
+/* ── Amber/Orange accents ── */
+.dark .bg-amber-50 {
+  background-color: rgba(245, 158, 11, 0.1);
+}
+.dark .bg-amber-100 {
+  background-color: rgba(245, 158, 11, 0.2);
+}
+
+/* ── Cyan accents ── */
+.dark .bg-cyan-100 {
+  background-color: rgba(6, 182, 212, 0.2);
+}
+
+/* ── Indigo accents ── */
+.dark .bg-indigo-100 {
+  background-color: rgba(99, 102, 241, 0.2);
+}
+
+/* ── Red/Rose accents ── */
+.dark .bg-red-50 {
+  background-color: rgba(239, 68, 68, 0.1);
+}
+.dark .bg-red-100 {
+  background-color: rgba(239, 68, 68, 0.2);
+}
+.dark .bg-rose-50 {
+  background-color: rgba(244, 63, 94, 0.1);
+}
+.dark .bg-rose-100 {
+  background-color: rgba(244, 63, 94, 0.2);
+}
+
+/* ── Form inputs ── */
+.dark input,
+.dark textarea,
+.dark select {
+  background-color: #0f172a;
+  border-color: #475569;
+  color: #e2e8f0;
+}
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #64748b;
+}
+.dark input:focus,
+.dark textarea:focus,
+.dark select:focus {
+  border-color: #3b82f6;
+}
+
+/* ── Gradients ── */
+.dark .bg-gradient-to-r.from-slate-50,
+.dark .bg-gradient-to-br.from-slate-50 {
+  --tw-gradient-from: #0f172a;
+}
+.dark .to-white,
+.dark .to-slate-50 {
+  --tw-gradient-to: #1e293b;
+}
+.dark .to-slate-100 {
+  --tw-gradient-to: #0f172a;
+}
+
+/* ── Hover states ── */
+.dark .hover\:bg-slate-50:hover {
+  background-color: #1e293b;
+}
+.dark .hover\:bg-slate-100:hover {
+  background-color: #334155;
+}
+.dark .hover\:bg-slate-200:hover {
+  background-color: #475569;
+}
+
+/* ── Scrollbar in dark mode ── */
+.dark ::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #475569;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* ── Dividers ── */
+.dark .divide-slate-200 > :not(:last-child) {
+  border-color: #334155;
+}
+
+/* ── Specific component overrides ── */
+.dark .bg-gradient-to-r.from-blue-50,
+.dark .bg-gradient-to-r.from-purple-50 {
+  --tw-gradient-from: rgba(59, 130, 246, 0.1);
+}
+.dark .bg-gradient-to-r.from-purple-100 {
+  --tw-gradient-from: rgba(147, 51, 234, 0.15);
+}
+.dark .to-pink-100 {
+  --tw-gradient-to: rgba(236, 72, 153, 0.15);
 }

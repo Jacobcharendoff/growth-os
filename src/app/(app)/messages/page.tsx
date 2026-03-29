@@ -286,10 +286,10 @@ export default function MessagesPage() {
   };
 
   return (
-    <div className="h-screen flex flex-col lg:flex-row bg-gradient-to-br from-slate-50 to-slate-100">
+    <div className="h-screen flex flex-col lg:flex-row bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900">
       {/* Left Sidebar - Filters */}
-      <div className="hidden lg:flex lg:w-56 bg-white border-r border-slate-200 flex flex-col">
-        <div className="p-4 border-b border-slate-200">
+      <div className="hidden lg:flex lg:w-56 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex flex-col">
+        <div className="p-4 border-b border-slate-200 dark:border-slate-700">
           <button
             onClick={() => {
               setComposeMode(true);
@@ -337,9 +337,9 @@ export default function MessagesPage() {
       {/* Main Content */}
       <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
         {/* Center Panel - Message List OR Templates */}
-        <div className="w-full lg:w-96 border-r border-slate-200 flex flex-col bg-white lg:border-r-4">
+        <div className="w-full lg:w-96 border-r border-slate-200 dark:border-slate-700 flex flex-col bg-white dark:bg-slate-800 lg:border-r-4">
           {/* Search Bar */}
-          <div className="p-4 border-b border-slate-200">
+          <div className="p-4 border-b border-slate-200 dark:border-slate-700">
             <div className="relative">
               <Search className="absolute left-3 top-3 w-4 h-4 text-slate-400" />
               <input
@@ -358,7 +358,7 @@ export default function MessagesPage() {
               {TEMPLATES.map((template) => (
                 <div
                   key={template.id}
-                  className="bg-slate-50 rounded-lg p-4 border border-slate-200 hover:border-blue-300 transition-colors cursor-pointer"
+                  className="bg-slate-50 dark:bg-slate-700 rounded-lg p-4 border border-slate-200 dark:border-slate-600 hover:border-blue-300 transition-colors cursor-pointer"
                 >
                   <p className="font-medium text-sm text-slate-900 mb-1">{template.title}</p>
                   <p className="text-xs text-slate-600 line-clamp-2 mb-3">{template.preview}</p>
@@ -392,8 +392,8 @@ export default function MessagesPage() {
                     setSelectedMessageId(message.id);
                     setComposeMode(false);
                   }}
-                  className={`w-full px-4 py-3 border-b border-slate-100 text-left hover:bg-slate-50 transition-colors ${
-                    selectedMessageId === message.id ? 'bg-blue-50 border-l-4 border-l-blue-600' : ''
+                  className={`w-full px-4 py-3 border-b border-slate-100 dark:border-slate-700 text-left hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors ${
+                    selectedMessageId === message.id ? 'bg-blue-50 dark:bg-blue-900 border-l-4 border-l-blue-600' : ''
                   }`}
                 >
                   <div className="flex items-start justify-between mb-1">
@@ -438,11 +438,11 @@ export default function MessagesPage() {
         </div>
 
         {/* Right Panel - Message Detail OR Compose */}
-        <div className="flex-1 flex flex-col bg-white">
+        <div className="flex-1 flex flex-col bg-white dark:bg-slate-900">
           {composeMode ? (
             <div className="flex flex-col h-full">
               {/* Compose Header */}
-              <div className="px-4 sm:px-8 py-4 sm:py-6 border-b border-slate-200 flex items-center justify-between">
+              <div className="px-4 sm:px-8 py-4 sm:py-6 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
                 <h2 className="text-2xl font-bold text-slate-900">Compose Message</h2>
                 <button
                   onClick={() => setComposeMode(false)}
@@ -599,7 +599,7 @@ export default function MessagesPage() {
 
               {/* Message Content */}
               <div className="flex-1 overflow-y-auto px-4 sm:px-8 py-4 sm:py-6">
-                <div className="bg-slate-50 rounded-xl p-6 border border-slate-200">
+                <div className="bg-slate-50 dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700">
                   <p className="text-slate-900 whitespace-pre-wrap">
                     {selectedMessage.fullContent}
                   </p>

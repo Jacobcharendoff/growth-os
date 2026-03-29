@@ -239,7 +239,7 @@ export default function SetupPage() {
   };
 
   return (
-    <div className="p-4 sm:p-8 bg-slate-50 min-h-screen">
+    <div className="p-4 sm:p-8 bg-slate-50 dark:bg-slate-950 min-h-screen">
       {/* Guided Tour Overlay */}
       {activeTourId && TOURS[activeTourId] && (
         <GuidedTour
@@ -254,7 +254,7 @@ export default function SetupPage() {
       {/* Celebration Overlay */}
       {showCelebration && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-8">
-          <div className="bg-white rounded-3xl p-10 max-w-lg text-center shadow-2xl animate-in">
+          <div className="bg-white dark:bg-slate-800 rounded-3xl p-10 max-w-lg text-center shadow-2xl animate-in">
             <div className="w-20 h-20 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6">
               <PartyPopper className="w-10 h-10 text-white" />
             </div>
@@ -274,7 +274,7 @@ export default function SetupPage() {
               </Link>
               <button
                 onClick={() => setShowCelebration(false)}
-                className="flex-1 px-6 py-3 bg-slate-100 text-slate-700 rounded-xl font-semibold hover:bg-slate-200 transition-all text-center"
+                className="flex-1 px-6 py-3 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl font-semibold hover:bg-slate-200 dark:hover:bg-slate-600 transition-all text-center"
               >
                 Review Setup
               </button>

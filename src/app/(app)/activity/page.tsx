@@ -42,9 +42,9 @@ export default function ActivityPage() {
   };
 
   return (
-    <div className="h-full flex flex-col bg-white">
+    <div className="h-full flex flex-col bg-white dark:bg-slate-900">
       {/* Header */}
-      <div className="px-4 sm:px-8 py-4 sm:py-6 border-b border-slate-200">
+      <div className="px-4 sm:px-8 py-4 sm:py-6 border-b border-slate-200 dark:border-slate-700">
         <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Activity</h1>
         <p className="text-slate-600 mt-1">
           {activities.length} total activities
@@ -66,19 +66,19 @@ export default function ActivityPage() {
                   <div key={activity.id} className="relative">
                     {/* Timeline line */}
                     {index !== sortedActivities.length - 1 && (
-                      <div className="absolute left-[19px] top-[48px] bottom-[-24px] w-0.5 bg-slate-200" />
+                      <div className="absolute left-[19px] top-[48px] bottom-[-24px] w-0.5 bg-slate-200 dark:bg-slate-700" />
                     )}
 
                     {/* Activity item */}
                     <div className="flex gap-6">
                       {/* Icon circle */}
-                      <div className="flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 flex-shrink-0 relative z-10">
+                      <div className="flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 flex-shrink-0 relative z-10">
                         {ACTIVITY_ICONS[activity.type] || <FileText className="w-5 h-5" />}
                       </div>
 
                       {/* Content */}
                       <div className="flex-1 pt-1">
-                        <div className="bg-slate-50 rounded-lg p-4 border border-slate-200">
+                        <div className="bg-slate-50 dark:bg-slate-800 rounded-lg p-4 border border-slate-200 dark:border-slate-700">
                           <div className="flex items-start justify-between mb-2">
                             <div>
                               <p className="font-semibold text-slate-900 capitalize">

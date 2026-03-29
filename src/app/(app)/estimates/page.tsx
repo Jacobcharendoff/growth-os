@@ -68,7 +68,16 @@ export default function EstimatesPage() {
     initializeSeedData();
   }, [initializeSeedData]);
 
-  if (!mounted) return <div className="p-8">Loading...</div>;
+  if (!mounted) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 p-8 animate-pulse">
+        <div className="h-8 bg-slate-200 dark:bg-slate-700 rounded w-48 mb-6"></div>
+        <div className="grid grid-cols-2 lg:grid-cols-6 gap-4 mb-8">
+          {[...Array(6)].map((_, i) => <div key={i} className="bg-white dark:bg-slate-800 rounded-xl h-28 shadow-sm"></div>)}
+        </div>
+      </div>
+    );
+  }
 
   // Calculate stats
   const totalEstimates = estimates.length;
@@ -185,7 +194,7 @@ export default function EstimatesPage() {
   };
 
   return (
-    <div className="p-4 sm:p-8 bg-slate-50 min-h-screen">
+    <div className="p-4 sm:p-8 bg-slate-50 dark:bg-slate-950 min-h-screen">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">Estimates</h1>
@@ -194,7 +203,7 @@ export default function EstimatesPage() {
 
       {/* Stats Bar */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8">
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-slate-600 font-medium mb-1">Total Estimates</p>
@@ -204,7 +213,7 @@ export default function EstimatesPage() {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-slate-600 font-medium mb-1">Pending Approval</p>
@@ -214,7 +223,7 @@ export default function EstimatesPage() {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-slate-600 font-medium mb-1">Approved This Month</p>
@@ -224,7 +233,7 @@ export default function EstimatesPage() {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-slate-600 font-medium mb-1">Conversion Rate</p>
@@ -238,7 +247,7 @@ export default function EstimatesPage() {
       </div>
 
       {/* Controls */}
-      <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-8">
+      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 mb-8">
         <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between mb-6">
           {/* Search */}
           <div className="relative flex-1 max-w-md">

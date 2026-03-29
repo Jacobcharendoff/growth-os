@@ -292,8 +292,7 @@ function Hero() {
 
           {/* Subheadline */}
           <p className="hero-reveal hero-reveal-delay-3 text-lg sm:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
-            Auto-respond to new leads in 60 seconds. Follow up on every estimate.
-            Get paid faster. You run the jobs — Growth OS runs everything else.
+            Never miss a lead. Growth OS auto-responds in 60 seconds and handles follow-ups, estimates, and invoicing — so you can focus on the job.
           </p>
 
           {/* CTAs */}
@@ -302,7 +301,7 @@ function Hero() {
               href="/setup"
               className="inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-base font-semibold rounded-2xl hover:from-blue-500 hover:to-blue-600 transition-all shadow-lg shadow-blue-600/25 hover:shadow-blue-500/40 hover:-translate-y-0.5"
             >
-              Start Your Free 14-Day Trial
+              Start Free — No Card Required
               <ArrowRight className="w-5 h-5" />
             </Link>
             <Link

@@ -19,7 +19,14 @@ export default function ContactsPage() {
   }, []);
 
   if (!mounted) {
-    return <div className="p-8">Loading...</div>;
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 p-8 animate-pulse">
+        <div className="h-8 bg-slate-200 dark:bg-slate-700 rounded w-48 mb-6"></div>
+        <div className="grid grid-cols-2 lg:grid-cols-6 gap-4 mb-8">
+          {[...Array(6)].map((_, i) => <div key={i} className="bg-white dark:bg-slate-800 rounded-xl h-28 shadow-sm"></div>)}
+        </div>
+      </div>
+    );
   }
 
   const filteredContacts = contacts.filter(
@@ -33,9 +40,9 @@ export default function ContactsPage() {
     deals.filter((d) => d.contactId === contactId).length;
 
   return (
-    <div className="h-full flex flex-col bg-white">
+    <div className="h-full flex flex-col bg-white dark:bg-slate-900">
       {/* Header */}
-      <div className="px-4 sm:px-8 py-4 sm:py-6 border-b border-slate-200">
+      <div className="px-4 sm:px-8 py-4 sm:py-6 border-b border-slate-200 dark:border-slate-700">
         <div className="flex items-center justify-between mb-4 sm:mb-6">
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Contacts</h1>
@@ -68,7 +75,7 @@ export default function ContactsPage() {
       {/* Table */}
       <div className="flex-1 overflow-x-auto">
         <table className="w-full">
-          <thead className="bg-slate-50 border-b border-slate-200 sticky top-0">
+          <thead className="bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0">
             <tr>
               <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-sm font-semibold text-slate-700">
                 Name & Address

@@ -261,9 +261,9 @@ export default function AdvisorPage() {
   // ─── Welcome Screen (before first message) ────────────────
   if (!hasStarted) {
     return (
-      <div className="h-full flex flex-col bg-white">
+      <div className="h-full flex flex-col bg-white dark:bg-slate-900">
         {/* Header */}
-        <div className="flex-shrink-0 border-b border-slate-200 bg-white/80 backdrop-blur-xl">
+        <div className="flex-shrink-0 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 backdrop-blur-xl">
           <div className="flex items-center gap-3 px-6 py-4">
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
               <Sparkles className="w-5 h-5 text-white" />
@@ -293,7 +293,7 @@ export default function AdvisorPage() {
                 <button
                   key={action.label}
                   onClick={() => handleQuickAction(action)}
-                  className="w-full flex items-center gap-3 px-4 py-3.5 bg-slate-50 hover:bg-slate-100 rounded-2xl transition-colors text-left group"
+                  className="w-full flex items-center gap-3 px-4 py-3.5 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-2xl transition-colors text-left group"
                 >
                   <div className="w-9 h-9 rounded-full bg-white shadow-sm flex items-center justify-center flex-shrink-0">
                     <Icon className="w-4.5 h-4.5 text-blue-600" />
@@ -307,8 +307,8 @@ export default function AdvisorPage() {
         </div>
 
         {/* Input Bar */}
-        <div className="flex-shrink-0 border-t border-slate-200 bg-white px-4 py-3">
-          <div className="flex items-center gap-2 bg-slate-100 rounded-full px-4 py-2.5">
+        <div className="flex-shrink-0 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3">
+          <div className="flex items-center gap-2 bg-slate-100 dark:bg-slate-700 rounded-full px-4 py-2.5">
             <input
               ref={inputRef}
               type="text"
@@ -337,9 +337,9 @@ export default function AdvisorPage() {
 
   // ─── Chat View (after first message) ──────────────────────
   return (
-    <div className="h-full flex flex-col bg-white">
+    <div className="h-full flex flex-col bg-white dark:bg-slate-900">
       {/* Header */}
-      <div className="flex-shrink-0 border-b border-slate-200 bg-white/80 backdrop-blur-xl z-10">
+      <div className="flex-shrink-0 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 backdrop-blur-xl z-10">
         <div className="flex items-center gap-3 px-6 py-4">
           <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
             <Sparkles className="w-5 h-5 text-white" />

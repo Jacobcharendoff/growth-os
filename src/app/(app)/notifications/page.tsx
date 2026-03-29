@@ -184,10 +184,10 @@ export default function NotificationsPage() {
       <div
         key={notif.id}
         onClick={() => setExpandedId(expandedId === notif.id ? null : notif.id)}
-        className={`bg-white rounded-lg p-4 border cursor-pointer transition-all ${
+        className={`bg-white dark:bg-slate-800 rounded-lg p-4 border cursor-pointer transition-all ${
           notif.read
-            ? 'border-slate-200 hover:border-slate-300'
-            : 'border-blue-200 bg-blue-50 hover:border-blue-300'
+            ? 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
+            : 'border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-900 hover:border-blue-300 dark:hover:border-blue-700'
         }`}
       >
         <div className="flex gap-4">
@@ -231,13 +231,13 @@ export default function NotificationsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 p-4 sm:p-8">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 p-4 sm:p-8">
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Notifications</h1>
           {unreadCount > 0 && (
-            <button className="px-4 py-2 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 text-slate-700 text-sm font-medium shadow-sm">
+            <button className="px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-sm font-medium shadow-sm">
               Mark All Read
             </button>
           )}

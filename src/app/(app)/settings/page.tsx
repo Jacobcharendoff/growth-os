@@ -183,7 +183,7 @@ export default function SettingsPage() {
   ];
 
   return (
-    <div className="p-4 sm:p-8 bg-slate-50 min-h-screen">
+    <div className="p-4 sm:p-8 bg-slate-50 dark:bg-slate-950 min-h-screen">
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-2">
@@ -194,8 +194,8 @@ export default function SettingsPage() {
       </div>
 
       {/* Tabs */}
-      <div className="bg-white rounded-xl shadow-sm border border-slate-200 mb-8 overflow-hidden">
-        <div className="flex overflow-x-auto border-b border-slate-200">
+      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 mb-8 overflow-hidden">
+        <div className="flex overflow-x-auto border-b border-slate-200 dark:border-slate-700">
           {tabs.map((tab) => (
             <button
               key={tab.id}

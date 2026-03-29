@@ -16,10 +16,13 @@ export default function HvacPage() {
           <p className="text-xl text-gray-600 mb-8 leading-relaxed">
             Winter and summer are chaos. Your phone is ringing off the hook, estimates are piling up, and your office is drowning in calls. Growth OS handles the busy season automatically.
           </p>
-          <button className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-full transition-colors">
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-full transition-colors"
+          >
             Get started free
             <Zap className="w-5 h-5" />
-          </button>
+          </Link>
           <p className="text-sm text-gray-500 mt-4">No credit card required. See the difference in your first week.</p>
         </div>
       </section>
@@ -230,10 +233,13 @@ export default function HvacPage() {
           <p className="text-xl text-gray-600 mb-8">
             Free trial starts today. No credit card needed. Setup takes 5 minutes.
           </p>
-          <button className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-full transition-colors text-lg">
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-full transition-colors text-lg"
+          >
             Start free trial
             <Zap className="w-5 h-5" />
-          </button>
+          </Link>
         </div>
       </section>
 

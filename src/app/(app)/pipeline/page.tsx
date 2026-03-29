@@ -118,13 +118,20 @@ export default function PipelinePage() {
     searchQuery || assignedToFilter !== 'all' || sourceFilter !== 'all' || valueFilter !== 'all';
 
   if (!mounted) {
-    return <div className="p-8">Loading...</div>;
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 p-8 animate-pulse">
+        <div className="h-8 bg-slate-200 dark:bg-slate-700 rounded w-48 mb-6"></div>
+        <div className="grid grid-cols-2 lg:grid-cols-6 gap-4 mb-8">
+          {[...Array(6)].map((_, i) => <div key={i} className="bg-white dark:bg-slate-800 rounded-xl h-28 shadow-sm"></div>)}
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="h-full flex flex-col bg-white">
+    <div className="h-full flex flex-col bg-white dark:bg-slate-900">
       {/* Header Section */}
-      <div className="px-4 sm:px-8 py-4 sm:py-6 border-b border-slate-200 bg-gradient-to-r from-slate-50 to-white">
+      <div className="px-4 sm:px-8 py-4 sm:py-6 border-b border-slate-200 dark:border-slate-700 bg-gradient-to-r from-slate-50 to-white dark:from-slate-900 dark:to-slate-800">
         <div className="flex items-center justify-between mb-4 sm:mb-6">
           <div>
             <h1 className="text-2xl sm:text-4xl font-bold text-slate-900">Pipeline</h1>
@@ -231,7 +238,7 @@ export default function PipelinePage() {
 
       {/* Board View */}
       {viewMode === 'board' && (
-        <div className="flex-1 overflow-x-auto overflow-y-hidden bg-slate-50 p-3 sm:p-6">
+        <div className="flex-1 overflow-x-auto overflow-y-hidden bg-slate-50 dark:bg-slate-950 p-3 sm:p-6">
           <DragDropContext onDragEnd={handleDragEnd}>
             <div className="flex gap-3 sm:gap-6 min-w-max">
               {PIPELINE_STAGES.map(({ stage, label, color }) => {
@@ -249,7 +256,7 @@ export default function PipelinePage() {
                         }`}
                       >
                         {/* Column Header */}
-                        <div className="sticky top-0 p-4 border-b border-slate-300 bg-white rounded-t-md">
+                        <div className="sticky top-0 p-4 border-b border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 rounded-t-md">
                           <div className="flex items-center justify-between mb-2">
                             <h3 className="font-bold text-slate-900">{label}</h3>
                             <button
@@ -283,7 +290,7 @@ export default function PipelinePage() {
                                       ref={provided.innerRef}
                                       {...provided.draggableProps}
                                       {...provided.dragHandleProps}
-                                      className={`p-4 bg-white rounded-lg border border-slate-200 cursor-move transition-all hover:shadow-lg active:shadow-xl ${
+                                      className={`p-4 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 cursor-move transition-all hover:shadow-lg active:shadow-xl ${
                                         snapshot.isDragging ? 'shadow-2xl rotate-2' : ''
                                       }`}
                                     >
@@ -329,7 +336,7 @@ export default function PipelinePage() {
       {viewMode === 'list' && (
         <div className="flex-1 overflow-auto p-6">
           <table className="w-full text-sm">
-            <thead className="bg-slate-100 sticky top-0">
+            <thead className="bg-slate-100 dark:bg-slate-800 sticky top-0">
               <tr>
                 <th className="text-left px-4 py-3 font-semibold text-slate-900 cursor-pointer hover:bg-slate-200">
                   Title
@@ -384,7 +391,7 @@ export default function PipelinePage() {
       )}
 
       {/* Pipeline Summary Bar */}
-      <div className="px-4 sm:px-8 py-4 border-t border-slate-200 bg-white grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="px-4 sm:px-8 py-4 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="text-center">
           <p className="text-sm text-slate-600">Total Deals</p>
           <p className="text-2xl font-bold text-slate-900">{metrics.totalDeals}</p>

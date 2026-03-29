@@ -29,6 +29,7 @@ import {
   AlertCircle,
   CheckCircle,
   MessageSquare,
+  Phone,
   Rocket,
   ArrowRight,
   ChevronRight,
@@ -69,7 +70,14 @@ export default function Dashboard() {
   }, []);
 
   if (!mounted) {
-    return <div className="p-8">Loading...</div>;
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 p-8 animate-pulse">
+        <div className="h-8 bg-slate-200 dark:bg-slate-700 rounded w-48 mb-6"></div>
+        <div className="grid grid-cols-2 lg:grid-cols-6 gap-4 mb-8">
+          {[...Array(6)].map((_, i) => <div key={i} className="bg-white dark:bg-slate-800 rounded-xl h-28 shadow-sm"></div>)}
+        </div>
+      </div>
+    );
   }
 
   // Calculate KPIs
@@ -214,10 +222,9 @@ export default function Dashboard() {
     }
   };
 
-  const Phone = AlertCircle;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-4 md:p-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 p-4 md:p-8">
       {/* Header with Date Range */}
       <div className="mb-6 sm:mb-8">
         <h1 className="text-2xl sm:text-4xl font-bold text-slate-900 mb-2">Dashboard</h1>
@@ -272,7 +279,7 @@ export default function Dashboard() {
       {/* KPI Cards Row */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-8">
         {/* Total Leads */}
-        <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-slate-100 hover:shadow-md transition-shadow">
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm p-4 sm:p-6 border border-slate-100 dark:border-slate-700 hover:shadow-md transition-shadow">
           <div className="flex items-start justify-between mb-3 sm:mb-4">
             <div>
               <p className="text-xs sm:text-sm font-medium text-slate-600">Total Leads</p>
@@ -301,7 +308,7 @@ export default function Dashboard() {
         </div>
 
         {/* Active Deals */}
-        <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-slate-100 hover:shadow-md transition-shadow">
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm p-4 sm:p-6 border border-slate-100 dark:border-slate-700 hover:shadow-md transition-shadow">
           <div className="flex items-start justify-between mb-3 sm:mb-4">
             <div>
               <p className="text-xs sm:text-sm font-medium text-slate-600">Active Deals</p>
@@ -315,7 +322,7 @@ export default function Dashboard() {
         </div>
 
         {/* Pipeline Value */}
-        <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-slate-100 hover:shadow-md transition-shadow">
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm p-4 sm:p-6 border border-slate-100 dark:border-slate-700 hover:shadow-md transition-shadow">
           <div className="flex items-start justify-between mb-3 sm:mb-4">
             <div>
               <p className="text-xs sm:text-sm font-medium text-slate-600">Pipeline Value</p>
@@ -331,7 +338,7 @@ export default function Dashboard() {
         </div>
 
         {/* Conversion Rate */}
-        <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-slate-100 hover:shadow-md transition-shadow">
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm p-4 sm:p-6 border border-slate-100 dark:border-slate-700 hover:shadow-md transition-shadow">
           <div className="flex items-start justify-between mb-3 sm:mb-4">
             <div>
               <p className="text-xs sm:text-sm font-medium text-slate-600">Conversion Rate</p>
@@ -347,7 +354,7 @@ export default function Dashboard() {
         </div>
 
         {/* Avg Deal Value */}
-        <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-slate-100 hover:shadow-md transition-shadow">
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm p-4 sm:p-6 border border-slate-100 dark:border-slate-700 hover:shadow-md transition-shadow">
           <div className="flex items-start justify-between mb-3 sm:mb-4">
             <div>
               <p className="text-xs sm:text-sm font-medium text-slate-600">Avg Deal Value</p>
@@ -363,7 +370,7 @@ export default function Dashboard() {
         </div>
 
         {/* Total Revenue */}
-        <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-slate-100 hover:shadow-md transition-shadow">
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm p-4 sm:p-6 border border-slate-100 dark:border-slate-700 hover:shadow-md transition-shadow">
           <div className="flex items-start justify-between mb-3 sm:mb-4">
             <div>
               <p className="text-xs sm:text-sm font-medium text-slate-600">Total Revenue</p>
@@ -382,7 +389,7 @@ export default function Dashboard() {
       {/* Charts Row 1: Pipeline Funnel & Revenue by Source */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         {/* Pipeline Funnel Chart */}
-        <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm p-6 border border-slate-100 dark:border-slate-700">
           <h2 className="text-lg font-semibold text-slate-900 mb-6">Pipeline Funnel</h2>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart
@@ -403,7 +410,7 @@ export default function Dashboard() {
         </div>
 
         {/* Revenue by Lead Source Pie Chart */}
-        <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm p-6 border border-slate-100 dark:border-slate-700">
           <h2 className="text-lg font-semibold text-slate-900 mb-6">
             Revenue by Lead Source
           </h2>
@@ -435,7 +442,7 @@ export default function Dashboard() {
       {/* Charts Row 2: Monthly Trend & Stage Duration */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         {/* Monthly Revenue Trend */}
-        <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm p-6 border border-slate-100 dark:border-slate-700">
           <h2 className="text-lg font-semibold text-slate-900 mb-6">
             Monthly Revenue Trend
           </h2>
@@ -463,7 +470,7 @@ export default function Dashboard() {
         </div>
 
         {/* Deal Stage Duration */}
-        <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm p-6 border border-slate-100 dark:border-slate-700">
           <h2 className="text-lg font-semibold text-slate-900 mb-6">
             Stage Duration (Avg Days)
           </h2>
@@ -482,7 +489,7 @@ export default function Dashboard() {
       {/* Bottom Section: Recent Activity & Top Deals */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-20">
         {/* Recent Activity */}
-        <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm p-6 border border-slate-100 dark:border-slate-700">
           <h2 className="text-lg font-semibold text-slate-900 mb-6">Recent Activity</h2>
           <div className="space-y-4">
             {recentActivities.length > 0 ? (
@@ -507,7 +514,7 @@ export default function Dashboard() {
         </div>
 
         {/* Top Deals */}
-        <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm p-6 border border-slate-100 dark:border-slate-700">
           <h2 className="text-lg font-semibold text-slate-900 mb-6">Top Deals</h2>
           <div className="space-y-4">
             {topDeals.length > 0 ? (
@@ -543,7 +550,7 @@ export default function Dashboard() {
       {/* Floating Action Button with Menu */}
       <div className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-50">
         {isFABExpanded && (
-          <div className="absolute bottom-20 right-0 bg-white rounded-xl shadow-xl border border-slate-200 overflow-hidden animate-in fade-in slide-in-from-bottom-2 duration-200">
+          <div className="absolute bottom-20 right-0 bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden animate-in fade-in slide-in-from-bottom-2 duration-200">
             <button
               onClick={() => {
                 setIsAddDealOpen(true);

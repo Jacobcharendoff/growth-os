@@ -200,12 +200,12 @@ export default function SchedulePage() {
   };
 
   if (!mounted) {
-    return <div className="p-8 bg-slate-50 min-h-screen flex items-center justify-center">Loading...</div>;
+    return <div className="p-8 bg-slate-50 dark:bg-slate-950 min-h-screen flex items-center justify-center">Loading...</div>;
   }
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <div className="p-4 sm:p-8 bg-slate-50 min-h-screen">
+      <div className="p-4 sm:p-8 bg-slate-50 dark:bg-slate-950 min-h-screen">
         {/* Header */}
         <div className="mb-6 sm:mb-8">
           <h1 className="text-2xl sm:text-4xl font-bold text-slate-900 mb-2">Schedule</h1>
@@ -213,7 +213,7 @@ export default function SchedulePage() {
         </div>
 
         {/* Week Navigation */}
-        <div className="bg-white rounded-xl border border-slate-200 p-4 sm:p-6 mb-6 sm:mb-8 shadow-sm">
+        <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-4 sm:p-6 mb-6 sm:mb-8 shadow-sm">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-center gap-2 sm:gap-4">
               <button
@@ -267,15 +267,15 @@ export default function SchedulePage() {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-8">
           {/* Calendar */}
           <div className="lg:col-span-3">
-            <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-x-auto">
+            <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-x-auto">
               {/* Day Headers */}
-              <div className="grid grid-cols-7 bg-slate-50 border-b border-slate-200">
+              <div className="grid grid-cols-7 bg-slate-50 dark:bg-slate-700 border-b border-slate-200 dark:border-slate-600">
                 <div className="col-span-1 p-4" />
                 {DAYS.map((day, idx) => {
                   const date = weekDates[idx];
                   const jobCount = countJobsForDay(day);
                   return (
-                    <div key={day} className="col-span-1 p-4 text-center border-l border-slate-200">
+                    <div key={day} className="col-span-1 p-4 text-center border-l border-slate-200 dark:border-slate-600">
                       <div className="text-sm font-semibold text-slate-600">{DAY_ABBREVIATIONS[idx]}</div>
                       <div className="text-lg font-bold text-slate-900 mt-1">{date.getDate()}</div>
                       <div className="text-xs text-slate-500 mt-2">
@@ -287,11 +287,11 @@ export default function SchedulePage() {
               </div>
 
               {/* Time Slots */}
-              <div className="divide-y divide-slate-200">
+              <div className="divide-y divide-slate-200 dark:divide-slate-600">
                 {TIME_SLOTS.map((hour) => (
                   <div key={hour} className="grid grid-cols-7">
                     {/* Hour Label */}
-                    <div className="col-span-1 p-4 bg-slate-50 border-r border-slate-200 text-xs font-semibold text-slate-600 flex items-start">
+                    <div className="col-span-1 p-4 bg-slate-50 dark:bg-slate-700 border-r border-slate-200 dark:border-slate-600 text-xs font-semibold text-slate-600 dark:text-slate-300 flex items-start">
                       {hour}:00
                     </div>
 
@@ -302,10 +302,10 @@ export default function SchedulePage() {
                           <div
                             ref={provided.innerRef}
                             {...provided.droppableProps}
-                            className={`col-span-1 p-2 border-l border-slate-200 min-h-24 transition ${
+                            className={`col-span-1 p-2 border-l border-slate-200 dark:border-slate-600 min-h-24 transition ${
                               snapshot.isDraggingOver
-                                ? 'bg-blue-50 border-l-4 border-l-blue-400'
-                                : 'bg-white hover:bg-slate-50'
+                                ? 'bg-blue-50 dark:bg-blue-900 border-l-4 border-l-blue-400'
+                                : 'bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800'
                             }`}
                           >
                             {getJobsForSlot(day, String(hour)).map((job, index) => (
@@ -367,10 +367,10 @@ export default function SchedulePage() {
                 <div
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  className={`bg-white rounded-xl border-2 border-dashed shadow-sm p-6 sticky top-8 transition ${
+                  className={`bg-white dark:bg-slate-800 rounded-xl border-2 border-dashed shadow-sm p-6 sticky top-8 transition ${
                     snapshot.isDraggingOver
-                      ? 'border-slate-400 bg-slate-50'
-                      : 'border-slate-200'
+                      ? 'border-slate-400 dark:border-slate-500 bg-slate-50 dark:bg-slate-700'
+                      : 'border-slate-200 dark:border-slate-600'
                   }`}
                 >
                   <h2 className="text-lg font-semibold text-slate-900 mb-4">Unscheduled</h2>

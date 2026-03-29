@@ -154,79 +154,6 @@ function useParallax(speed: number = 0.3) {
   return offset;
 }
 
-// ─── Sticky Section Navigation ────────────────────────────────
-function StickySectionNav() {
-  const [isVisible, setIsVisible] = useState(false);
-  const [activeSection, setActiveSection] = useState('');
-
-  useEffect(() => {
-    // Track hero visibility
-    const hero = document.getElementById('hero');
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(!entry.isIntersecting);
-      },
-      { threshold: 0.1 }
-    );
-
-    if (hero) {
-      observer.observe(hero);
-    }
-
-    // Track active section while scrolling
-    const handleScroll = () => {
-      const sections = document.querySelectorAll('[data-section]');
-      let active = '';
-      for (const section of sections) {
-        const rect = section.getBoundingClientRect();
-        if (rect.top <= 200) {
-          active = section.getAttribute('data-section') || '';
-        }
-      }
-      setActiveSection(active);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => {
-      observer.disconnect();
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  const scrollToSection = (id: string) => {
-    const element = document.querySelector(`[data-section="${id}"]`);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  if (!isVisible) return null;
-
-  return (
-    <div className="fixed top-[64px] left-0 right-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-200/50">
-      <div className="max-w-7xl mx-auto px-6 py-3 flex gap-6 lg:gap-8 overflow-x-auto scrollbar-hide">
-        {[
-          { id: 'product', label: 'Product' },
-          { id: 'proof', label: 'Proof' },
-          { id: 'automations', label: 'Automations' },
-          { id: 'pricing', label: 'Pricing' },
-        ].map((item) => (
-          <button
-            key={item.id}
-            onClick={() => scrollToSection(item.id)}
-            className={`text-sm font-medium whitespace-nowrap transition-colors pb-2 border-b-2 ${
-              activeSection === item.id
-                ? 'text-blue-600 border-blue-600'
-                : 'text-gray-600 border-transparent hover:text-gray-900'
-            }`}
-          >
-            {item.label}
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 // ─── Hero Section ─────────────────────────────────────────────
 function Hero() {
@@ -1504,7 +1431,6 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-white">
       <Navigation />
-      <StickySectionNav />
       <Hero />
       <ProblemSection />
       <InteractiveExplorer />

@@ -61,15 +61,15 @@ export default function LandscapingPage() {
                     <div className="flex items-start gap-3">
                       <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
                       <div>
-                        <div className="font-semibold">Turn estimates into jobs</div>
-                        <div className="text-sm text-green-700">Auto follow-up that actually works</div>
+                        <div className="font-semibold">Collect spring deposits early</div>
+                        <div className="text-sm text-green-700">Lock in work before you fill up</div>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
                       <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
                       <div>
-                        <div className="font-semibold">Repeat customers on autopilot</div>
-                        <div className="text-sm text-green-700">Seasonal reminders, zero work</div>
+                        <div className="font-semibold">Before/after photos automatically organized</div>
+                        <div className="text-sm text-green-700">Crew takes them. System sorts them by customer</div>
                       </div>
                     </div>
                   </div>
@@ -147,21 +147,21 @@ export default function LandscapingPage() {
               </ul>
             </div>
 
-            {/* Pain Point 4: Repeat Customers */}
+            {/* Pain Point 4: Equipment & Crew Tracking */}
             <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
               <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-6">
                 <RefreshCw className="w-6 h-6 text-purple-600" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">
-                No system for repeat business
+                Equipment and crew scheduling headaches
               </h3>
               <p className="text-gray-600 mb-4">
-                Existing customers are your best source of revenue, but you have no way to remind them.
+                Spring hits, you need 5 extra people for 6 weeks. Finding them is chaotic. Equipment breaks down on jobs.
               </p>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li>Customers hire competitors because they forgot about you</li>
-                <li>You lose 40% of recurring revenue you should get</li>
-                <li>Spring cleanup season needs better planning</li>
+                <li>Don't know which crew has seasonal availability</li>
+                <li>Equipment maintenance falls through the cracks</li>
+                <li>Seasonal crew turnover is unpredictable</li>
               </ul>
             </div>
           </div>
@@ -210,15 +210,15 @@ export default function LandscapingPage() {
                 <Zap className="w-6 h-6 text-green-600" />
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-3">
-                Auto Follow-Up on Estimates
+                Recover Cold Estimates
               </h3>
               <p className="text-gray-600 text-sm mb-4">
-                Your estimates automatically get flagged if they're sitting idle for 3 days. One-click follow-up, or let us handle it.
+                Estimates sitting for a week? We flag them. You get a reminder to follow up. Simple template follows up automatically.
               </p>
               <ul className="space-y-2 text-sm text-gray-600">
                 <li className="flex gap-2">
                   <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span>Turn 15% more estimates into jobs</span>
+                  <span>Recover 8-12% of estimates that would go cold</span>
                 </li>
                 <li className="flex gap-2">
                   <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
@@ -233,15 +233,15 @@ export default function LandscapingPage() {
                 <RefreshCw className="w-6 h-6 text-green-600" />
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-3">
-                Repeat Customers on Autopilot
+                Seasonal Deposit Collection
               </h3>
               <p className="text-gray-600 text-sm mb-4">
-                Schedule reminders for seasonal jobs. Spring cleanup reminders go to past customers automatically.
+                Collect spring cleanup deposits in January. Lock in the work before your schedule fills up. Automatic reminders for recurring seasonal jobs.
               </p>
               <ul className="space-y-2 text-sm text-gray-600">
                 <li className="flex gap-2">
                   <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span>Recover 25% more repeat business</span>
+                  <span>Reduce seasonal cash flow stress</span>
                 </li>
                 <li className="flex gap-2">
                   <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
@@ -271,10 +271,10 @@ export default function LandscapingPage() {
                 <Users className="w-6 h-6 text-green-600" />
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-3">
-                Team Collaboration
+                Equipment & Seasonal Crew Tracking
               </h3>
               <p className="text-gray-600 text-sm mb-4">
-                Unlimited team members. Foreman sees jobs. Office staff manages estimates. Everyone stays aligned.
+                Know which truck has the mower that needs service. Track seasonal crew availability so you're not scrambling in spring.
               </p>
             </div>
           </div>
@@ -291,7 +291,7 @@ export default function LandscapingPage() {
               ))}
             </div>
             <blockquote className="text-xl sm:text-2xl font-bold text-gray-900 mb-8">
-              "Growth OS cut my back-office work in half. My crew gets their jobs in the app, I know exactly where cash flow stands, and we're booking 20% more repeat work just from the seasonal reminders. Best $200 a month we spend."
+              "The seasonal cash flow thing was killing us. We'd be flush in July and broke in January. Growth OS didn't fix that overnight — it's still seasonal — but now we can see it coming. We started collecting deposits earlier and booking spring work in February instead of scrambling in April. Crew scheduling is easier too, though I still end up texting my guys directly half the time. Old habits."
             </blockquote>
             <div className="flex items-center gap-4">
               <div className="w-14 h-14 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
@@ -303,6 +303,86 @@ export default function LandscapingPage() {
                 <p className="text-gray-500 text-xs">Calgary, AB</p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing */}
+      <section className="py-16 sm:py-20 bg-white">
+        <div className="max-w-5xl mx-auto px-6 text-center">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+            Simple pricing. No surprises.
+          </h2>
+          <p className="text-lg text-gray-500 mb-12 max-w-2xl mx-auto">
+            Month-to-month. Cancel anytime. No contracts, no setup fees.
+          </p>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="rounded-2xl border border-gray-200 p-6 text-left hover:shadow-lg transition-shadow">
+              <h3 className="text-lg font-semibold text-gray-900">Starter</h3>
+              <div className="mt-3 flex items-baseline gap-1">
+                <span className="text-3xl font-bold text-gray-900">$79</span>
+                <span className="text-sm text-gray-500">/mo CAD</span>
+              </div>
+              <p className="mt-2 text-sm text-gray-500">Solo operators. One dashboard, never miss a lead.</p>
+              <Link href="/setup" className="mt-6 block text-center px-5 py-2.5 rounded-xl bg-gray-900 text-white text-sm font-semibold hover:bg-gray-800 transition-colors">
+                Try Free (14 Days)
+              </Link>
+            </div>
+            <div className="rounded-2xl border-2 border-blue-600 p-6 text-left shadow-lg relative">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-blue-600 text-white text-xs font-bold rounded-full">
+                Most Popular
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900">Growth</h3>
+              <div className="mt-3 flex items-baseline gap-1">
+                <span className="text-3xl font-bold text-gray-900">$149</span>
+                <span className="text-sm text-gray-500">/mo CAD</span>
+              </div>
+              <p className="mt-2 text-sm text-gray-500">Your whole team. All automations. French + English.</p>
+              <Link href="/setup" className="mt-6 block text-center px-5 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition-colors">
+                Try Free (14 Days)
+              </Link>
+            </div>
+            <div className="rounded-2xl border border-gray-200 p-6 text-left hover:shadow-lg transition-shadow">
+              <h3 className="text-lg font-semibold text-gray-900">Scale</h3>
+              <div className="mt-3 flex items-baseline gap-1">
+                <span className="text-3xl font-bold text-gray-900">$299</span>
+                <span className="text-sm text-gray-500">/mo CAD</span>
+              </div>
+              <p className="mt-2 text-sm text-gray-500">Multiple crews. Multiple locations. Dedicated support.</p>
+              <Link href="/setup" className="mt-6 block text-center px-5 py-2.5 rounded-xl bg-gray-900 text-white text-sm font-semibold hover:bg-gray-800 transition-colors">
+                Try Free (14 Days)
+              </Link>
+            </div>
+          </div>
+          <p className="mt-8 text-sm text-gray-400">
+            All plans include a 14-day free trial. No credit card required.{" "}
+            <Link href="/#pricing" className="text-blue-600 hover:underline">See full plan comparison</Link>
+          </p>
+        </div>
+      </section>
+
+      {/* Book a Demo */}
+      <section className="py-16 sm:py-20" style={{ backgroundColor: '#F5F5F7' }}>
+        <div className="max-w-3xl mx-auto px-6 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
+            Want to see it before you try it?
+          </h2>
+          <p className="text-lg text-gray-500 mb-8">
+            Book a free 15-minute walkthrough. We'll show you how Growth OS works for your specific business — no sales pitch, just a demo.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gray-900 text-white text-base font-semibold rounded-full hover:bg-gray-800 transition-all hover:-translate-y-0.5"
+            >
+              Book a Demo
+            </Link>
+            <Link
+              href="/setup"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-white text-gray-900 text-base font-semibold rounded-full border border-gray-200 hover:border-gray-300 hover:shadow-md transition-all"
+            >
+              Or start your free trial
+            </Link>
           </div>
         </div>
       </section>

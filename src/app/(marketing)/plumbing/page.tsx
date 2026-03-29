@@ -2,6 +2,7 @@
 
 import { MarketingLayout } from '@/components/MarketingLayout';
 import { Phone, Clock, CreditCard, Star, CheckCircle, MessageSquare, BarChart3, FileText } from 'lucide-react';
+import Link from 'next/link';
 
 export default function PlumbingPage() {
   return (
@@ -37,7 +38,7 @@ export default function PlumbingPage() {
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">Missed calls mean lost money</h3>
                   <p className="text-gray-600">
-                    Three missed calls a week equals $5,000+ in lost revenue per month. Your phone is ringing when you're on a job site.
+                    Even 2-3 missed calls a week adds up to $2,000-3,000/month in lost jobs. Your phone is ringing when you're on a job site.
                   </p>
                 </div>
               </div>
@@ -69,14 +70,14 @@ export default function PlumbingPage() {
               </div>
             </div>
 
-            {/* No Reviews */}
+            {/* Emergency Dispatch */}
             <div className="bg-white p-8 rounded-2xl shadow-sm border-l-4 border-amber-500">
               <div className="flex items-start gap-4">
                 <Star className="w-6 h-6 text-amber-500 flex-shrink-0 mt-1" />
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">No reviews coming in</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Emergency calls throw off your whole day</h3>
                   <p className="text-gray-600">
-                    You're too busy to ask for Google reviews. New customers can't find you online because your profile has 2 reviews from 2019.
+                    A burst pipe at 6am means your whole schedule shifts. You need to reroute your day, communicate with teams, and keep customers in the loop without the chaos.
                   </p>
                 </div>
               </div>
@@ -171,27 +172,27 @@ export default function PlumbingPage() {
               </ul>
             </div>
 
-            {/* Reviews */}
+            {/* Parts & Warranty */}
             <div className="bg-gray-50 p-8 rounded-2xl">
               <div className="flex items-center gap-3 mb-4">
                 <Star className="w-8 h-8 text-blue-600" />
-                <h3 className="text-lg font-semibold text-gray-900">Automatic review requests</h3>
+                <h3 className="text-lg font-semibold text-gray-900">Parts tracking and warranty alerts</h3>
               </div>
               <p className="text-gray-600 mb-4">
-                After every job, Growth OS sends customers a link to leave a review. Watch your Google rating climb on autopilot.
+                Track which jobs need parts on order so nothing falls through the cracks. Get flagged for warranty callbacks so you're never surprised by a 30-day issue.
               </p>
               <ul className="space-y-2">
                 <li className="flex items-center gap-2 text-sm text-gray-600">
                   <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                  Customizable review requests
+                  Link parts orders to jobs
                 </li>
                 <li className="flex items-center gap-2 text-sm text-gray-600">
                   <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                  Track all your reviews in one dashboard
+                  Automatic warranty callback reminders
                 </li>
                 <li className="flex items-center gap-2 text-sm text-gray-600">
                   <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                  More 5-stars in 90 days
+                  See pending parts at a glance
                 </li>
               </ul>
             </div>
@@ -209,7 +210,7 @@ export default function PlumbingPage() {
               ))}
             </div>
             <p className="text-xl text-gray-900 mb-8 leading-relaxed font-medium">
-              "Growth OS cut my office time in half. I was spending 2 hours a day answering calls and following up on estimates. Now my phone is organized, estimates go out fast, and I'm getting paid on time. Last month we booked 6 more jobs because we were faster than the guys we usually compete with."
+              "Biggest thing for us was not missing calls. My wife was fielding maybe 15-20 calls a day and probably losing a third of them. Now they all get logged and we follow up same-day instead of next-week. We're probably booking 4-5 more jobs a month — hard to say exactly, but the phone doesn't ring and go nowhere anymore. Still working on getting guys to update job statuses, but we'll get there."
             </p>
             <div>
               <p className="font-semibold text-gray-900">Mike Reynolds</p>
@@ -233,6 +234,86 @@ export default function PlumbingPage() {
             Start your free trial
             <Phone className="w-5 h-5" />
           </button>
+        </div>
+      </section>
+
+      {/* Pricing */}
+      <section className="py-16 sm:py-20 bg-white">
+        <div className="max-w-5xl mx-auto px-6 text-center">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+            Simple pricing. No surprises.
+          </h2>
+          <p className="text-lg text-gray-500 mb-12 max-w-2xl mx-auto">
+            Month-to-month. Cancel anytime. No contracts, no setup fees.
+          </p>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="rounded-2xl border border-gray-200 p-6 text-left hover:shadow-lg transition-shadow">
+              <h3 className="text-lg font-semibold text-gray-900">Starter</h3>
+              <div className="mt-3 flex items-baseline gap-1">
+                <span className="text-3xl font-bold text-gray-900">$79</span>
+                <span className="text-sm text-gray-500">/mo CAD</span>
+              </div>
+              <p className="mt-2 text-sm text-gray-500">Solo operators. One dashboard, never miss a lead.</p>
+              <Link href="/setup" className="mt-6 block text-center px-5 py-2.5 rounded-xl bg-gray-900 text-white text-sm font-semibold hover:bg-gray-800 transition-colors">
+                Try Free (14 Days)
+              </Link>
+            </div>
+            <div className="rounded-2xl border-2 border-blue-600 p-6 text-left shadow-lg relative">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-blue-600 text-white text-xs font-bold rounded-full">
+                Most Popular
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900">Growth</h3>
+              <div className="mt-3 flex items-baseline gap-1">
+                <span className="text-3xl font-bold text-gray-900">$149</span>
+                <span className="text-sm text-gray-500">/mo CAD</span>
+              </div>
+              <p className="mt-2 text-sm text-gray-500">Your whole team. All automations. French + English.</p>
+              <Link href="/setup" className="mt-6 block text-center px-5 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition-colors">
+                Try Free (14 Days)
+              </Link>
+            </div>
+            <div className="rounded-2xl border border-gray-200 p-6 text-left hover:shadow-lg transition-shadow">
+              <h3 className="text-lg font-semibold text-gray-900">Scale</h3>
+              <div className="mt-3 flex items-baseline gap-1">
+                <span className="text-3xl font-bold text-gray-900">$299</span>
+                <span className="text-sm text-gray-500">/mo CAD</span>
+              </div>
+              <p className="mt-2 text-sm text-gray-500">Multiple crews. Multiple locations. Dedicated support.</p>
+              <Link href="/setup" className="mt-6 block text-center px-5 py-2.5 rounded-xl bg-gray-900 text-white text-sm font-semibold hover:bg-gray-800 transition-colors">
+                Try Free (14 Days)
+              </Link>
+            </div>
+          </div>
+          <p className="mt-8 text-sm text-gray-400">
+            All plans include a 14-day free trial. No credit card required.{" "}
+            <Link href="/#pricing" className="text-blue-600 hover:underline">See full plan comparison</Link>
+          </p>
+        </div>
+      </section>
+
+      {/* Book a Demo */}
+      <section className="py-16 sm:py-20" style={{ backgroundColor: '#F5F5F7' }}>
+        <div className="max-w-3xl mx-auto px-6 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
+            Want to see it before you try it?
+          </h2>
+          <p className="text-lg text-gray-500 mb-8">
+            Book a free 15-minute walkthrough. We'll show you how Growth OS works for your specific business — no sales pitch, just a demo.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gray-900 text-white text-base font-semibold rounded-full hover:bg-gray-800 transition-all hover:-translate-y-0.5"
+            >
+              Book a Demo
+            </Link>
+            <Link
+              href="/setup"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-white text-gray-900 text-base font-semibold rounded-full border border-gray-200 hover:border-gray-300 hover:shadow-md transition-all"
+            >
+              Or start your free trial
+            </Link>
+          </div>
         </div>
       </section>
     </MarketingLayout>

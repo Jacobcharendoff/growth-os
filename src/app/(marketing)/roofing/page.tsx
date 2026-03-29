@@ -54,8 +54,8 @@ export default function RoofingPage() {
                     <div className="flex items-start gap-3">
                       <CheckCircle2 className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
                       <div>
-                        <div className="font-semibold">Manage weather delays</div>
-                        <div className="text-sm text-blue-700">Keep clients in the loop automatically</div>
+                        <div className="font-semibold">Track insurance claims end-to-end</div>
+                        <div className="text-sm text-blue-700">Assessment to approval to payment</div>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
@@ -147,21 +147,21 @@ export default function RoofingPage() {
               </ul>
             </div>
 
-            {/* Pain Point 4: Subcontractor Coordination */}
+            {/* Pain Point 4: Insurance & Material Tracking */}
             <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
               <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-6">
                 <Users className="w-6 h-6 text-purple-600" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">
-                Subcontractor chaos
+                Insurance flow chaos and material delays
               </h3>
               <p className="text-gray-600 mb-4">
-                One sub for tearoff. Another for shingles. No one's talking. Work doesn't flow.
+                Adjuster request. Supplement negotiations. Materials on backorder. No way to track it all or keep subs in sync.
               </p>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li>Group texts get out of hand fast</li>
-                <li>Timeline gaps cause rework</li>
-                <li>Materials show up at the wrong time</li>
+                <li>Insurance jobs disappear into spreadsheets</li>
+                <li>Material delays aren't visible until crew shows up</li>
+                <li>Subs don't know why work keeps getting pushed</li>
               </ul>
             </div>
           </div>
@@ -187,19 +187,19 @@ export default function RoofingPage() {
                 <TrendingUp className="w-6 h-6 text-blue-600" />
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-3">
-                Sales Pipeline Visibility
+                Insurance Claims Pipeline
               </h3>
               <p className="text-gray-600 text-sm mb-4">
-                See every estimate at a glance. Which are hot? Which are stalling? Get smart alerts for old quotes.
+                Damage assessment → estimate → adjuster review → supplement → approval → invoice. Track every step. Stop using spreadsheets.
               </p>
               <ul className="space-y-2 text-sm text-gray-600">
                 <li className="flex gap-2">
                   <CheckCircle2 className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
-                  <span>Close 35% more big deals</span>
+                  <span>Close 10-15% more big deals</span>
                 </li>
                 <li className="flex gap-2">
                   <CheckCircle2 className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
-                  <span>Know where money is coming</span>
+                  <span>Never lose a quote to disorganization</span>
                 </li>
               </ul>
             </div>
@@ -210,19 +210,19 @@ export default function RoofingPage() {
                 <AlertCircle className="w-6 h-6 text-blue-600" />
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-3">
-                Weather & Schedule Management
+                Weather Delays & Material Backorders
               </h3>
               <p className="text-gray-600 text-sm mb-4">
-                Reschedule the entire job with one click. Automatic messages go out. No surprises.
+                Rain pushed the job back 3 days? Shingles on 4-week backorder? Log it in two taps. Customer gets notified. Everyone knows the status.
               </p>
               <ul className="space-y-2 text-sm text-gray-600">
                 <li className="flex gap-2">
                   <CheckCircle2 className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
-                  <span>Customers stay informed</span>
+                  <span>Reduce no-shows by 30-40%</span>
                 </li>
                 <li className="flex gap-2">
                   <CheckCircle2 className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
-                  <span>Save 5+ hours per week rescheduling</span>
+                  <span>Never forget a material follow-up</span>
                 </li>
               </ul>
             </div>
@@ -233,19 +233,19 @@ export default function RoofingPage() {
                 <Users className="w-6 h-6 text-blue-600" />
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-3">
-                Subcontractor Coordination
+                Subcontractor Payment Management
               </h3>
               <p className="text-gray-600 text-sm mb-4">
-                Assign tasks to multiple subs. Everyone sees the timeline, materials, and dependencies.
+                Your subs want to get paid on completion, not net-30. Track sub invoices separately from customer invoices. Everyone gets paid on time.
               </p>
               <ul className="space-y-2 text-sm text-gray-600">
                 <li className="flex gap-2">
                   <CheckCircle2 className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
-                  <span>Jobs finish on schedule</span>
+                  <span>Subs stay happy and show up</span>
                 </li>
                 <li className="flex gap-2">
                   <CheckCircle2 className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
-                  <span>Less rework and waste</span>
+                  <span>Better coordination on complex jobs</span>
                 </li>
               </ul>
             </div>
@@ -261,7 +261,7 @@ export default function RoofingPage() {
                 Quick Invoicing
               </h3>
               <p className="text-gray-600 text-sm mb-4">
-                Work's done. Generate invoice and send instantly. Get paid faster. 17-day reduction in payment cycles.
+                Work's done. Generate invoice and send instantly. Get paid a week faster on average.
               </p>
             </div>
 
@@ -291,7 +291,7 @@ export default function RoofingPage() {
               ))}
             </div>
             <blockquote className="text-xl sm:text-2xl font-bold text-gray-900 mb-8">
-              "We manage 12 roofing jobs at different stages. Growth OS lets us see which estimates are about to expire, reschedule around weather in seconds, and keep our subcontractors aligned. We're closing 30% more jobs and our customers actually know what's happening."
+              "Honestly, I resisted this for a year. My accountant kept saying I needed a system. The biggest win is tracking where every estimate stands — I had 12 open quotes I'd basically forgotten about. The system reminded the customers and three of them came back. That alone paid for it. Insurance tracking is still something I'm learning but it beats my old notebook by a mile."
             </blockquote>
             <div className="flex items-center gap-4">
               <div className="w-14 h-14 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
@@ -303,6 +303,86 @@ export default function RoofingPage() {
                 <p className="text-gray-500 text-xs">Ottawa, ON</p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing */}
+      <section className="py-16 sm:py-20 bg-white">
+        <div className="max-w-5xl mx-auto px-6 text-center">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+            Simple pricing. No surprises.
+          </h2>
+          <p className="text-lg text-gray-500 mb-12 max-w-2xl mx-auto">
+            Month-to-month. Cancel anytime. No contracts, no setup fees.
+          </p>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="rounded-2xl border border-gray-200 p-6 text-left hover:shadow-lg transition-shadow">
+              <h3 className="text-lg font-semibold text-gray-900">Starter</h3>
+              <div className="mt-3 flex items-baseline gap-1">
+                <span className="text-3xl font-bold text-gray-900">$79</span>
+                <span className="text-sm text-gray-500">/mo CAD</span>
+              </div>
+              <p className="mt-2 text-sm text-gray-500">Solo operators. One dashboard, never miss a lead.</p>
+              <Link href="/setup" className="mt-6 block text-center px-5 py-2.5 rounded-xl bg-gray-900 text-white text-sm font-semibold hover:bg-gray-800 transition-colors">
+                Try Free (14 Days)
+              </Link>
+            </div>
+            <div className="rounded-2xl border-2 border-blue-600 p-6 text-left shadow-lg relative">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-blue-600 text-white text-xs font-bold rounded-full">
+                Most Popular
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900">Growth</h3>
+              <div className="mt-3 flex items-baseline gap-1">
+                <span className="text-3xl font-bold text-gray-900">$149</span>
+                <span className="text-sm text-gray-500">/mo CAD</span>
+              </div>
+              <p className="mt-2 text-sm text-gray-500">Your whole team. All automations. French + English.</p>
+              <Link href="/setup" className="mt-6 block text-center px-5 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition-colors">
+                Try Free (14 Days)
+              </Link>
+            </div>
+            <div className="rounded-2xl border border-gray-200 p-6 text-left hover:shadow-lg transition-shadow">
+              <h3 className="text-lg font-semibold text-gray-900">Scale</h3>
+              <div className="mt-3 flex items-baseline gap-1">
+                <span className="text-3xl font-bold text-gray-900">$299</span>
+                <span className="text-sm text-gray-500">/mo CAD</span>
+              </div>
+              <p className="mt-2 text-sm text-gray-500">Multiple crews. Multiple locations. Dedicated support.</p>
+              <Link href="/setup" className="mt-6 block text-center px-5 py-2.5 rounded-xl bg-gray-900 text-white text-sm font-semibold hover:bg-gray-800 transition-colors">
+                Try Free (14 Days)
+              </Link>
+            </div>
+          </div>
+          <p className="mt-8 text-sm text-gray-400">
+            All plans include a 14-day free trial. No credit card required.{" "}
+            <Link href="/#pricing" className="text-blue-600 hover:underline">See full plan comparison</Link>
+          </p>
+        </div>
+      </section>
+
+      {/* Book a Demo */}
+      <section className="py-16 sm:py-20" style={{ backgroundColor: '#F5F5F7' }}>
+        <div className="max-w-3xl mx-auto px-6 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
+            Want to see it before you try it?
+          </h2>
+          <p className="text-lg text-gray-500 mb-8">
+            Book a free 15-minute walkthrough. We'll show you how Growth OS works for your specific business — no sales pitch, just a demo.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gray-900 text-white text-base font-semibold rounded-full hover:bg-gray-800 transition-all hover:-translate-y-0.5"
+            >
+              Book a Demo
+            </Link>
+            <Link
+              href="/setup"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-white text-gray-900 text-base font-semibold rounded-full border border-gray-200 hover:border-gray-300 hover:shadow-md transition-all"
+            >
+              Or start your free trial
+            </Link>
           </div>
         </div>
       </section>

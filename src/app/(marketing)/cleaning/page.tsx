@@ -68,8 +68,8 @@ export default function CleaningPage() {
                     <div className="flex items-start gap-3">
                       <CheckCircle2 className="w-5 h-5 text-cyan-600 flex-shrink-0 mt-0.5" />
                       <div>
-                        <div className="font-semibold">Reduce no-shows by 90%</div>
-                        <div className="text-sm text-cyan-700">Reminders work automatically</div>
+                        <div className="font-semibold">Cut no-shows in half</div>
+                        <div className="text-sm text-cyan-700">Automatic reminders actually work</div>
                       </div>
                     </div>
                   </div>
@@ -99,15 +99,15 @@ export default function CleaningPage() {
                 <PhoneOff className="w-6 h-6 text-red-600" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">
-                No-shows cost you thousands
+                No-shows wreck your schedule
               </h3>
               <p className="text-gray-600 mb-4">
-                Client forgets the appointment. You showed up with supplies, crew was ready. $150 gone.
+                Client forgets. You show up with supplies and crew ready. Nobody's home. Revenue gone, crew idle.
               </p>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li>20% of bookings never show up</li>
-                <li>No reminder system means missed revenue</li>
-                <li>Team wastes time on routes that vanish</li>
+                <li>3-4 cancellations per week with zero notice</li>
+                <li>You don't find out until you're at the house</li>
+                <li>Crew gets paid for idle time, margins vanish</li>
               </ul>
             </div>
 
@@ -147,21 +147,21 @@ export default function CleaningPage() {
               </ul>
             </div>
 
-            {/* Pain Point 4: Pricing Inconsistency */}
+            {/* Pain Point 4: Supply Costs & Pricing */}
             <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
               <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-6">
                 <TrendingUp className="w-6 h-6 text-purple-600" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">
-                Pricing all over the place
+                Supply costs eat your margins
               </h3>
               <p className="text-gray-600 mb-4">
-                Different prices for different clients. Recurring rates versus one-offs. It's a mess.
+                Cleaning supplies cost 30-40% of revenue if you're not careful. Residential vs commercial are completely different businesses.
               </p>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li>Clients pay different amounts for same work</li>
-                <li>You can't track what you actually charge</li>
-                <li>Recurring bookings leave money on table</li>
+                <li>You don't know which jobs are actually profitable</li>
+                <li>Same pricing for residential and post-construction is wrong</li>
+                <li>Supplies mysteriously shrink margins</li>
               </ul>
             </div>
           </div>
@@ -195,7 +195,7 @@ export default function CleaningPage() {
               <ul className="space-y-2 text-sm text-gray-600">
                 <li className="flex gap-2">
                   <CheckCircle2 className="w-4 h-4 text-cyan-600 flex-shrink-0 mt-0.5" />
-                  <span>Book 30% more jobs</span>
+                  <span>Close more jobs without more phone calls</span>
                 </li>
                 <li className="flex gap-2">
                   <CheckCircle2 className="w-4 h-4 text-cyan-600 flex-shrink-0 mt-0.5" />
@@ -210,15 +210,15 @@ export default function CleaningPage() {
                 <RotateCw className="w-6 h-6 text-cyan-600" />
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-3">
-                Recurring on Autopilot
+                Recurring Booking Confirmations
               </h3>
               <p className="text-gray-600 text-sm mb-4">
-                Set it and forget it. Biweekly cleanings auto-book. Invoices generate automatically. Clients get reminder 48 hours before.
+                Biweekly clients get an automatic reminder 24 hours before. They confirm or reschedule — no more showing up to a locked house.
               </p>
               <ul className="space-y-2 text-sm text-gray-600">
                 <li className="flex gap-2">
                   <CheckCircle2 className="w-4 h-4 text-cyan-600 flex-shrink-0 mt-0.5" />
-                  <span>Reduce cancellations by 70%</span>
+                  <span>Reduce no-shows by 30-40%</span>
                 </li>
                 <li className="flex gap-2">
                   <CheckCircle2 className="w-4 h-4 text-cyan-600 flex-shrink-0 mt-0.5" />
@@ -241,7 +241,7 @@ export default function CleaningPage() {
               <ul className="space-y-2 text-sm text-gray-600">
                 <li className="flex gap-2">
                   <CheckCircle2 className="w-4 h-4 text-cyan-600 flex-shrink-0 mt-0.5" />
-                  <span>3x more reviews per month</span>
+                  <span>2-3x more reviews per month</span>
                 </li>
                 <li className="flex gap-2">
                   <CheckCircle2 className="w-4 h-4 text-cyan-600 flex-shrink-0 mt-0.5" />
@@ -261,7 +261,7 @@ export default function CleaningPage() {
                 No-Show Prevention
               </h3>
               <p className="text-gray-600 text-sm mb-4">
-                Automatic reminders, 48 and 24 hours before appointment. Customers confirm. Reduces no-shows by 90%.
+                Automatic reminders 24 hours before appointment. Customers confirm or reschedule. Know by the night before, not at the house.
               </p>
             </div>
 
@@ -271,10 +271,10 @@ export default function CleaningPage() {
                 <Users className="w-6 h-6 text-cyan-600" />
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-3">
-                Pricing That Works
+                Client Classification & Supply Tracking
               </h3>
               <p className="text-gray-600 text-sm mb-4">
-                Set pricing per property, per size. One-off cleaning is different from weekly. System knows what to charge.
+                Residential, commercial, and post-construction are different pricing. Tag each client type. Log supply costs per job to protect margins.
               </p>
             </div>
           </div>
@@ -291,7 +291,7 @@ export default function CleaningPage() {
               ))}
             </div>
             <blockquote className="text-xl sm:text-2xl font-bold text-gray-900 mb-8">
-              "I was spending 4 hours a day on the phone booking jobs, juggling recurring clients, and following up on no-shows. Growth OS lets me focus on training my team while it runs the whole booking system. We have more recurring clients, fewer cancellations, and Google reviews keep coming in. This literally saved my business."
+              "The no-show thing was the reason I signed up. We were getting maybe 3-4 cancellations a week with zero notice. The automatic reminders cut that roughly in half — not completely, people still cancel, but at least we know by the night before instead of showing up to an empty house. The recurring booking feature is honestly what I use most. It's not perfect but it's way better than my Google Sheet."
             </blockquote>
             <div className="flex items-center gap-4">
               <div className="w-14 h-14 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
@@ -303,6 +303,86 @@ export default function CleaningPage() {
                 <p className="text-gray-500 text-xs">Winnipeg, MB</p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing */}
+      <section className="py-16 sm:py-20 bg-white">
+        <div className="max-w-5xl mx-auto px-6 text-center">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+            Simple pricing. No surprises.
+          </h2>
+          <p className="text-lg text-gray-500 mb-12 max-w-2xl mx-auto">
+            Month-to-month. Cancel anytime. No contracts, no setup fees.
+          </p>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="rounded-2xl border border-gray-200 p-6 text-left hover:shadow-lg transition-shadow">
+              <h3 className="text-lg font-semibold text-gray-900">Starter</h3>
+              <div className="mt-3 flex items-baseline gap-1">
+                <span className="text-3xl font-bold text-gray-900">$79</span>
+                <span className="text-sm text-gray-500">/mo CAD</span>
+              </div>
+              <p className="mt-2 text-sm text-gray-500">Solo operators. One dashboard, never miss a lead.</p>
+              <Link href="/setup" className="mt-6 block text-center px-5 py-2.5 rounded-xl bg-gray-900 text-white text-sm font-semibold hover:bg-gray-800 transition-colors">
+                Try Free (14 Days)
+              </Link>
+            </div>
+            <div className="rounded-2xl border-2 border-blue-600 p-6 text-left shadow-lg relative">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-blue-600 text-white text-xs font-bold rounded-full">
+                Most Popular
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900">Growth</h3>
+              <div className="mt-3 flex items-baseline gap-1">
+                <span className="text-3xl font-bold text-gray-900">$149</span>
+                <span className="text-sm text-gray-500">/mo CAD</span>
+              </div>
+              <p className="mt-2 text-sm text-gray-500">Your whole team. All automations. French + English.</p>
+              <Link href="/setup" className="mt-6 block text-center px-5 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition-colors">
+                Try Free (14 Days)
+              </Link>
+            </div>
+            <div className="rounded-2xl border border-gray-200 p-6 text-left hover:shadow-lg transition-shadow">
+              <h3 className="text-lg font-semibold text-gray-900">Scale</h3>
+              <div className="mt-3 flex items-baseline gap-1">
+                <span className="text-3xl font-bold text-gray-900">$299</span>
+                <span className="text-sm text-gray-500">/mo CAD</span>
+              </div>
+              <p className="mt-2 text-sm text-gray-500">Multiple crews. Multiple locations. Dedicated support.</p>
+              <Link href="/setup" className="mt-6 block text-center px-5 py-2.5 rounded-xl bg-gray-900 text-white text-sm font-semibold hover:bg-gray-800 transition-colors">
+                Try Free (14 Days)
+              </Link>
+            </div>
+          </div>
+          <p className="mt-8 text-sm text-gray-400">
+            All plans include a 14-day free trial. No credit card required.{" "}
+            <Link href="/#pricing" className="text-blue-600 hover:underline">See full plan comparison</Link>
+          </p>
+        </div>
+      </section>
+
+      {/* Book a Demo */}
+      <section className="py-16 sm:py-20" style={{ backgroundColor: '#F5F5F7' }}>
+        <div className="max-w-3xl mx-auto px-6 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
+            Want to see it before you try it?
+          </h2>
+          <p className="text-lg text-gray-500 mb-8">
+            Book a free 15-minute walkthrough. We'll show you how Growth OS works for your specific business — no sales pitch, just a demo.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gray-900 text-white text-base font-semibold rounded-full hover:bg-gray-800 transition-all hover:-translate-y-0.5"
+            >
+              Book a Demo
+            </Link>
+            <Link
+              href="/setup"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-white text-gray-900 text-base font-semibold rounded-full border border-gray-200 hover:border-gray-300 hover:shadow-md transition-all"
+            >
+              Or start your free trial
+            </Link>
           </div>
         </div>
       </section>

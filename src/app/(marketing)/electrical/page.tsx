@@ -2,6 +2,7 @@
 
 import { MarketingLayout } from '@/components/MarketingLayout';
 import { Zap, FileText, AlertCircle, TrendingUp, CheckCircle, Phone, BarChart3, Shield } from 'lucide-react';
+import Link from 'next/link';
 
 export default function ElectricalPage() {
   return (
@@ -43,27 +44,27 @@ export default function ElectricalPage() {
               </div>
             </div>
 
-            {/* Estimate Turnaround */}
+            {/* Estimates & Follow-ups */}
             <div className="bg-white p-8 rounded-2xl shadow-sm border-l-4 border-amber-500">
               <div className="flex items-start gap-4">
                 <TrendingUp className="w-6 h-6 text-amber-500 flex-shrink-0 mt-1" />
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Estimates take forever to close</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Estimates and follow-ups take forever</h3>
                   <p className="text-gray-600">
-                    You quote a job on a napkin, email it three days later, and never hear back. You're too busy to follow up. Competitors steal those jobs.
+                    You quote a job on a napkin, send it days later from your email, and never follow up. Competitors are faster. An average job is $3,000-5,000 — you can't afford to lose those.
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Missed Follow-ups */}
+            {/* Code Inspections */}
             <div className="bg-white p-8 rounded-2xl shadow-sm border-l-4 border-rose-500">
               <div className="flex items-start gap-4">
                 <Phone className="w-6 h-6 text-rose-500 flex-shrink-0 mt-1" />
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Follow-ups slip through cracks</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Inspection failures and re-checks</h3>
                   <p className="text-gray-600">
-                    You meet a contractor at a supply house, exchange numbers, and forget to follow up. That could have been a $10,000 job.
+                    Inspection didn't pass? You need to log it, schedule the re-check, and keep the customer in the loop. One forgotten re-inspection means a delayed project and upset customer.
                   </p>
                 </div>
               </div>
@@ -100,23 +101,23 @@ export default function ElectricalPage() {
             <div className="bg-gray-50 p-8 rounded-2xl">
               <div className="flex items-center gap-3 mb-4">
                 <FileText className="w-8 h-8 text-blue-600" />
-                <h3 className="text-lg font-semibold text-gray-900">Permit tracking and alerts</h3>
+                <h3 className="text-lg font-semibold text-gray-900">Permit tracking is THE feature</h3>
               </div>
               <p className="text-gray-600 mb-4">
-                Track every permit and inspection deadline. Get alerts before they expire. Never miss a deadline again.
+                Every permit has a deadline. Growth OS tracks them so you never miss one and never lose a contract over paperwork. That's recurring revenue protected.
               </p>
               <ul className="space-y-2">
+                <li className="flex items-center gap-2 text-sm text-gray-600">
+                  <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+                  Deadline reminders 7 days out
+                </li>
                 <li className="flex items-center gap-2 text-sm text-gray-600">
                   <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" />
                   Link permits to job records
                 </li>
                 <li className="flex items-center gap-2 text-sm text-gray-600">
                   <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                  Automatic deadline reminders
-                </li>
-                <li className="flex items-center gap-2 text-sm text-gray-600">
-                  <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                  All paperwork in one place
+                  Never lose a permit again
                 </li>
               </ul>
             </div>
@@ -171,27 +172,27 @@ export default function ElectricalPage() {
               </ul>
             </div>
 
-            {/* License Management */}
+            {/* Solo Operator Support */}
             <div className="bg-gray-50 p-8 rounded-2xl">
               <div className="flex items-center gap-3 mb-4">
                 <Shield className="w-8 h-8 text-blue-600" />
-                <h3 className="text-lg font-semibold text-gray-900">License and insurance tracking</h3>
+                <h3 className="text-lg font-semibold text-gray-900">The office manager you can't afford to hire</h3>
               </div>
               <p className="text-gray-600 mb-4">
-                Track licenses, insurance, and certifications for you and your team. Get notified before anything expires.
+                You left someone else's shop to run your own. Growth OS handles scheduling, follow-ups, invoicing, and compliance tracking so you can focus on electrical work.
               </p>
               <ul className="space-y-2">
                 <li className="flex items-center gap-2 text-sm text-gray-600">
                   <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                  Store all credentials in one place
+                  Licenses and insurance tracking
                 </li>
                 <li className="flex items-center gap-2 text-sm text-gray-600">
                   <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                  Renewal reminders 30 days out
+                  Automatic renewal reminders
                 </li>
                 <li className="flex items-center gap-2 text-sm text-gray-600">
                   <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                  Team member certification tracking
+                  Scale without hiring office staff
                 </li>
               </ul>
             </div>
@@ -209,7 +210,7 @@ export default function ElectricalPage() {
               ))}
             </div>
             <p className="text-xl text-gray-900 mb-8 leading-relaxed font-medium">
-              "I was tracking permits in emails, follow-ups in my head, and estimates in three different places. It was a disaster. Growth OS brought everything together. Now I know exactly which permits are coming due, which estimates are pending, and who needs a follow-up call. We closed 4 extra jobs in the first month just by following up faster. This has been a game-changer for our business."
+              "I was tracking permits in my email, follow-ups in my head, and estimates in three different places. Now it's one screen. I'm still getting used to it — took me about a week to really trust it. But my estimates go out same-day now instead of whenever I get home, and I've definitely closed a few jobs I would have lost to someone faster."
             </p>
             <div>
               <p className="font-semibold text-gray-900">Steve Kim</p>
@@ -233,6 +234,86 @@ export default function ElectricalPage() {
             Start free trial
             <Zap className="w-5 h-5" />
           </button>
+        </div>
+      </section>
+
+      {/* Pricing */}
+      <section className="py-16 sm:py-20 bg-white">
+        <div className="max-w-5xl mx-auto px-6 text-center">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+            Simple pricing. No surprises.
+          </h2>
+          <p className="text-lg text-gray-500 mb-12 max-w-2xl mx-auto">
+            Month-to-month. Cancel anytime. No contracts, no setup fees.
+          </p>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="rounded-2xl border border-gray-200 p-6 text-left hover:shadow-lg transition-shadow">
+              <h3 className="text-lg font-semibold text-gray-900">Starter</h3>
+              <div className="mt-3 flex items-baseline gap-1">
+                <span className="text-3xl font-bold text-gray-900">$79</span>
+                <span className="text-sm text-gray-500">/mo CAD</span>
+              </div>
+              <p className="mt-2 text-sm text-gray-500">Solo operators. One dashboard, never miss a lead.</p>
+              <Link href="/setup" className="mt-6 block text-center px-5 py-2.5 rounded-xl bg-gray-900 text-white text-sm font-semibold hover:bg-gray-800 transition-colors">
+                Try Free (14 Days)
+              </Link>
+            </div>
+            <div className="rounded-2xl border-2 border-blue-600 p-6 text-left shadow-lg relative">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-blue-600 text-white text-xs font-bold rounded-full">
+                Most Popular
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900">Growth</h3>
+              <div className="mt-3 flex items-baseline gap-1">
+                <span className="text-3xl font-bold text-gray-900">$149</span>
+                <span className="text-sm text-gray-500">/mo CAD</span>
+              </div>
+              <p className="mt-2 text-sm text-gray-500">Your whole team. All automations. French + English.</p>
+              <Link href="/setup" className="mt-6 block text-center px-5 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition-colors">
+                Try Free (14 Days)
+              </Link>
+            </div>
+            <div className="rounded-2xl border border-gray-200 p-6 text-left hover:shadow-lg transition-shadow">
+              <h3 className="text-lg font-semibold text-gray-900">Scale</h3>
+              <div className="mt-3 flex items-baseline gap-1">
+                <span className="text-3xl font-bold text-gray-900">$299</span>
+                <span className="text-sm text-gray-500">/mo CAD</span>
+              </div>
+              <p className="mt-2 text-sm text-gray-500">Multiple crews. Multiple locations. Dedicated support.</p>
+              <Link href="/setup" className="mt-6 block text-center px-5 py-2.5 rounded-xl bg-gray-900 text-white text-sm font-semibold hover:bg-gray-800 transition-colors">
+                Try Free (14 Days)
+              </Link>
+            </div>
+          </div>
+          <p className="mt-8 text-sm text-gray-400">
+            All plans include a 14-day free trial. No credit card required.{" "}
+            <Link href="/#pricing" className="text-blue-600 hover:underline">See full plan comparison</Link>
+          </p>
+        </div>
+      </section>
+
+      {/* Book a Demo */}
+      <section className="py-16 sm:py-20" style={{ backgroundColor: '#F5F5F7' }}>
+        <div className="max-w-3xl mx-auto px-6 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
+            Want to see it before you try it?
+          </h2>
+          <p className="text-lg text-gray-500 mb-8">
+            Book a free 15-minute walkthrough. We'll show you how Growth OS works for your specific business — no sales pitch, just a demo.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gray-900 text-white text-base font-semibold rounded-full hover:bg-gray-800 transition-all hover:-translate-y-0.5"
+            >
+              Book a Demo
+            </Link>
+            <Link
+              href="/setup"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-white text-gray-900 text-base font-semibold rounded-full border border-gray-200 hover:border-gray-300 hover:shadow-md transition-all"
+            >
+              Or start your free trial
+            </Link>
+          </div>
         </div>
       </section>
     </MarketingLayout>

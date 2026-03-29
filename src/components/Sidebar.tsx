@@ -17,7 +17,10 @@ import {
   Rocket,
   Sparkles,
   X,
+  Moon,
+  Sun,
 } from 'lucide-react';
+import { useTheme } from './ThemeProvider';
 
 interface SidebarProps {
   mobileOpen?: boolean;
@@ -26,6 +29,7 @@ interface SidebarProps {
 
 export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
+  const { theme, toggleTheme } = useTheme();
 
   const navItems = [
     { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -129,7 +133,27 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
       </nav>
 
       {/* Settings Section - Bottom */}
-      <div className="px-4 py-4 border-t border-slate-700">
+      <div className="px-4 py-4 border-t border-slate-700 space-y-2">
+        {/* Dark Mode Toggle */}
+        <button
+          onClick={toggleTheme}
+          className="w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 text-slate-300 hover:bg-slate-700/50 hover:text-white"
+          aria-label="Toggle dark mode"
+        >
+          {theme === 'light' ? (
+            <>
+              <Moon className="w-5 h-5" />
+              <span className="font-medium text-sm">Dark Mode</span>
+            </>
+          ) : (
+            <>
+              <Sun className="w-5 h-5" />
+              <span className="font-medium text-sm">Light Mode</span>
+            </>
+          )}
+        </button>
+
+        {/* Settings Link */}
         {(() => {
           const Icon = settingsItem.icon;
           const isActive = pathname === settingsItem.href;

@@ -438,7 +438,7 @@ function HowItWorks() {
           ].map((s, i) => (
             <div key={s.step} className="scroll-fade-up relative">
               {i < 3 && <div className="scroll-fade-up hidden lg:block absolute top-12 left-full w-full h-px draw-path bg-gradient-to-r from-blue-200 to-transparent" />}
-              <div className="text-5xl font-black text-blue-200/70 mb-4">{s.step}</div>
+              <div className="text-5xl font-black text-blue-400/50 mb-4">{s.step}</div>
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 text-white flex items-center justify-center mb-4 shadow-lg">
                 {s.icon}
               </div>
@@ -680,7 +680,7 @@ function InteractiveExplorer() {
 
   // ─── Static mockup content for each tab (no animation, clean and final-state) ───
   const DashboardMockup = () => (
-    <div className="bg-slate-50 p-4 sm:p-6">
+    <div className="bg-slate-900 p-4 sm:p-6">
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
         {[
           { label: 'New Leads', value: '23', trend: '+12%' },
@@ -688,29 +688,29 @@ function InteractiveExplorer() {
           { label: 'Revenue', value: '$87.4K', trend: '+18%' },
           { label: 'Conversion', value: '68%', trend: '+5%' },
         ].map((kpi) => (
-          <div key={kpi.label} className="bg-white rounded-xl p-3 sm:p-4 border border-gray-100 shadow-sm">
-            <p className="text-[10px] sm:text-xs text-gray-500 uppercase font-semibold">{kpi.label}</p>
-            <p className="text-lg sm:text-2xl font-bold text-gray-900 mt-1">{kpi.value}</p>
-            <p className="text-[10px] sm:text-xs text-emerald-500 font-semibold">{kpi.trend} vs last month</p>
+          <div key={kpi.label} className="bg-slate-800 rounded-xl p-3 sm:p-4 border border-slate-700/50 shadow-sm">
+            <p className="text-[10px] sm:text-xs text-slate-400 uppercase font-semibold">{kpi.label}</p>
+            <p className="text-lg sm:text-2xl font-bold text-white mt-1">{kpi.value}</p>
+            <p className="text-[10px] sm:text-xs text-emerald-400 font-semibold">{kpi.trend} vs last month</p>
           </div>
         ))}
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="bg-white rounded-xl p-4 sm:p-5 border border-gray-100 shadow-sm">
-          <p className="text-xs font-semibold text-gray-700 mb-4">Revenue Trend</p>
+        <div className="bg-slate-800 rounded-xl p-4 sm:p-5 border border-slate-700/50 shadow-sm">
+          <p className="text-xs font-semibold text-slate-200 mb-4">Revenue Trend</p>
           <div className="flex items-end gap-1.5 h-24 sm:h-32">
             {[40, 55, 45, 65, 75, 85, 70, 90, 95, 80, 88, 100].map((h, i) => (
-              <div key={i} className="flex-1 rounded-t-md bg-gradient-to-t from-blue-600 to-blue-400" style={{ height: `${h}%` }} />
+              <div key={i} className="flex-1 rounded-t-md bg-gradient-to-t from-blue-600 to-blue-500" style={{ height: `${h}%` }} />
             ))}
           </div>
         </div>
-        <div className="bg-white rounded-xl p-4 sm:p-5 border border-gray-100 shadow-sm">
-          <p className="text-xs font-semibold text-gray-700 mb-4">Pipeline</p>
+        <div className="bg-slate-800 rounded-xl p-4 sm:p-5 border border-slate-700/50 shadow-sm">
+          <p className="text-xs font-semibold text-slate-200 mb-4">Pipeline</p>
           {[{ stage: 'New Leads', w: 80 }, { stage: 'Quoted', w: 55 }, { stage: 'Booked', w: 40 }, { stage: 'In Progress', w: 30 }].map((s) => (
             <div key={s.stage} className="flex items-center gap-2 mb-3">
-              <span className="text-[10px] sm:text-xs text-gray-500 w-16 sm:w-20 shrink-0">{s.stage}</span>
-              <div className="flex-1 h-2.5 bg-gray-100 rounded-full overflow-hidden">
-                <div className="h-full bg-gradient-to-r from-blue-600 to-blue-400 rounded-full" style={{ width: `${s.w}%` }} />
+              <span className="text-[10px] sm:text-xs text-slate-400 w-16 sm:w-20 shrink-0">{s.stage}</span>
+              <div className="flex-1 h-2.5 bg-slate-700 rounded-full overflow-hidden">
+                <div className="h-full bg-gradient-to-r from-blue-600 to-blue-500 rounded-full" style={{ width: `${s.w}%` }} />
               </div>
             </div>
           ))}
@@ -727,28 +727,28 @@ function InteractiveExplorer() {
       { name: 'Booked', color: 'border-amber-500', dot: 'bg-amber-500', cards: [{ n: 'Sewer Line Replace', v: '$8,900' }, { n: 'Whole House Repipe', v: '$12,500' }] },
     ];
     return (
-      <div className="bg-slate-50 p-4 sm:p-6">
+      <div className="bg-slate-900 p-4 sm:p-6">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <p className="text-sm font-bold text-gray-900">$55,800 across 15 deals</p>
+            <p className="text-sm font-bold text-white">$55,800 across 15 deals</p>
           </div>
           <div className="flex gap-1">
             <span className="px-3 py-1 bg-blue-600 text-white text-xs font-medium rounded-lg">Board</span>
-            <span className="px-3 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded-lg">List</span>
+            <span className="px-3 py-1 bg-slate-800 text-slate-400 text-xs font-medium rounded-lg border border-slate-700/50">List</span>
           </div>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {stages.map((stage) => (
-            <div key={stage.name} className="bg-white rounded-xl p-3 border border-gray-200 min-h-[200px]">
+            <div key={stage.name} className="bg-slate-800 rounded-xl p-3 border border-slate-700/50 min-h-[200px]">
               <div className="flex items-center gap-2 mb-3">
                 <div className={`w-2 h-2 rounded-full ${stage.dot}`} />
-                <p className="text-[10px] sm:text-xs font-bold text-gray-600 uppercase">{stage.name}</p>
+                <p className="text-[10px] sm:text-xs font-bold text-slate-300 uppercase">{stage.name}</p>
               </div>
               <div className="space-y-2">
                 {stage.cards.map((card) => (
-                  <div key={card.n} className={`bg-slate-50 rounded-lg p-2.5 border-l-4 ${stage.color}`}>
-                    <p className="text-xs font-semibold text-gray-900 truncate">{card.n}</p>
-                    <p className="text-[10px] text-gray-500 mt-0.5">{card.v}</p>
+                  <div key={card.n} className={`bg-slate-800/50 rounded-lg p-2.5 border-l-4 ${stage.color}`}>
+                    <p className="text-xs font-semibold text-slate-200 truncate">{card.n}</p>
+                    <p className="text-[10px] text-slate-400 mt-0.5">{card.v}</p>
                   </div>
                 ))}
               </div>
@@ -760,39 +760,39 @@ function InteractiveExplorer() {
   };
 
   const EstimatesMockup = () => (
-    <div className="bg-slate-50 p-4 sm:p-6">
+    <div className="bg-slate-900 p-4 sm:p-6">
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
         {[{ l: 'Total Estimates', v: '10' }, { l: 'Pending', v: '4' }, { l: 'Approved', v: '5' }, { l: 'Conversion', v: '50%' }].map((k) => (
-          <div key={k.l} className="bg-white rounded-xl p-3 border border-gray-100 shadow-sm">
-            <p className="text-[10px] text-gray-500 uppercase font-semibold">{k.l}</p>
-            <p className="text-xl font-bold text-gray-900 mt-1">{k.v}</p>
+          <div key={k.l} className="bg-slate-800 rounded-xl p-3 border border-slate-700/50 shadow-sm">
+            <p className="text-[10px] text-slate-400 uppercase font-semibold">{k.l}</p>
+            <p className="text-xl font-bold text-white mt-1">{k.v}</p>
           </div>
         ))}
       </div>
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+      <div className="bg-slate-800 rounded-xl border border-slate-700/50 shadow-sm overflow-hidden">
         <table className="w-full text-xs sm:text-sm">
           <thead>
-            <tr className="bg-gray-50 border-b border-gray-100">
-              <th className="text-left py-2.5 px-3 font-semibold text-gray-500 uppercase text-[10px]">Estimate #</th>
-              <th className="text-left py-2.5 px-3 font-semibold text-gray-500 uppercase text-[10px]">Customer</th>
-              <th className="text-left py-2.5 px-3 font-semibold text-gray-500 uppercase text-[10px] hidden sm:table-cell">Service</th>
-              <th className="text-right py-2.5 px-3 font-semibold text-gray-500 uppercase text-[10px]">Amount</th>
-              <th className="text-center py-2.5 px-3 font-semibold text-gray-500 uppercase text-[10px]">Status</th>
+            <tr className="bg-slate-800/50 border-b border-slate-700/50">
+              <th className="text-left py-2.5 px-3 font-semibold text-slate-400 uppercase text-[10px]">Estimate #</th>
+              <th className="text-left py-2.5 px-3 font-semibold text-slate-400 uppercase text-[10px]">Customer</th>
+              <th className="text-left py-2.5 px-3 font-semibold text-slate-400 uppercase text-[10px] hidden sm:table-cell">Service</th>
+              <th className="text-right py-2.5 px-3 font-semibold text-slate-400 uppercase text-[10px]">Amount</th>
+              <th className="text-center py-2.5 px-3 font-semibold text-slate-400 uppercase text-[10px]">Status</th>
             </tr>
           </thead>
           <tbody>
             {[
-              { id: 'EST-001', cust: 'John Martinez', svc: 'Main Line Repair', amt: '$3,500', status: 'Approved', color: 'bg-emerald-100 text-emerald-700' },
-              { id: 'EST-002', cust: 'Sarah Chen', svc: 'Kitchen Faucet', amt: '$850', status: 'Sent', color: 'bg-blue-100 text-blue-700' },
-              { id: 'EST-003', cust: 'Michael O\'Brien', svc: 'Water Heater', amt: '$1,540', status: 'Approved', color: 'bg-emerald-100 text-emerald-700' },
-              { id: 'EST-004', cust: 'Jennifer Williams', svc: 'Bathroom Remodel', amt: '$5,600', status: 'Draft', color: 'bg-gray-100 text-gray-600' },
-              { id: 'EST-005', cust: 'David Rodriguez', svc: 'Fixture Install', amt: '$4,480', status: 'Approved', color: 'bg-emerald-100 text-emerald-700' },
+              { id: 'EST-001', cust: 'John Martinez', svc: 'Main Line Repair', amt: '$3,500', status: 'Approved', color: 'bg-emerald-500/20 text-emerald-400' },
+              { id: 'EST-002', cust: 'Sarah Chen', svc: 'Kitchen Faucet', amt: '$850', status: 'Sent', color: 'bg-blue-500/20 text-blue-400' },
+              { id: 'EST-003', cust: 'Michael O\'Brien', svc: 'Water Heater', amt: '$1,540', status: 'Approved', color: 'bg-emerald-500/20 text-emerald-400' },
+              { id: 'EST-004', cust: 'Jennifer Williams', svc: 'Bathroom Remodel', amt: '$5,600', status: 'Draft', color: 'bg-slate-600/50 text-slate-300' },
+              { id: 'EST-005', cust: 'David Rodriguez', svc: 'Fixture Install', amt: '$4,480', status: 'Approved', color: 'bg-emerald-500/20 text-emerald-400' },
             ].map((r) => (
-              <tr key={r.id} className="border-b border-gray-50 hover:bg-gray-50/50">
-                <td className="py-2.5 px-3 font-medium text-gray-900">{r.id}</td>
-                <td className="py-2.5 px-3 text-gray-700">{r.cust}</td>
-                <td className="py-2.5 px-3 text-gray-500 hidden sm:table-cell">{r.svc}</td>
-                <td className="py-2.5 px-3 text-right font-semibold text-gray-900">{r.amt}</td>
+              <tr key={r.id} className="border-b border-slate-800/50 hover:bg-slate-800/30">
+                <td className="py-2.5 px-3 font-medium text-slate-200">{r.id}</td>
+                <td className="py-2.5 px-3 text-slate-300">{r.cust}</td>
+                <td className="py-2.5 px-3 text-slate-400 hidden sm:table-cell">{r.svc}</td>
+                <td className="py-2.5 px-3 text-right font-semibold text-slate-100">{r.amt}</td>
                 <td className="py-2.5 px-3 text-center"><span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold ${r.color}`}>{r.status}</span></td>
               </tr>
             ))}
@@ -803,49 +803,49 @@ function InteractiveExplorer() {
   );
 
   const AdvisorMockup = () => (
-    <div className="bg-slate-50 p-4 sm:p-6">
-      <div className="bg-white rounded-2xl p-5 sm:p-7 border border-gray-100 shadow-sm">
+    <div className="bg-slate-900 p-4 sm:p-6">
+      <div className="bg-slate-800 rounded-2xl p-5 sm:p-7 border border-slate-700/50 shadow-sm">
         <div className="space-y-4">
           <div className="flex gap-3">
             <div className="flex-shrink-0 w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white text-xs font-bold shadow-md shadow-blue-500/30">AI</div>
-            <div className="bg-gray-100 rounded-2xl rounded-tl-sm px-4 py-2.5 max-w-sm">
-              <p className="text-sm text-gray-900 leading-relaxed">Morning Mike. You closed 8 jobs this month for $34,200. Up 18% from last month.</p>
+            <div className="bg-slate-700/50 rounded-2xl rounded-tl-sm px-4 py-2.5 max-w-sm">
+              <p className="text-sm text-slate-200 leading-relaxed">Morning Mike. You closed 8 jobs this month for $34,200. Up 18% from last month.</p>
             </div>
           </div>
           <div className="flex gap-3">
             <div className="flex-shrink-0 w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white text-xs font-bold shadow-md shadow-blue-500/30">AI</div>
-            <div className="bg-gray-100 rounded-2xl rounded-tl-sm px-4 py-2.5 max-w-sm">
-              <p className="text-sm text-gray-900 leading-relaxed">3 estimates over $5K are going stale. That&apos;s $23K sitting on the table.</p>
+            <div className="bg-slate-700/50 rounded-2xl rounded-tl-sm px-4 py-2.5 max-w-sm">
+              <p className="text-sm text-slate-200 leading-relaxed">3 estimates over $5K are going stale. That&apos;s $23K sitting on the table.</p>
             </div>
           </div>
           <div className="flex gap-3 justify-end">
-            <div className="bg-blue-500 text-white rounded-2xl rounded-tr-sm px-4 py-2.5 max-w-sm shadow-md shadow-blue-500/20">
+            <div className="bg-blue-600 text-white rounded-2xl rounded-tr-sm px-4 py-2.5 max-w-sm shadow-md shadow-blue-600/20">
               <p className="text-sm leading-relaxed">Which ones?</p>
             </div>
-            <div className="flex-shrink-0 w-9 h-9 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 text-xs font-bold">M</div>
+            <div className="flex-shrink-0 w-9 h-9 rounded-full bg-slate-700 flex items-center justify-center text-slate-300 text-xs font-bold">M</div>
           </div>
           <div className="flex gap-3">
             <div className="flex-shrink-0 w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white text-xs font-bold shadow-md shadow-blue-500/30">AI</div>
-            <div className="bg-gray-100 rounded-2xl rounded-tl-sm px-4 py-2.5 max-w-sm">
-              <p className="text-sm text-gray-900 leading-relaxed">Patel kitchen reno ($12K), Chen HVAC ($6.2K), Rodriguez bathroom ($4.8K). Want me to follow up?</p>
+            <div className="bg-slate-700/50 rounded-2xl rounded-tl-sm px-4 py-2.5 max-w-sm">
+              <p className="text-sm text-slate-200 leading-relaxed">Patel kitchen reno ($12K), Chen HVAC ($6.2K), Rodriguez bathroom ($4.8K). Want me to follow up?</p>
             </div>
           </div>
           <div className="flex gap-3 justify-end">
-            <div className="bg-blue-500 text-white rounded-2xl rounded-tr-sm px-4 py-2.5 max-w-sm shadow-md shadow-blue-500/20">
+            <div className="bg-blue-600 text-white rounded-2xl rounded-tr-sm px-4 py-2.5 max-w-sm shadow-md shadow-blue-600/20">
               <p className="text-sm leading-relaxed">Yes, follow up today</p>
             </div>
-            <div className="flex-shrink-0 w-9 h-9 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 text-xs font-bold">M</div>
+            <div className="flex-shrink-0 w-9 h-9 rounded-full bg-slate-700 flex items-center justify-center text-slate-300 text-xs font-bold">M</div>
           </div>
           <div className="flex gap-3">
             <div className="flex-shrink-0 w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white text-xs font-bold shadow-md shadow-blue-500/30">AI</div>
-            <div className="bg-emerald-50 border border-emerald-200 rounded-2xl rounded-tl-sm px-4 py-2.5 max-w-sm">
-              <p className="text-sm text-emerald-800 font-medium">Done. Follow-up emails sent to all 3 customers with personalized quotes attached.</p>
+            <div className="bg-emerald-500/20 border border-emerald-500/30 rounded-2xl rounded-tl-sm px-4 py-2.5 max-w-sm">
+              <p className="text-sm text-emerald-300 font-medium">Done. Follow-up emails sent to all 3 customers with personalized quotes attached.</p>
             </div>
           </div>
         </div>
-        <div className="flex gap-2 mt-5 pt-4 border-t border-gray-100">
-          <div className="flex-1 px-4 py-2.5 bg-gray-50 rounded-full text-sm text-gray-400 border border-gray-200">Ask anything about your business...</div>
-          <div className="p-2.5 bg-blue-500 text-white rounded-full shadow-md shadow-blue-500/20">
+        <div className="flex gap-2 mt-5 pt-4 border-t border-slate-700/50">
+          <div className="flex-1 px-4 py-2.5 bg-slate-700/50 rounded-full text-sm text-slate-400 border border-slate-700">Ask anything about your business...</div>
+          <div className="p-2.5 bg-blue-600 text-white rounded-full shadow-md shadow-blue-600/20">
             <Send className="w-4 h-4" />
           </div>
         </div>
@@ -854,16 +854,16 @@ function InteractiveExplorer() {
   );
 
   const AutopilotMockup = () => (
-    <div className="bg-slate-50 p-4 sm:p-6">
+    <div className="bg-slate-900 p-4 sm:p-6">
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
         {[{ l: 'Emails/month', v: '~240' }, { l: 'Texts/month', v: '~180' }, { l: 'Hours saved', v: '47' }, { l: 'Revenue impact', v: '+$19.4K' }].map((k) => (
-          <div key={k.l} className="bg-white rounded-xl p-3 border border-gray-100 shadow-sm">
-            <p className="text-[10px] text-gray-500 uppercase font-semibold">{k.l}</p>
-            <p className="text-xl font-bold text-gray-900 mt-1">{k.v}</p>
+          <div key={k.l} className="bg-slate-800 rounded-xl p-3 border border-slate-700/50 shadow-sm">
+            <p className="text-[10px] text-slate-400 uppercase font-semibold">{k.l}</p>
+            <p className="text-xl font-bold text-white mt-1">{k.v}</p>
           </div>
         ))}
       </div>
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm divide-y divide-gray-50">
+      <div className="bg-slate-800 rounded-xl border border-slate-700/50 shadow-sm divide-y divide-slate-700/50">
         {[
           { name: 'Speed to Lead', desc: 'Responds in 60 seconds', sent: '247 sent' },
           { name: 'Estimate Follow-Up', desc: 'Days 1, 3, 7', sent: '1,204 sent' },
@@ -874,14 +874,14 @@ function InteractiveExplorer() {
         ].map((auto) => (
           <div key={auto.name} className="flex items-center justify-between p-3 sm:p-4">
             <div className="min-w-0">
-              <p className="text-sm font-semibold text-gray-900">{auto.name}</p>
-              <p className="text-xs text-gray-500 mt-0.5">{auto.desc}</p>
+              <p className="text-sm font-semibold text-slate-200">{auto.name}</p>
+              <p className="text-xs text-slate-400 mt-0.5">{auto.desc}</p>
             </div>
             <div className="flex items-center gap-3 shrink-0">
               <div className="relative w-11 h-6 rounded-full bg-emerald-500 shadow-md shadow-emerald-500/30">
-                <div className="absolute top-0.5 w-5 h-5 rounded-full bg-white shadow-sm" style={{ left: 'calc(100% - 22px)' }} />
+                <div className="absolute top-0.5 w-5 h-5 rounded-full bg-slate-900 shadow-sm" style={{ left: 'calc(100% - 22px)' }} />
               </div>
-              <span className="text-xs font-medium text-emerald-600 w-20 text-right">{auto.sent}</span>
+              <span className="text-xs font-medium text-emerald-400 w-20 text-right">{auto.sent}</span>
             </div>
           </div>
         ))}
@@ -890,48 +890,48 @@ function InteractiveExplorer() {
   );
 
   const InvoicingMockup = () => (
-    <div className="bg-slate-50 p-4 sm:p-6">
+    <div className="bg-slate-900 p-4 sm:p-6">
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
         {[{ l: 'Invoices', v: '3' }, { l: 'Outstanding', v: '$3,107' }, { l: 'Paid', v: '$3,955' }, { l: 'Collection', v: '56%' }].map((k) => (
-          <div key={k.l} className="bg-white rounded-xl p-3 border border-gray-100 shadow-sm">
-            <p className="text-[10px] text-gray-500 uppercase font-semibold">{k.l}</p>
-            <p className="text-xl font-bold text-gray-900 mt-1">{k.v}</p>
+          <div key={k.l} className="bg-slate-800 rounded-xl p-3 border border-slate-700/50 shadow-sm">
+            <p className="text-[10px] text-slate-400 uppercase font-semibold">{k.l}</p>
+            <p className="text-xl font-bold text-white mt-1">{k.v}</p>
           </div>
         ))}
       </div>
-      <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm mb-4">
+      <div className="bg-slate-800 rounded-xl p-4 border border-slate-700/50 shadow-sm mb-4">
         <div className="flex justify-between items-center mb-2">
-          <p className="text-sm font-semibold text-gray-900">Payment Collection</p>
-          <p className="text-sm font-bold text-emerald-600">56%</p>
+          <p className="text-sm font-semibold text-slate-200">Payment Collection</p>
+          <p className="text-sm font-bold text-emerald-400">56%</p>
         </div>
-        <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
+        <div className="h-3 bg-slate-700 rounded-full overflow-hidden">
           <div className="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full" style={{ width: '56%' }} />
         </div>
-        <div className="flex justify-between mt-2 text-xs text-gray-500">
+        <div className="flex justify-between mt-2 text-xs text-slate-400">
           <span>Collected: $3,955</span>
           <span>Outstanding: $3,107</span>
         </div>
       </div>
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+      <div className="bg-slate-800 rounded-xl border border-slate-700/50 shadow-sm overflow-hidden">
         <table className="w-full text-xs sm:text-sm">
           <thead>
-            <tr className="bg-gray-50 border-b border-gray-100">
-              <th className="text-left py-2.5 px-3 font-semibold text-gray-500 uppercase text-[10px]">Invoice</th>
-              <th className="text-left py-2.5 px-3 font-semibold text-gray-500 uppercase text-[10px]">Customer</th>
-              <th className="text-right py-2.5 px-3 font-semibold text-gray-500 uppercase text-[10px]">Total</th>
-              <th className="text-center py-2.5 px-3 font-semibold text-gray-500 uppercase text-[10px]">Status</th>
+            <tr className="bg-slate-800/50 border-b border-slate-700/50">
+              <th className="text-left py-2.5 px-3 font-semibold text-slate-400 uppercase text-[10px]">Invoice</th>
+              <th className="text-left py-2.5 px-3 font-semibold text-slate-400 uppercase text-[10px]">Customer</th>
+              <th className="text-right py-2.5 px-3 font-semibold text-slate-400 uppercase text-[10px]">Total</th>
+              <th className="text-center py-2.5 px-3 font-semibold text-slate-400 uppercase text-[10px]">Status</th>
             </tr>
           </thead>
           <tbody>
             {[
-              { id: 'INV-001', cust: 'John Martinez', amt: '$3,955', status: 'Paid', color: 'bg-emerald-100 text-emerald-700' },
-              { id: 'INV-002', cust: 'Patricia King', amt: '$734.50', status: 'Sent', color: 'bg-blue-100 text-blue-700' },
-              { id: 'INV-003', cust: 'Sarah Chen', amt: '$2,373', status: 'Sent', color: 'bg-blue-100 text-blue-700' },
+              { id: 'INV-001', cust: 'John Martinez', amt: '$3,955', status: 'Paid', color: 'bg-emerald-500/20 text-emerald-400' },
+              { id: 'INV-002', cust: 'Patricia King', amt: '$734.50', status: 'Sent', color: 'bg-blue-500/20 text-blue-400' },
+              { id: 'INV-003', cust: 'Sarah Chen', amt: '$2,373', status: 'Sent', color: 'bg-blue-500/20 text-blue-400' },
             ].map((r) => (
-              <tr key={r.id} className="border-b border-gray-50">
-                <td className="py-2.5 px-3 font-medium text-gray-900">{r.id}</td>
-                <td className="py-2.5 px-3 text-gray-700">{r.cust}</td>
-                <td className="py-2.5 px-3 text-right font-semibold text-gray-900">{r.amt}</td>
+              <tr key={r.id} className="border-b border-slate-800/50">
+                <td className="py-2.5 px-3 font-medium text-slate-200">{r.id}</td>
+                <td className="py-2.5 px-3 text-slate-300">{r.cust}</td>
+                <td className="py-2.5 px-3 text-right font-semibold text-slate-100">{r.amt}</td>
                 <td className="py-2.5 px-3 text-center"><span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold ${r.color}`}>{r.status}</span></td>
               </tr>
             ))}
@@ -1024,27 +1024,25 @@ function InteractiveExplorer() {
             </div>
           </div>
 
-          {/* Right side: browser frame + mockup */}
+          {/* Right side: minimal app header + dark mockup */}
           <div className="flex-1 min-w-0">
-            <div className="rounded-xl sm:rounded-2xl overflow-hidden border border-slate-700/50 shadow-2xl shadow-black/30">
-              {/* Browser chrome */}
-              <div className="bg-slate-800 px-4 py-2.5 flex items-center gap-3">
-                <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-red-400/80" />
-                  <div className="w-3 h-3 rounded-full bg-yellow-400/80" />
-                  <div className="w-3 h-3 rounded-full bg-green-400/80" />
-                </div>
-                <div className="flex-1 flex justify-center">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-700/50 rounded-lg max-w-sm">
-                    <div className="w-2 h-2 rounded-full bg-green-400" />
-                    <span className="text-xs text-slate-400 font-mono truncate">{currentTab.url}</span>
+            <div className="rounded-2xl overflow-hidden bg-slate-900 shadow-2xl shadow-black/50 ring-1 ring-white/5">
+              {/* Minimal app header - no browser chrome */}
+              <div className="bg-slate-800 px-4 py-2.5 flex items-center justify-between border-b border-slate-700/50">
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
+                    <Zap className="w-3.5 h-3.5 text-white" />
                   </div>
+                  <span className="text-xs font-medium text-slate-400">Growth OS</span>
                 </div>
-                <div className="w-14" />
+                <div className="flex items-center gap-1.5">
+                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  <span className="text-[10px] text-slate-500">Live</span>
+                </div>
               </div>
 
               {/* Mockup content */}
-              <div className="bg-slate-100 min-h-[400px] sm:min-h-[480px]">
+              <div className="bg-slate-900 min-h-[400px] sm:min-h-[480px]">
                 {renderMockup()}
               </div>
             </div>

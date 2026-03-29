@@ -153,6 +153,80 @@ function useParallax(speed: number = 0.3) {
   return offset;
 }
 
+// ─── Sticky Section Navigation ────────────────────────────────
+function StickySectionNav() {
+  const [isVisible, setIsVisible] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
+
+  useEffect(() => {
+    // Track hero visibility
+    const hero = document.getElementById('hero');
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(!entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+
+    if (hero) {
+      observer.observe(hero);
+    }
+
+    // Track active section while scrolling
+    const handleScroll = () => {
+      const sections = document.querySelectorAll('[data-section]');
+      let active = '';
+      for (const section of sections) {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= 200) {
+          active = section.getAttribute('data-section') || '';
+        }
+      }
+      setActiveSection(active);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const scrollToSection = (id: string) => {
+    const element = document.querySelector(`[data-section="${id}"]`);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  if (!isVisible) return null;
+
+  return (
+    <div className="fixed top-[64px] left-0 right-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-200/50">
+      <div className="max-w-7xl mx-auto px-6 py-3 flex gap-6 lg:gap-8 overflow-x-auto scrollbar-hide">
+        {[
+          { id: 'product', label: 'Product' },
+          { id: 'proof', label: 'Proof' },
+          { id: 'automations', label: 'Automations' },
+          { id: 'pricing', label: 'Pricing' },
+        ].map((item) => (
+          <button
+            key={item.id}
+            onClick={() => scrollToSection(item.id)}
+            className={`text-sm font-medium whitespace-nowrap transition-colors pb-2 border-b-2 ${
+              activeSection === item.id
+                ? 'text-blue-600 border-blue-600'
+                : 'text-gray-600 border-transparent hover:text-gray-900'
+            }`}
+          >
+            {item.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ─── Hero Section ─────────────────────────────────────────────
 function Hero() {
   const { t } = useLanguage();
@@ -192,7 +266,7 @@ function Hero() {
   const smooth = 'cubic-bezier(0.16, 1, 0.3, 1)';
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-50">
+    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-50">
       {/* Subtle grid background */}
       <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
 
@@ -298,21 +372,14 @@ function Hero() {
             {t('hero.neverMissLead')}
           </p>
 
-          {/* CTAs */}
-          <div className="hero-reveal hero-reveal-delay-4 mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+          {/* CTA */}
+          <div className="hero-reveal hero-reveal-delay-4 mt-10 flex justify-center">
             <Link
               href="/setup"
               className="inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-base font-semibold rounded-2xl hover:from-blue-500 hover:to-blue-600 transition-all shadow-lg shadow-blue-600/25 hover:shadow-blue-500/40 hover:-translate-y-0.5"
             >
               {t('hero.startFreeNoCard')}
               <ArrowRight className="w-5 h-5" />
-            </Link>
-            <Link
-              href="/dashboard"
-              className="inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-white text-gray-700 text-base font-semibold rounded-2xl border border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-all shadow-sm"
-            >
-              {t('landing.seeItInAction')}
-              <ChevronRight className="w-5 h-5" />
             </Link>
           </div>
 
@@ -385,33 +452,23 @@ function Hero() {
 function ProblemSection() {
   const { t } = useLanguage();
   return (
-    <section className="py-20 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900">
-      <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+    <section className="py-16 lg:py-20 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900">
+      <div className="max-w-3xl mx-auto px-6 lg:px-8 text-center">
         <h2 className="scroll-fade-up text-2xl sm:text-3xl font-bold text-white mb-8">{t('problem.soundFamiliar')}</h2>
-        <div className="stagger-children scroll-fade-up grid sm:grid-cols-2 gap-4 text-left max-w-3xl mx-auto">
+        <div className="stagger-children scroll-fade-up grid gap-4 text-left max-w-2xl mx-auto">
           {[
             t('problem.missedCall'),
             t('problem.estimateFollowUp'),
-            t('problem.bestCustomer'),
             t('problem.invoicedLate'),
-            t('problem.adsNotWorking'),
-            t('problem.jobberDidntHelp'),
-          ].map((pain, index) => (
-            <div key={pain} className={`${index % 2 === 0 ? 'scroll-fade-left' : 'scroll-fade-right'} flex items-start gap-3 p-4 rounded-xl bg-white/5 border border-white/10`}>
+          ].map((pain) => (
+            <div key={pain} className="scroll-fade-left flex items-start gap-3 p-4 rounded-lg bg-white/5 border border-white/10">
               <X className="w-5 h-5 text-rose-400 shrink-0 mt-0.5" />
               <p className="text-sm text-slate-300">{pain}</p>
             </div>
           ))}
         </div>
 
-        {/* Canada differentiator */}
-        <div className="scroll-fade-up mt-12 max-w-3xl mx-auto text-center">
-          <p className="text-base sm:text-lg text-gray-300 leading-relaxed">
-            {t('problem.builtInUs')}
-          </p>
-        </div>
-
-        <p className="mt-10 text-lg text-blue-300 font-medium">
+        <p className="scroll-fade-up mt-8 text-lg text-blue-300 font-medium">
           {t('problem.fixesAvailable')}
         </p>
       </div>
@@ -419,262 +476,7 @@ function ProblemSection() {
   );
 }
 
-// ─── How It Works ────────────────────────────────────────────
-function HowItWorks() {
-  const { t } = useLanguage();
-  return (
-    <section id="how-it-works" className="py-24 lg:py-32 bg-white">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="scroll-fade-up text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-100 mb-6">
-            <span className="text-xs font-semibold text-blue-600 uppercase tracking-wider">{t('howItWorks.title')}</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight">
-            {t('howItWorks.setupTime')}{" "}
-            <span className="text-blue-600">
-              {t('howItWorks.setupTimeHighlight')}
-            </span>
-          </h2>
-        </div>
-
-        <div className="stagger-children scroll-fade-up grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {[
-            { step: "01", title: t('howItWorks.addCustomers'), description: t('howItWorks.addCustomersDesc'), icon: <Users className="w-6 h-6" /> },
-            { step: "02", title: t('howItWorks.turnOnAutopilot'), description: t('howItWorks.autopilotDesc'), icon: <Bot className="w-6 h-6" /> },
-            { step: "03", title: t('howItWorks.seeEveryJob'), description: t('howItWorks.seeEveryJobDesc'), icon: <Layers className="w-6 h-6" /> },
-            { step: "04", title: t('howItWorks.grow'), description: t('howItWorks.growDesc'), icon: <TrendingUp className="w-6 h-6" /> },
-          ].map((s, i) => (
-            <div key={s.step} className="scroll-fade-up relative">
-              {i < 3 && <div className="scroll-fade-up hidden lg:block absolute top-12 left-full w-full h-px draw-path bg-gradient-to-r from-blue-200 to-transparent" />}
-              <div className="text-5xl font-black text-blue-400/50 mb-4">{s.step}</div>
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 text-white flex items-center justify-center mb-4 shadow-lg">
-                {s.icon}
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">{s.title}</h3>
-              <p className="text-sm text-gray-500 leading-relaxed">{s.description}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─── Product Showcase Component (Sticky Scroll Feature Showcase) ─────────────────────────────────────────
-function ProductShowcase() {
-  const { t } = useLanguage();
-  const [phase, setPhase] = useState(0);
-  const showcaseRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!showcaseRef.current) return;
-      const rect = showcaseRef.current.getBoundingClientRect();
-      const sectionTop = rect.top;
-      const sectionHeight = rect.height;
-      const windowHeight = window.innerHeight;
-
-      // Calculate scroll progress (0 to 1) within this section
-      const scrollProgress = Math.max(0, Math.min(1, (windowHeight - sectionTop) / (windowHeight + sectionHeight)));
-
-      // Map to 4 phases (0-3)
-      const newPhase = Math.min(3, Math.floor(scrollProgress * 4));
-      setPhase(newPhase);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const phases = [
-    {
-      title: t('showcase.seeEveryJobGlance'),
-      gradient: "from-blue-600 via-blue-500 to-cyan-500",
-      content: (
-        <div className="w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden">
-          <div className="bg-gradient-to-r from-slate-800 to-slate-900 px-4 py-3 flex items-center gap-2">
-            <div className="flex gap-1.5">
-              <div className="w-3 h-3 rounded-full bg-red-400" />
-              <div className="w-3 h-3 rounded-full bg-yellow-400" />
-              <div className="w-3 h-3 rounded-full bg-green-400" />
-            </div>
-          </div>
-          <div className="p-4 bg-slate-50">
-            <div className="text-xs font-semibold text-gray-600 mb-3">{t('showcase.pipelineLabel')}</div>
-            <div className="flex gap-3">
-              {[t('showcase.newLeads'), t('showcase.quoted'), t('showcase.booked'), t('showcase.inProgress')].map((stage, i) => (
-                <div key={stage} className="flex-1 bg-white rounded-lg p-3 border border-gray-200 shadow-sm">
-                  <div className="text-[10px] text-gray-500 font-semibold mb-2">{stage}</div>
-                  <div className="space-y-2">
-                    {[1, 2].map((j) => (
-                      <div key={j} className={`rounded-md p-2 text-[10px] font-medium flex items-center gap-1.5 ${
-                        i === 0 ? 'bg-blue-100 text-blue-700' :
-                        i === 1 ? 'bg-purple-100 text-purple-700' :
-                        i === 2 ? 'bg-emerald-100 text-emerald-700' :
-                        'bg-amber-100 text-amber-700'
-                      }`}>
-                        <div className="w-1 h-1 rounded-full bg-current" />
-                        Job {i}{j}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      ),
-    },
-    {
-      title: t('showcase.tieredPricingCloses'),
-      gradient: "from-purple-600 via-purple-500 to-pink-500",
-      content: (
-        <div className="w-full max-w-lg space-y-4">
-          {[
-            { tier: t('showcase.good'), price: '$800', color: 'bg-slate-50 border-gray-200' },
-            { tier: t('showcase.better'), price: '$1,200', color: 'bg-gradient-to-br from-blue-50 to-blue-100 border-blue-400 ring-2 ring-blue-500', isHighlight: true },
-            { tier: t('showcase.best'), price: '$1,800', color: 'bg-slate-50 border-gray-200' }
-          ].map((tier) => (
-            <div key={tier.tier} className={`rounded-xl p-4 border-2 transition-all ${tier.color} ${tier.isHighlight ? 'scale-105 shadow-2xl shadow-blue-500/20' : 'shadow-lg'}`}>
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="font-semibold text-gray-900">{tier.tier}</div>
-                  <div className="text-2xl font-bold text-gray-900 mt-1">{tier.price}</div>
-                </div>
-                {tier.isHighlight && <div className="px-3 py-1 rounded-full bg-blue-500 text-white text-xs font-semibold">{t('showcase.recommended')}</div>}
-              </div>
-            </div>
-          ))}
-        </div>
-      ),
-    },
-    {
-      title: t('showcase.automationsRunning'),
-      gradient: "from-emerald-600 via-emerald-500 to-cyan-500",
-      content: (
-        <div className="w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden">
-          <div className="bg-gradient-to-r from-slate-800 to-slate-900 px-4 py-3" />
-          <div className="p-6 space-y-4">
-            {[t('showcase.speedToLead'), t('showcase.estimateFollowUp'), t('showcase.reviewRequests'), t('showcase.paymentReminders')].map((automation) => (
-              <div key={automation} className="flex items-center justify-between p-4 bg-slate-50 rounded-lg border border-gray-200">
-                <span className="text-sm font-medium text-gray-900">{automation}</span>
-                <div className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-lg shadow-emerald-500/50" />
-                  <span className="text-xs font-semibold text-emerald-600">{t('showcase.running')}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      ),
-    },
-    {
-      title: t('showcase.aiGrowthAdvisor'),
-      gradient: "from-indigo-600 via-indigo-500 to-purple-500",
-      content: (
-        <div className="w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden">
-          <div className="bg-gradient-to-r from-slate-800 to-slate-900 px-4 py-3 flex items-center gap-2">
-            <div className="flex gap-1.5">
-              <div className="w-3 h-3 rounded-full bg-red-400" />
-              <div className="w-3 h-3 rounded-full bg-yellow-400" />
-              <div className="w-3 h-3 rounded-full bg-green-400" />
-            </div>
-          </div>
-          <div className="p-6 space-y-4 bg-slate-50">
-            <div className="flex gap-2">
-              <div className="max-w-xs bg-gray-200 rounded-lg p-3 text-sm">
-                What should I focus on this week?
-              </div>
-            </div>
-            <div className="flex gap-2 justify-end">
-              <div className="max-w-xs bg-indigo-500 text-white rounded-lg p-3 text-sm">
-                Your top 3 opportunities: 2 estimates pending follow-up, 1 invoice overdue, and 4 new leads to call today.
-              </div>
-            </div>
-            <div className="flex gap-2">
-              <div className="max-w-xs bg-gray-200 rounded-lg p-3 text-sm">
-                Which customers pay the fastest?
-              </div>
-            </div>
-          </div>
-        </div>
-      ),
-    },
-  ];
-
-  return (
-    <section id="product-showcase" ref={showcaseRef} className="relative bg-slate-50">
-      {/* Desktop: sticky scroll version (400vh) */}
-      <div className="hidden lg:block" style={{ height: '400vh', position: 'relative' }}>
-        <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden transition-colors duration-500" style={{ backgroundColor: `hsl(${200 + phase * 10}, 70%, 40%)` }}>
-          <div className={`absolute inset-0 opacity-60 transition-opacity duration-500 bg-gradient-to-br ${phases[phase].gradient}`} />
-
-          <div className="relative max-w-7xl mx-auto px-6 lg:px-8 w-full h-full flex items-center">
-            <div className="grid grid-cols-2 gap-12 items-center w-full">
-              {/* Text content */}
-              <div>
-                <h2 className="text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 transition-all duration-500" style={{ opacity: 1 - Math.abs(0 - phase) * 0.2 }}>
-                  {phases[phase].title}
-                </h2>
-                <p className="text-lg text-white/80 max-w-xl transition-all duration-500">
-                  {phase === 0 && t('showcase.seeEveryJobGlanceDesc')}
-                  {phase === 1 && t('showcase.tieredPricingDesc')}
-                  {phase === 2 && t('showcase.automationsRunningDesc')}
-                  {phase === 3 && t('showcase.aiGrowthAdvisorDesc')}
-                </p>
-              </div>
-
-              {/* Product mockup */}
-              <div className="flex items-center justify-center h-full transition-all duration-500">
-                <div className="opacity-0 transition-opacity duration-500" style={{ opacity: phase >= 0 ? 1 : 0 }}>
-                  {phases[phase].content}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Hidden scroll drivers */}
-        <div className="h-screen" />
-        <div className="h-screen" />
-        <div className="h-screen" />
-        <div className="h-screen" />
-      </div>
-
-      {/* Mobile: stacked vertical version */}
-      <div className="lg:hidden">
-        <div className="max-w-7xl mx-auto px-6 py-12">
-          {phases.map((phaseData, index) => (
-            <div key={index} className="mb-16 scroll-fade-up">
-              <div className="rounded-2xl bg-gradient-to-br from-white to-slate-100 overflow-hidden shadow-lg">
-                <div className={`h-48 flex items-center justify-center bg-gradient-to-br ${phaseData.gradient}`}>
-                  <div className="text-white text-center">
-                    <div className="text-lg font-semibold opacity-90">Feature {index + 1}</div>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4">{phaseData.title}</h3>
-                  <p className="text-gray-600 mb-6">
-                    {index === 0 && t('showcase.seeEveryJobGlanceDesc')}
-                    {index === 1 && t('showcase.tieredPricingDesc')}
-                    {index === 2 && t('showcase.automationsRunningDesc')}
-                    {index === 3 && t('showcase.aiGrowthAdvisorDesc')}
-                  </p>
-                  <div className="scale-75 origin-top-left">
-                    {phaseData.content}
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─── Interactive Explorer Section ─────────────────────────────
+// ─── Interactive Explorer Section (Compact Tabbed Product Showcase) ─────────────────────────────────────────
 function InteractiveExplorer() {
   const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState<string>('dashboard');
@@ -966,7 +768,7 @@ function InteractiveExplorer() {
   const currentTab = tabs.find(t => t.id === activeTab)!;
 
   return (
-    <section className="relative bg-slate-950 py-20 sm:py-28 overflow-hidden">
+    <section data-section="product" className="relative bg-slate-950 py-20 sm:py-28 overflow-hidden">
       {/* Background glow */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="hidden sm:block absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-blue-500/5 rounded-full blur-3xl" />
@@ -1157,59 +959,45 @@ function Features() {
   );
 }
 
-// ─── Autopilot Section ───────────────────────────────────────
+// ─── Autopilot Section (Compressed) ──────────────────────────
 function AutopilotSection() {
   const { t } = useLanguage();
-  const playbooks = [
-    { name: t('autopilot.speedToLead'), description: t('autopilot.speedToLeadDesc'), category: "Leads", color: "bg-blue-500" },
-    { name: t('autopilot.estimateFollowUp'), description: t('autopilot.estimateFollowUpDesc'), category: "Sales", color: "bg-purple-500" },
-    { name: t('autopilot.reviewMachine'), description: t('autopilot.reviewMachineDesc'), category: "Reputation", color: "bg-amber-500" },
-    { name: t('autopilot.paymentReminders'), description: t('autopilot.paymentRemindersDesc'), category: "Revenue", color: "bg-emerald-500" },
-    { name: t('autopilot.customerReactivation'), description: t('autopilot.customerReactivationDesc'), category: "Retention", color: "bg-rose-500" },
-    { name: t('autopilot.seasonalCampaigns'), description: t('autopilot.seasonalCampaignsDesc'), category: "Growth", color: "bg-teal-500" },
+  const automations = [
+    { name: t('autopilot.speedToLead'), icon: <Zap className="w-4 h-4" /> },
+    { name: t('autopilot.estimateFollowUp'), icon: <FileText className="w-4 h-4" /> },
+    { name: t('autopilot.reviewMachine'), icon: <Star className="w-4 h-4" /> },
+    { name: t('autopilot.paymentReminders'), icon: <DollarSign className="w-4 h-4" /> },
+    { name: t('autopilot.customerReactivation'), icon: <Users className="w-4 h-4" /> },
+    { name: t('autopilot.seasonalCampaigns'), icon: <TrendingUp className="w-4 h-4" /> },
   ];
 
   return (
-    <section id="autopilot" className="py-16 lg:py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="scroll-fade-up text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-purple-50 border border-purple-100 mb-6">
-            <Bot className="w-3.5 h-3.5 text-purple-600" />
-            <span className="text-xs font-semibold text-purple-600 uppercase tracking-wider">{t('automations.title')}</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight">
+    <section data-section="automations" className="py-12 lg:py-16 bg-white">
+      <div className="max-w-4xl mx-auto px-6 lg:px-8">
+        <div className="scroll-fade-up text-center mb-10">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">
             {t('autopilot.title')}{" "}
             <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
               {t('autopilot.subtitle')}
             </span>
           </h2>
-          <p className="mt-4 text-lg text-gray-500">
+          <p className="mt-3 text-gray-600">
             {t('autopilot.description')}
           </p>
         </div>
 
-        <div className="stagger-children scroll-fade-up grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {playbooks.map((p) => (
-            <div key={p.name} className="scroll-fade-up group relative p-6 rounded-2xl bg-white border border-gray-100 hover:border-gray-200 hover:shadow-lg transition-all duration-300 overflow-hidden">
-              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-100 overflow-hidden rounded-b-2xl">
-                <div className="h-full bg-gradient-to-r from-blue-400 to-purple-500 progress-fill" style={{ width: '75%', animation: 'fillWidth 3s ease-in-out infinite' }} />
-              </div>
-              <div className="flex items-center justify-between mb-4">
-                <span className={`inline-flex px-2.5 py-1 rounded-full text-[10px] font-semibold text-white ${p.color}`}>{p.category}</span>
-                <div className="w-2 h-2 rounded-full bg-emerald-400 pulse-ring" />
-              </div>
-              <h3 className="text-base font-semibold text-gray-900 mb-2">{p.name}</h3>
-              <p className="text-sm text-gray-500 leading-relaxed">{p.description}</p>
+        {/* Compact 2-row grid of automation badges */}
+        <div className="stagger-children scroll-fade-up grid grid-cols-2 lg:grid-cols-3 gap-3">
+          {automations.map((a) => (
+            <div key={a.name} className="scroll-fade-up flex items-center gap-2 px-4 py-3 rounded-lg bg-gradient-to-r from-slate-50 to-blue-50 border border-gray-100 hover:border-blue-200 transition-all">
+              <div className="text-blue-600">{a.icon}</div>
+              <span className="text-sm font-medium text-gray-700">{a.name}</span>
             </div>
           ))}
         </div>
 
-        <p className="mt-8 text-center text-sm text-gray-400">
-          {t('autopilot.preWritten')}
-        </p>
-
-        <div className="mt-6 text-center">
-          <Link href="/automations" className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white text-sm font-semibold rounded-xl hover:from-purple-700 hover:to-blue-700 transition-all shadow-lg shadow-purple-600/20">
+        <div className="mt-8 text-center">
+          <Link href="/automations" className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors">
             {t('autopilot.exploreAll')} <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -1402,24 +1190,76 @@ function AdvisorDemo() {
 }
 
 // ─── Stats Banner ─────────────────────────────────────────────
-function StatsBanner() {
+function SocialProof() {
   const { t } = useLanguage();
+
+  const testimonials = [
+    {
+      quote: "We were losing calls every morning because the guys were already on jobs. Growth OS auto-texts every missed call now. Month one: 12 extra jobs. That's $14,000 we would have lost.",
+      name: "Mike Reynolds",
+      role: "Owner, Reynolds Plumbing — Toronto, ON",
+      initials: "MR",
+      color: "bg-blue-500",
+    },
+    {
+      quote: "Jobber handled scheduling fine, but it never helped us grow. Growth OS follows up on every estimate, asks for reviews, and the tax calculations actually work for Quebec. Switched in one day.",
+      name: "Jean-Pierre Lavoie",
+      role: "Propriétaire, Lavoie Climatisation — Montréal, QC",
+      initials: "JL",
+      color: "bg-red-500",
+    },
+    {
+      quote: "We turned on the review machine. 23 new Google reviews in 30 days. Calls went up. People said they found us because of the reviews. The platform paid for itself in week one.",
+      name: "Sarah Kim",
+      role: "GM, Comfort Zone HVAC — Vancouver, BC",
+      initials: "SK",
+      color: "bg-emerald-500",
+    },
+  ];
+
   return (
-    <section className="py-12 lg:py-16 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900">
+    <section data-section="proof" className="py-16 lg:py-20 bg-gradient-to-b from-white to-slate-50">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="stagger-children scroll-fade-up grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+        {/* Stats as compact row */}
+        <div className="mb-16 grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8 text-center">
           {[
-            { value: 40, suffix: "%", label: t('stats.moreJobsBooked'), sublabel: t('stats.moreJobsBookedSub') },
-            { value: 60, suffix: "sec", label: t('stats.leadResponseTime'), sublabel: t('stats.leadResponseTimeSub') },
-            { value: 12, suffix: "hrs", label: t('stats.savedPerWeek'), sublabel: t('stats.savedPerWeekSub') },
-            { value: 8500, suffix: "", prefix: "$", label: t('stats.extraRevenue'), sublabel: t('stats.extraRevenueSub') },
+            { value: 40, suffix: "%", label: t('stats.moreJobsBooked') },
+            { value: 60, suffix: "sec", label: t('stats.leadResponseTime') },
+            { value: 12, suffix: "hrs", label: t('stats.savedPerWeek') },
+            { value: 8500, suffix: "", prefix: "$", label: t('stats.extraRevenue') },
           ].map((stat) => (
             <div key={stat.label} className="scroll-fade-up">
-              <div className="text-3xl lg:text-4xl font-bold text-white">
+              <div className="text-2xl lg:text-3xl font-bold text-gray-900">
                 <AnimatedCounter end={stat.value} suffix={stat.suffix} prefix={stat.prefix || ""} />
               </div>
-              <p className="mt-2 text-sm text-slate-300 font-medium">{stat.label}</p>
-              <p className="text-xs text-slate-500">{stat.sublabel}</p>
+              <p className="mt-2 text-xs lg:text-sm text-gray-600 font-medium">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Testimonials section header */}
+        <div className="scroll-fade-up text-center max-w-3xl mx-auto mb-12">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight">
+            {t('testimonials.realBusinesses')}{" "}
+            <span className="bg-gradient-to-r from-amber-500 to-orange-500 bg-clip-text text-transparent">
+              {t('testimonials.realNumbers')}
+            </span>
+          </h2>
+        </div>
+
+        {/* Testimonials grid - 3 cards */}
+        <div className="stagger-children scroll-fade-up grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {testimonials.map((t) => (
+            <div key={t.name} className="scroll-fade-up p-6 rounded-2xl bg-white border border-gray-100 hover:shadow-lg transition-all">
+              <AnimatedStars />
+              <p className="text-gray-600 leading-relaxed mb-6 text-sm">&ldquo;{t.quote}&rdquo;</p>
+              <div className="flex items-center gap-3">
+                <div className={`w-10 h-10 rounded-full ${t.color} flex items-center justify-center text-white text-sm font-bold`}>{t.initials}</div>
+                <div>
+                  <p className="text-sm font-semibold text-gray-900">{t.name}</p>
+                  <p className="text-xs text-gray-400">{t.role}</p>
+                </div>
+              </div>
             </div>
           ))}
         </div>
@@ -1472,240 +1312,31 @@ function AnimatedStars() {
 }
 
 // ─── Testimonials ─────────────────────────────────────────────
-function Testimonials() {
-  const { t } = useLanguage();
-  const testimonials = [
-    {
-      quote: "We were losing calls every morning because the guys were already on jobs. Growth OS auto-texts every missed call now. Month one: 12 extra jobs. That's $14,000 we would have lost.",
-      name: "Mike Reynolds",
-      role: "Owner, Reynolds Plumbing — Toronto, ON",
-      initials: "MR",
-      color: "bg-blue-500",
-    },
-    {
-      quote: "Jobber handled scheduling fine, but it never helped us grow. Growth OS follows up on every estimate, asks for reviews, and the tax calculations actually work for Quebec. Switched in one day.",
-      name: "Jean-Pierre Lavoie",
-      role: "Propri\u00E9taire, Lavoie Climatisation — Montr\u00E9al, QC",
-      initials: "JL",
-      color: "bg-red-500",
-    },
-    {
-      quote: "We turned on the review machine. 23 new Google reviews in 30 days. Calls went up. People said they found us because of the reviews. The platform paid for itself in week one.",
-      name: "Sarah Kim",
-      role: "GM, Comfort Zone HVAC — Vancouver, BC",
-      initials: "SK",
-      color: "bg-emerald-500",
-    },
-    {
-      quote: "I'm not a tech guy. I thought I'd need to hire someone to set this up. Took me 10 minutes. Now I see every job, every lead, every dollar — from my phone. Worth every penny.",
-      name: "Tony Della Rosa",
-      role: "Owner, Della Plumbing — Calgary, AB",
-      initials: "TD",
-      color: "bg-orange-500",
-    },
-    {
-      quote: "Three trucks, three crews, and we were running on texts and memory. Growth OS let everyone see what's booked, who's going where, and what we're making. We doubled revenue this year.",
-      name: "Priya Patel",
-      role: "Manager, Elite HVAC Solutions — Mississauga, ON",
-      initials: "PP",
-      color: "bg-indigo-500",
-    },
-  ];
-
-  return (
-    <section id="testimonials" className="py-16 lg:py-24 bg-gradient-to-b from-white to-slate-50">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="scroll-fade-up text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-50 border border-amber-100 mb-6">
-            <span className="text-xs font-semibold text-amber-600 uppercase tracking-wider">{t('testimonials.results')}</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight">
-            {t('testimonials.realBusinesses')}{" "}
-            <span className="bg-gradient-to-r from-amber-500 to-orange-500 bg-clip-text text-transparent">
-              {t('testimonials.realNumbers')}
-            </span>
-          </h2>
-        </div>
-
-        <div className="stagger-children scroll-fade-up grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {testimonials.slice(0, 3).map((t) => (
-            <div key={t.name} className="scroll-fade-up p-8 rounded-2xl bg-white border border-gray-100 hover:shadow-lg transition-all duration-300">
-              <AnimatedStars />
-              <p className="text-gray-600 leading-relaxed mb-6">&ldquo;{t.quote}&rdquo;</p>
-              <div className="flex items-center gap-3">
-                <div className={`w-10 h-10 rounded-full ${t.color} flex items-center justify-center text-white text-sm font-bold`}>{t.initials}</div>
-                <div>
-                  <p className="text-sm font-semibold text-gray-900">{t.name}</p>
-                  <p className="text-xs text-gray-400">{t.role}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-        {/* Second row — 2 testimonials centered */}
-        <div className="stagger-children scroll-fade-up grid md:grid-cols-2 gap-6 mt-6 max-w-4xl mx-auto">
-          {testimonials.slice(3).map((t) => (
-            <div key={t.name} className="scroll-fade-up p-8 rounded-2xl bg-white border border-gray-100 hover:shadow-lg transition-all duration-300">
-              <AnimatedStars />
-              <p className="text-gray-600 leading-relaxed mb-6">&ldquo;{t.quote}&rdquo;</p>
-              <div className="flex items-center gap-3">
-                <div className={`w-10 h-10 rounded-full ${t.color} flex items-center justify-center text-white text-sm font-bold`}>{t.initials}</div>
-                <div>
-                  <p className="text-sm font-semibold text-gray-900">{t.name}</p>
-                  <p className="text-xs text-gray-400">{t.role}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─── Competitor Comparison ───────────────────────────────────
-function CompetitorComparison() {
-  const { t } = useLanguage();
-  const competitors = [
-    { name: "Growth OS", price: "$79\u2013$299", highlight: true, features: { leads: true, autopilot: true, estimates: true, tax: true, bilingual: true, noContract: true, reviews: true, pipeline: true } },
-    { name: "ServiceTitan", price: "$200+ (annual)", highlight: false, features: { leads: true, autopilot: "partial" as const, estimates: true, tax: false, bilingual: false, noContract: false, reviews: false, pipeline: true } },
-    { name: "Jobber", price: "$49\u2013$249", highlight: false, features: { leads: "partial" as const, autopilot: false, estimates: true, tax: "partial" as const, bilingual: false, noContract: true, reviews: false, pipeline: "partial" as const } },
-    { name: "Housecall Pro", price: "$65\u2013$200", highlight: false, features: { leads: true, autopilot: "partial" as const, estimates: true, tax: false, bilingual: false, noContract: false, reviews: "partial" as const, pipeline: true } },
-  ];
-
-  const featureLabels = [
-    { key: "leads", label: t('comparison.autoRespondMissedCalls') },
-    { key: "autopilot", label: t('comparison.automatedFollowUps') },
-    { key: "estimates", label: t('comparison.goodBetterBest') },
-    { key: "tax", label: t('comparison.canadianTaxCalculations') },
-    { key: "bilingual", label: t('comparison.frenchEnglishTemplates') },
-    { key: "noContract", label: t('comparison.monthToMonth') },
-    { key: "reviews", label: t('comparison.googleHomeStarsReviews') },
-    { key: "pipeline", label: t('comparison.visualPipeline') },
-  ];
-
-  const renderCheck = (value: boolean | "partial") => {
-    if (value === true) return <CheckCircle2 className="w-5 h-5 text-emerald-500 mx-auto" />;
-    if (value === "partial") return <div className="w-5 h-5 rounded-full border-2 border-amber-400 flex items-center justify-center mx-auto"><div className="w-2 h-2 rounded-full bg-amber-400" /></div>;
-    return <X className="w-5 h-5 text-gray-300 mx-auto" />;
-  };
-
-  return (
-    <section id="compare" className="py-16 lg:py-24 bg-white">
-      <div className="max-w-6xl mx-auto px-6 lg:px-8">
-        <div className="scroll-fade-up text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-100 mb-6">
-            <span className="text-xs font-semibold text-blue-600 uppercase tracking-wider">{t('comparison.compare')}</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight">
-            {t('comparison.moreFeatures')}{" "}
-            <span className="bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent">
-              {t('comparison.lessMoneyNoContracts')}
-            </span>
-          </h2>
-        </div>
-
-        {/* Desktop table */}
-        <div className="scroll-scale-up overflow-x-auto hidden md:block">
-          <table className="w-full border-collapse">
-            <thead>
-              <tr>
-                <th className="text-left p-4 text-sm font-medium text-gray-500"></th>
-                {competitors.map((c) => (
-                  <th key={c.name} className={`p-4 text-center ${c.highlight ? "bg-blue-50 rounded-t-2xl" : ""}`}>
-                    <div className={`text-sm font-bold ${c.highlight ? "text-blue-600" : "text-gray-700"}`}>{c.name}</div>
-                    <div className={`text-xs mt-1 ${c.highlight ? "text-blue-500" : "text-gray-400"}`}>{c.price}/mo</div>
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {featureLabels.map((feature, i) => (
-                <tr key={feature.key} className={i % 2 === 0 ? "bg-gray-50/50" : ""}>
-                  <td className="p-4 text-sm text-gray-700 font-medium">{feature.label}</td>
-                  {competitors.map((c) => (
-                    <td key={`${c.name}-${feature.key}`} className={`p-4 text-center ${c.highlight ? "bg-blue-50/50" : ""}`}>
-                      {renderCheck(c.features[feature.key as keyof typeof c.features])}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        {/* Mobile cards */}
-        <div className="scroll-scale-up md:hidden space-y-4">
-          {competitors.map((c) => (
-            <div key={c.name} className={`rounded-2xl p-5 ${c.highlight ? "bg-blue-50 border-2 border-blue-200" : "bg-white border border-gray-200"}`}>
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <div className={`text-base font-bold ${c.highlight ? "text-blue-600" : "text-gray-900"}`}>{c.name}</div>
-                  <div className={`text-xs ${c.highlight ? "text-blue-500" : "text-gray-400"}`}>{c.price}/mo</div>
-                </div>
-                {c.highlight && <span className="px-2.5 py-1 bg-blue-600 text-white text-[10px] font-bold rounded-full">{t('comparison.bestValue')}</span>}
-              </div>
-              <div className="space-y-2">
-                {featureLabels.map((feature) => (
-                  <div key={feature.key} className="flex items-center justify-between gap-3">
-                    <span className="text-xs text-gray-600 flex-1">{feature.label}</span>
-                    <div className="shrink-0">{renderCheck(c.features[feature.key as keyof typeof c.features])}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <p className="mt-8 text-center text-sm text-gray-400">
-          {t('comparison.noContractNote')}
-        </p>
-      </div>
-    </section>
-  );
-}
-
-// ─── Built for Canada (Closer) ───────────────────────────────
-function BuiltForCanada() {
-  const { t } = useLanguage();
-  return (
-    <section className="py-16 lg:py-24 bg-gradient-to-b from-slate-50 to-white">
-      <div className="max-w-5xl mx-auto px-6 lg:px-8">
-        <div className="scroll-fade-up text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-red-50 border border-red-100 mb-6">
-            <MapPin className="w-3.5 h-3.5 text-red-600" />
-            <span className="text-xs font-semibold text-red-600 uppercase tracking-wider">{t('marketing.madeInCanada')}</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">
-            {t('builtForCanada.title')}
-          </h2>
-          <p className="mt-3 text-lg text-gray-500 max-w-2xl mx-auto">
-            {t('builtForCanada.subtitle')}
-          </p>
-        </div>
-
-        <div className="stagger-children scroll-fade-up grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {[
-            { icon: <DollarSign className="w-5 h-5" />, title: t('builtForCanada.taxesDone'), desc: t('builtForCanada.taxesDesc') },
-            { icon: <Languages className="w-5 h-5" />, title: t('builtForCanada.frenchEnglish'), desc: t('builtForCanada.frenchEnglishDesc') },
-            { icon: <Receipt className="w-5 h-5" />, title: t('builtForCanada.craReadyInvoices'), desc: t('builtForCanada.craReadyInvoicesDesc') },
-            { icon: <BadgeCheck className="w-5 h-5" />, title: t('builtForCanada.licenseTracking'), desc: t('builtForCanada.licenseTrackingDesc') },
-            { icon: <Globe className="w-5 h-5" />, title: t('builtForCanada.homeStarsReviews'), desc: t('builtForCanada.homeStarsReviewsDesc') },
-            { icon: <DollarSign className="w-5 h-5" />, title: t('builtForCanada.interacETransfer'), desc: t('builtForCanada.interacETransferDesc') },
-          ].map((f) => (
-            <div key={f.title} className="scroll-fade-up p-5 rounded-xl bg-white border border-gray-100 hover:border-red-200/50 hover:shadow-md transition-all">
-              <div className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-red-50 text-red-600 mb-3">{f.icon}</div>
-              <h3 className="text-sm font-semibold text-gray-900 mb-1">{f.title}</h3>
-              <p className="text-xs text-gray-500 leading-relaxed">{f.desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
 
 // ─── Pricing ──────────────────────────────────────────────────
+function PricingTeaser() {
+  const { t } = useLanguage();
+
+  return (
+    <section data-section="pricing" className="py-12 lg:py-16 bg-gradient-to-b from-white to-slate-50">
+      <div className="max-w-3xl mx-auto px-6 lg:px-8 text-center">
+        <div className="scroll-fade-up">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight mb-4">
+            Flexible plans that grow with you.
+          </h2>
+          <p className="text-lg text-gray-600 mb-8">
+            Plans starting at <span className="text-blue-600 font-semibold">$79/mo CAD</span>. Try free for 14 days — no credit card required.
+          </p>
+          <Link href="/pricing" className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg">
+            View all pricing plans <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Pricing (Full Page) ──────────────────────────────────────
 function Pricing() {
   const { t } = useLanguage();
   const plans = [
@@ -1792,55 +1423,6 @@ function Pricing() {
 }
 
 // ─── FAQ ──────────────────────────────────────────────────────
-function FAQ() {
-  const { t } = useLanguage();
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-  const faqs = [
-    { q: t('faq.setupTime'), a: t('faq.setupTimeAnswer') },
-    { q: t('faq.importData'), a: t('faq.importDataAnswer') },
-    { q: t('faq.quebecTaxes'), a: t('faq.quebecTaxesAnswer') },
-    { q: t('faq.techniciansMobile'), a: t('faq.techniciansMobileAnswer') },
-    { q: t('faq.soloOperator'), a: t('faq.soloOperatorAnswer') },
-    { q: t('faq.contract'), a: t('faq.contractAnswer') },
-    { q: t('faq.techSavvy'), a: t('faq.techSavvyAnswer') },
-    { q: t('faq.afterTrial'), a: t('faq.afterTrialAnswer') },
-    { q: t('faq.specificTrade'), a: t('faq.specificTradeAnswer') },
-  ];
-
-  return (
-    <section className="py-16 lg:py-24 bg-gradient-to-b from-white to-slate-50">
-      <div className="max-w-3xl mx-auto px-6 lg:px-8">
-        <div className="scroll-fade-up text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-100 border border-gray-200 mb-6">
-            <HelpCircle className="w-3.5 h-3.5 text-gray-500" />
-            <span className="text-xs font-semibold text-gray-600 uppercase tracking-wider">{t('faq.faq')}</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">{t('faq.questions')}</h2>
-        </div>
-
-        <div className="scroll-fade-up space-y-3">
-          {faqs.map((faq, i) => (
-            <div key={i} className="bg-white rounded-xl border border-gray-100 overflow-hidden">
-              <button
-                className="w-full text-left px-6 py-5 flex items-center justify-between gap-4"
-                onClick={() => setOpenIndex(openIndex === i ? null : i)}
-              >
-                <span className="text-sm font-semibold text-gray-900">{faq.q}</span>
-                <ChevronRight className={`w-5 h-5 text-gray-400 shrink-0 transition-transform ${openIndex === i ? "rotate-90" : ""}`} />
-              </button>
-              {openIndex === i && (
-                <div className="px-6 pb-5">
-                  <p className="text-sm text-gray-500 leading-relaxed">{faq.a}</p>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
 
 // ─── Main Landing Page ────────────────────────────────────────
 export default function LandingPage() {
@@ -1848,17 +1430,13 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-white">
       <Navigation />
+      <StickySectionNav />
       <Hero />
       <ProblemSection />
-      <HowItWorks />
       <InteractiveExplorer />
-      <Testimonials />
+      <SocialProof />
       <AutopilotSection />
-      <StatsBanner />
-      <CompetitorComparison />
-      <BuiltForCanada />
-      <Pricing />
-      <FAQ />
+      <PricingTeaser />
       <CTASection />
       <Footer />
     </div>

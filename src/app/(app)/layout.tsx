@@ -2,27 +2,26 @@
 
 import { useState } from 'react';
 import { Sidebar } from '@/components/Sidebar';
-import { ThemeProvider } from '@/components/ThemeProvider';
+import { ThemeProvider, useTheme } from '@/components/ThemeProvider';
 import { Menu, Zap } from 'lucide-react';
 
-export default function AppLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+function AppContent({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
 
   return (
-    <ThemeProvider>
-      <div className="min-h-screen flex bg-gray-50 dark:bg-slate-950 transition-colors duration-200">
-        <Sidebar mobileOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+    <div className={`min-h-screen flex transition-colors duration-200 ${isDark ? 'bg-slate-950' : 'bg-gray-50'}`}>
+      <Sidebar mobileOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         <div className="flex-1 flex flex-col min-w-0">
           {/* Mobile header */}
-          <header className="lg:hidden flex items-center justify-between px-4 py-3 bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 sticky top-0 z-30 transition-colors duration-200">
+          <header className={`lg:hidden flex items-center justify-between px-4 py-3 border-b sticky top-0 z-30 transition-colors duration-200 ${
+            isDark ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'
+          }`}>
             <button
               onClick={() => setSidebarOpen(true)}
-              className="p-2 -ml-2 text-gray-600 dark:text-slate-300 hover:text-gray-900 dark:hover:text-white rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700"
+              className={`p-2 -ml-2 rounded-lg ${isDark ? 'text-slate-300 hover:text-white hover:bg-slate-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'}`}
             >
               <Menu className="w-5 h-5" />
             </button>
@@ -30,7 +29,7 @@ export default function AppLayout({
               <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
                 <Zap className="w-4 h-4 text-white" />
               </div>
-              <span className="font-bold text-gray-900 dark:text-white text-sm">Growth OS</span>
+              <span className={`font-bold text-sm ${isDark ? 'text-white' : 'text-gray-900'}`}>Growth OS</span>
             </div>
             <div className="w-9" />
           </header>
@@ -38,6 +37,17 @@ export default function AppLayout({
           <main className="flex-1 overflow-auto">{children}</main>
         </div>
       </div>
+  );
+}
+
+export default function AppLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <ThemeProvider>
+      <AppContent>{children}</AppContent>
     </ThemeProvider>
   );
 }

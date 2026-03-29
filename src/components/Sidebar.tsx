@@ -52,9 +52,7 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
   const settingsItem = { href: '/settings', label: t('nav.settings'), icon: Settings };
 
   // Theme-aware color classes
-  const sidebarBg = isDark
-    ? 'bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900'
-    : 'bg-white';
+  const sidebarBg = 'bg-white dark:bg-slate-900';
   const sidebarBorder = isDark ? 'border-slate-700' : 'border-gray-200';
   const brandText = isDark ? 'text-white' : 'text-gray-900';
   const brandAccent = isDark ? 'text-blue-400' : 'text-blue-600';

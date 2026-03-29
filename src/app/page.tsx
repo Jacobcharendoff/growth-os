@@ -4,6 +4,9 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Navigation, Footer, CTASection } from "@/components/MarketingLayout";
 import { useLanguage } from '@/components/LanguageProvider';
+import { InteractiveProductTour } from '@/components/InteractiveProductTour';
+import { ROICalculator } from '@/components/ROICalculator';
+import { LogoWall, IntegrationsBar } from '@/components/TrustSections';
 import {
   Zap,
   ArrowRight,
@@ -1434,8 +1437,12 @@ export default function LandingPage() {
       <Hero />
       <ProblemSection />
       <InteractiveExplorer />
+      <InteractiveProductTour />
       <SocialProof />
+      <LogoWall />
       <AutopilotSection />
+      <ROICalculator />
+      <IntegrationsBar />
       <Pricing />
       <CTASection />
       <Footer />

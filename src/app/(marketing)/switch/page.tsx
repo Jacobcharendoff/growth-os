@@ -2,6 +2,8 @@
 
 import { MarketingLayout } from '@/components/MarketingLayout';
 import { useLanguage } from '@/components/LanguageProvider';
+import { ComparisonMatrix } from '@/components/ComparisonMatrix';
+import { ROICalculator } from '@/components/ROICalculator';
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import {
@@ -693,6 +695,12 @@ export default function WhyGrowthOSPage() {
             </div>
           </div>
         </section>
+
+        {/* DETAILED COMPARISON MATRIX */}
+        <ComparisonMatrix />
+
+        {/* ROI CALCULATOR */}
+        <ROICalculator />
 
         {/* SECTION 6: REAL RESULTS - TESTIMONIALS */}
         <section

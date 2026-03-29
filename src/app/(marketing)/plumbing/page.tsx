@@ -591,7 +591,7 @@ export default function PlumbingPage() {
 
           <p className="mt-12 text-sm text-gray-600">
             All plans include a 14-day free trial. No credit card required. {' '}
-            <Link href="/#pricing" className="text-blue-600 hover:underline">
+            <Link href="/pricing" className="text-blue-600 hover:underline">
               See full comparison
             </Link>
           </p>

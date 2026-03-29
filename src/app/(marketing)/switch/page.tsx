@@ -169,7 +169,7 @@ export default function WhyGrowthOSPage() {
         }
 
         .gradient-text {
-          background: linear-gradient(to right, #3b82f6, #2563eb);
+          background: linear-gradient(to right, #27AE60, #229954);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -180,8 +180,8 @@ export default function WhyGrowthOSPage() {
         }
 
         .glow-hover:hover {
-          box-shadow: 0 0 30px rgba(59, 130, 246, 0.25);
-          border-color: rgba(59, 130, 246, 0.5);
+          box-shadow: 0 0 30px rgba(39, 174, 96, 0.25);
+          border-color: rgba(39, 174, 96, 0.5);
         }
 
         .animate-progress {
@@ -206,7 +206,7 @@ export default function WhyGrowthOSPage() {
         .orb-1 {
           width: 300px;
           height: 300px;
-          background: linear-gradient(135deg, #3b82f6, #2563eb);
+          background: linear-gradient(135deg, #27AE60, #229954);
           top: 10%;
           left: 10%;
           animation: float 20s ease-in-out infinite;
@@ -215,7 +215,7 @@ export default function WhyGrowthOSPage() {
         .orb-2 {
           width: 250px;
           height: 250px;
-          background: linear-gradient(135deg, #1e3a8a, #1e40af);
+          background: linear-gradient(135deg, #1e5e35, #27AE60);
           bottom: 20%;
           right: 10%;
           animation: float 25s ease-in-out infinite reverse;
@@ -240,7 +240,7 @@ export default function WhyGrowthOSPage() {
           position: absolute;
           inset: -4px;
           border-radius: 50%;
-          border: 2px solid rgba(59, 130, 246, 0.2);
+          border: 2px solid rgba(39, 174, 96, 0.2);
           animation: pulse-expand 2s ease-out infinite;
         }
 
@@ -267,9 +267,9 @@ export default function WhyGrowthOSPage() {
 
           <div className="relative z-10 max-w-5xl mx-auto text-center">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full mb-8 hover:bg-blue-500/15 transition-colors">
-              <span className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></span>
-              <span className="text-sm font-semibold text-blue-300">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full mb-8 hover:bg-emerald-500/15 transition-colors">
+              <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
+              <span className="text-sm font-semibold text-emerald-300">
                 {t('whyGrowthOS.heroBadge')}
               </span>
             </div>
@@ -287,8 +287,8 @@ export default function WhyGrowthOSPage() {
             {/* Stats Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
               {/* Stat 1 */}
-              <div className="p-6 bg-slate-800/50 border border-slate-700/50 rounded-2xl backdrop-blur-sm hover:border-blue-500/50 transition-all group">
-                <div className="text-4xl sm:text-5xl font-bold text-blue-400 mb-2 group-hover:text-blue-300 transition-colors">
+              <div className="p-6 bg-slate-800/50 border border-slate-700/50 rounded-2xl backdrop-blur-sm hover:border-emerald-500/50 transition-all group">
+                <div className="text-4xl sm:text-5xl font-bold text-emerald-400 mb-2 group-hover:text-emerald-300 transition-colors">
                   <AnimatedCounter end={40} suffix="%" />
                 </div>
                 <p className="text-slate-400 text-sm font-medium">
@@ -297,8 +297,8 @@ export default function WhyGrowthOSPage() {
               </div>
 
               {/* Stat 2 */}
-              <div className="p-6 bg-slate-800/50 border border-slate-700/50 rounded-2xl backdrop-blur-sm hover:border-blue-500/50 transition-all group">
-                <div className="text-4xl sm:text-5xl font-bold text-blue-400 mb-2 group-hover:text-blue-300 transition-colors">
+              <div className="p-6 bg-slate-800/50 border border-slate-700/50 rounded-2xl backdrop-blur-sm hover:border-emerald-500/50 transition-all group">
+                <div className="text-4xl sm:text-5xl font-bold text-emerald-400 mb-2 group-hover:text-emerald-300 transition-colors">
                   <AnimatedCounter end={60} suffix="sec" />
                 </div>
                 <p className="text-slate-400 text-sm font-medium">
@@ -307,8 +307,8 @@ export default function WhyGrowthOSPage() {
               </div>
 
               {/* Stat 3 */}
-              <div className="p-6 bg-slate-800/50 border border-slate-700/50 rounded-2xl backdrop-blur-sm hover:border-blue-500/50 transition-all group">
-                <div className="text-4xl sm:text-5xl font-bold text-blue-400 mb-2 group-hover:text-blue-300 transition-colors">
+              <div className="p-6 bg-slate-800/50 border border-slate-700/50 rounded-2xl backdrop-blur-sm hover:border-emerald-500/50 transition-all group">
+                <div className="text-4xl sm:text-5xl font-bold text-emerald-400 mb-2 group-hover:text-emerald-300 transition-colors">
                   <AnimatedCounter end={12} suffix="hrs" />
                 </div>
                 <p className="text-slate-400 text-sm font-medium">
@@ -317,8 +317,8 @@ export default function WhyGrowthOSPage() {
               </div>
 
               {/* Stat 4 */}
-              <div className="p-6 bg-slate-800/50 border border-slate-700/50 rounded-2xl backdrop-blur-sm hover:border-blue-500/50 transition-all group">
-                <div className="text-4xl sm:text-5xl font-bold text-blue-400 mb-2 group-hover:text-blue-300 transition-colors">
+              <div className="p-6 bg-slate-800/50 border border-slate-700/50 rounded-2xl backdrop-blur-sm hover:border-emerald-500/50 transition-all group">
+                <div className="text-4xl sm:text-5xl font-bold text-emerald-400 mb-2 group-hover:text-emerald-300 transition-colors">
                   $<AnimatedCounter end={8500} />
                 </div>
                 <p className="text-slate-400 text-sm font-medium">
@@ -643,8 +643,8 @@ export default function WhyGrowthOSPage() {
             {/* Competitor Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
               {/* ServiceTitan */}
-              <div className="p-8 bg-slate-900/50 border border-slate-800/50 rounded-2xl backdrop-blur-sm hover:border-blue-500/50 transition-all group">
-                <h3 className="text-xl font-bold text-white mb-4 group-hover:text-blue-300 transition-colors">
+              <div className="p-8 bg-slate-900/50 border border-slate-800/50 rounded-2xl backdrop-blur-sm hover:border-emerald-500/50 transition-all group">
+                <h3 className="text-xl font-bold text-white mb-4 group-hover:text-emerald-300 transition-colors">
                   {t('whyGrowthOS.fromST')}
                 </h3>
                 <p className="text-slate-400 mb-6 leading-relaxed">
@@ -652,7 +652,7 @@ export default function WhyGrowthOSPage() {
                 </p>
                 <Link
                   href="/vs-servicetitan"
-                  className="inline-flex items-center gap-2 text-blue-400 font-semibold hover:text-blue-300 transition-colors"
+                  className="inline-flex items-center gap-2 text-emerald-400 font-semibold hover:text-emerald-300 transition-colors"
                 >
                   {t('whyGrowthOS.fromSTLink')}
                   <ArrowRight className="w-4 h-4" />
@@ -660,8 +660,8 @@ export default function WhyGrowthOSPage() {
               </div>
 
               {/* Jobber */}
-              <div className="p-8 bg-slate-900/50 border border-slate-800/50 rounded-2xl backdrop-blur-sm hover:border-blue-500/50 transition-all group">
-                <h3 className="text-xl font-bold text-white mb-4 group-hover:text-blue-300 transition-colors">
+              <div className="p-8 bg-slate-900/50 border border-slate-800/50 rounded-2xl backdrop-blur-sm hover:border-emerald-500/50 transition-all group">
+                <h3 className="text-xl font-bold text-white mb-4 group-hover:text-emerald-300 transition-colors">
                   {t('whyGrowthOS.fromJobber')}
                 </h3>
                 <p className="text-slate-400 mb-6 leading-relaxed">
@@ -669,7 +669,7 @@ export default function WhyGrowthOSPage() {
                 </p>
                 <Link
                   href="/vs-jobber"
-                  className="inline-flex items-center gap-2 text-blue-400 font-semibold hover:text-blue-300 transition-colors"
+                  className="inline-flex items-center gap-2 text-emerald-400 font-semibold hover:text-emerald-300 transition-colors"
                 >
                   {t('whyGrowthOS.fromJobberLink')}
                   <ArrowRight className="w-4 h-4" />
@@ -677,8 +677,8 @@ export default function WhyGrowthOSPage() {
               </div>
 
               {/* Housecall Pro */}
-              <div className="p-8 bg-slate-900/50 border border-slate-800/50 rounded-2xl backdrop-blur-sm hover:border-blue-500/50 transition-all group">
-                <h3 className="text-xl font-bold text-white mb-4 group-hover:text-blue-300 transition-colors">
+              <div className="p-8 bg-slate-900/50 border border-slate-800/50 rounded-2xl backdrop-blur-sm hover:border-emerald-500/50 transition-all group">
+                <h3 className="text-xl font-bold text-white mb-4 group-hover:text-emerald-300 transition-colors">
                   {t('whyGrowthOS.fromHCP')}
                 </h3>
                 <p className="text-slate-400 mb-6 leading-relaxed">
@@ -686,7 +686,7 @@ export default function WhyGrowthOSPage() {
                 </p>
                 <Link
                   href="/vs-housecall-pro"
-                  className="inline-flex items-center gap-2 text-blue-400 font-semibold hover:text-blue-300 transition-colors"
+                  className="inline-flex items-center gap-2 text-emerald-400 font-semibold hover:text-emerald-300 transition-colors"
                 >
                   {t('whyGrowthOS.fromHCPLink')}
                   <ArrowRight className="w-4 h-4" />
@@ -725,7 +725,7 @@ export default function WhyGrowthOSPage() {
               {/* Testimonial 1 */}
               <div
                 ref={testimonial1.ref}
-                className={`reveal reveal-delay-1 p-8 bg-gradient-to-br from-slate-50 to-white border border-slate-200 rounded-2xl hover:border-blue-300 transition-all ${
+                className={`reveal reveal-delay-1 p-8 bg-gradient-to-br from-slate-50 to-white border border-slate-200 rounded-2xl hover:border-emerald-300 transition-all ${
                   testimonial1.isVisible ? 'visible' : ''
                 }`}
               >
@@ -740,7 +740,7 @@ export default function WhyGrowthOSPage() {
                 <p className="text-slate-700 mb-6 italic leading-relaxed">
                   "{t('whyGrowthOS.testimonial1Quote')}"
                 </p>
-                <div className="border-l-4 border-blue-600 pl-4">
+                <div className="border-l-4 border-emerald-600 pl-4">
                   <p className="font-bold text-slate-900">
                     {t('whyGrowthOS.testimonial1Name')}
                   </p>
@@ -753,7 +753,7 @@ export default function WhyGrowthOSPage() {
               {/* Testimonial 2 */}
               <div
                 ref={testimonial2.ref}
-                className={`reveal reveal-delay-2 p-8 bg-gradient-to-br from-slate-50 to-white border border-slate-200 rounded-2xl hover:border-blue-300 transition-all ${
+                className={`reveal reveal-delay-2 p-8 bg-gradient-to-br from-slate-50 to-white border border-slate-200 rounded-2xl hover:border-emerald-300 transition-all ${
                   testimonial2.isVisible ? 'visible' : ''
                 }`}
               >
@@ -768,7 +768,7 @@ export default function WhyGrowthOSPage() {
                 <p className="text-slate-700 mb-6 italic leading-relaxed">
                   "{t('whyGrowthOS.testimonial2Quote')}"
                 </p>
-                <div className="border-l-4 border-blue-600 pl-4">
+                <div className="border-l-4 border-emerald-600 pl-4">
                   <p className="font-bold text-slate-900">
                     {t('whyGrowthOS.testimonial2Name')}
                   </p>
@@ -781,7 +781,7 @@ export default function WhyGrowthOSPage() {
               {/* Testimonial 3 */}
               <div
                 ref={testimonial3.ref}
-                className={`reveal reveal-delay-3 p-8 bg-gradient-to-br from-slate-50 to-white border border-slate-200 rounded-2xl hover:border-blue-300 transition-all ${
+                className={`reveal reveal-delay-3 p-8 bg-gradient-to-br from-slate-50 to-white border border-slate-200 rounded-2xl hover:border-emerald-300 transition-all ${
                   testimonial3.isVisible ? 'visible' : ''
                 }`}
               >
@@ -796,7 +796,7 @@ export default function WhyGrowthOSPage() {
                 <p className="text-slate-700 mb-6 italic leading-relaxed">
                   "{t('whyGrowthOS.testimonial3Quote')}"
                 </p>
-                <div className="border-l-4 border-blue-600 pl-4">
+                <div className="border-l-4 border-emerald-600 pl-4">
                   <p className="font-bold text-slate-900">
                     {t('whyGrowthOS.testimonial3Name')}
                   </p>

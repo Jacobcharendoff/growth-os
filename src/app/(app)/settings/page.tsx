@@ -32,6 +32,21 @@ interface TeamMember {
   status: 'active' | 'inactive';
 }
 
+const stageColorMap: Record<string, string> = {
+  blue: 'bg-blue-500',
+  green: 'bg-green-500',
+  yellow: 'bg-yellow-500',
+  purple: 'bg-purple-500',
+  orange: 'bg-orange-500',
+  red: 'bg-red-500',
+  emerald: 'bg-emerald-500',
+  indigo: 'bg-indigo-500',
+  slate: 'bg-slate-500',
+  cyan: 'bg-cyan-500',
+  amber: 'bg-amber-500',
+  rose: 'bg-rose-500',
+};
+
 interface PipelineStage {
   id: string;
   name: string;
@@ -410,7 +425,7 @@ export default function SettingsPage() {
                       <GripHorizontal className="w-5 h-5 text-slate-400 dark:text-slate-500" />
                     </button>
                     <div
-                      className={`w-4 h-4 rounded-full bg-${stage.color}-500`}
+                      className={`w-4 h-4 rounded-full ${stageColorMap[stage.color] || 'bg-slate-500'}`}
                     />
                     <input
                       type="text"

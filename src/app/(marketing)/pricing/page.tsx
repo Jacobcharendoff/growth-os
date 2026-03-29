@@ -109,15 +109,15 @@ export default function PricingPage() {
 
                 <div className="p-8">
                   {/* Plan Name and Price */}
-                  <h3 className={`text-lg font-semibold mb-2 ${plan.highlighted ? 'text-blue-100' : 'text-gray-900'}`}>
+                  <h3 className={`text-lg font-semibold mb-2 ${plan.highlighted ? 'text-white' : 'text-gray-900'}`}>
                     {plan.name}
                   </h3>
                   <div className="flex items-baseline gap-1 mb-2">
-                    <span className={`text-sm ${plan.highlighted ? 'text-blue-200' : 'text-gray-400'}`}>$</span>
+                    <span className={`text-sm ${plan.highlighted ? 'text-white' : 'text-gray-400'}`}>$</span>
                     <span className="text-4xl font-bold">{plan.price}</span>
-                    <span className={`text-sm ${plan.highlighted ? 'text-blue-200' : 'text-gray-400'}`}>/mo CAD</span>
+                    <span className={`text-sm ${plan.highlighted ? 'text-white' : 'text-gray-400'}`}>/mo CAD</span>
                   </div>
-                  <p className={`text-sm mb-8 ${plan.highlighted ? 'text-blue-100' : 'text-gray-500'}`}>
+                  <p className={`text-sm mb-8 ${plan.highlighted ? 'text-white' : 'text-gray-500'}`}>
                     {plan.description}
                   </p>
 
@@ -139,10 +139,10 @@ export default function PricingPage() {
                       <li key={feature} className="flex items-start gap-3">
                         <CheckCircle2
                           className={`w-5 h-5 shrink-0 mt-0.5 ${
-                            plan.highlighted ? 'text-blue-200' : 'text-emerald-500'
+                            plan.highlighted ? 'text-white' : 'text-emerald-500'
                           }`}
                         />
-                        <span className={`text-sm ${plan.highlighted ? 'text-blue-50' : 'text-gray-600'}`}>
+                        <span className={`text-sm ${plan.highlighted ? 'text-white' : 'text-gray-600'}`}>
                           {feature}
                         </span>
                       </li>
@@ -155,11 +155,11 @@ export default function PricingPage() {
 
           {/* Risk Reversal Copy */}
           <div className="mt-16 max-w-2xl mx-auto text-center">
-            <div className="bg-blue-50 border border-blue-100 rounded-2xl p-8">
-              <p className="text-lg font-semibold text-blue-900 mb-2">
+            <div className="bg-emerald-50 border border-emerald-100 rounded-2xl p-8">
+              <p className="text-lg font-semibold text-emerald-900 mb-2">
                 {t('pricing.riskReversal')}
               </p>
-              <p className="text-blue-700">
+              <p className="text-emerald-700">
                 {t('pricing.noCredit')}
               </p>
             </div>
@@ -180,7 +180,7 @@ export default function PricingPage() {
                 <tr className="border-b-2 border-gray-200">
                   <th className="text-left py-4 px-6 font-semibold text-gray-900">Feature</th>
                   <th className="text-center py-4 px-6 font-semibold text-gray-900">Starter</th>
-                  <th className="text-center py-4 px-6 font-semibold text-blue-600 bg-blue-50">Growth</th>
+                  <th className="text-center py-4 px-6 font-semibold text-[#27AE60] bg-emerald-50">Growth</th>
                   <th className="text-center py-4 px-6 font-semibold text-gray-900">Scale</th>
                 </tr>
               </thead>
@@ -195,7 +195,7 @@ export default function PricingPage() {
                         <div className="w-5 h-5 rounded-full border-2 border-gray-300 mx-auto" />
                       )}
                     </td>
-                    <td className="py-4 px-6 text-center bg-blue-50">
+                    <td className="py-4 px-6 text-center bg-emerald-50">
                       {feature.growth ? (
                         <CheckCircle2 className="w-5 h-5 text-emerald-500 mx-auto" />
                       ) : (

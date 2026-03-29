@@ -20,12 +20,12 @@ import {
 } from 'lucide-react';
 
 const STATUS_COLORS: Record<EstimateStatus, string> = {
-  draft: 'bg-slate-100 text-slate-800 border-slate-300',
-  sent: 'bg-blue-100 text-blue-800 border-blue-300',
-  viewed: 'bg-amber-100 text-amber-800 border-amber-300',
-  approved: 'bg-emerald-100 text-emerald-800 border-emerald-300',
-  rejected: 'bg-rose-100 text-rose-800 border-rose-300',
-  expired: 'bg-slate-200 text-slate-800 border-slate-400',
+  draft: 'bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-slate-200 border-slate-300 dark:border-slate-600',
+  sent: 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-300 border-blue-300 dark:border-blue-700',
+  viewed: 'bg-amber-100 dark:bg-amber-900 text-amber-800 dark:text-amber-300 border-amber-300 dark:border-amber-700',
+  approved: 'bg-emerald-100 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-300 border-emerald-300 dark:border-emerald-700',
+  rejected: 'bg-rose-100 dark:bg-rose-900 text-rose-800 dark:text-rose-300 border-rose-300 dark:border-rose-700',
+  expired: 'bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200 border-slate-400 dark:border-slate-600',
 };
 
 interface CreateEstimateForm {

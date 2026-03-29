@@ -64,6 +64,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full antialiased">
       <head>
+        <script dangerouslySetInnerHTML={{__html: `
+          try{const t=localStorage.getItem('growth-os-theme');if(t==='dark')document.documentElement.classList.add('dark')}catch(e){}
+        `}} />
         <Script
           id="jsonld-schema"
           type="application/ld+json"

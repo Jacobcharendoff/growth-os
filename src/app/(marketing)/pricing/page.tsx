@@ -97,7 +97,7 @@ export default function PricingPage() {
                 key={plan.name}
                 className={`relative rounded-2xl transition-all duration-300 ${
                   plan.highlighted
-                    ? 'bg-gradient-to-b from-blue-600 to-blue-700 text-white shadow-2xl shadow-blue-600/25 md:scale-105 border-2 border-blue-500'
+                    ? 'bg-[#27AE60] text-white shadow-2xl shadow-[#27AE60]/25 md:scale-105 border-2 border-[#229954]'
                     : 'bg-white border border-gray-200 hover:border-gray-300 hover:shadow-lg'
                 }`}
               >
@@ -126,7 +126,7 @@ export default function PricingPage() {
                     href="/setup"
                     className={`block text-center px-6 py-3 rounded-xl font-semibold text-sm transition-all mb-8 ${
                       plan.highlighted
-                        ? 'bg-white text-blue-600 hover:bg-blue-50 shadow-lg'
+                        ? 'bg-white text-[#27AE60] hover:bg-gray-50 shadow-lg'
                         : 'bg-gray-900 text-white hover:bg-gray-800'
                     }`}
                   >

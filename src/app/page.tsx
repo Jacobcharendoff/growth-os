@@ -307,7 +307,7 @@ function Hero() {
           <div className="hero-reveal hero-reveal-delay-4 mt-10 flex justify-center">
             <Link
               href="/setup"
-              className="inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-base font-semibold rounded-2xl hover:from-blue-500 hover:to-blue-600 transition-all shadow-lg shadow-blue-600/25 hover:shadow-blue-500/40 hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-[#27AE60] hover:bg-[#229954] text-white text-base font-semibold rounded-2xl transition-all shadow-lg shadow-emerald-600/25 hover:shadow-emerald-500/40 hover:-translate-y-0.5"
             >
               {t('hero.startFreeNoCard')}
               <ArrowRight className="w-5 h-5" />
@@ -858,7 +858,7 @@ function InteractiveExplorer() {
                   <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
                     <Zap className="w-3.5 h-3.5 text-white" />
                   </div>
-                  <span className="text-xs font-medium text-slate-400">Growth OS</span>
+                  <span className="text-xs font-medium text-slate-400">GrowthOS</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
@@ -913,7 +913,7 @@ function Features() {
       icon: <Layers className="w-6 h-6" />,
       title: t('features.seeAllJobs'),
       description: t('features.seeAllJobsDesc'),
-      gradient: "from-blue-500 to-indigo-600",
+      gradient: "from-[#2C3E50] to-[#27AE60]",
     },
     {
       icon: <MessageSquare className="w-6 h-6" />,
@@ -1216,14 +1216,14 @@ function SocialProof() {
 
   const testimonials = [
     {
-      quote: "We were losing calls every morning because the guys were already on jobs. Growth OS auto-texts every missed call now. Month one: 12 extra jobs. That's $14,000 we would have lost.",
+      quote: "We were losing calls every morning because the guys were already on jobs. GrowthOS auto-texts every missed call now. Month one: 12 extra jobs. That's $14,000 we would have lost.",
       name: "Mike Reynolds",
       role: "Owner, Reynolds Plumbing — Toronto, ON",
       initials: "MR",
       color: "bg-blue-500",
     },
     {
-      quote: "Jobber handled scheduling fine, but it never helped us grow. Growth OS follows up on every estimate, asks for reviews, and the tax calculations actually work for Quebec. Switched in one day.",
+      quote: "Jobber handled scheduling fine, but it never helped us grow. GrowthOS follows up on every estimate, asks for reviews, and the tax calculations actually work for Quebec. Switched in one day.",
       name: "Jean-Pierre Lavoie",
       role: "Propriétaire, Lavoie Climatisation — Montréal, QC",
       initials: "JL",
@@ -1331,7 +1331,7 @@ function PricingTeaser() {
           <p className="text-lg text-gray-600 mb-8">
             Plans starting at <span className="text-blue-600 font-semibold">$79/mo CAD</span>. Try free for 14 days — no credit card required.
           </p>
-          <Link href="/pricing" className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg">
+          <Link href="/pricing" className="inline-flex items-center gap-2 px-6 py-3 bg-[#27AE60] hover:bg-[#229954] text-white font-semibold rounded-xl transition-all shadow-lg">
             View all pricing plans <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -1393,29 +1393,29 @@ function Pricing() {
 
         <div className="stagger-children scroll-fade-up grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {plans.map((plan) => (
-            <div key={plan.name} className={`scroll-fade-up relative rounded-2xl p-6 sm:p-8 transition-all duration-300 ${plan.highlighted ? "bg-gradient-to-b from-blue-600 to-blue-700 text-white shadow-2xl shadow-blue-600/25 md:scale-105 shimmer-border" : "bg-white border border-gray-200 hover:border-gray-300 hover:shadow-lg"}`}>
+            <div key={plan.name} className={`scroll-fade-up relative rounded-2xl p-6 sm:p-8 transition-all duration-300 ${plan.highlighted ? "bg-[#2C3E50] text-white shadow-2xl shadow-slate-600/25 md:scale-105 shimmer-border" : "bg-white border border-gray-200 hover:border-gray-300 hover:shadow-lg"}`}>
               {plan.highlighted && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-gradient-to-r from-amber-400 to-orange-400 text-white text-xs font-bold rounded-full shadow-lg">
                   {/* Note: "Most Popular" is not in translations yet, keeping hardcoded for now */}
                   Most Popular
                 </div>
               )}
-              <h3 className={`text-lg font-semibold ${plan.highlighted ? "text-blue-100" : "text-gray-900"}`}>{plan.name}</h3>
+              <h3 className={`text-lg font-semibold ${plan.highlighted ? "text-slate-100" : "text-gray-900"}`}>{plan.name}</h3>
               <div className="mt-4 flex items-baseline gap-1">
-                <span className={`text-sm ${plan.highlighted ? "text-blue-200" : "text-gray-400"}`}>$</span>
+                <span className={`text-sm ${plan.highlighted ? "text-slate-300" : "text-gray-400"}`}>$</span>
                 <span className="text-4xl font-bold">{plan.price}</span>
-                <span className={`text-sm ${plan.highlighted ? "text-blue-200" : "text-gray-400"}`}>/mo CAD</span>
+                <span className={`text-sm ${plan.highlighted ? "text-slate-300" : "text-gray-400"}`}>/mo CAD</span>
               </div>
-              <p className={`mt-2 text-sm ${plan.highlighted ? "text-blue-200" : "text-gray-500"}`}>{plan.description}</p>
+              <p className={`mt-2 text-sm ${plan.highlighted ? "text-slate-300" : "text-gray-500"}`}>{plan.description}</p>
               <ul className="mt-8 space-y-3">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-3">
-                    <CheckCircle2 className={`w-5 h-5 shrink-0 mt-0.5 ${plan.highlighted ? "text-blue-200" : "text-emerald-500"}`} />
-                    <span className={`text-sm ${plan.highlighted ? "text-blue-50" : "text-gray-600"}`}>{feature}</span>
+                    <CheckCircle2 className={`w-5 h-5 shrink-0 mt-0.5 ${plan.highlighted ? "text-emerald-400" : "text-emerald-500"}`} />
+                    <span className={`text-sm ${plan.highlighted ? "text-slate-100" : "text-gray-600"}`}>{feature}</span>
                   </li>
                 ))}
               </ul>
-              <Link href="/setup" className={`mt-8 block text-center px-6 py-3 rounded-xl font-semibold text-sm transition-all ${plan.highlighted ? "bg-white text-blue-600 hover:bg-blue-50 shadow-lg" : "bg-gray-900 text-white hover:bg-gray-800"}`}>
+              <Link href="/setup" className={`mt-8 block text-center px-6 py-3 rounded-xl font-semibold text-sm transition-all ${plan.highlighted ? "bg-white text-[#2C3E50] hover:bg-slate-50 shadow-lg" : "bg-gray-900 text-white hover:bg-gray-800"}`}>
                 {plan.cta}
               </Link>
             </div>

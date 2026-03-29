@@ -187,7 +187,7 @@ export function ComparisonMatrix() {
                 </th>
                 <th className="text-center px-6 py-4 bg-gradient-to-b from-blue-50 to-blue-100/50 border-b-2 border-blue-200">
                   <div className="flex items-center justify-center gap-2 mb-2">
-                    <span className="font-black text-slate-900 text-lg">Growth OS</span>
+                    <span className="font-black text-slate-900 text-lg">GrowthOS</span>
                     <Crown className="w-5 h-5 text-blue-600" />
                   </div>
                   <div className="inline-block bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">
@@ -245,7 +245,7 @@ export function ComparisonMatrix() {
                 </th>
                 <th className="text-center px-4 py-3 bg-gradient-to-b from-blue-50 to-blue-100/50 border-b-2 border-blue-200 min-w-28">
                   <div className="flex flex-col items-center gap-1">
-                    <span className="font-bold text-sm text-slate-900">Growth OS</span>
+                    <span className="font-bold text-sm text-slate-900">GrowthOS</span>
                     <Crown className="w-4 h-4 text-blue-600" />
                   </div>
                 </th>
@@ -309,7 +309,7 @@ export function ComparisonMatrix() {
                         <div className="font-medium text-slate-900 mb-3 text-sm">{row.feature}</div>
                         <div className="space-y-2 text-sm">
                           <div className="flex items-center justify-between">
-                            <span className="text-slate-600 font-medium">Growth OS:</span>
+                            <span className="text-slate-600 font-medium">GrowthOS:</span>
                             <span className="font-bold text-blue-600">{renderValue(row.growthOS)}</span>
                           </div>
                           <div className="flex items-center justify-between">
@@ -345,7 +345,7 @@ export function ComparisonMatrix() {
             </div>
             <Link
               href="/setup"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-base font-semibold rounded-full hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg shadow-blue-600/40 hover:shadow-blue-700/50 hover:-translate-y-0.5 whitespace-nowrap"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-[#27AE60] hover:bg-[#229954] text-white text-base font-semibold rounded-full transition-all shadow-lg shadow-emerald-600/40 hover:shadow-emerald-700/50 hover:-translate-y-0.5 whitespace-nowrap"
             >
               {t('compare.switchCta')}
               <ArrowRight className="w-5 h-5" />

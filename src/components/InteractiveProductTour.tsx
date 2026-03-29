@@ -101,8 +101,8 @@ export function InteractiveProductTour() {
     <div className="bg-gradient-to-br from-slate-900 to-slate-950 p-6 h-full flex flex-col justify-center items-center">
       {/* Phone animation */}
       <div className="relative mb-8">
-        <div className="absolute inset-0 bg-blue-500/30 rounded-3xl blur-2xl animate-pulse" />
-        <div className="relative bg-gradient-to-br from-blue-500 to-blue-600 rounded-3xl p-8 shadow-2xl">
+        <div className="absolute inset-0 bg-[#2C3E50]/30 rounded-3xl blur-2xl animate-pulse" />
+        <div className="relative bg-[#2C3E50] rounded-3xl p-8 shadow-2xl">
           <Phone className="w-16 h-16 text-white animate-bounce" />
         </div>
       </div>
@@ -402,7 +402,7 @@ export function InteractiveProductTour() {
                   <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
                     <span className="text-xs font-bold text-white">GO</span>
                   </div>
-                  <span className="text-sm font-medium text-slate-300">Growth OS</span>
+                  <span className="text-sm font-medium text-slate-300">GrowthOS</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
@@ -449,7 +449,7 @@ export function InteractiveProductTour() {
         <div className="mt-16 sm:mt-20 text-center">
           <Link
             href="/dashboard"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold text-white bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 shadow-lg shadow-blue-600/25 transition-all duration-300 hover:shadow-xl hover:shadow-blue-600/30 hover:scale-105"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold text-white bg-[#27AE60] hover:bg-[#229954] shadow-lg shadow-emerald-600/25 transition-all duration-300 hover:shadow-xl hover:shadow-emerald-600/30 hover:scale-105"
           >
             {t('tour.cta')}
             <ArrowRight className="w-5 h-5" />

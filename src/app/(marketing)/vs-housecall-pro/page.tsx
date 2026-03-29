@@ -32,9 +32,9 @@ export default function VsHousecallProPage() {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            {/* Growth OS */}
-            <div className="bg-white rounded-lg shadow-lg p-8 border-2 border-blue-600">
-              <h3 className="text-2xl font-bold text-blue-600 mb-6">Growth OS</h3>
+            {/* GrowthOS */}
+            <div className="bg-white rounded-lg shadow-lg p-8 border-2 border-[#27AE60]">
+              <h3 className="text-2xl font-bold text-[#27AE60] mb-6">GrowthOS</h3>
               <div className="text-4xl font-bold text-slate-900 mb-2">$149/mo</div>
               <p className="text-slate-600 mb-8">{t('vsHousecallPro.plus')}</p>
 
@@ -135,7 +135,7 @@ export default function VsHousecallProPage() {
               <thead>
                 <tr className="bg-slate-900 text-white">
                   <th className="px-6 py-4 text-left font-semibold">Feature</th>
-                  <th className="px-6 py-4 text-center font-semibold">Growth OS</th>
+                  <th className="px-6 py-4 text-center font-semibold">GrowthOS</th>
                   <th className="px-6 py-4 text-center font-semibold">Housecall Pro</th>
                 </tr>
               </thead>
@@ -350,7 +350,7 @@ export default function VsHousecallProPage() {
         </div>
       </section>
 
-      {/* Where Growth OS Pulls Ahead */}
+      {/* Where GrowthOS Pulls Ahead */}
       <section className="py-16 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl font-bold text-slate-900 mb-8">
@@ -535,24 +535,24 @@ export default function VsHousecallProPage() {
       </section>
 
       {/* Bottom CTA */}
-      <section className="py-16 px-4 sm:px-6 bg-gradient-to-r from-blue-600 to-blue-700 text-white">
+      <section className="py-16 px-4 sm:px-6 bg-[#27AE60] text-white">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-2xl sm:text-3xl font-bold mb-6">
             {t('vsHousecallPro.stopOverpaying')}
           </h2>
-          <p className="text-lg mb-8 text-blue-100">
+          <p className="text-lg mb-8 text-white/80">
             {t('vsHousecallPro.stopOverpayingDesc')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/signup"
-              className="bg-white text-blue-600 px-8 py-3 rounded font-bold hover:bg-blue-50 transition"
+              className="bg-white text-[#27AE60] px-8 py-3 rounded font-bold hover:bg-gray-50 transition"
             >
               {t('vsHousecallPro.free14')}
             </Link>
             <Link
               href="/demo"
-              className="border-2 border-white text-white px-8 py-3 rounded font-bold hover:bg-blue-600 transition"
+              className="border-2 border-white text-white px-8 py-3 rounded font-bold hover:bg-[#229954] transition"
             >
               {t('marketing.bookDemo')}
             </Link>

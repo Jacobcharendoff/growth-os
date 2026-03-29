@@ -108,7 +108,7 @@ export default function PlumbingPage() {
       {/* 1. HERO SECTION - Trade-colored gradient background */}
       <section
         ref={heroReveal.ref}
-        className={`pt-32 pb-20 bg-gradient-to-br from-blue-700 via-blue-800 to-slate-900 relative overflow-hidden transition-opacity duration-1000 ${
+        className={`pt-32 pb-20 bg-[#2C3E50] relative overflow-hidden transition-opacity duration-1000 ${
           heroReveal.isVisible ? 'opacity-100' : 'opacity-0'
         }`}
       >
@@ -119,7 +119,7 @@ export default function PlumbingPage() {
 
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Pill badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-600/20 border border-blue-400/30 mb-8 text-blue-100 text-sm font-medium">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 mb-8 text-white text-sm font-medium">
             <Droplet className="w-4 h-4" />
             {t('plumbingPage.heroBadge') }
           </div>
@@ -130,7 +130,7 @@ export default function PlumbingPage() {
           </h1>
 
           {/* Subtitle */}
-          <p className="text-lg sm:text-xl text-blue-100 mb-10 max-w-2xl leading-relaxed">
+          <p className="text-lg sm:text-xl text-white/70 mb-10 max-w-2xl leading-relaxed">
             {t('plumbingPage.heroDesc') }
           </p>
 
@@ -138,7 +138,7 @@ export default function PlumbingPage() {
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <Link
               href="/setup"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-white text-blue-700 font-semibold rounded-full hover:bg-blue-50 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-[#27AE60] text-white font-semibold rounded-full hover:bg-[#229954] transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
             >
               {t('plumbingPage.heroCta') }
               <Zap className="w-5 h-5" />
@@ -298,7 +298,7 @@ export default function PlumbingPage() {
           <div className="grid md:grid-cols-2 gap-8">
             {/* Feature 1 */}
             <div className="p-8 bg-white/5 rounded-2xl border border-blue-500/20 hover:border-blue-500/50 hover:bg-white/10 transition-all group">
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:shadow-blue-600/50 transition-all">
+              <div className="w-12 h-12 rounded-full bg-[#2C3E50] flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:shadow-[#2C3E50]/50 transition-all">
                 <Phone className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-xl font-bold text-white mb-3">
@@ -325,7 +325,7 @@ export default function PlumbingPage() {
 
             {/* Feature 2 */}
             <div className="p-8 bg-white/5 rounded-2xl border border-blue-500/20 hover:border-blue-500/50 hover:bg-white/10 transition-all group">
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:shadow-blue-600/50 transition-all">
+              <div className="w-12 h-12 rounded-full bg-[#2C3E50] flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:shadow-[#2C3E50]/50 transition-all">
                 <Zap className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-xl font-bold text-white mb-3">
@@ -352,7 +352,7 @@ export default function PlumbingPage() {
 
             {/* Feature 3 */}
             <div className="p-8 bg-white/5 rounded-2xl border border-blue-500/20 hover:border-blue-500/50 hover:bg-white/10 transition-all group">
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:shadow-blue-600/50 transition-all">
+              <div className="w-12 h-12 rounded-full bg-[#2C3E50] flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:shadow-[#2C3E50]/50 transition-all">
                 <CreditCard className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-xl font-bold text-white mb-3">
@@ -379,7 +379,7 @@ export default function PlumbingPage() {
 
             {/* Feature 4 */}
             <div className="p-8 bg-white/5 rounded-2xl border border-blue-500/20 hover:border-blue-500/50 hover:bg-white/10 transition-all group">
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:shadow-blue-600/50 transition-all">
+              <div className="w-12 h-12 rounded-full bg-[#2C3E50] flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:shadow-[#2C3E50]/50 transition-all">
                 <TrendingUp className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-xl font-bold text-white mb-3">
@@ -497,7 +497,7 @@ export default function PlumbingPage() {
               <p className="text-sm text-gray-600 mb-6">For solo operators and small teams</p>
               <Link
                 href="/setup"
-                className="block w-full px-6 py-3 rounded-xl bg-gray-900 text-white text-sm font-semibold hover:bg-gray-800 transition-colors text-center mb-6"
+                className="block w-full px-6 py-3 rounded-xl bg-[#27AE60] text-white text-sm font-semibold hover:bg-[#229954] transition-colors text-center mb-6"
               >
                 Start Free Trial
               </Link>
@@ -530,7 +530,7 @@ export default function PlumbingPage() {
               <p className="text-sm text-gray-600 mb-6">For growing service businesses</p>
               <Link
                 href="/setup"
-                className="block w-full px-6 py-3 rounded-xl bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition-colors text-center mb-6"
+                className="block w-full px-6 py-3 rounded-xl bg-[#27AE60] text-white text-sm font-semibold hover:bg-[#229954] transition-colors text-center mb-6"
               >
                 Start Free Trial
               </Link>
@@ -564,7 +564,7 @@ export default function PlumbingPage() {
               <p className="text-sm text-gray-600 mb-6">For multi-team operations</p>
               <Link
                 href="/setup"
-                className="block w-full px-6 py-3 rounded-xl bg-gray-900 text-white text-sm font-semibold hover:bg-gray-800 transition-colors text-center mb-6"
+                className="block w-full px-6 py-3 rounded-xl bg-[#27AE60] text-white text-sm font-semibold hover:bg-[#229954] transition-colors text-center mb-6"
               >
                 Start Free Trial
               </Link>

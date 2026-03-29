@@ -230,7 +230,7 @@ export const TOURS: Record<string, Tour> = {
       },
       {
         title: 'Set a monthly goal',
-        content: 'Having a target keeps you motivated. Most service businesses with Growth OS get 10-15 new reviews per month automatically.',
+        content: 'Having a target keeps you motivated. Most service businesses with GrowthOS get 10-15 new reviews per month automatically.',
         position: 'top',
         highlight: 'review_goal',
         action: 'Pick a review goal',
@@ -264,7 +264,7 @@ export const TOURS: Record<string, Tour> = {
       },
       {
         title: 'You\'re on autopilot!',
-        content: 'Every playbook you activate works 24/7 in the background — following up on estimates, requesting reviews, chasing payments, and more. You focus on the work. Growth OS handles the rest.',
+        content: 'Every playbook you activate works 24/7 in the background — following up on estimates, requesting reviews, chasing payments, and more. You focus on the work. GrowthOS handles the rest.',
         position: 'center',
         action: 'Head back to Setup to continue',
       },
@@ -310,7 +310,7 @@ export const TOURS: Record<string, Tour> = {
       },
       {
         title: 'Connect Stripe',
-        content: 'Go to Settings → Integrations and click "Connect" next to Stripe. You\'ll create a free Stripe account (or connect an existing one) and you\'re done. Growth OS handles the rest.',
+        content: 'Go to Settings → Integrations and click "Connect" next to Stripe. You\'ll create a free Stripe account (or connect an existing one) and you\'re done. GrowthOS handles the rest.',
         tip: 'Stripe charges 2.9% + $0.30 per transaction. Most businesses pass this to the customer as a "convenience fee" or build it into their pricing.',
         position: 'center',
         navigateTo: '/settings',

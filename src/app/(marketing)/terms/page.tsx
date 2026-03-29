@@ -22,15 +22,15 @@ export default function TermsPage() {
           <div className="bg-white rounded-2xl p-8 md:p-12 shadow-sm prose prose-lg max-w-none">
             <h2>1. Acceptance of Terms</h2>
             <p>
-              These Terms of Service ("Terms") govern your access to and use of Growth OS, a web-based customer relationship management platform provided by Growth OS Inc. ("Company," "we," "us," or "our"), a company based in Toronto, Ontario, Canada.
+              These Terms of Service ("Terms") govern your access to and use of GrowthOS, a web-based customer relationship management platform provided by GrowthOS Inc. ("Company," "we," "us," or "our"), a company based in Toronto, Ontario, Canada.
             </p>
             <p>
-              By accessing or using Growth OS, you agree to be bound by these Terms. If you do not agree to any part of these Terms, you may not use the Service.
+              By accessing or using GrowthOS, you agree to be bound by these Terms. If you do not agree to any part of these Terms, you may not use the Service.
             </p>
 
             <h2>2. Service Description</h2>
             <p>
-              Growth OS is a cloud-based CRM platform designed to help service businesses manage customer relationships, scheduling, invoicing, and business operations. The Service includes features such as contact management, job scheduling, invoicing, and reporting tools.
+              GrowthOS is a cloud-based CRM platform designed to help service businesses manage customer relationships, scheduling, invoicing, and business operations. The Service includes features such as contact management, job scheduling, invoicing, and reporting tools.
             </p>
             <p>
               We reserve the right to modify, suspend, or discontinue the Service at any time with reasonable notice.
@@ -38,7 +38,7 @@ export default function TermsPage() {
 
             <h2>3. Account Terms</h2>
             <p>
-              When you create an account with Growth OS, you agree to:
+              When you create an account with GrowthOS, you agree to:
             </p>
             <ul>
               <li>Provide accurate, complete, and current information</li>
@@ -53,7 +53,7 @@ export default function TermsPage() {
 
             <h2>4. Payment Terms</h2>
             <p>
-              Growth OS is provided on a subscription basis. All fees are stated in Canadian Dollars (CAD).
+              GrowthOS is provided on a subscription basis. All fees are stated in Canadian Dollars (CAD).
             </p>
             <ul>
               <li><strong>Billing Cycle:</strong> Fees are billed monthly or annually, depending on your selected plan</li>
@@ -68,7 +68,7 @@ export default function TermsPage() {
 
             <h2>5. Cancellation</h2>
             <p>
-              You may cancel your Growth OS subscription at any time. Cancellation will take effect at the end of your current billing period. No refunds will be issued for the portion of the billing period after cancellation.
+              You may cancel your GrowthOS subscription at any time. Cancellation will take effect at the end of your current billing period. No refunds will be issued for the portion of the billing period after cancellation.
             </p>
             <p>
               Upon cancellation, you will lose access to the Service and your account data will be retained for 90 days before permanent deletion, unless local law requires a different period.
@@ -76,18 +76,18 @@ export default function TermsPage() {
 
             <h2>6. User Content and Data</h2>
             <p>
-              "User Content" refers to any data, files, or information you input into Growth OS, including customer information, job details, invoices, and communications.
+              "User Content" refers to any data, files, or information you input into GrowthOS, including customer information, job details, invoices, and communications.
             </p>
             <ul>
               <li><strong>Ownership:</strong> You retain full ownership of your User Content</li>
-              <li><strong>License to Growth OS:</strong> You grant us a worldwide, non-exclusive license to use, store, and process your User Content solely to provide the Service</li>
+              <li><strong>License to GrowthOS:</strong> You grant us a worldwide, non-exclusive license to use, store, and process your User Content solely to provide the Service</li>
               <li><strong>Responsibility:</strong> You are responsible for ensuring your User Content does not infringe third-party rights or violate applicable laws</li>
               <li><strong>Data Security:</strong> We implement industry-standard security measures, but cannot guarantee absolute protection</li>
             </ul>
 
             <h2>7. Intellectual Property Rights</h2>
             <p>
-              The Growth OS Service, including all software, documentation, design, graphics, and other materials, are the exclusive property of Growth OS Inc. and are protected by copyright, trademark, and other intellectual property laws.
+              The GrowthOS Service, including all software, documentation, design, graphics, and other materials, are the exclusive property of GrowthOS Inc. and are protected by copyright, trademark, and other intellectual property laws.
             </p>
             <p>
               You may not reproduce, modify, distribute, or reverse-engineer any part of the Service without our express written permission. You are granted a limited, non-exclusive, non-transferable license to use the Service solely for your internal business purposes.
@@ -114,7 +114,7 @@ export default function TermsPage() {
 
             <h2>10. Indemnification</h2>
             <p>
-              You agree to indemnify and hold harmless Growth OS Inc., its officers, employees, and agents from any claims, damages, losses, or expenses (including legal fees) arising out of:
+              You agree to indemnify and hold harmless GrowthOS Inc., its officers, employees, and agents from any claims, damages, losses, or expenses (including legal fees) arising out of:
             </p>
             <ul>
               <li>Your use of the Service</li>
@@ -137,7 +137,7 @@ export default function TermsPage() {
 
             <h2>13. Entire Agreement</h2>
             <p>
-              These Terms, together with our Privacy Policy and any other agreements you have entered into with us, constitute the entire agreement between you and Growth OS Inc. and supersede all prior and contemporaneous agreements, understandings, and negotiations.
+              These Terms, together with our Privacy Policy and any other agreements you have entered into with us, constitute the entire agreement between you and GrowthOS Inc. and supersede all prior and contemporaneous agreements, understandings, and negotiations.
             </p>
 
             <h2>14. Changes to These Terms</h2>

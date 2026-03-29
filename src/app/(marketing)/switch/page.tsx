@@ -331,7 +331,7 @@ export default function WhyGrowthOSPage() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 href="/setup"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-base font-semibold rounded-full hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg shadow-blue-600/40 hover:shadow-blue-700/50 hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-[#27AE60] text-white text-base font-semibold rounded-full hover:bg-[#229954] transition-all shadow-lg shadow-[#27AE60]/40 hover:shadow-[#229954]/50 hover:-translate-y-0.5"
               >
                 {t('whyGrowthOS.heroCta')}
                 <ArrowRight className="w-5 h-5" />
@@ -361,7 +361,7 @@ export default function WhyGrowthOSPage() {
                 {t('whyGrowthOS.painTitle')}
               </h2>
               <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-                These challenges disappear when you move to Growth OS.
+                These challenges disappear when you move to GrowthOS.
               </p>
             </div>
 
@@ -451,7 +451,7 @@ export default function WhyGrowthOSPage() {
                   gainCard1.isVisible ? 'visible' : ''
                 }`}
               >
-                <div className="w-14 h-14 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center mb-6">
+                <div className="w-14 h-14 bg-[#2C3E50] rounded-xl flex items-center justify-center mb-6">
                   <Languages className="w-7 h-7 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-3">
@@ -581,7 +581,7 @@ export default function WhyGrowthOSPage() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
                 {/* Step 1 */}
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl font-bold shadow-lg shadow-blue-600/40 pulse-ring">
+                  <div className="w-16 h-16 bg-[#2C3E50] rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl font-bold shadow-lg shadow-[#2C3E50]/40 pulse-ring">
                     <CheckCircle2 className="w-8 h-8" />
                   </div>
                   <h3 className="text-xl font-bold text-slate-900 mb-2">
@@ -594,7 +594,7 @@ export default function WhyGrowthOSPage() {
 
                 {/* Step 2 */}
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl font-bold shadow-lg shadow-blue-600/40 pulse-ring">
+                  <div className="w-16 h-16 bg-[#2C3E50] rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl font-bold shadow-lg shadow-[#2C3E50]/40 pulse-ring">
                     <ArrowRight className="w-8 h-8" />
                   </div>
                   <h3 className="text-xl font-bold text-slate-900 mb-2">
@@ -607,7 +607,7 @@ export default function WhyGrowthOSPage() {
 
                 {/* Step 3 */}
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl font-bold shadow-lg shadow-blue-600/40 pulse-ring">
+                  <div className="w-16 h-16 bg-[#2C3E50] rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl font-bold shadow-lg shadow-[#2C3E50]/40 pulse-ring">
                     <Zap className="w-8 h-8" />
                   </div>
                   <h3 className="text-xl font-bold text-slate-900 mb-2">
@@ -716,7 +716,7 @@ export default function WhyGrowthOSPage() {
                 {t('whyGrowthOS.socialTitle')}
               </h2>
               <p className="text-lg text-slate-600">
-                Hear from service business owners using Growth OS right now.
+                Hear from service business owners using GrowthOS right now.
               </p>
             </div>
 

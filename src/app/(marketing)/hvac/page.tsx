@@ -283,7 +283,7 @@ export default function HVACPage() {
             {t('hvacPage.solutionTitle') }
           </h2>
           <p className="text-center text-slate-300 text-lg mb-16 max-w-2xl mx-auto">
-            Growth OS helps you break the seasonal cycle and build recurring revenue streams.
+            GrowthOS helps you break the seasonal cycle and build recurring revenue streams.
           </p>
 
           <div className="grid md:grid-cols-2 gap-8">

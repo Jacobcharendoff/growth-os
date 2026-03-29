@@ -263,7 +263,7 @@ export default function Dashboard() {
       </div>
 
       {/* Onboarding Banner */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-6 mb-8 text-white relative overflow-hidden">
+      <div className="bg-[#2C3E50] rounded-2xl p-6 mb-8 text-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/4" />
         <div className="relative flex items-center justify-between gap-6 flex-wrap">
           <div className="flex items-center gap-4">
@@ -398,8 +398,8 @@ export default function Dashboard() {
                 ${avgDealValue.toLocaleString()}
               </p>
             </div>
-            <div className="p-2 bg-indigo-100 rounded-lg">
-              <TrendingUp className="w-6 h-6 text-indigo-600" />
+            <div className="p-2 bg-emerald-100 rounded-lg">
+              <TrendingUp className="w-6 h-6 text-[#27AE60]" />
             </div>
           </div>
           <p className="text-xs text-slate-500 dark:text-slate-400">Per active deal</p>
@@ -614,7 +614,7 @@ export default function Dashboard() {
 
         <button
           onClick={() => setIsFABExpanded(!isFABExpanded)}
-          className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-full p-4 shadow-lg hover:shadow-xl transition-all transform hover:scale-110 active:scale-95"
+          className="bg-[#27AE60] hover:bg-[#229954] text-white rounded-full p-4 shadow-lg hover:shadow-xl transition-all transform hover:scale-110 active:scale-95"
         >
           <Plus className="w-6 h-6" />
         </button>

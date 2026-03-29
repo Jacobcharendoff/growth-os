@@ -275,7 +275,7 @@ export default function ElectricalPage() {
             {t('electricalPage.solutionTitle') }
           </h2>
           <p className="text-center text-slate-300 text-lg mb-16 max-w-2xl mx-auto">
-            Growth OS built for electricians who need to keep the lights on (literally).
+            GrowthOS built for electricians who need to keep the lights on (literally).
           </p>
 
           <div className="grid md:grid-cols-2 gap-8">

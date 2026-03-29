@@ -52,7 +52,7 @@ export default function VsJobberPage() {
               <thead>
                 <tr className="border-b-2 border-slate-300 bg-slate-50">
                   <th className="px-4 py-3 text-left font-semibold text-slate-900">{t('vsJobber.feature')}</th>
-                  <th className="px-4 py-3 text-left font-semibold text-emerald-700">Growth OS</th>
+                  <th className="px-4 py-3 text-left font-semibold text-emerald-700">GrowthOS</th>
                   <th className="px-4 py-3 text-left font-semibold text-slate-600">Jobber</th>
                 </tr>
               </thead>
@@ -199,7 +199,7 @@ export default function VsJobberPage() {
         </div>
       </div>
 
-      {/* Who Growth OS is Built For */}
+      {/* Who GrowthOS is Built For */}
       <div className="py-16 bg-white">
         <div className="max-w-3xl mx-auto px-4">
           <h2 className="text-2xl font-bold text-slate-900 mb-4">{t('vsJobber.builtForGrowth')}</h2>
@@ -231,7 +231,7 @@ export default function VsJobberPage() {
         </div>
       </div>
 
-      {/* Growth OS Pricing Tiers */}
+      {/* GrowthOS Pricing Tiers */}
       <div className="py-16 bg-slate-50">
         <div className="max-w-5xl mx-auto px-4">
           <h2 className="text-3xl font-bold text-slate-900 mb-12 text-center">{t('vsJobber.pricingTiers')}</h2>

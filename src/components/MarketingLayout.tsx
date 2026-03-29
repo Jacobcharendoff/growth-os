@@ -73,11 +73,11 @@ export function Navigation() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           <Link href="/" className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center shadow-lg shadow-blue-600/25">
+            <div className="w-9 h-9 rounded-xl bg-[#2C3E50] flex items-center justify-center shadow-lg shadow-slate-600/25">
               <Zap className="w-5 h-5 text-white" />
             </div>
             <span className="text-xl font-bold tracking-tight">
-              Growth OS<span className="text-blue-600">™</span>
+              <span className="text-gray-900">Growth</span><span className="text-[#27AE60]">OS</span>
             </span>
           </Link>
 
@@ -111,7 +111,7 @@ export function Navigation() {
                       key={trade.key}
                       href={trade.href}
                       onClick={() => setDesktopDropdownOpen(false)}
-                      className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-colors"
+                      className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-700 hover:text-[#27AE60] hover:bg-emerald-50 transition-colors"
                     >
                       <span className="text-gray-400">{tradeIcons[trade.key]}</span>
                       {t(`industry.${trade.key}` as any)}
@@ -143,7 +143,7 @@ export function Navigation() {
             </Link>
             <Link
               href="/setup"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm font-semibold rounded-full hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg shadow-blue-600/25 hover:shadow-blue-700/30 hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#27AE60] text-white text-sm font-semibold rounded-full hover:bg-[#229954] transition-all shadow-lg shadow-green-600/25 hover:shadow-green-700/30 hover:-translate-y-0.5"
             >
               {t('marketing.tryFree')}
               <ArrowRight className="w-4 h-4" />
@@ -219,7 +219,7 @@ export function Navigation() {
               >
                 <Globe className="w-4 h-4" />
                 {locale === 'en' ? 'Français' : 'English'}
-                <span className="ml-auto text-xs font-bold bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full">{locale.toUpperCase()}</span>
+                <span className="ml-auto text-xs font-bold bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">{locale.toUpperCase()}</span>
               </button>
 
               <div className="border-t border-gray-100 pt-4 flex flex-col gap-3">
@@ -232,7 +232,7 @@ export function Navigation() {
                 </Link>
                 <Link
                   href="/setup"
-                  className="inline-flex items-center justify-center gap-2 w-full px-5 py-2.5 bg-blue-600 text-white text-sm font-semibold rounded-full hover:bg-blue-700 transition-colors"
+                  className="inline-flex items-center justify-center gap-2 w-full px-5 py-2.5 bg-[#27AE60] text-white text-sm font-semibold rounded-full hover:bg-[#229954] transition-colors"
                   onClick={() => setMobileOpen(false)}
                 >
                   {t('marketing.tryFree')}
@@ -282,10 +282,10 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-16">
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="flex items-center gap-2.5 mb-4">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
+              <div className="w-9 h-9 rounded-xl bg-[#2C3E50] flex items-center justify-center">
                 <Zap className="w-5 h-5 text-white" />
               </div>
-              <span className="text-lg font-bold text-white">Growth OS<span className="text-blue-500">™</span></span>
+              <span className="text-lg font-bold text-white"><span className="text-white">Growth</span><span className="text-[#27AE60]">OS</span></span>
             </Link>
             <p className="text-sm leading-relaxed">The operating system for service business growth. Purpose-built for the trades.</p>
             <div className="mt-3 flex items-center gap-1.5">
@@ -323,7 +323,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-slate-500">&copy; {new Date().getFullYear()} Growth OS. All rights reserved. {t('marketing.madeInCanada')}.</p>
+          <p className="text-xs text-slate-500">&copy; {new Date().getFullYear()} GrowthOS. All rights reserved. {t('marketing.madeInCanada')}.</p>
           <div className="flex items-center gap-4">
             <a href="mailto:hello@growthos.ca" className="text-slate-500 hover:text-white transition-colors"><Mail className="w-5 h-5" /></a>
             <a href="tel:+18005550199" className="text-slate-500 hover:text-white transition-colors"><Phone className="w-5 h-5" /></a>
@@ -338,7 +338,7 @@ export function Footer() {
 export function CTASection() {
   const { t } = useLanguage();
   return (
-    <section className="relative py-20 sm:py-28 bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 overflow-hidden">
+    <section className="relative py-20 sm:py-28 bg-[#2C3E50] overflow-hidden">
       <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(255,255,255,0.05) 0%, transparent 50%)' }} />
       <div className="relative max-w-4xl mx-auto px-6 text-center">
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">

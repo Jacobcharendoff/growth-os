@@ -100,7 +100,7 @@ const notifications: Notification[] = [
     id: '9',
     type: 'review',
     title: 'New 5-star review from John Martinez on Google!',
-    description: '"Best plumber in Austin. Highly recommend Growth OS Plumbing!"',
+    description: '"Best plumber in Austin. Highly recommend GrowthOS Plumbing!"',
     timeAgo: 'Yesterday',
     date: 'yesterday',
     read: true,
@@ -147,7 +147,7 @@ const typeConfig = {
   overdue: { icon: AlertCircle, color: 'text-red-600 dark:text-red-400', bgColor: 'bg-red-100 dark:bg-red-900' },
   review: { icon: Star, color: 'text-yellow-600 dark:text-yellow-400', bgColor: 'bg-yellow-100 dark:bg-yellow-900' },
   team: { icon: Users, color: 'text-slate-600 dark:text-slate-400', bgColor: 'bg-slate-100 dark:bg-slate-700' },
-  automation: { icon: Zap, color: 'text-indigo-600 dark:text-indigo-400', bgColor: 'bg-indigo-100 dark:bg-indigo-900' },
+  automation: { icon: Zap, color: 'text-[#27AE60] dark:text-emerald-400', bgColor: 'bg-emerald-100 dark:bg-emerald-900' },
   system: { icon: MessageCircle, color: 'text-slate-600 dark:text-slate-400', bgColor: 'bg-slate-100 dark:bg-slate-700' }
 };
 

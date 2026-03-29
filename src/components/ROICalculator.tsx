@@ -112,7 +112,7 @@ function ResultCard({
     <div
       className={`rounded-2xl p-6 border transition-all ${
         highlight
-          ? 'bg-gradient-to-br from-blue-50 to-blue-100 border-blue-300 shadow-md'
+          ? 'bg-gradient-to-br from-emerald-50 to-emerald-100 border-emerald-300 shadow-md'
           : 'bg-white border-slate-200 shadow-sm'
       }`}
     >
@@ -344,7 +344,7 @@ export function ROICalculator() {
 
         {/* CTA Section */}
         <div className="mt-12 text-center">
-          <button className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-2xl hover:from-blue-500 hover:to-blue-600 transition-all shadow-lg shadow-blue-600/25 hover:shadow-blue-500/40 hover:-translate-y-0.5">
+          <button className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#27AE60] hover:bg-[#229954] text-white font-semibold rounded-2xl transition-all shadow-lg shadow-emerald-600/25 hover:shadow-emerald-500/40 hover:-translate-y-0.5">
             {t('roi.cta')}
             <ArrowRight className="w-5 h-5" />
           </button>

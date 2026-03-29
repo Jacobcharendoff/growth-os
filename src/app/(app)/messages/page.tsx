@@ -58,7 +58,7 @@ const MOCK_MESSAGES: Message[] = [
     type: 'Email',
     status: 'Read',
     fullContent:
-      'Hi Sarah,\n\nYour estimate for HVAC maintenance is ready for your review. The total cost is $1,250 for a full system inspection and cleaning.\n\nPlease review and let us know if you have any questions.\n\nBest regards,\nGrowth OS Team',
+      'Hi Sarah,\n\nYour estimate for HVAC maintenance is ready for your review. The total cost is $1,250 for a full system inspection and cleaning.\n\nPlease review and let us know if you have any questions.\n\nBest regards,\nGrowthOS Team',
     recipient: 'sarah.j@email.com',
   },
   {

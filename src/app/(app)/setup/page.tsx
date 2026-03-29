@@ -141,7 +141,7 @@ const INITIAL_STEPS: SetupStep[] = [
   {
     id: 'first-estimate',
     title: 'Create Your First Estimate',
-    description: 'Build a Good/Better/Best estimate to see how Growth OS helps you upsell and close more jobs.',
+    description: 'Build a Good/Better/Best estimate to see how GrowthOS helps you upsell and close more jobs.',
     whyItMatters: 'Good/Better/Best pricing increases average ticket size by 28%. The "Better" option is chosen 62% of the time.',
     icon: <FileText className="w-6 h-6" />,
     category: 'growth',
@@ -288,7 +288,7 @@ export default function SetupPage() {
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-2">
-          <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center">
+          <div className="w-10 h-10 bg-[#2C3E50] rounded-xl flex items-center justify-center">
             <Rocket className="w-5 h-5 text-white" />
           </div>
           <div>
@@ -566,7 +566,7 @@ export default function SetupPage() {
           </div>
           <h4 className="font-bold text-slate-900 dark:text-white mb-1">Built for the trades</h4>
           <p className="text-sm text-slate-600 dark:text-slate-400">
-            Growth OS was built by people who understand service businesses. Every feature is designed for the way you actually work.
+            GrowthOS was built by people who understand service businesses. Every feature is designed for the way you actually work.
           </p>
         </div>
       </div>

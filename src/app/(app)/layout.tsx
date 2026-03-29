@@ -26,10 +26,10 @@ function AppContent({ children }: { children: React.ReactNode }) {
               <Menu className="w-5 h-5" />
             </button>
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
+              <div className="w-7 h-7 rounded-lg bg-[#2C3E50] flex items-center justify-center">
                 <Zap className="w-4 h-4 text-white" />
               </div>
-              <span className={`font-bold text-sm ${isDark ? 'text-white' : 'text-gray-900'}`}>Growth OS</span>
+              <span className={`font-bold text-sm ${isDark ? 'text-white' : 'text-gray-900'}`}>Growth<span className={isDark ? 'text-emerald-400' : 'text-[#27AE60]'}>OS</span></span>
             </div>
             <div className="w-9" />
           </header>

@@ -55,8 +55,7 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
   const sidebarBg = 'bg-white dark:bg-slate-900';
   const sidebarBorder = isDark ? 'border-slate-700' : 'border-gray-200';
   const brandText = isDark ? 'text-white' : 'text-gray-900';
-  const brandAccent = isDark ? 'text-blue-400' : 'text-blue-600';
-  const brandTm = isDark ? 'text-blue-300' : 'text-blue-500';
+  const brandAccent = isDark ? 'text-emerald-400' : 'text-[#27AE60]';
   const navText = isDark ? 'text-slate-300' : 'text-gray-600';
   const navHover = isDark ? 'hover:bg-slate-700/50 hover:text-white' : 'hover:bg-gray-100 hover:text-gray-900';
   const sectionBorder = isDark ? 'border-slate-700' : 'border-gray-200';
@@ -73,9 +72,8 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
           <Zap className={`w-7 h-7 ${brandAccent}`} />
           <div className="flex flex-col">
             <span className={`font-bold text-lg tracking-tight ${brandText}`}>
-              Growth OS
+              Growth<span className={brandAccent}>OS</span>
             </span>
-            <span className={`text-xs font-medium ${brandTm}`}>™</span>
           </div>
         </div>
         {onClose && (
@@ -92,10 +90,10 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
           onClick={onClose}
           className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
             pathname === '/setup'
-              ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20'
+              ? 'bg-[#27AE60] text-white shadow-lg shadow-emerald-600/20'
               : isDark
-                ? 'bg-gradient-to-r from-blue-600/20 to-purple-600/20 text-blue-300 hover:from-blue-600/30 hover:to-purple-600/30 border border-blue-500/30'
-                : 'bg-gradient-to-r from-blue-50 to-purple-50 text-blue-700 hover:from-blue-100 hover:to-purple-100 border border-blue-200'
+                ? 'bg-gradient-to-r from-emerald-600/20 to-emerald-800/20 text-emerald-300 hover:from-emerald-600/30 hover:to-emerald-800/30 border border-emerald-500/30'
+                : 'bg-gradient-to-r from-emerald-50 to-emerald-100 text-emerald-700 hover:from-emerald-100 hover:to-emerald-200 border border-emerald-200'
           }`}
         >
           <Rocket className="w-5 h-5" />
@@ -115,10 +113,10 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
           onClick={onClose}
           className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
             pathname === '/advisor'
-              ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-purple-600/20'
+              ? 'bg-[#27AE60] text-white shadow-lg shadow-emerald-600/20'
               : isDark
-                ? 'bg-gradient-to-r from-blue-500/10 to-purple-500/10 text-purple-300 hover:from-blue-500/20 hover:to-purple-500/20 border border-purple-500/20'
-                : 'bg-gradient-to-r from-blue-50/80 to-purple-50/80 text-purple-700 hover:from-blue-100 hover:to-purple-100 border border-purple-200'
+                ? 'bg-gradient-to-r from-emerald-500/10 to-emerald-700/10 text-emerald-300 hover:from-emerald-500/20 hover:to-emerald-700/20 border border-emerald-500/20'
+                : 'bg-gradient-to-r from-emerald-50/80 to-emerald-100/80 text-emerald-700 hover:from-emerald-100 hover:to-emerald-200 border border-emerald-200'
           }`}
         >
           <Sparkles className="w-5 h-5" />
@@ -143,7 +141,7 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
               onClick={onClose}
               className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-200 ${
                 isActive
-                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20'
+                  ? 'bg-[#27AE60] text-white shadow-lg shadow-emerald-600/20'
                   : `${navText} ${navHover}`
               }`}
             >
@@ -173,14 +171,14 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
           >
             <span className={`inline-flex items-center justify-center h-6 px-2.5 rounded-full text-xs font-bold transition-all ${
               locale === 'en'
-                ? 'bg-blue-600 text-white shadow-sm'
+                ? 'bg-[#27AE60] text-white shadow-sm'
                 : isDark ? 'text-slate-400' : 'text-gray-500'
             }`}>
               EN
             </span>
             <span className={`inline-flex items-center justify-center h-6 px-2.5 rounded-full text-xs font-bold transition-all ${
               locale === 'fr'
-                ? 'bg-blue-600 text-white shadow-sm'
+                ? 'bg-[#27AE60] text-white shadow-sm'
                 : isDark ? 'text-slate-400' : 'text-gray-500'
             }`}>
               FR
@@ -203,7 +201,7 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
           <button
             onClick={toggleTheme}
             className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors ${
-              isDark ? 'bg-blue-600' : 'bg-gray-300'
+              isDark ? 'bg-[#27AE60]' : 'bg-gray-300'
             }`}
             aria-label="Toggle dark mode"
           >
@@ -226,7 +224,7 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
               onClick={onClose}
               className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-200 ${
                 isActive
-                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20'
+                  ? 'bg-[#27AE60] text-white shadow-lg shadow-emerald-600/20'
                   : `${navText} ${navHover}`
               }`}
             >

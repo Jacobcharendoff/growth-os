@@ -182,7 +182,7 @@ export default function VsServiceTitanPage() {
         </div>
       </section>
 
-      {/* Who Growth OS is Built For */}
+      {/* Who GrowthOS is Built For */}
       <section className="w-full bg-gray-50 py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-gray-900 mb-6">
@@ -228,9 +228,9 @@ export default function VsServiceTitanPage() {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            {/* Growth OS Pricing */}
+            {/* GrowthOS Pricing */}
             <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Growth OS</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">GrowthOS</h3>
               <div className="space-y-4">
                 <div className="p-6 bg-blue-50 border border-blue-200 rounded-2xl">
                   <p className="text-sm font-semibold text-gray-600 mb-2">STARTER</p>
@@ -283,15 +283,15 @@ export default function VsServiceTitanPage() {
             </div>
           </div>
 
-          <div className="p-8 bg-gradient-to-r from-blue-50 to-blue-100 rounded-2xl border border-blue-300">
-            <h4 className="text-lg font-bold text-gray-900 mb-3">
+          <div className="p-8 bg-[#2C3E50] rounded-2xl border border-[#2C3E50]">
+            <h4 className="text-lg font-bold text-white mb-3">
               Real Example: 5-Person Crew
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
               <div>
-                <p className="text-sm text-gray-600 mb-2">Growth OS (Pro)</p>
-                <p className="text-2xl font-bold text-blue-600">$1,788/year</p>
-                <p className="text-sm text-gray-600 mt-2">$149/month, no setup fee, cancel anytime.</p>
+                <p className="text-sm text-gray-200 mb-2">GrowthOS (Pro)</p>
+                <p className="text-2xl font-bold text-[#27AE60]">$1,788/year</p>
+                <p className="text-sm text-gray-200 mt-2">$149/month, no setup fee, cancel anytime.</p>
               </div>
               <div>
                 <p className="text-sm text-gray-600 mb-2">ServiceTitan (Mid-tier)</p>
@@ -299,7 +299,7 @@ export default function VsServiceTitanPage() {
                 <p className="text-sm text-gray-600 mt-2">$850/month + $5K setup + 36-month lock-in.</p>
               </div>
             </div>
-            <p className="text-sm text-gray-700 mt-6 font-semibold">
+            <p className="text-sm text-gray-100 mt-6 font-semibold">
               That's over $8,400 per year you can invest back into your business.
             </p>
           </div>
@@ -307,31 +307,31 @@ export default function VsServiceTitanPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="w-full bg-gradient-to-br from-blue-600 to-blue-700 py-16 px-4 sm:px-6 lg:px-8">
+      <section className="w-full bg-[#27AE60] py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6">
             {t('cta.stopLosingLeads')}
           </h2>
-          <p className="text-xl text-blue-100 mb-10 max-w-2xl mx-auto">
+          <p className="text-xl text-white/80 mb-10 max-w-2xl mx-auto">
             {t('cta.ctaDescription')}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/trial"
-              className="inline-block px-8 py-4 bg-white text-blue-600 font-bold rounded-2xl hover:bg-gray-50 transition-colors"
+              className="inline-block px-8 py-4 bg-white text-[#27AE60] font-bold rounded-2xl hover:bg-gray-50 transition-colors"
             >
               {t('cta.startFreeTrial')}
             </Link>
             <Link
               href="/demo"
-              className="inline-block px-8 py-4 bg-blue-800 text-white font-bold rounded-2xl hover:bg-blue-900 transition-colors border border-blue-500"
+              className="inline-block px-8 py-4 bg-[#229954] text-white font-bold rounded-2xl hover:bg-[#1e8449] transition-colors border border-[#229954]"
             >
               {t('marketing.bookDemo')}
             </Link>
           </div>
 
-          <p className="text-sm text-blue-100 mt-8">
+          <p className="text-sm text-white/70 mt-8">
             {t('cta.noCardRequired')}
           </p>
         </div>

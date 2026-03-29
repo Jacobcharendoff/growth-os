@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Navigation, Footer, CTASection } from "@/components/MarketingLayout";
 import { useLanguage } from '@/components/LanguageProvider';
@@ -40,6 +40,7 @@ import {
   Minus,
   Send,
   Check,
+  Calendar,
 } from "lucide-react";
 
 // ─── Animated Counter ─────────────────────────────────────────
@@ -501,15 +502,17 @@ function InteractiveExplorer() {
   const tabColors: Record<string, string> = {
     dashboard: 'from-blue-500 to-blue-600',
     pipeline: 'from-purple-500 to-violet-600',
-    estimates: 'from-emerald-500 to-teal-600',
-    invoicing: 'from-amber-500 to-orange-600',
+    schedule: 'from-cyan-500 to-teal-600',
+    automations: 'from-amber-500 to-orange-600',
+    advisor: 'from-emerald-500 to-green-600',
   };
 
   const tabs = [
     { id: 'dashboard', icon: <BarChart3 className="w-5 h-5" />, label: t('explorer.dashboard'), description: t('explorer.dashboardDesc'), url: 'app.growthos.com/dashboard' },
     { id: 'pipeline', icon: <Layers className="w-5 h-5" />, label: t('explorer.pipeline'), description: t('explorer.pipelineDesc'), url: 'app.growthos.com/pipeline' },
-    { id: 'estimates', icon: <FileText className="w-5 h-5" />, label: t('explorer.estimates'), description: t('explorer.estimatesDesc'), url: 'app.growthos.com/estimates' },
-    { id: 'invoicing', icon: <Receipt className="w-5 h-5" />, label: t('explorer.invoicing'), description: t('explorer.invoicingDesc'), url: 'app.growthos.com/invoices' },
+    { id: 'schedule', icon: <Calendar className="w-5 h-5" />, label: t('explorer.schedule'), description: t('explorer.scheduleDesc'), url: 'app.growthos.com/schedule' },
+    { id: 'automations', icon: <Zap className="w-5 h-5" />, label: t('explorer.autopilot'), description: t('explorer.autopilotDesc'), url: 'app.growthos.com/automations' },
+    { id: 'advisor', icon: <Bot className="w-5 h-5" />, label: t('explorer.growthAdvisor'), description: t('explorer.growthAdvisorDesc'), url: 'app.growthos.com/advisor' },
   ];
 
   // ─── Static mockup content for each tab (no animation, clean and final-state) ───
@@ -587,6 +590,65 @@ function InteractiveExplorer() {
                 ))}
               </div>
             </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  const ScheduleMockup = () => {
+    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+    const hours = ['8 AM', '10 AM', '12 PM', '2 PM', '4 PM'];
+    const jobs = [
+      { day: 0, start: 0, span: 2, name: 'Patel — Kitchen Reno', crew: 'Mike + Dave', color: 'bg-blue-500/30 border-blue-500' },
+      { day: 0, start: 3, span: 1, name: 'Chen — Furnace Inspect', crew: 'Solo', color: 'bg-amber-500/30 border-amber-500' },
+      { day: 1, start: 0, span: 1, name: 'Rodriguez — Repipe', crew: 'Mike + Jay', color: 'bg-purple-500/30 border-purple-500' },
+      { day: 1, start: 2, span: 2, name: 'Williams — Bathroom', crew: 'Dave + Jay', color: 'bg-emerald-500/30 border-emerald-500' },
+      { day: 2, start: 1, span: 1, name: 'O\'Brien — Water Heater', crew: 'Solo', color: 'bg-cyan-500/30 border-cyan-500' },
+      { day: 2, start: 3, span: 2, name: 'King — Sewer Line', crew: 'Full Crew', color: 'bg-rose-500/30 border-rose-500' },
+      { day: 3, start: 0, span: 3, name: 'Martinez — Full Repipe', crew: 'Mike + Dave + Jay', color: 'bg-blue-500/30 border-blue-500' },
+      { day: 4, start: 0, span: 1, name: 'Lee — Faucet Install', crew: 'Solo', color: 'bg-amber-500/30 border-amber-500' },
+      { day: 4, start: 2, span: 2, name: 'Singh — Drain Cleaning', crew: 'Dave', color: 'bg-purple-500/30 border-purple-500' },
+    ];
+    return (
+      <div className="bg-slate-900 p-3 sm:p-5">
+        <div className="flex items-center justify-between mb-3">
+          <p className="text-sm font-bold text-white">Mar 24 – 28, 2026</p>
+          <div className="flex gap-1">
+            <span className="px-3 py-1 bg-cyan-600 text-white text-xs font-medium rounded-lg">Week</span>
+            <span className="px-3 py-1 bg-slate-800 text-slate-400 text-xs font-medium rounded-lg border border-slate-700/50">Day</span>
+          </div>
+        </div>
+        <div className="grid grid-cols-[40px_repeat(5,1fr)] gap-px bg-slate-800 rounded-xl overflow-hidden border border-slate-700/50">
+          {/* Header row */}
+          <div className="bg-slate-900 p-1.5" />
+          {days.map(d => (
+            <div key={d} className="bg-slate-900 p-1.5 text-center">
+              <p className="text-[10px] sm:text-xs font-bold text-slate-300 uppercase">{d}</p>
+            </div>
+          ))}
+          {/* Time rows */}
+          {hours.map((hour, hi) => (
+            <React.Fragment key={hour}>
+              <div className="bg-slate-900/80 p-1 flex items-start justify-end pr-1.5">
+                <span className="text-[8px] sm:text-[10px] text-slate-500 font-medium">{hour}</span>
+              </div>
+              {days.map((_, di) => {
+                const job = jobs.find(j => j.day === di && j.start === hi);
+                const occupied = jobs.some(j => j.day === di && j.start < hi && j.start + j.span > hi);
+                if (occupied) return null;
+                return (
+                  <div key={`${di}-${hi}`} className="bg-slate-900/50 p-0.5 min-h-[48px] sm:min-h-[56px] relative" style={job ? { gridRow: `span ${job.span}` } : undefined}>
+                    {job && (
+                      <div className={`h-full rounded-lg border-l-[3px] ${job.color} p-1.5 sm:p-2`}>
+                        <p className="text-[9px] sm:text-xs font-semibold text-slate-200 truncate leading-tight">{job.name}</p>
+                        <p className="text-[8px] sm:text-[10px] text-slate-400 mt-0.5 truncate">{job.crew}</p>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </React.Fragment>
           ))}
         </div>
       </div>
@@ -779,8 +841,9 @@ function InteractiveExplorer() {
     switch (activeTab) {
       case 'dashboard': return <DashboardMockup />;
       case 'pipeline': return <PipelineMockup />;
-      case 'estimates': return <EstimatesMockup />;
-      case 'invoicing': return <InvoicingMockup />;
+      case 'schedule': return <ScheduleMockup />;
+      case 'automations': return <AutopilotMockup />;
+      case 'advisor': return <AdvisorMockup />;
       default: return <DashboardMockup />;
     }
   };
@@ -818,7 +881,7 @@ function InteractiveExplorer() {
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex-shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all whitespace-nowrap ${
                     activeTab === tab.id
-                      ? `bg-gradient-to-r ${tabColors[tab.id]} text-white shadow-lg shadow-${tab.id === 'dashboard' ? 'blue' : tab.id === 'pipeline' ? 'purple' : tab.id === 'estimates' ? 'emerald' : 'amber'}-500/25`
+                      ? `bg-gradient-to-r ${tabColors[tab.id]} text-white shadow-lg`
                       : 'text-slate-400 hover:text-white bg-white/5 hover:bg-white/10'
                   }`}
                 >
@@ -826,9 +889,6 @@ function InteractiveExplorer() {
                   {tab.label}
                 </button>
               ))}
-              <Link href="/dashboard" className="flex-shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-blue-400 bg-white/5 hover:bg-white/10 transition-all whitespace-nowrap border border-blue-500/30">
-                See all features <ArrowRight className="w-4 h-4" />
-              </Link>
             </div>
 
             {/* Desktop: vertical tabs with descriptions */}
@@ -837,7 +897,7 @@ function InteractiveExplorer() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`text-left w-full px-4 py-4 rounded-xl transition-all duration-200 ${
+                  className={`text-left w-full px-4 py-3 rounded-xl transition-all duration-200 ${
                     activeTab === tab.id
                       ? `bg-gradient-to-r ${tabColors[tab.id]} border border-white/20 shadow-lg`
                       : 'hover:bg-white/5 border border-transparent'
@@ -856,11 +916,6 @@ function InteractiveExplorer() {
                   </p>
                 </button>
               ))}
-              {/* CTA link at bottom of tabs */}
-              <Link href="/dashboard" className="flex items-center gap-2 px-4 py-3 mt-2 rounded-xl text-sm font-medium text-blue-400 hover:text-blue-300 hover:bg-white/5 transition-all border border-blue-500/20">
-                <ArrowRight className="w-4 h-4" />
-                Explore all features
-              </Link>
             </div>
           </div>
 
@@ -887,6 +942,14 @@ function InteractiveExplorer() {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* CTA below the explorer — clearly separated */}
+        <div className="mt-10 text-center">
+          <Link href="/dashboard" className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 shadow-lg shadow-blue-600/25 transition-all">
+            Explore all features
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
       </div>
     </section>

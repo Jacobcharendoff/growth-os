@@ -66,8 +66,8 @@ export function Navigation() {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? 'bg-white/90 backdrop-blur-xl shadow-sm border-b border-gray-200/50'
-          : 'bg-white/0'
+          ? 'bg-white/95 backdrop-blur-xl shadow-sm border-b border-gray-200/50'
+          : 'bg-white shadow-sm'
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">

@@ -32,7 +32,7 @@ export default function ContactPage() {
       {/* Hero Section */}
       <section className="pt-24 pb-16 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
             Let's talk
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl">
@@ -44,10 +44,10 @@ export default function ContactPage() {
       {/* Contact Content */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Form Column */}
             <div className="lg:col-span-2">
-              <div className="bg-white rounded-2xl p-8 shadow-sm">
+              <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm">
                 <h2 className="text-2xl font-bold text-gray-900 mb-8">Send us a message</h2>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -144,7 +144,7 @@ export default function ContactPage() {
             {/* Sidebar */}
             <div className="space-y-6">
               {/* Contact Info */}
-              <div className="bg-white rounded-2xl p-8 shadow-sm">
+              <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm">
                 <h3 className="text-xl font-bold text-gray-900 mb-6">Contact info</h3>
 
                 <div className="space-y-4">
@@ -188,7 +188,7 @@ export default function ContactPage() {
               </div>
 
               {/* Book a Demo */}
-              <div className="bg-blue-50 border border-blue-100 rounded-2xl p-8">
+              <div className="bg-blue-50 border border-blue-100 rounded-2xl p-6 sm:p-8">
                 <div className="flex gap-3 mb-4">
                   <Calendar className="w-6 h-6 text-blue-600 flex-shrink-0" />
                   <h3 className="text-xl font-bold text-gray-900">Book a demo</h3>

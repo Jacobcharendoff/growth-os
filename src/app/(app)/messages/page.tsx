@@ -286,9 +286,9 @@ export default function MessagesPage() {
   };
 
   return (
-    <div className="h-screen flex bg-gradient-to-br from-slate-50 to-slate-100">
+    <div className="h-screen flex flex-col lg:flex-row bg-gradient-to-br from-slate-50 to-slate-100">
       {/* Left Sidebar - Filters */}
-      <div className="w-56 bg-white border-r border-slate-200 flex flex-col">
+      <div className="hidden lg:flex lg:w-56 bg-white border-r border-slate-200 flex flex-col">
         <div className="p-4 border-b border-slate-200">
           <button
             onClick={() => {
@@ -335,9 +335,9 @@ export default function MessagesPage() {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
         {/* Center Panel - Message List OR Templates */}
-        <div className="w-96 border-r border-slate-200 flex flex-col bg-white">
+        <div className="w-full lg:w-96 border-r border-slate-200 flex flex-col bg-white lg:border-r-4">
           {/* Search Bar */}
           <div className="p-4 border-b border-slate-200">
             <div className="relative">

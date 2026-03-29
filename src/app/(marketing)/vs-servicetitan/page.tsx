@@ -9,7 +9,7 @@ export default function VsServiceTitanPage() {
       {/* Hero Section */}
       <section className="w-full bg-white py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6">
             Growth OS vs ServiceTitan
           </h1>
           <p className="text-xl text-gray-600 mb-4">
@@ -188,7 +188,7 @@ export default function VsServiceTitanPage() {
           <p className="text-lg text-gray-600 mb-6">
             If you're growing a Canadian field service shop—plumbing, HVAC, electrical, landscaping—Growth OS gets it.
           </p>
-          <div className="grid sm:grid-cols-2 gap-4 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
             <div className="p-4 bg-white rounded-lg border border-gray-300">
               <p className="font-semibold text-gray-900 mb-2">1–15 person teams</p>
               <p className="text-sm text-gray-600">No bloat. No features you don't need.</p>
@@ -224,7 +224,7 @@ export default function VsServiceTitanPage() {
             Pricing Breakdown
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-8 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
             {/* Growth OS Pricing */}
             <div>
               <h3 className="text-2xl font-bold text-gray-900 mb-6">Growth OS</h3>
@@ -284,7 +284,7 @@ export default function VsServiceTitanPage() {
             <h4 className="text-lg font-bold text-gray-900 mb-3">
               Real Example: 5-Person Crew
             </h4>
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
               <div>
                 <p className="text-sm text-gray-600 mb-2">Growth OS (Pro)</p>
                 <p className="text-2xl font-bold text-blue-600">$1,788/year</p>
@@ -306,7 +306,7 @@ export default function VsServiceTitanPage() {
       {/* CTA Section */}
       <section className="w-full bg-gradient-to-br from-blue-600 to-blue-700 py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6">
             Ready to Switch?
           </h2>
           <p className="text-xl text-blue-100 mb-10 max-w-2xl mx-auto">

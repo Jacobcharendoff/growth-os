@@ -291,25 +291,25 @@ export default function EstimatesPage() {
           <table className="w-full">
             <thead className="bg-slate-50 border-b border-slate-200">
               <tr>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wide">
+                <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wide">
                   Estimate #
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wide">
+                <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wide">
                   Customer
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wide">
+                <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wide hidden md:table-cell">
                   Service
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wide">
+                <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wide">
                   Amount
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wide">
+                <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wide">
                   Status
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wide">
+                <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wide hidden md:table-cell">
                   Created
                 </th>
-                <th className="px-6 py-4 text-right text-xs font-semibold text-slate-600 uppercase tracking-wide">
+                <th className="px-3 sm:px-6 py-3 sm:py-4 text-right text-xs font-semibold text-slate-600 uppercase tracking-wide">
                   Actions
                 </th>
               </tr>
@@ -323,21 +323,21 @@ export default function EstimatesPage() {
                     onMouseLeave={() => setHoveredRow(null)}
                     className={`transition ${hoveredRow === estimate.id ? 'bg-blue-50' : ''}`}
                   >
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-slate-900">
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-sm font-semibold text-slate-900">
                       <Link href={`/estimates/${estimate.id}`} className="hover:text-blue-600">
                         {estimate.number}
                       </Link>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-700">
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-sm text-slate-700">
                       {estimate.customerName}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-sm text-slate-600 hidden md:table-cell">
                       {estimate.service}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-slate-900">
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-sm font-semibold text-slate-900">
                       ${getDisplayAmount(estimate).toLocaleString()}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
                       <span
                         className={`inline-block px-3 py-1 rounded-full text-xs font-semibold border ${
                           STATUS_COLORS[estimate.status]
@@ -346,13 +346,13 @@ export default function EstimatesPage() {
                         {estimate.status.charAt(0).toUpperCase() + estimate.status.slice(1)}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-sm text-slate-600 hidden md:table-cell">
                       {new Date(estimate.createdAt).toLocaleDateString('en-US', {
                         month: 'short',
                         day: 'numeric',
                       })}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right">
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-right">
                       <div className="flex justify-end gap-2">
                         <Link
                           href={`/estimates/${estimate.id}`}
@@ -383,7 +383,7 @@ export default function EstimatesPage() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={7} className="px-6 py-12 text-center">
+                  <td colSpan={7} className="px-3 sm:px-6 py-12 text-center">
                     <p className="text-slate-500 text-sm">No estimates found</p>
                   </td>
                 </tr>

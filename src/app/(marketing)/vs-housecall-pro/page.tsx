@@ -7,9 +7,9 @@ export default function VsHousecallProPage() {
   return (
     <MarketingLayout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-slate-900 to-slate-800 text-white py-20 px-6">
+      <section className="bg-gradient-to-b from-slate-900 to-slate-800 text-white py-20 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl font-bold mb-6">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6">
             Growth OS vs Housecall Pro
           </h1>
           <p className="text-xl text-slate-300 mb-8">
@@ -22,13 +22,13 @@ export default function VsHousecallProPage() {
       </section>
 
       {/* Quick Cost Comparison */}
-      <section className="py-16 px-6 bg-slate-50">
+      <section className="py-16 px-4 sm:px-6 bg-slate-50">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12 text-slate-900">
+          <h2 className="text-2xl sm:text-3xl font-bold text-center mb-12 text-slate-900">
             Real-World Monthly Cost (5 Users)
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-8 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
             {/* Growth OS */}
             <div className="bg-white rounded-lg shadow-lg p-8 border-2 border-blue-600">
               <h3 className="text-2xl font-bold text-blue-600 mb-6">Growth OS</h3>
@@ -121,9 +121,9 @@ export default function VsHousecallProPage() {
       </section>
 
       {/* Full Feature Comparison Table */}
-      <section className="py-16 px-6">
+      <section className="py-16 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12 text-slate-900">
+          <h2 className="text-2xl sm:text-3xl font-bold text-center mb-12 text-slate-900">
             Feature-by-Feature Breakdown
           </h2>
 
@@ -319,12 +319,12 @@ export default function VsHousecallProPage() {
       </section>
 
       {/* What Housecall Pro Does Well */}
-      <section className="py-16 px-6 bg-slate-50">
+      <section className="py-16 px-4 sm:px-6 bg-slate-50">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl font-bold text-slate-900 mb-8">
             What Housecall Pro Does Well
           </h2>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
             <div className="bg-white p-6 rounded-lg shadow">
               <h3 className="font-bold text-slate-900 mb-3">Good Mobile App</h3>
               <p className="text-slate-600 text-sm">
@@ -348,12 +348,12 @@ export default function VsHousecallProPage() {
       </section>
 
       {/* Where Growth OS Pulls Ahead */}
-      <section className="py-16 px-6">
+      <section className="py-16 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl font-bold text-slate-900 mb-8">
             Where Growth OS Pulls Ahead
           </h2>
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
             <div className="border-l-4 border-blue-600 pl-6">
               <h3 className="font-bold text-slate-900 mb-2 text-lg">
                 All-In-One Pricing
@@ -407,13 +407,13 @@ export default function VsHousecallProPage() {
       </section>
 
       {/* Pricing Tiers */}
-      <section className="py-16 px-6 bg-slate-50">
+      <section className="py-16 px-4 sm:px-6 bg-slate-50">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12 text-slate-900">
+          <h2 className="text-2xl sm:text-3xl font-bold text-center mb-12 text-slate-900">
             Growth OS Pricing (No Hidden Costs)
           </h2>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {/* Starter */}
             <div className="bg-white rounded-lg shadow-lg p-8">
               <h3 className="text-xl font-bold text-slate-900 mb-2">Starter</h3>
@@ -532,9 +532,9 @@ export default function VsHousecallProPage() {
       </section>
 
       {/* Bottom CTA */}
-      <section className="py-16 px-6 bg-gradient-to-r from-blue-600 to-blue-700 text-white">
+      <section className="py-16 px-4 sm:px-6 bg-gradient-to-r from-blue-600 to-blue-700 text-white">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-6">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-6">
             Ready to Stop Overpaying for Add-Ons?
           </h2>
           <p className="text-lg mb-8 text-blue-100">
@@ -558,9 +558,9 @@ export default function VsHousecallProPage() {
       </section>
 
       {/* FAQ-Style Closing */}
-      <section className="py-16 px-6">
+      <section className="py-16 px-4 sm:px-6">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-2xl font-bold text-slate-900 mb-10">
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-10">
             Common Questions
           </h2>
 

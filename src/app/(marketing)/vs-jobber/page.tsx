@@ -9,7 +9,7 @@ export default function VsJobberPage() {
       {/* Hero Section */}
       <div className="py-16 bg-gradient-to-br from-slate-50 to-white">
         <div className="max-w-5xl mx-auto px-4">
-          <h1 className="text-5xl font-bold text-slate-900 mb-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-4">
             Growth OS vs Jobber
           </h1>
           <p className="text-xl text-slate-600 mb-6">
@@ -26,7 +26,7 @@ export default function VsJobberPage() {
       {/* Pricing Highlight */}
       <div className="py-12 bg-white border-y border-slate-200">
         <div className="max-w-5xl mx-auto px-4">
-          <div className="grid grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             <div>
               <p className="text-sm font-semibold text-slate-600 uppercase">Growth OS</p>
               <p className="text-4xl font-bold text-slate-900 mt-2">$149/month</p>
@@ -239,7 +239,7 @@ export default function VsJobberPage() {
         <div className="max-w-5xl mx-auto px-4">
           <h2 className="text-3xl font-bold text-slate-900 mb-12 text-center">Growth OS Pricing Plans</h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
             {/* Starter */}
             <div className="bg-white rounded-lg border border-slate-200 p-8">
               <h3 className="text-xl font-bold text-slate-900 mb-2">Starter</h3>

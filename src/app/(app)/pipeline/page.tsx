@@ -384,7 +384,7 @@ export default function PipelinePage() {
       )}
 
       {/* Pipeline Summary Bar */}
-      <div className="px-8 py-4 border-t border-slate-200 bg-white grid grid-cols-4 gap-4">
+      <div className="px-4 sm:px-8 py-4 border-t border-slate-200 bg-white grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="text-center">
           <p className="text-sm text-slate-600">Total Deals</p>
           <p className="text-2xl font-bold text-slate-900">{metrics.totalDeals}</p>

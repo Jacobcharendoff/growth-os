@@ -66,23 +66,23 @@ export default function ContactsPage() {
       </div>
 
       {/* Table */}
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 overflow-x-auto">
         <table className="w-full">
           <thead className="bg-slate-50 border-b border-slate-200 sticky top-0">
             <tr>
-              <th className="px-6 py-4 text-left text-sm font-semibold text-slate-700">
+              <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-sm font-semibold text-slate-700">
                 Name & Address
               </th>
-              <th className="px-6 py-4 text-left text-sm font-semibold text-slate-700">
+              <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-sm font-semibold text-slate-700 hidden sm:table-cell">
                 Type
               </th>
-              <th className="px-6 py-4 text-left text-sm font-semibold text-slate-700">
+              <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-sm font-semibold text-slate-700 hidden sm:table-cell">
                 Source
               </th>
-              <th className="px-6 py-4 text-left text-sm font-semibold text-slate-700">
+              <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-sm font-semibold text-slate-700">
                 Contact
               </th>
-              <th className="px-6 py-4 text-right text-sm font-semibold text-slate-700">
+              <th className="px-3 sm:px-6 py-3 sm:py-4 text-right text-sm font-semibold text-slate-700">
                 Deals
               </th>
             </tr>

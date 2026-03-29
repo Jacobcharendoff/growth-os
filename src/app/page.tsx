@@ -194,9 +194,9 @@ function Hero() {
       <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
 
       {/* Soft gradient orbs */}
-      <div className="absolute top-20 right-10 w-[500px] h-[500px] bg-blue-100/40 rounded-full blur-3xl" style={{ transform: `translateY(${parallaxOffset * 0.2}px)` }} />
-      <div className="absolute bottom-20 left-10 w-[400px] h-[400px] bg-purple-100/30 rounded-full blur-3xl" style={{ transform: `translateY(${-parallaxOffset * 0.15}px)` }} />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-100/20 rounded-full blur-3xl" />
+      <div className="hidden sm:block absolute top-20 right-10 w-[500px] h-[500px] bg-blue-100/40 rounded-full blur-3xl" style={{ transform: `translateY(${parallaxOffset * 0.2}px)` }} />
+      <div className="hidden sm:block absolute bottom-20 left-10 w-[400px] h-[400px] bg-purple-100/30 rounded-full blur-3xl" style={{ transform: `translateY(${-parallaxOffset * 0.15}px)` }} />
+      <div className="hidden sm:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-100/20 rounded-full blur-3xl" />
 
       {/* Floating persona cards — desktop only */}
       <div className="hidden lg:block absolute inset-0 pointer-events-none">
@@ -251,7 +251,7 @@ function Hero() {
           </div>
 
           {/* Headline with rotating trade name */}
-          <h1 className="hero-reveal hero-reveal-delay-2 text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 leading-[1.1] mb-2">
+          <h1 className="hero-reveal hero-reveal-delay-2 text-3xl sm:text-5xl lg:text-7xl font-bold tracking-tight text-gray-900 leading-[1.1] mb-2">
             The growth engine
             <br />
             for{' '}
@@ -959,7 +959,7 @@ function InteractiveExplorer() {
     <section className="relative bg-slate-950 py-20 sm:py-28 overflow-hidden">
       {/* Background glow */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-blue-500/5 rounded-full blur-3xl" />
+        <div className="hidden sm:block absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-blue-500/5 rounded-full blur-3xl" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-6">

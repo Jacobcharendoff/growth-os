@@ -10,7 +10,7 @@ export default function PlumbingPage() {
       {/* Hero Section */}
       <section className="pt-24 pb-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-5xl sm:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
             Stop losing plumbing leads to your competitor's voicemail
           </h1>
           <p className="text-xl text-gray-600 mb-8 leading-relaxed">
@@ -27,7 +27,7 @@ export default function PlumbingPage() {
       {/* Pain Points Section */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-gray-900 mb-16 text-center">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-16 text-center">
             Common problems we solve for plumbers
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -89,7 +89,7 @@ export default function PlumbingPage() {
       {/* Features Section */}
       <section className="py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4 text-center">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 text-center">
             How Growth OS fixes it
           </h2>
           <p className="text-xl text-gray-600 text-center mb-16">
@@ -224,7 +224,7 @@ export default function PlumbingPage() {
       {/* CTA Section */}
       <section className="py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold text-gray-900 mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-6">
             Ready to book more jobs and chase fewer invoices?
           </h2>
           <p className="text-xl text-gray-600 mb-8">
@@ -239,8 +239,8 @@ export default function PlumbingPage() {
 
       {/* Pricing */}
       <section className="py-16 sm:py-20 bg-white">
-        <div className="max-w-5xl mx-auto px-6 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             Simple pricing. No surprises.
           </h2>
           <p className="text-lg text-gray-500 mb-12 max-w-2xl mx-auto">
@@ -293,8 +293,8 @@ export default function PlumbingPage() {
 
       {/* Book a Demo */}
       <section className="py-16 sm:py-20" style={{ backgroundColor: '#F5F5F7' }}>
-        <div className="max-w-3xl mx-auto px-6 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-4">
             Want to see it before you try it?
           </h2>
           <p className="text-lg text-gray-500 mb-8">

@@ -27,6 +27,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark');
     try { window.localStorage?.setItem('growth-os-theme', theme); } catch {}
+    // Clean up dark class when ThemeProvider unmounts (e.g. navigating to marketing pages)
+    return () => {
+      document.documentElement.classList.remove('dark');
+    };
   }, [theme]);
 
   const toggleTheme = () => setTheme(t => t === 'light' ? 'dark' : 'light');

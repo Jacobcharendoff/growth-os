@@ -582,6 +582,7 @@ export default function SchedulePage() {
                     ? 'hover:bg-slate-700 text-slate-400 hover:text-slate-200'
                     : 'hover:bg-slate-100 text-slate-600 hover:text-slate-900'
                 }`}
+                aria-label="Go to previous week"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
@@ -604,6 +605,7 @@ export default function SchedulePage() {
                     ? 'hover:bg-slate-700 text-slate-400 hover:text-slate-200'
                     : 'hover:bg-slate-100 text-slate-600 hover:text-slate-900'
                 }`}
+                aria-label="Go to next week"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
@@ -615,13 +617,14 @@ export default function SchedulePage() {
                     ? 'text-slate-300 hover:bg-slate-700'
                     : 'text-slate-700 hover:bg-slate-100'
                 }`}
+                aria-label="Go to current week"
               >
                 {t('schedule.today')}
               </button>
             </div>
 
             {/* View Mode Toggle - hidden on mobile (always day view) */}
-            <div className="hidden md:flex items-center gap-2">
+            <div className="hidden md:flex items-center gap-2" role="tablist">
               <button
                 onClick={() => setViewMode('week')}
                 className={`px-3 py-1.5 rounded-lg text-sm font-medium transition ${
@@ -633,6 +636,9 @@ export default function SchedulePage() {
                     ? 'bg-slate-700 text-slate-300 hover:bg-slate-600'
                     : 'bg-slate-200 text-slate-600 hover:bg-slate-300'
                 }`}
+                role="tab"
+                aria-selected={viewMode === 'week'}
+                aria-label="Week view"
               >
                 Week
               </button>
@@ -650,6 +656,9 @@ export default function SchedulePage() {
                     ? 'bg-slate-700 text-slate-300 hover:bg-slate-600'
                     : 'bg-slate-200 text-slate-600 hover:bg-slate-300'
                 }`}
+                role="tab"
+                aria-selected={viewMode === 'day'}
+                aria-label="Day view"
               >
                 Day
               </button>

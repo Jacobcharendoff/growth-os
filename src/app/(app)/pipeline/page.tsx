@@ -356,7 +356,7 @@ export default function PipelinePage() {
           <div className="md:hidden flex flex-col h-full">
             {/* Scrollable stage tabs */}
             <div className="overflow-x-auto flex-shrink-0 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
-              <div className="flex min-w-max">
+              <div className="flex min-w-max" role="tablist">
                 {PIPELINE_STAGES_CONFIG.map(({ stage, labelKey }) => {
                   const count = getDealsByStage(stage).length;
                   return (
@@ -368,6 +368,9 @@ export default function PipelinePage() {
                           ? 'border-[#27AE60] text-[#27AE60] bg-emerald-50 dark:bg-emerald-950'
                           : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white'
                       }`}
+                      role="tab"
+                      aria-selected={mobileSelectedStage === stage}
+                      aria-label={`${t(labelKey as any)} stage with ${count} jobs`}
                     >
                       {t(labelKey as any)} ({count})
                     </button>
@@ -435,6 +438,7 @@ export default function PipelinePage() {
                         className={`flex-shrink-0 w-64 sm:w-80 rounded-lg border-2 transition-all ${color} ${
                           snapshot.isDraggingOver ? 'shadow-xl ring-2 ring-blue-400' : 'shadow'
                         }`}
+                        aria-label={`${label} column with ${metrics.count} jobs`}
                       >
                         {/* Column Header */}
                         <div className="sticky top-0 p-4 border-b border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 rounded-t-md">
@@ -443,7 +447,7 @@ export default function PipelinePage() {
                             <button
                               onClick={() => setIsAddDealOpen(true)}
                               className="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded p-1"
-                              title="Add job to this stage"
+                              aria-label={`Add job to ${label} stage`}
                             >
                               <Plus className="w-4 h-4" />
                             </button>

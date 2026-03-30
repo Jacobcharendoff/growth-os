@@ -7,8 +7,12 @@ import { useStore } from '@/store';
 import { Contact, LeadSource, ContactType } from '@/types';
 import { Modal } from '@/components/Modal';
 import { LeadSourceBadge } from '@/components/LeadSourceBadge';
-import { Plus, Search, Edit2, Trash2, X, ChevronDown, FileText, DollarSign, Clock, User, Download, Check } from 'lucide-react';
+import { Plus, X, Download, Trash2 } from 'lucide-react';
 import { FormEvent } from 'react';
+import { ContactMobileCard } from '@/components/contacts/ContactMobileCard';
+import { ContactTableRow } from '@/components/contacts/ContactTableRow';
+import { ContactFilters } from '@/components/contacts/ContactFilters';
+import { ContactDetailPanel } from '@/components/contacts/ContactDetailPanel';
 
 const LEAD_SOURCES: { value: LeadSource; label: string }[] = [
   { value: 'existing_customer', label: 'Existing Customer' },
@@ -331,124 +335,29 @@ export default function ContactsPage() {
         </div>
 
         {/* Search and Filters */}
-        <div className="space-y-3">
-          <div className="relative">
-            <Search className={`absolute left-3 top-3 w-5 h-5 ${isDark ? 'text-slate-500' : 'text-slate-400'}`} />
-            <input
-              type="text"
-              placeholder={t('contacts.searchPlaceholder')}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                isDark
-                  ? 'border-slate-600 bg-slate-800 text-white placeholder-slate-400'
-                  : 'border-slate-300 bg-white text-slate-900'
-              }`}
-            />
-          </div>
-
-          {/* Filter Chips */}
-          <div className="flex flex-wrap gap-2">
-            <button
-              onClick={() => setFilterType('all')}
-              className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
-                filterType === 'all'
-                  ? 'bg-blue-600 text-white'
-                  : isDark
-                    ? 'bg-slate-700 text-slate-300 hover:bg-slate-600'
-                    : 'bg-slate-200 text-slate-700 hover:bg-slate-300'
-              }`}
-            >
-              All Types
-            </button>
-            <button
-              onClick={() => setFilterType('customer')}
-              className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
-                filterType === 'customer'
-                  ? 'bg-blue-600 text-white'
-                  : isDark
-                    ? 'bg-slate-700 text-slate-300 hover:bg-slate-600'
-                    : 'bg-slate-200 text-slate-700 hover:bg-slate-300'
-              }`}
-            >
-              Customers
-            </button>
-            <button
-              onClick={() => setFilterType('lead')}
-              className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
-                filterType === 'lead'
-                  ? 'bg-blue-600 text-white'
-                  : isDark
-                    ? 'bg-slate-700 text-slate-300 hover:bg-slate-600'
-                    : 'bg-slate-200 text-slate-700 hover:bg-slate-300'
-              }`}
-            >
-              Leads
-            </button>
-
-            <div className="flex-1"></div>
-
-            <select
-              value={filterSource}
-              onChange={(e) => setFilterSource(e.target.value as LeadSource | 'all')}
-              className={`px-3 py-1 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                isDark
-                  ? 'bg-slate-700 text-slate-300 border-slate-600'
-                  : 'bg-slate-200 text-slate-700 border-slate-300'
-              }`}
-            >
-              <option value="all">All Sources</option>
-              {LEAD_SOURCES.map(({ value, label }) => (
-                <option key={value} value={value}>
-                  {label}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
+        <ContactFilters
+          isDark={isDark}
+          searchQuery={searchQuery}
+          filterType={filterType}
+          filterSource={filterSource}
+          onSearchChange={setSearchQuery}
+          onTypeFilterChange={setFilterType}
+          onSourceFilterChange={setFilterSource}
+          leadSources={LEAD_SOURCES}
+        />
       </div>
 
       {/* Mobile Card View */}
       <div className="md:hidden flex-1 overflow-y-auto divide-y divide-slate-200 dark:divide-slate-700">
         {filteredContacts.length > 0 ? (
           filteredContacts.map((contact) => (
-            <div
+            <ContactMobileCard
               key={contact.id}
-              onClick={() => openDetailView(contact)}
-              className={`p-4 cursor-pointer transition-colors ${
-                isDark ? 'hover:bg-slate-800' : 'hover:bg-slate-50'
-              }`}
-            >
-              <div className="flex items-start justify-between gap-3">
-                <div className="min-w-0 flex-1">
-                  <p className={`font-medium truncate ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                    {contact.name}
-                  </p>
-                  <p className={`text-xs mt-0.5 truncate ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                    {contact.email}
-                  </p>
-                  {contact.address && (
-                    <p className={`text-xs mt-0.5 truncate ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>
-                      {contact.address}
-                    </p>
-                  )}
-                </div>
-                <div className="flex flex-col items-end gap-1 shrink-0">
-                  <span
-                    className={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium ${
-                      contact.type === 'customer'
-                        ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200'
-                        : 'bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-300'
-                    }`}
-                  >
-                    {contact.type === 'customer' ? 'Customer' : 'Lead'}
-                  </span>
-                  <span className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                    {getDealCount(contact.id)} {getDealCount(contact.id) === 1 ? 'deal' : 'deals'}
-                  </span>
-                </div>
-              </div>
-            </div>
+              contact={contact}
+              isDark={isDark}
+              dealCount={getDealCount(contact.id)}
+              onOpenDetailView={openDetailView}
+            />
           ))
         ) : (
           <div className="px-6 py-8 text-center">
@@ -498,89 +407,17 @@ export default function ContactsPage() {
           <tbody>
             {filteredContacts.length > 0 ? (
               filteredContacts.map((contact) => (
-                <tr
+                <ContactTableRow
                   key={contact.id}
-                  className={`border-b transition-colors ${
-                    selectedContactIds.has(contact.id)
-                      ? isDark
-                        ? 'bg-emerald-900/20 hover:bg-emerald-900/30'
-                        : 'bg-emerald-50/60 hover:bg-emerald-100/60'
-                      : isDark
-                        ? 'border-slate-700 hover:bg-slate-800'
-                        : 'border-slate-200 hover:bg-slate-50'
-                  }`}
-                >
-                  <td className={`px-3 sm:px-4 py-4 text-center`}>
-                    <input
-                      type="checkbox"
-                      checked={selectedContactIds.has(contact.id)}
-                      onChange={() => toggleContactSelection(contact.id)}
-                      className="w-4 h-4 rounded cursor-pointer"
-                      aria-label={`Select ${contact.name}`}
-                    />
-                  </td>
-                  <td
-                    className={`px-3 sm:px-6 py-4 cursor-pointer`}
-                    onClick={() => openDetailView(contact)}
-                  >
-                    <div>
-                      <p className={`font-medium ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                        {contact.name}
-                      </p>
-                      <p className={`text-xs mt-1 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                        {contact.address}
-                      </p>
-                    </div>
-                  </td>
-                  <td className={`px-3 sm:px-6 py-4 hidden sm:table-cell`}>
-                    <span
-                      className={`inline-flex px-3 py-1 rounded-full text-xs font-medium ${
-                        contact.type === 'customer'
-                          ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200'
-                          : 'bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-300'
-                      }`}
-                    >
-                      {contact.type === 'customer' ? 'Customer' : 'Lead'}
-                    </span>
-                  </td>
-                  <td className={`px-3 sm:px-6 py-4 hidden sm:table-cell`}>
-                    <LeadSourceBadge source={contact.source} />
-                  </td>
-                  <td className={`px-3 sm:px-6 py-4 text-sm ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-                    {contact.email}
-                  </td>
-                  <td className={`px-3 sm:px-6 py-4 text-right`}>
-                    <span className={`text-sm font-medium ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                      {getDealCount(contact.id)}
-                    </span>
-                  </td>
-                  <td className={`px-3 sm:px-6 py-4 text-right`}>
-                    <div className="flex items-center justify-end gap-2">
-                      <button
-                        onClick={() => openEditModal(contact)}
-                        className={`p-2 rounded-lg transition-colors ${
-                          isDark
-                            ? 'hover:bg-slate-700 text-slate-400 hover:text-slate-200'
-                            : 'hover:bg-slate-100 text-slate-600 hover:text-slate-900'
-                        }`}
-                        title="Edit"
-                      >
-                        <Edit2 className="w-4 h-4" />
-                      </button>
-                      <button
-                        onClick={() => openDeleteConfirm(contact)}
-                        className={`p-2 rounded-lg transition-colors ${
-                          isDark
-                            ? 'hover:bg-red-900 text-red-400 hover:text-red-200'
-                            : 'hover:bg-red-100 text-red-600 hover:text-red-900'
-                        }`}
-                        title="Delete"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
+                  contact={contact}
+                  isDark={isDark}
+                  isSelected={selectedContactIds.has(contact.id)}
+                  dealCount={getDealCount(contact.id)}
+                  onToggleSelect={toggleContactSelection}
+                  onOpenDetailView={openDetailView}
+                  onOpenEditModal={openEditModal}
+                  onOpenDeleteConfirm={openDeleteConfirm}
+                />
               ))
             ) : (
               <tr>
@@ -687,7 +524,7 @@ export default function ContactsPage() {
 
       {/* Contact Detail View */}
       {selectedContact && (
-        <ContactDetailView
+        <ContactDetailPanel
           isOpen={isDetailViewOpen}
           onClose={() => {
             setIsDetailViewOpen(false);
@@ -1219,16 +1056,6 @@ function DeleteConfirmDialog({
   );
 }
 
-interface ContactDetailViewProps {
-  isOpen: boolean;
-  onClose: () => void;
-  contact: Contact;
-  deals: any[];
-  estimates: any[];
-  invoices: any[];
-  isDark: boolean;
-}
-
 interface BulkDeleteConfirmDialogProps {
   isOpen: boolean;
   onClose: () => void;
@@ -1294,237 +1121,6 @@ function BulkDeleteConfirmDialog({
             </button>
           </div>
         </div>
-      </div>
-    </div>
-  );
-}
-
-function ContactDetailView({
-  isOpen,
-  onClose,
-  contact,
-  deals,
-  estimates,
-  invoices,
-  isDark,
-}: ContactDetailViewProps) {
-  if (!isOpen) return null;
-
-  const totalDealValue = deals.reduce((sum, deal) => sum + deal.value, 0);
-  const totalInvoiced = invoices.reduce((sum, inv) => sum + inv.total, 0);
-  const totalPaid = invoices.reduce((sum, inv) => sum + inv.amountPaid, 0);
-
-  return (
-    <div
-      className="fixed inset-0 bg-black/50 flex items-end justify-end z-50"
-      role="presentation"
-      onClick={onClose}
-    >
-      <div
-        className={`${isDark ? 'bg-slate-800' : 'bg-white'} w-full sm:w-96 h-full overflow-y-auto shadow-xl`}
-        role="dialog"
-        aria-modal="true"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Header */}
-        <div className={`sticky top-0 px-6 py-4 border-b ${isDark ? 'border-slate-700 bg-slate-800' : 'border-slate-200 bg-white'}`}>
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className={`text-xl font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                {contact.name}
-              </h2>
-              <p className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                {contact.type === 'customer' ? 'Customer' : 'Lead'}
-              </p>
-            </div>
-            <button
-              onClick={onClose}
-              className={`transition-colors ${isDark ? 'text-slate-500 hover:text-slate-300' : 'text-slate-400 hover:text-slate-600'}`}
-              aria-label="Close"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
-
-        {/* Contact Info */}
-        <div className={`px-6 py-4 border-b ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
-          <h3 className={`text-sm font-semibold mb-3 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-            Contact Information
-          </h3>
-          <div className="space-y-2">
-            <div>
-              <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Email</p>
-              <a
-                href={`mailto:${contact.email}`}
-                className="text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium"
-              >
-                {contact.email}
-              </a>
-            </div>
-            <div>
-              <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Phone</p>
-              <a
-                href={`tel:${contact.phone}`}
-                className="text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium"
-              >
-                {contact.phone}
-              </a>
-            </div>
-            <div>
-              <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Address</p>
-              <p className={`text-sm font-medium ${isDark ? 'text-slate-300' : 'text-slate-900'}`}>
-                {contact.address}
-              </p>
-            </div>
-            <div>
-              <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Source</p>
-              <div className="mt-1">
-                <LeadSourceBadge source={contact.source} variant="full" />
-              </div>
-            </div>
-            {contact.notes && (
-              <div>
-                <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Notes</p>
-                <p className={`text-sm font-medium ${isDark ? 'text-slate-300' : 'text-slate-900'}`}>
-                  {contact.notes}
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* KPI Cards */}
-        <div className={`px-6 py-4 border-b ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
-          <div className="grid grid-cols-2 gap-3">
-            <div className={`p-3 rounded-lg ${isDark ? 'bg-slate-700' : 'bg-slate-100'}`}>
-              <div className="flex items-center gap-2 mb-1">
-                <DollarSign className={`w-4 h-4 ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`} />
-                <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Deal Value</p>
-              </div>
-              <p className={`text-lg font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                ${totalDealValue.toLocaleString()}
-              </p>
-            </div>
-            <div className={`p-3 rounded-lg ${isDark ? 'bg-slate-700' : 'bg-slate-100'}`}>
-              <div className="flex items-center gap-2 mb-1">
-                <FileText className={`w-4 h-4 ${isDark ? 'text-blue-400' : 'text-blue-600'}`} />
-                <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Invoiced</p>
-              </div>
-              <p className={`text-lg font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                ${totalInvoiced.toLocaleString()}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Deals */}
-        {deals.length > 0 && (
-          <div className={`px-6 py-4 border-b ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
-            <h3 className={`text-sm font-semibold mb-3 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-              Linked Deals ({deals.length})
-            </h3>
-            <div className="space-y-2">
-              {deals.map((deal) => (
-                <div
-                  key={deal.id}
-                  className={`p-3 rounded-lg ${isDark ? 'bg-slate-700' : 'bg-slate-100'}`}
-                >
-                  <p className={`text-sm font-medium ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                    {deal.title}
-                  </p>
-                  <div className="flex items-center justify-between mt-2">
-                    <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                      {deal.stage}
-                    </p>
-                    <p className={`text-sm font-bold ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}>
-                      ${deal.value.toLocaleString()}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Estimates */}
-        {estimates.length > 0 && (
-          <div className={`px-6 py-4 border-b ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
-            <h3 className={`text-sm font-semibold mb-3 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-              Estimates ({estimates.length})
-            </h3>
-            <div className="space-y-2">
-              {estimates.map((estimate) => (
-                <div
-                  key={estimate.id}
-                  className={`p-3 rounded-lg ${isDark ? 'bg-slate-700' : 'bg-slate-100'}`}
-                >
-                  <div className="flex items-center justify-between">
-                    <p className={`text-sm font-medium ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                      {estimate.number}
-                    </p>
-                    <span
-                      className={`inline-flex px-2 py-1 rounded text-xs font-medium ${
-                        estimate.status === 'approved'
-                          ? 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200'
-                          : estimate.status === 'sent'
-                            ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200'
-                            : 'bg-slate-100 text-slate-700 dark:bg-slate-600 dark:text-slate-300'
-                      }`}
-                    >
-                      {estimate.status}
-                    </span>
-                  </div>
-                  <p className={`text-xs mt-1 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                    {estimate.service}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Invoices */}
-        {invoices.length > 0 && (
-          <div className={`px-6 py-4 ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
-            <h3 className={`text-sm font-semibold mb-3 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-              Invoices ({invoices.length})
-            </h3>
-            <div className="space-y-2">
-              {invoices.map((invoice) => (
-                <div
-                  key={invoice.id}
-                  className={`p-3 rounded-lg ${isDark ? 'bg-slate-700' : 'bg-slate-100'}`}
-                >
-                  <div className="flex items-center justify-between">
-                    <p className={`text-sm font-medium ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                      {invoice.number}
-                    </p>
-                    <span
-                      className={`inline-flex px-2 py-1 rounded text-xs font-medium ${
-                        invoice.status === 'paid'
-                          ? 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200'
-                          : invoice.status === 'overdue'
-                            ? 'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-200'
-                            : 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200'
-                      }`}
-                    >
-                      {invoice.status}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between mt-2">
-                    <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                      Total: ${invoice.total.toLocaleString()}
-                    </p>
-                    <p className={`text-xs font-medium ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}>
-                      Paid: ${invoice.amountPaid.toLocaleString()}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

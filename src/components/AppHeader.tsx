@@ -142,6 +142,7 @@ function AppHeader() {
       className={`hidden lg:flex sticky top-0 z-40 h-14 lg:h-16 border-b transition-colors duration-200 items-center px-4 lg:px-6 ${
         isDark ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200'
       }`}
+      role="banner"
     >
       <div className="flex-1 flex items-center gap-6">
         {/* Page Title */}
@@ -163,6 +164,7 @@ function AppHeader() {
               ? 'bg-slate-700 border-slate-600 hover:border-slate-500 text-slate-400'
               : 'bg-slate-100 border-slate-200 hover:border-slate-300 text-slate-500'
           } hover:${isDark ? 'bg-slate-600' : 'bg-slate-150'}`}
+          aria-label="Search all items"
         >
           <Search className="w-4 h-4" />
           <span className="text-sm">Search...</span>
@@ -180,7 +182,7 @@ function AppHeader() {
               ? 'bg-[#27AE60] hover:bg-emerald-500 text-white'
               : 'bg-[#27AE60] hover:bg-emerald-500 text-white'
           }`}
-          title="Quick add"
+          aria-label="Quick add contact, deal, or activity"
         >
           <Plus className="w-5 h-5" />
         </button>
@@ -192,7 +194,7 @@ function AppHeader() {
               ? 'hover:bg-slate-700 text-slate-300'
               : 'hover:bg-slate-100 text-slate-600'
           }`}
-          title="Notifications"
+          aria-label={`Notifications${unreadCount > 0 ? `, ${unreadCount} unread` : ''}`}
         >
           <Bell className="w-5 h-5" />
           {unreadCount > 0 && (
@@ -211,7 +213,9 @@ function AppHeader() {
                 ? 'hover:bg-slate-700'
                 : 'hover:bg-slate-100'
             }`}
-            title="User menu"
+            aria-label="User menu"
+            aria-expanded={dropdownOpen}
+            aria-haspopup="menu"
           >
             <div
               className={`flex items-center justify-center w-7 h-7 rounded-md text-xs font-bold ${
@@ -237,6 +241,7 @@ function AppHeader() {
                   ? 'bg-slate-800 border-slate-700'
                   : 'bg-white border-slate-200'
               }`}
+              role="menu"
             >
               {/* User Info */}
               <div

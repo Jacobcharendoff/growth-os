@@ -217,13 +217,13 @@ export default function SettingsPage() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-6 py-4 font-medium transition border-b-2 whitespace-nowrap ${
+              className={`flex items-center gap-2 px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-medium transition border-b-2 whitespace-nowrap ${
                 activeTab === tab.id
                   ? 'border-b-blue-600 text-blue-600 bg-blue-50 dark:bg-blue-900/20 dark:text-blue-400'
                   : 'border-b-transparent text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white'
               }`}
             >
-              {tab.icon}
+              <span className="hidden sm:inline">{tab.icon}</span>
               {tab.label}
             </button>
           ))}
@@ -240,10 +240,11 @@ export default function SettingsPage() {
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                    <label htmlFor="businessName" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                       {t('settings.businessName')}
                     </label>
                     <input
+                      id="businessName"
                       type="text"
                       value={companyData.businessName}
                       onChange={(e) =>
@@ -253,12 +254,13 @@ export default function SettingsPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                    <label htmlFor="phone" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                       Phone
                     </label>
                     <div className="flex items-center gap-2">
                       <Phone className="w-5 h-5 text-slate-400 dark:text-slate-500" />
                       <input
+                        id="phone"
                         type="tel"
                         value={companyData.phone}
                         onChange={(e) =>
@@ -269,12 +271,13 @@ export default function SettingsPage() {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                    <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                       Email
                     </label>
                     <div className="flex items-center gap-2">
                       <Mail className="w-5 h-5 text-slate-400 dark:text-slate-500" />
                       <input
+                        id="email"
                         type="email"
                         value={companyData.email}
                         onChange={(e) =>
@@ -285,12 +288,13 @@ export default function SettingsPage() {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                    <label htmlFor="address" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                       Address
                     </label>
                     <div className="flex items-center gap-2">
                       <MapPin className="w-5 h-5 text-slate-400 dark:text-slate-500" />
                       <input
+                        id="address"
                         type="text"
                         value={companyData.address}
                         onChange={(e) =>
@@ -301,10 +305,11 @@ export default function SettingsPage() {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                    <label htmlFor="industry" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                       Industry
                     </label>
                     <select
+                      id="industry"
                       value={companyData.industry}
                       onChange={(e) =>
                         setCompanyData({ ...companyData, industry: e.target.value })
@@ -318,10 +323,11 @@ export default function SettingsPage() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                    <label htmlFor="timezone" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                       Timezone
                     </label>
                     <select
+                      id="timezone"
                       value={companyData.timezone}
                       onChange={(e) =>
                         setCompanyData({ ...companyData, timezone: e.target.value })
@@ -532,6 +538,8 @@ export default function SettingsPage() {
                             ? 'bg-blue-600'
                             : 'bg-slate-300 dark:bg-slate-600'
                         }`}
+                        aria-label={`Toggle ${label}`}
+                        aria-pressed={notificationSettings[key as keyof typeof notificationSettings]}
                       >
                         <span
                           className={`inline-block h-4 w-4 transform rounded-full bg-white transition ${
@@ -586,6 +594,8 @@ export default function SettingsPage() {
                             ? 'bg-blue-600'
                             : 'bg-slate-300 dark:bg-slate-600'
                         }`}
+                        aria-label={`Toggle ${label}`}
+                        aria-pressed={notificationSettings[key as keyof typeof notificationSettings]}
                       >
                         <span
                           className={`inline-block h-4 w-4 transform rounded-full bg-white transition ${

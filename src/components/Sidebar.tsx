@@ -76,7 +76,7 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
   const sidebarContent = (
     <>
       {/* Brand */}
-      <div className={`px-6 py-6 border-b ${sectionBorder} flex items-center justify-between`}>
+      <div className={`px-6 py-6 border-b ${sectionBorder} flex items-center justify-between`} role="banner">
         <div className="flex items-center gap-2">
           <Zap className={`w-7 h-7 ${brandAccent}`} />
           <div className="flex flex-col">
@@ -138,7 +138,7 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+      <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto" role="navigation" aria-label="Main navigation">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = pathname === item.href || (item.href === '/dashboard' && pathname === '/');
@@ -154,6 +154,7 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
                   ? 'bg-[#27AE60] text-white shadow-lg shadow-emerald-600/20'
                   : `${navText} ${navHover}`
               }`}
+              aria-current={isActive ? 'page' : undefined}
             >
               <Icon className="w-5 h-5" />
               <span className="font-medium text-sm">{item.label}</span>
@@ -242,6 +243,7 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
                   ? 'bg-[#27AE60] text-white shadow-lg shadow-emerald-600/20'
                   : `${navText} ${navHover}`
               }`}
+              aria-current={isActive ? 'page' : undefined}
             >
               <Icon className="w-5 h-5" />
               <span className="font-medium text-sm">{settingsItem.label}</span>
@@ -260,7 +262,7 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className={`hidden lg:flex w-64 ${sidebarBg} border-r ${sidebarBorder} flex-col h-full shrink-0 transition-colors duration-200`}>
+      <aside className={`hidden lg:flex w-64 ${sidebarBg} border-r ${sidebarBorder} flex-col h-full shrink-0 transition-colors duration-200`} role="navigation" aria-label="Main sidebar navigation">
         {sidebarContent}
       </aside>
 
@@ -271,7 +273,7 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
             className="lg:hidden fixed inset-0 bg-black/50 z-40"
             onClick={onClose}
           />
-          <aside className={`lg:hidden fixed inset-y-0 left-0 z-50 w-72 ${sidebarBg} border-r ${sidebarBorder} flex flex-col animate-[slideIn_0.2s_ease-out] transition-colors duration-200`}>
+          <aside className={`lg:hidden fixed inset-y-0 left-0 z-50 w-72 ${sidebarBg} border-r ${sidebarBorder} flex flex-col animate-[slideIn_0.2s_ease-out] transition-colors duration-200`} role="navigation" aria-label="Mobile sidebar navigation">
             {sidebarContent}
           </aside>
         </>

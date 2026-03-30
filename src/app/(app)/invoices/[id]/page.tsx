@@ -1,549 +1,532 @@
 'use client';
 
-import { use, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { useLanguage } from '@/components/LanguageProvider';
+import { useEffect, useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
 import { useStore } from '@/store';
+import { useTheme } from '@/components/ThemeProvider';
 import {
   ArrowLeft,
+  Download,
   Send,
   DollarSign,
-  Download,
-  Trash2,
-  X,
-  CheckCircle2,
+  AlertCircle,
+  CheckCircle,
   Clock,
 } from 'lucide-react';
-import Link from 'next/link';
 
-const STATUS_COLORS: Record<string, string> = {
-  draft: 'bg-slate-100 text-slate-800 border-slate-300',
-  sent: 'bg-blue-100 text-blue-800 border-blue-300',
-  viewed: 'bg-amber-100 text-amber-800 border-amber-300',
-  partial: 'bg-amber-100 text-amber-800 border-amber-300',
-  paid: 'bg-emerald-100 text-emerald-800 border-emerald-300',
-  overdue: 'bg-rose-100 text-rose-800 border-rose-300',
-};
-
-const PAYMENT_METHODS = [
-  'Interac e-Transfer',
-  'Credit Card',
-  'Cheque',
-  'Cash',
-];
-
-interface RecordPaymentForm {
-  amount: string;
-  method: string;
-  date: string;
-  notes: string;
-}
-
-export default function InvoiceDetailPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+export default function InvoiceDetailPage() {
+  const params = useParams();
   const router = useRouter();
-  const { t } = useLanguage();
-  const { id } = use(params);
-  const { getInvoice, recordPayment, deleteInvoice, updateInvoice } = useStore();
-  const invoice = getInvoice(id);
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
+  const invoiceId = typeof params?.id === 'string' ? params.id : '';
 
-  const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [paymentForm, setPaymentForm] = useState<RecordPaymentForm>({
-    amount: invoice ? (invoice.total - invoice.amountPaid).toFixed(2) : '0.00',
-    method: 'Interac e-Transfer',
-    date: new Date().toISOString().split('T')[0],
-    notes: '',
-  });
+  const { getInvoice, getContact, recordPayment, settings } = useStore();
+  const invoice = getInvoice(invoiceId);
+  const customer = invoice ? getContact(invoice.contactId) : null;
 
-  if (!invoice) {
+  const [mounted, setMounted] = useState(false);
+  const [showPaymentForm, setShowPaymentForm] = useState(false);
+  const [paymentAmount, setPaymentAmount] = useState<string>('');
+  const [paymentDate, setPaymentDate] = useState<string>(
+    new Date().toISOString().split('T')[0]
+  );
+  const [paymentMethod, setPaymentMethod] = useState<string>('e-transfer');
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
+  if (!invoice || !customer) {
     return (
-      <div className="min-h-screen bg-slate-50 p-4 sm:p-8">
-        <Link href="/invoices" className="flex items-center text-blue-600 hover:text-blue-700 mb-6">
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          {t('invoiceDetail.backToInvoices')}
-        </Link>
-        <div className="text-center py-12">
-          <h1 className="text-2xl font-bold text-slate-900 mb-2">{t('invoiceDetail.notFound')}</h1>
-          <p className="text-slate-600">{t('invoiceDetail.notFoundDesc')}</p>
+      <div className={`min-h-screen ${isDark ? 'bg-slate-900' : 'bg-slate-50'} p-6`}>
+        <button
+          onClick={() => router.back()}
+          className={`flex items-center gap-2 mb-6 ${
+            isDark ? 'text-slate-400 hover:text-slate-200' : 'text-slate-600 hover:text-slate-900'
+          }`}
+        >
+          <ArrowLeft size={18} />
+          Back to Invoices
+        </button>
+        <div className={`text-center py-12 ${isDark ? 'bg-slate-800' : 'bg-white'} rounded-lg`}>
+          <AlertCircle
+            size={48}
+            className={`mx-auto mb-4 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}
+          />
+          <h2 className={`text-xl font-semibold ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>
+            Invoice not found
+          </h2>
+          <p className={`mt-2 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+            The invoice you are looking for does not exist.
+          </p>
         </div>
       </div>
     );
   }
 
-  const percentPaid = Math.round((invoice.amountPaid / invoice.total) * 100);
-  const remainingBalance = invoice.total - invoice.amountPaid;
-  const isPaid = invoice.status === 'paid';
+  const balanceDue = Math.max(0, invoice.total - invoice.amountPaid);
+  const isOverdue =
+    invoice.status === 'overdue' || (balanceDue > 0 && Date.now() > invoice.dueDate);
+
+  const getStatusColor = () => {
+    switch (invoice.status) {
+      case 'draft':
+        return 'bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-slate-200';
+      case 'sent':
+      case 'viewed':
+        return 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-300';
+      case 'partial':
+        return 'bg-amber-100 dark:bg-amber-900 text-amber-800 dark:text-amber-300';
+      case 'paid':
+        return 'bg-emerald-100 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-300';
+      case 'overdue':
+        return 'bg-rose-100 dark:bg-rose-900 text-rose-800 dark:text-rose-300';
+      default:
+        return 'bg-slate-100 dark:bg-slate-700';
+    }
+  };
+
+  const getStatusIcon = () => {
+    switch (invoice.status) {
+      case 'paid':
+        return <CheckCircle size={20} />;
+      case 'overdue':
+        return <AlertCircle size={20} />;
+      default:
+        return <Clock size={20} />;
+    }
+  };
 
   const handleRecordPayment = () => {
-    const amount = parseFloat(paymentForm.amount);
-    if (amount <= 0 || amount > remainingBalance) {
-      alert('Please enter a valid payment amount');
-      return;
+    const amount = parseFloat(paymentAmount);
+    if (amount > 0 && amount <= balanceDue) {
+      recordPayment(invoiceId, amount);
+      setPaymentAmount('');
+      setShowPaymentForm(false);
     }
+  };
 
-    recordPayment(id, amount);
-
-    // Update status if fully paid
-    if (amount >= remainingBalance) {
-      updateInvoice(id, {
-        status: 'paid',
-        paidAt: Date.now(),
-      });
-    } else {
-      updateInvoice(id, {
-        status: 'partial',
-      });
+  const handleDownloadPDF = () => {
+    const element = document.getElementById('invoice-document');
+    if (element) {
+      const printWindow = window.open('', '', 'width=900,height=600');
+      if (printWindow) {
+        printWindow.document.write(element.innerHTML);
+        printWindow.document.close();
+        printWindow.print();
+      }
     }
+  };
 
-    setShowPaymentModal(false);
-    setPaymentForm({
-      amount: '0.00',
-      method: 'Interac e-Transfer',
-      date: new Date().toISOString().split('T')[0],
-      notes: '',
+  const formatCurrency = (value: number) => {
+    return new Intl.NumberFormat('en-CA', {
+      style: 'currency',
+      currency: 'CAD',
+    }).format(value);
+  };
+
+  const formatDate = (timestamp: number) => {
+    return new Date(timestamp).toLocaleDateString('en-CA', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
     });
   };
 
-  const handleDeleteInvoice = () => {
-    if (confirm(t('invoiceDetail.deleteConfirm'))) {
-      deleteInvoice(id);
-      router.push('/invoices');
-    }
-  };
-
-  const handleSendInvoice = () => {
-    if (invoice.status === 'draft') {
-      updateInvoice(id, {
-        status: 'sent',
-        sentAt: Date.now(),
-      });
-    }
-  };
+  const paymentHistory = [
+    ...(invoice.amountPaid > 0
+      ? [
+          {
+            date: invoice.paidAt || invoice.createdAt,
+            amount: invoice.amountPaid,
+            method: 'Previous payment',
+          },
+        ]
+      : []),
+  ];
 
   return (
-    <div className="min-h-screen bg-slate-50 p-4 sm:p-8">
-      {/* Header */}
-      <div className="mb-8">
-        <Link href="/invoices" className="flex items-center text-blue-600 hover:text-blue-700 mb-6">
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          {t('invoiceDetail.backToInvoices')}
-        </Link>
+    <div className={`min-h-screen ${isDark ? 'bg-slate-900' : 'bg-slate-50'} p-6`}>
+      <button
+        onClick={() => router.back()}
+        className={`flex items-center gap-2 mb-6 ${
+          isDark ? 'text-slate-400 hover:text-slate-200' : 'text-slate-600 hover:text-slate-900'
+        }`}
+      >
+        <ArrowLeft size={18} />
+        Back to Invoices
+      </button>
 
-        <div className="flex items-start justify-between">
+      {/* Status Banner */}
+      <div className={`${getStatusColor()} rounded-lg p-4 mb-6 flex items-start justify-between`}>
+        <div className="flex items-start gap-3">
+          {getStatusIcon()}
           <div>
-            <div className="flex items-center gap-4 mb-2">
-              <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">{invoice.number}</h1>
-              <span
-                className={`px-3 py-1 rounded-full text-sm font-semibold border ${
-                  STATUS_COLORS[invoice.status]
-                }`}
-              >
-                {invoice.status.charAt(0).toUpperCase() + invoice.status.slice(1)}
-              </span>
-            </div>
-            <p className="text-sm text-slate-600">
-              Created {new Date(invoice.createdAt).toLocaleDateString('en-US')}
+            <h1 className="text-2xl font-bold">{invoice.number}</h1>
+            <p className="text-sm mt-1 opacity-90">
+              {invoice.customerName} • Issued {formatDate(invoice.createdAt)}
+            </p>
+            <p className="text-sm opacity-90">
+              Due {formatDate(invoice.dueDate)}
+              {isOverdue && ' (Overdue)'}
             </p>
           </div>
-
-          {/* Action Buttons */}
-          <div className="flex gap-3">
-            {invoice.status === 'draft' && (
-              <button
-                onClick={handleSendInvoice}
-                className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition"
-              >
-                <Send className="w-4 h-4" />
-                {t('invoiceDetail.sendInvoice')}
-              </button>
-            )}
-
-            {invoice.status !== 'paid' && (
-              <button
-                onClick={() => setShowPaymentModal(true)}
-                className="flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium transition"
-              >
-                <DollarSign className="w-4 h-4" />
-                {t('invoiceDetail.recordPayment')}
-              </button>
-            )}
-
-            <button
-              className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 text-slate-700 font-medium transition"
-            >
-              <Download className="w-4 h-4" />
-              {t('invoiceDetail.downloadPDF')}
+        </div>
+        <div className="flex gap-2">
+          {invoice.status === 'draft' && (
+            <button className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded font-medium text-sm transition">
+              <Send size={16} className="inline mr-2" />
+              Send
             </button>
-
+          )}
+          {balanceDue > 0 && (
             <button
-              onClick={handleDeleteInvoice}
-              className="flex items-center gap-2 px-4 py-2 bg-white border border-rose-200 rounded-lg hover:bg-rose-50 text-rose-600 font-medium transition"
+              onClick={() => setShowPaymentForm(true)}
+              className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded font-medium text-sm transition"
             >
-              <Trash2 className="w-4 h-4" />
-              {t('invoiceDetail.delete')}
+              <DollarSign size={16} className="inline mr-2" />
+              Record Payment
             </button>
-          </div>
+          )}
+          <button
+            onClick={handleDownloadPDF}
+            className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded font-medium text-sm transition"
+          >
+            <Download size={16} className="inline mr-2" />
+            PDF
+          </button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8">
-        {/* Main Content */}
-        <div className="lg:col-span-2 space-y-6">
-          {/* Invoice Card */}
-          <div className="bg-white rounded-xl p-4 sm:p-8 shadow-sm border border-slate-200">
+      <div className="grid grid-cols-3 gap-6">
+        {/* Main Section - Invoice Document */}
+        <div className="col-span-2">
+          <div
+            id="invoice-document"
+            className={`${isDark ? 'bg-slate-800' : 'bg-white'} rounded-lg p-12 shadow-sm`}
+          >
             {/* Company Header */}
-            <div className="mb-8 pb-8 border-b border-slate-200">
-              <h2 className="text-2xl font-bold text-slate-900">{t('invoiceDetail.yourCompany')}</h2>
-              <p className="text-slate-600 text-sm mt-4">{t('invoiceDetail.taxRegistration')}</p>
+            <div className="mb-8">
+              <h2 className={`text-3xl font-bold ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>
+                {settings.companyName}
+              </h2>
+              <p className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'} mt-2`}>
+                {settings.companyAddress} • {settings.companyPhone}
+              </p>
+              <p className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                {settings.companyEmail}
+              </p>
             </div>
 
-            {/* Bill To and Invoice Details */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8 mb-6 sm:mb-8">
+            {/* Invoice Title & Details */}
+            <div className="flex justify-between items-start mb-8 pb-8 border-b border-slate-200 dark:border-slate-700">
               <div>
-                <h3 className="text-xs font-semibold text-slate-500 uppercase mb-3">{t('invoiceDetail.billTo')}</h3>
-                <p className="font-semibold text-slate-900">{invoice.customerName}</p>
-                <p className="text-sm text-slate-600 mt-2">{invoice.customerAddress}</p>
-                <p className="text-sm text-slate-600">{invoice.customerEmail}</p>
+                <h3 className={`text-3xl font-bold ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>
+                  INVOICE
+                </h3>
               </div>
-              <div className="text-right text-sm">
-                <div className="mb-4">
-                  <p className="text-slate-500">{t('invoiceDetail.invoiceNumber')}</p>
-                  <p className="font-semibold text-slate-900 text-base">{invoice.number}</p>
-                </div>
-                <div className="mb-4">
-                  <p className="text-slate-500">{t('invoiceDetail.invoiceDate')}</p>
-                  <p className="font-semibold text-slate-900">
-                    {new Date(invoice.createdAt).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'short',
-                      day: 'numeric',
-                    })}
-                  </p>
-                </div>
-                <div className="mb-4">
-                  <p className="text-slate-500">{t('invoiceDetail.dueDate')}</p>
-                  <p className="font-semibold text-slate-900">
-                    {new Date(invoice.dueDate).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'short',
-                      day: 'numeric',
-                    })}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-slate-500">{t('invoiceDetail.province')}</p>
-                  <p className="font-semibold text-slate-900">{invoice.province}</p>
-                </div>
+              <div className={`text-right text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                <p>
+                  <strong>Number:</strong> {invoice.number}
+                </p>
+                <p>
+                  <strong>Date:</strong> {formatDate(invoice.createdAt)}
+                </p>
+                <p>
+                  <strong>Due:</strong> {formatDate(invoice.dueDate)}
+                </p>
+              </div>
+            </div>
+
+            {/* Bill To */}
+            <div className="grid grid-cols-2 gap-8 mb-8">
+              <div>
+                <p className={`text-xs font-semibold uppercase ${isDark ? 'text-slate-400' : 'text-slate-500'} mb-2`}>
+                  Bill To
+                </p>
+                <p className={`font-semibold ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>
+                  {invoice.customerName}
+                </p>
+                <p className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                  {invoice.customerEmail}
+                </p>
+                <p className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                  {invoice.customerAddress}
+                </p>
               </div>
             </div>
 
             {/* Line Items Table */}
-            <div className="mb-8">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-slate-200">
-                    <th className="text-left py-3 px-4 font-semibold text-slate-900">{t('invoiceDetail.description')}</th>
-                    <th className="text-right py-3 px-4 font-semibold text-slate-900">{t('invoiceDetail.quantity')}</th>
-                    <th className="text-right py-3 px-4 font-semibold text-slate-900">{t('invoiceDetail.unitPrice')}</th>
-                    <th className="text-right py-3 px-4 font-semibold text-slate-900">{t('invoiceDetail.amount')}</th>
+            <table className="w-full mb-8">
+              <thead>
+                <tr className={`border-b-2 ${isDark ? 'border-slate-600' : 'border-slate-200'}`}>
+                  <th
+                    className={`text-left py-3 px-2 font-semibold ${
+                      isDark ? 'text-slate-300' : 'text-slate-700'
+                    }`}
+                  >
+                    Description
+                  </th>
+                  <th
+                    className={`text-right py-3 px-2 font-semibold ${
+                      isDark ? 'text-slate-300' : 'text-slate-700'
+                    } w-20`}
+                  >
+                    Qty
+                  </th>
+                  <th
+                    className={`text-right py-3 px-2 font-semibold ${
+                      isDark ? 'text-slate-300' : 'text-slate-700'
+                    } w-28`}
+                  >
+                    Unit Price
+                  </th>
+                  <th
+                    className={`text-right py-3 px-2 font-semibold ${
+                      isDark ? 'text-slate-300' : 'text-slate-700'
+                    } w-28`}
+                  >
+                    Amount
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {invoice.lineItems.map((item, idx) => (
+                  <tr
+                    key={idx}
+                    className={`border-b ${isDark ? 'border-slate-700' : 'border-slate-100'}`}
+                  >
+                    <td
+                      className={`py-3 px-2 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}
+                    >
+                      {item.description}
+                    </td>
+                    <td
+                      className={`text-right py-3 px-2 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}
+                    >
+                      {item.quantity}
+                    </td>
+                    <td
+                      className={`text-right py-3 px-2 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}
+                    >
+                      {formatCurrency(item.unitPrice)}
+                    </td>
+                    <td
+                      className={`text-right py-3 px-2 font-semibold ${
+                        isDark ? 'text-slate-200' : 'text-slate-900'
+                      }`}
+                    >
+                      {formatCurrency(item.quantity * item.unitPrice)}
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {invoice.lineItems.map((item, idx) => (
-                    <tr key={idx} className="border-b border-slate-100">
-                      <td className="py-3 px-4 text-slate-900">{item.description}</td>
-                      <td className="text-right py-3 px-4 text-slate-600">{item.quantity}</td>
-                      <td className="text-right py-3 px-4 text-slate-600">
-                        ${item.unitPrice.toFixed(2)}
-                      </td>
-                      <td className="text-right py-3 px-4 font-medium text-slate-900">
-                        ${(item.quantity * item.unitPrice).toFixed(2)}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                ))}
+              </tbody>
+            </table>
+
+            {/* Totals */}
+            <div className="flex justify-end mb-8">
+              <div className="w-64">
+                <div
+                  className={`flex justify-between py-2 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}
+                >
+                  <span>Subtotal:</span>
+                  <span>{formatCurrency(invoice.subtotal)}</span>
+                </div>
+                <div
+                  className={`flex justify-between py-2 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}
+                >
+                  <span>
+                    {invoice.taxType} ({(invoice.taxRate * 100).toFixed(1)}%):
+                  </span>
+                  <span>{formatCurrency(invoice.taxAmount)}</span>
+                </div>
+                <div
+                  className={`flex justify-between py-3 px-3 rounded font-bold text-lg ${
+                    isDark ? 'bg-slate-700 text-slate-100' : 'bg-slate-100 text-slate-900'
+                  }`}
+                >
+                  <span>Total:</span>
+                  <span>{formatCurrency(invoice.total)}</span>
+                </div>
+              </div>
             </div>
 
-            {/* Tax Breakdown */}
+            {/* Amount Paid & Balance */}
             <div className="flex justify-end mb-8">
-              <div className="w-72 space-y-3 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-slate-600">{t('invoiceDetail.subtotal')}</span>
-                  <span className="font-medium text-slate-900">
-                    ${invoice.subtotal.toFixed(2)}
-                  </span>
+              <div className="w-64">
+                <div
+                  className={`flex justify-between py-2 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}
+                >
+                  <span>Amount Paid:</span>
+                  <span>{formatCurrency(invoice.amountPaid)}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-slate-600">
-                    {invoice.taxType} ({(invoice.taxRate * 100).toFixed(3)}%)
-                  </span>
-                  <span className="font-medium text-slate-900">
-                    ${invoice.taxAmount.toFixed(2)}
-                  </span>
-                </div>
-                <div className="flex justify-between border-t border-slate-200 pt-3">
-                  <span className="font-semibold text-slate-900">{t('invoiceDetail.total')}</span>
-                  <span className="font-bold text-lg text-slate-900">
-                    ${invoice.total.toFixed(2)}
-                  </span>
+                <div
+                  className={`flex justify-between py-3 px-3 rounded font-bold text-lg ${
+                    balanceDue > 0
+                      ? isDark
+                        ? 'bg-rose-900/30 text-rose-300'
+                        : 'bg-rose-100 text-rose-900'
+                      : isDark
+                        ? 'bg-emerald-900/30 text-emerald-300'
+                        : 'bg-emerald-100 text-emerald-900'
+                  }`}
+                >
+                  <span>Balance Due:</span>
+                  <span>{formatCurrency(balanceDue)}</span>
                 </div>
               </div>
             </div>
 
             {/* Notes */}
             {invoice.notes && (
-              <div className="pt-6 border-t border-slate-200">
-                <h4 className="text-sm font-semibold text-slate-900 mb-2">{t('contactDetail.notes')}</h4>
-                <p className="text-sm text-slate-600 whitespace-pre-wrap">{invoice.notes}</p>
-              </div>
-            )}
-          </div>
-
-          {/* Payment Progress */}
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
-            <h3 className="text-lg font-bold text-slate-900 mb-4">{t('invoiceDetail.paymentProgress')}</h3>
-
-            <div className="mb-4">
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-sm font-medium text-slate-600">{t('invoiceDetail.percentPaid', { percent: percentPaid })}</span>
-                <span className="text-sm font-medium text-slate-900">
-                  ${invoice.amountPaid.toFixed(2)} of ${invoice.total.toFixed(2)}
-                </span>
-              </div>
-              <div className="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
-                <div
-                  className="h-3 rounded-full bg-gradient-to-r from-emerald-500 to-emerald-600 transition-all"
-                  style={{ width: `${percentPaid}%` }}
-                />
-              </div>
-            </div>
-
-            {!isPaid && (
-              <div className="mt-4 p-4 bg-amber-50 border border-amber-200 rounded-lg">
-                <p className="text-sm font-medium text-amber-900">
-                  {t('invoiceDetail.remainingBalance', { amount: remainingBalance.toFixed(2) })}
+              <div className={`pt-6 border-t ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
+                <p className={`text-xs font-semibold uppercase ${isDark ? 'text-slate-400' : 'text-slate-500'} mb-2`}>
+                  Notes
                 </p>
-              </div>
-            )}
-
-            {isPaid && invoice.paidAt && (
-              <div className="mt-4 p-4 bg-emerald-50 border border-emerald-200 rounded-lg flex items-center gap-3">
-                <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0" />
-                <div>
-                  <p className="text-sm font-medium text-emerald-900">{t('invoiceDetail.paidInFull')}</p>
-                  <p className="text-xs text-emerald-700">
-                    {t('invoiceDetail.paidOn', {
-                      date: new Date(invoice.paidAt).toLocaleDateString('en-US', {
-                        month: 'short',
-                        day: 'numeric',
-                        year: 'numeric',
-                      }),
-                    })}
-                  </p>
-                </div>
+                <p className={`text-sm ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                  {invoice.notes}
+                </p>
               </div>
             )}
           </div>
         </div>
 
-        {/* Sidebar */}
+        {/* Right Sidebar */}
         <div className="space-y-6">
-          {/* Summary Card */}
-          <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 border border-blue-200">
-            <p className="text-sm text-blue-900 font-medium mb-2">{t('invoiceDetail.invoiceTotal')}</p>
-            <p className="text-2xl sm:text-4xl font-bold text-blue-900">
-              ${invoice.total.toFixed(2)}
-            </p>
-            <p className="text-xs text-blue-700 mt-3">
-              Due {new Date(invoice.dueDate).toLocaleDateString('en-US')}
-            </p>
+          {/* Payment History */}
+          <div className={`${isDark ? 'bg-slate-800' : 'bg-white'} rounded-lg p-4 shadow-sm`}>
+            <h3
+              className={`font-semibold mb-4 ${
+                isDark ? 'text-slate-100' : 'text-slate-900'
+              }`}
+            >
+              Payment History
+            </h3>
+            {paymentHistory.length > 0 ? (
+              <div className="space-y-3">
+                {paymentHistory.map((payment, idx) => (
+                  <div
+                    key={idx}
+                    className={`flex justify-between text-sm p-2 rounded ${
+                      isDark ? 'bg-slate-700/50' : 'bg-slate-50'
+                    }`}
+                  >
+                    <span className={isDark ? 'text-slate-300' : 'text-slate-600'}>
+                      {formatDate(payment.date)}
+                    </span>
+                    <span className={`font-semibold ${isDark ? 'text-emerald-300' : 'text-emerald-700'}`}>
+                      {formatCurrency(payment.amount)}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p
+                className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-500'}`}
+              >
+                No payments recorded
+              </p>
+            )}
           </div>
 
-          {!isPaid && (
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-4">
-              <h3 className="text-lg font-bold text-slate-900">{t('invoiceDetail.recordPayment')}</h3>
-
-              <div>
-                <label className="block text-sm font-medium text-slate-900 mb-2">
-                  {t('invoiceDetail.paymentAmount')}
-                </label>
-                <div className="text-2xl font-bold text-slate-900 mb-2">
-                  ${remainingBalance.toFixed(2)}
+          {/* Record Payment Form */}
+          {showPaymentForm && balanceDue > 0 && (
+            <div className={`${isDark ? 'bg-slate-800' : 'bg-white'} rounded-lg p-4 shadow-sm`}>
+              <h3 className={`font-semibold mb-4 ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>
+                Record Payment
+              </h3>
+              <div className="space-y-3">
+                <div>
+                  <label className={`block text-xs font-semibold uppercase ${isDark ? 'text-slate-400' : 'text-slate-500'} mb-1`}>
+                    Amount
+                  </label>
+                  <input
+                    type="number"
+                    placeholder="0.00"
+                    value={paymentAmount}
+                    onChange={(e) => setPaymentAmount(e.target.value)}
+                    max={balanceDue}
+                    step="0.01"
+                    className={`w-full px-3 py-2 rounded border ${
+                      isDark
+                        ? 'bg-slate-700 border-slate-600 text-slate-100'
+                        : 'bg-white border-slate-200 text-slate-900'
+                    }`}
+                  />
                 </div>
-                <p className="text-xs text-slate-500">{t('invoiceDetail.recordPayment')}</p>
+                <div>
+                  <label className={`block text-xs font-semibold uppercase ${isDark ? 'text-slate-400' : 'text-slate-500'} mb-1`}>
+                    Date
+                  </label>
+                  <input
+                    type="date"
+                    value={paymentDate}
+                    onChange={(e) => setPaymentDate(e.target.value)}
+                    className={`w-full px-3 py-2 rounded border ${
+                      isDark
+                        ? 'bg-slate-700 border-slate-600 text-slate-100'
+                        : 'bg-white border-slate-200 text-slate-900'
+                    }`}
+                  />
+                </div>
+                <div>
+                  <label className={`block text-xs font-semibold uppercase ${isDark ? 'text-slate-400' : 'text-slate-500'} mb-1`}>
+                    Method
+                  </label>
+                  <select
+                    value={paymentMethod}
+                    onChange={(e) => setPaymentMethod(e.target.value)}
+                    className={`w-full px-3 py-2 rounded border ${
+                      isDark
+                        ? 'bg-slate-700 border-slate-600 text-slate-100'
+                        : 'bg-white border-slate-200 text-slate-900'
+                    }`}
+                  >
+                    <option value="cash">Cash</option>
+                    <option value="check">Check</option>
+                    <option value="e-transfer">E-Transfer</option>
+                    <option value="credit-card">Credit Card</option>
+                  </select>
+                </div>
+                <div className="flex gap-2 pt-2">
+                  <button
+                    onClick={handleRecordPayment}
+                    className="flex-1 px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded font-medium text-sm transition"
+                  >
+                    Record
+                  </button>
+                  <button
+                    onClick={() => setShowPaymentForm(false)}
+                    className={`flex-1 px-3 py-2 rounded font-medium text-sm transition ${
+                      isDark
+                        ? 'bg-slate-700 hover:bg-slate-600 text-slate-200'
+                        : 'bg-slate-200 hover:bg-slate-300 text-slate-900'
+                    }`}
+                  >
+                    Cancel
+                  </button>
+                </div>
               </div>
-
-              <button
-                onClick={() => setShowPaymentModal(true)}
-                className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition"
-              >
-                {t('invoiceDetail.recordPaymentButton')}
-              </button>
             </div>
           )}
 
-          {/* Status Card */}
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
-            <h3 className="text-lg font-bold text-slate-900 mb-4">{t('invoiceDetail.statusDetails')}</h3>
-
-            <div className="space-y-4 text-sm">
-              <div>
-                <p className="text-slate-600 mb-1">{t('invoiceDetail.currentStatus')}</p>
-                <div
-                  className={`inline-block px-3 py-1 rounded-full text-xs font-semibold border ${
-                    STATUS_COLORS[invoice.status]
-                  }`}
-                >
-                  {invoice.status.charAt(0).toUpperCase() + invoice.status.slice(1)}
-                </div>
-              </div>
-
-              {invoice.sentAt && (
-                <div>
-                  <p className="text-slate-600 mb-1">{t('invoiceDetail.sentOn')}</p>
-                  <p className="text-slate-900 font-medium">
-                    {new Date(invoice.sentAt).toLocaleDateString('en-US')}
-                  </p>
-                </div>
-              )}
-
-              {invoice.paidAt && (
-                <div>
-                  <p className="text-slate-600 mb-1">{t('invoiceDetail.paidOn', { date: new Date(invoice.paidAt).toLocaleDateString('en-US') })}</p>
-                  <p className="text-slate-900 font-medium">
-                    {new Date(invoice.paidAt).toLocaleDateString('en-US')}
-                  </p>
-                </div>
-              )}
-
-              <div>
-                <p className="text-slate-600 mb-1">{t('invoiceDetail.taxInformation')}</p>
-                <p className="text-slate-900 font-medium">
-                  {invoice.taxType} ({(invoice.taxRate * 100).toFixed(3)}%)
-                </p>
-              </div>
+          {/* Customer Card */}
+          <div className={`${isDark ? 'bg-slate-800' : 'bg-white'} rounded-lg p-4 shadow-sm`}>
+            <h3 className={`font-semibold mb-3 ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>
+              Customer
+            </h3>
+            <div className={`space-y-2 text-sm ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+              <p className="font-medium">{customer.name}</p>
+              <p>{customer.email}</p>
+              <p>{customer.phone}</p>
+              <p>{customer.address}</p>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Record Payment Modal */}
-      {showPaymentModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl shadow-lg max-w-md w-full mx-4">
-            <div className="border-b border-slate-200 p-6 flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-slate-900">{t('invoiceDetail.recordPayment')}</h2>
-              <button
-                onClick={() => setShowPaymentModal(false)}
-                className="p-2 hover:bg-slate-100 rounded-lg transition"
-              >
-                <X className="w-5 h-5 text-slate-600" />
-              </button>
-            </div>
-
-            <div className="p-6 space-y-4">
-              {/* Amount */}
-              <div>
-                <label className="block text-sm font-semibold text-slate-900 mb-2">
-                  {t('invoiceDetail.paymentAmount')}
-                </label>
-                <div className="relative">
-                  <span className="absolute left-3 top-2.5 text-slate-600">$</span>
-                  <input
-                    type="number"
-                    step="0.01"
-                    min="0"
-                    max={remainingBalance}
-                    value={paymentForm.amount}
-                    onChange={(e) =>
-                      setPaymentForm({ ...paymentForm, amount: e.target.value })
-                    }
-                    className="w-full pl-7 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-                  />
-                </div>
-                <p className="text-xs text-slate-500 mt-1">
-                  {t('invoiceDetail.maxAmount', { amount: remainingBalance.toFixed(2) })}
-                </p>
-              </div>
-
-              {/* Payment Method */}
-              <div>
-                <label className="block text-sm font-semibold text-slate-900 mb-2">
-                  {t('invoiceDetail.paymentMethod')}
-                </label>
-                <select
-                  value={paymentForm.method}
-                  onChange={(e) =>
-                    setPaymentForm({ ...paymentForm, method: e.target.value })
-                  }
-                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-                >
-                  {PAYMENT_METHODS.map((method) => (
-                    <option key={method} value={method}>
-                      {method === 'Interac e-Transfer' ? t('invoiceDetail.interacTransfer') :
-                       method === 'Credit Card' ? t('invoiceDetail.creditCard') :
-                       method === 'Cheque' ? t('invoiceDetail.cheque') :
-                       method === 'Cash' ? t('invoiceDetail.cash') :
-                       method}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Date */}
-              <div>
-                <label className="block text-sm font-semibold text-slate-900 mb-2">
-                  {t('invoiceDetail.paymentDate')}
-                </label>
-                <input
-                  type="date"
-                  value={paymentForm.date}
-                  onChange={(e) =>
-                    setPaymentForm({ ...paymentForm, date: e.target.value })
-                  }
-                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-                />
-              </div>
-
-              {/* Notes */}
-              <div>
-                <label className="block text-sm font-semibold text-slate-900 mb-2">
-                  {t('contactDetail.notes')}
-                </label>
-                <textarea
-                  value={paymentForm.notes}
-                  onChange={(e) =>
-                    setPaymentForm({ ...paymentForm, notes: e.target.value })
-                  }
-                  placeholder={t('invoiceDetail.notesPlaceholder')}
-                  rows={2}
-                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 resize-none"
-                />
-              </div>
-
-              {/* Action Buttons */}
-              <div className="flex gap-3 pt-4 border-t border-slate-200">
-                <button
-                  onClick={() => setShowPaymentModal(false)}
-                  className="flex-1 px-4 py-2 border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 font-medium transition"
-                >
-                  {t('invoiceDetail.cancel')}
-                </button>
-                <button
-                  onClick={handleRecordPayment}
-                  className="flex-1 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium transition"
-                >
-                  {t('invoiceDetail.recordPaymentButton')}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

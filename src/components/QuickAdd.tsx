@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { useStore } from '@/store';
 import { useTheme } from '@/components/ThemeProvider';
+import { useToast } from '@/components/Toast';
 import { X, Loader } from 'lucide-react';
 import type { ContactType, ActivityType, PipelineStage } from '@/types';
 
@@ -15,11 +16,11 @@ interface FormErrors {
 export function QuickAdd() {
   const { addContact, addDeal, addActivity, contacts, settings } = useStore();
   const { theme } = useTheme();
+  const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<Tab>('contact');
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
-  const [showSuccess, setShowSuccess] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const isDark = theme === 'dark';
@@ -86,7 +87,6 @@ export function QuickAdd() {
   const handleClose = () => {
     setIsOpen(false);
     setErrors({});
-    setShowSuccess(false);
     // Reset forms
     setContactForm({ name: '', email: '', phone: '', type: 'lead' });
     setDealForm({ title: '', contactId: '', value: '', stage: 'new_lead' });
@@ -130,7 +130,7 @@ export function QuickAdd() {
         source: 'referral',
         notes: '',
       });
-      setShowSuccess(true);
+      toast.success('Contact added successfully', `${contactForm.name} has been added to your contacts`);
       setTimeout(() => {
         handleClose();
       }, 1500);
@@ -154,7 +154,7 @@ export function QuickAdd() {
         assignedTo: 'Team',
         notes: '',
       });
-      setShowSuccess(true);
+      toast.success('Deal created successfully', `${dealForm.title} has been added to your pipeline`);
       setTimeout(() => {
         handleClose();
       }, 1500);
@@ -175,7 +175,7 @@ export function QuickAdd() {
         contactId: activityForm.contactId || undefined,
         dealId: activityForm.dealId || undefined,
       });
-      setShowSuccess(true);
+      toast.success('Activity recorded', `${activityForm.type} has been logged`);
       setTimeout(() => {
         handleClose();
       }, 1500);
@@ -245,16 +245,6 @@ export function QuickAdd() {
 
         {/* Content */}
         <div className="p-6">
-          {showSuccess && (
-            <div
-              className={`mb-4 p-3 rounded-lg text-sm font-medium ${
-                isDark ? 'bg-emerald-900 text-emerald-200' : 'bg-emerald-50 text-emerald-700'
-              }`}
-            >
-              ✓ Added successfully!
-            </div>
-          )}
-
           {/* Contact Form */}
           {activeTab === 'contact' && (
             <form onSubmit={handleAddContact} className="space-y-4">

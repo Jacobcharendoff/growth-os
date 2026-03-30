@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Sidebar } from '@/components/Sidebar';
 import { ThemeProvider, useTheme } from '@/components/ThemeProvider';
 import { AuthProvider } from '@/components/AuthProvider';
+import { ToastProvider } from '@/components/ToastProvider';
 import AppHeader from '@/components/AppHeader';
 import { QuickAdd } from '@/components/QuickAdd';
 import { Menu, Zap } from 'lucide-react';
@@ -68,7 +69,9 @@ export default function AppLayout({
   return (
     <ThemeProvider>
       <AuthProvider>
-        <AppContent>{children}</AppContent>
+        <ToastProvider>
+          <AppContent>{children}</AppContent>
+        </ToastProvider>
       </AuthProvider>
     </ThemeProvider>
   );

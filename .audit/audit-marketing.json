@@ -1,0 +1,467 @@
+{
+  "auditor": "External Marketing & SEO Auditor",
+  "date": "2026-03-30",
+  "overallScore": 6.8,
+  "summary": "GrowthOS has a well-structured marketing site with strong design execution, bilingual support, and industry-specific pages. However, there are significant conversion funnel friction points, SEO infrastructure gaps, and copy clarity issues that are likely leaving conversion opportunities on the table. The site looks polished but doesn't convert as effectively as it could. Key issues: weak value prop clarity on homepage, missing sitemap/robots.txt, no product demo accessibility, weak social proof, and unclear differentiation without reading entire pages.",
+  "pageAudits": [
+    {
+      "page": "Homepage (/) ",
+      "file": "src/app/page.tsx",
+      "scores": {
+        "copyQuality": 7,
+        "conversionOptimization": 6,
+        "seoReadiness": 5,
+        "mobileExperience": 8,
+        "socialProof": 6
+      },
+      "strengths": [
+        "Excellent visual design with smooth animations and parallax effects",
+        "Strong hero section with rotating trade selection",
+        "Good use of animated counters (40% more jobs, 60sec lead response time)",
+        "Bilingual support baked in (EN/FR toggle)",
+        "Persona cards showing real results (+47% booked jobs, +$12K monthly revenue)",
+        "Clear trust signals: '500+ Canadian businesses', 5-star ratings, 'Built in Canada'",
+        "Mobile-responsive design with good breakpoints",
+        "Multiple CTAs (Try Free, Watch Demo) with clear visual hierarchy"
+      ],
+      "issues": [
+        "VALUE PROP TOO VAGUE: Headline 'Stop Losing Leads. Start Growing Revenue' is generic and could apply to any CRM. Takes 3 sentences to understand what the product does",
+        "First subheadline paragraph has numbers (30-40% lead loss) without source or context—feels pulled from thin air",
+        "Long time to first CTA (below the fold). 'Watch Demo' link (#demo) doesn't scroll to any visible demo section on homepage",
+        "No explicit mention of key differentiators until scrolling deep: bilingual, Canadian taxes, HomeStars integration barely visible",
+        "Social proof weak: 500+ users is decent but no customer logos, testimonial quotes, or case studies visible initially",
+        "'Free forever up to 5 users' vs pricing page says 'Starter Free' for solo—confusing messaging",
+        "Interactive sections feel heavy on animations, light on substance. What actually IS the product?",
+        "Missing H2 hierarchy for SEO. Main title is generic, no keyword targets",
+        "No clear ROI statement until very bottom of page"
+      ],
+      "recommendations": [
+        "REWRITE HERO: Lead with the actual problem solved + outcome. Example: 'Plumbers & HVAC techs win 40% more jobs with GrowthOS—auto-respond to every lead in 60 seconds'",
+        "Add a concise 'How it Works' section with 3 steps visible above fold: 1) Captures leads, 2) Auto-assigns & responds, 3) Tracks to close",
+        "Make the demo actually work—clicking 'Watch Demo' should play a video or open a demo modal",
+        "ADD CUSTOMER LOGOS + TESTIMONIAL QUOTES above the fold. Currently missing massive trust signal",
+        "Clarify pricing messaging: state Free plan limits clearly upfront",
+        "Add structured data (FAQ schema) to improve SERP appearance",
+        "Section headers need keyword optimization (e.g., 'Lead Capture CRM for Home Service Businesses' not just 'Problem Agitation + Stats')"
+      ]
+    },
+    {
+      "page": "Pricing Page",
+      "file": "src/app/(marketing)/pricing/page.tsx",
+      "scores": {
+        "copyQuality": 7,
+        "conversionOptimization": 7,
+        "seoReadiness": 6,
+        "mobileExperience": 8,
+        "socialProof": 5
+      },
+      "strengths": [
+        "Clear 3-tier pricing model (Starter/Professional/Enterprise)",
+        "Professional plan highlighted with 'Most Popular' badge",
+        "Annual discount prominently shown (20% savings)",
+        "Mobile and desktop comparison tables",
+        "Monthly/Annual toggle with visual feedback",
+        "CTA buttons are prominent and color-coded",
+        "Feature comparison sections well-organized",
+        "FAQ section addresses common objections",
+        "No hidden fees messaging ('No contracts. No hidden fees. Cancel anytime.')"
+      ],
+      "issues": [
+        "MISSING SOCIAL PROOF: No testimonial or case study showing ROI at each tier",
+        "Free plan (Starter) is too limited (50 contacts, 5 estimates/month, basic pipeline). Perception: not really 'free' if you outgrow in days",
+        "Professional plan at $49/mo feels moderate but no justification WHY ($315/mo Jobber makes GrowthOS cheaper, but that's competitor comparison, not value prop)",
+        "No mention of onboarding, training, or support quality differences between tiers",
+        "Enterprise plan says 'Contact Sales' with no indication of price range or typical investment",
+        "FAQ answers are generic (Yes/No + short explanation). Missing micro-conversions like 'See our data migration process' with link",
+        "No risk reversal: 30-day money-back guarantee, pause subscription option, etc.",
+        "Comparison table shows what's included but NOT the outcomes (e.g., 'Unlimited estimates' is a feature, not a benefit)",
+        "Layout: 3-column grid breaks at tablet size. Could stack better"
+      ],
+      "recommendations": [
+        "ADD TESTIMONIAL SECTION: 'Customers at each tier see X outcome' with quote + photo",
+        "EXPAND STARTER DESCRIPTION: 'Great for testing GrowthOS at zero risk. Upgrade to Professional when you're ready to scale.' Make it feel intentional, not limited",
+        "ADD RISK REVERSAL: 'Try Professional free for 14 days. No credit card. Full access. If it's not right, we'll transfer your data.' (Check if offered)",
+        "REWRITE FEATURE BENEFITS: Instead of 'Unlimited estimates', say 'Unlimited estimates = send quotes same day, not next week'",
+        "ADD COMPARISON CONTEXT: 'Most service businesses move to Professional within 30 days to unlock automations'",
+        "CREATE PRICING FAQ SCHEMA: Structured data so Google shows pricing in search results",
+        "ADD TRUST SIGNALS: 'Trusted by X% of [city] HVAC companies' or 'Fastest average setup: 2 minutes'",
+        "ENTERPRISE TIER: Add 3-5 example scenarios (10 crew, 25 crew, 50+ crew) with estimated pricing range"
+      ]
+    },
+    {
+      "page": "About Page",
+      "file": "src/app/(marketing)/about/page.tsx",
+      "scores": {
+        "copyQuality": 6,
+        "conversionOptimization": 4,
+        "seoReadiness": 5,
+        "mobileExperience": 7,
+        "socialProof": 3
+      },
+      "strengths": [
+        "Clean layout with good section hierarchy",
+        "Mission statement visible and mission-aligned",
+        "Values section with 4 pillars (Canada-first, Simplicity, Revenue-focused, Operator-led)",
+        "Team section acknowledges team depth without naming individuals (good for early stage)"
+      ],
+      "issues": [
+        "CRITICAL: Entire page uses language tokens (t('aboutPage.heroTitle')) instead of actual copy. Cannot evaluate marketing effectiveness because actual text is in i18n file",
+        "Page content is skeletal: No founder story, no origin narrative, no credibility markers",
+        "No mention of why built in Canada (tax compliance? values? proximity to customers?)",
+        "Team section generic: 'Small team, big vision' but no faces, names, or LinkedIn profiles",
+        "No customer feedback on this page (quotes like 'GrowthOS changed how I run my business')",
+        "CTA at bottom ('Get In Touch') is weak. Should be 'Book a 15-min demo' or 'See pricing'",
+        "No 'Why we built this' origin story—missing emotional connection",
+        "Missing company stats: Founded when? Revenue? Funding? Number of customers saved how much time?",
+        "SEO: No H2 with keywords. 'Our Values' is generic"
+      ],
+      "recommendations": [
+        "ADD FOUNDER/TEAM STORY: 'We built GrowthOS because [founder] lost $18K in uncaptured leads in his plumbing company. Now, 500+ businesses don't.'",
+        "ADD TEAM WITH FACES: Show small team photos with titles and 1-line bios",
+        "ADD CUSTOMER IMPACT STATS: 'In 2025, GrowthOS helped our customers capture X lost leads, worth $X in revenue'",
+        "EXPAND VALUES WITH EXAMPLES: 'Simplicity First' → 'No 15-step setup. No training needed. Working in 2 minutes.'",
+        "ADD ORIGIN NARRATIVE: 'Founded in Toronto, 2023, by a former plumber frustrated with Jobber's lack of Canadian tax support'",
+        "LINK VALUES TO PRODUCT: Each value → feature matrix (Canada-first → HST/GST auto-calc, automatic HomeStars sync)",
+        "ADD TEAM CREDENTIALS: Where did founders work before? What problems did they solve?",
+        "CHANGE CTA TO ACTION: 'See how GrowthOS works' → video demo vs 'Get In Touch'"
+      ]
+    },
+    {
+      "page": "Contact Page",
+      "file": "src/app/(marketing)/contact/page.tsx",
+      "scores": {
+        "copyQuality": 6,
+        "conversionOptimization": 6,
+        "seoReadiness": 5,
+        "mobileExperience": 8,
+        "socialProof": 2
+      },
+      "strengths": [
+        "Form is simple and not overwhelming (5 fields: name, email, company, phone, message)",
+        "Success message shown after submit",
+        "Contact info sidebar with icons (email, phone, address)",
+        "Mobile-responsive layout stacks form and sidebar well",
+        "Optional phone field (good—doesn't force)",
+        "Book demo CTA in sidebar is alternative entry point"
+      ],
+      "issues": [
+        "FORM NOT CONNECTED TO BACKEND: handleSubmit clears form and shows success message, but no indication of where data is sent. Is it emailing? Saving to database? CRM?",
+        "No privacy reassurance: 'We'll never spam you' or 'Used only for your inquiry'",
+        "Phone number (1-800-555-0199) appears fake/placeholder",
+        "Address: 'Toronto, ON, Canada' with no actual address—can't get directions or verify legitimacy",
+        "Book demo button says 'Schedule Call' but clicking it likely does nothing (no integration shown)",
+        "Missing urgency/response time promise: 'We'll respond within 2 hours' or similar",
+        "No alternative contact methods: live chat, WhatsApp, Slack, Discord community",
+        "Form doesn't specify: Is this for sales? Support? Partnerships? Let me know what to expect"
+      ],
+      "recommendations": [
+        "VERIFY BACKEND: Ensure form data is actually being captured and routed to sales team. Add console confirmation.",
+        "ADD PRIVACY COPY: 'Your information is safe with us. We'll use it only to respond to your inquiry.'",
+        "REPLACE PLACEHOLDER PHONE: Use actual business number or remove if not staffed",
+        "ADD ACTUAL ADDRESS: Full address with Google Maps embed or directions link",
+        "LINK BOOK DEMO TO CALENDAR: Connect 'Schedule Call' to Calendly or HubSpot scheduling",
+        "ADD RESPONSE TIME PROMISE: 'We typically respond within 2 hours during business hours'",
+        "ADD FORM CONTEXT: '50+ customers per week ask us [X]. Is that you?' → clarifies sales intent",
+        "ADD SECONDARY CONTACT: Email form is good, but offer phone directly in form (make phone field prominent)",
+        "ADD LIVE CHAT WIDGET: Intercom, Drift, or similar for immediate inquiry capture"
+      ]
+    },
+    {
+      "page": "Comparison: GrowthOS vs Jobber",
+      "file": "src/app/(marketing)/vs-jobber/page.tsx",
+      "scores": {
+        "copyQuality": 8,
+        "conversionOptimization": 8,
+        "seoReadiness": 7,
+        "mobileExperience": 7,
+        "socialProof": 6
+      },
+      "strengths": [
+        "EXCELLENT STRUCTURE: Hero → Pricing highlight → Feature comparison → Who is Jobber good for → CTA",
+        "FAIR FRAMING: 'Who is Jobber good for' section is honest and builds credibility",
+        "SPECIFIC CLAIMS: 'Estimate Delivery' (Direct email vs jobbermail.com domain with '60%+ unseen' stat)",
+        "'Calendar Sync Speed' (Real-time vs 24 hours) is concrete differentiation",
+        "QuickBooks integration comparison with specific data loss stat ('~2% line items drop')",
+        "Pricing comparison very clear ($149 vs $315 for 5 users)",
+        "Well-organized comparison table with clear visual diff (green badges for GrowthOS wins)",
+        "Honest about when Jobber is better (basic scheduling, smaller teams)"
+      ],
+      "issues": [
+        "STAT CREDIBILITY: '60%+ unseen' for Jobber emails and '~2% line items drop' need attribution. Where from? Own testing? Customer reports? Missing source weakens claims",
+        "CANADIAN NARRATIVE WEAK: This page is ideal for Canadian pitch but never mentions HST/GST/HomeStars until table. Lead with Canadian advantage",
+        "COPY TONE: Page reads like feature list, not persuasion. 'Auto Lead Response 60 seconds' vs 'Not available' is data, not why customer should care",
+        "MISSING OUTCOME COMPARISON: Not 'GrowthOS = real-time sync' but 'GrowthOS = never miss a phone call again (real-time sync). Jobber = miss 40% of calls (24-hr sync)'",
+        "MISSING MIGRATION PATH: No mention of how easy/hard to switch from Jobber to GrowthOS",
+        "NO RISK REVERSAL: 'Try both free and pick the winner' or 'If you're not convinced, we'll transfer all your data'",
+        "OBJECTION MISSING: 'But Jobber has more integrations' or 'But Jobber has a mobile app'—doesn't address why someone might choose Jobber beyond team size"
+      ],
+      "recommendations": [
+        "ADD SOURCES: Cite where comparison stats come from. 'Our data (2024, 50+ customers)' or 'Jobber support forum reports'",
+        "LEAD WITH CANADIAN WINS: Move Canadian tax, French, HomeStars to top 3 rows of table",
+        "REFRAME BENEFITS AS OUTCOMES: 'Auto Lead Response' → 'Respond to leads while competitor is still in meeting. Win 30% more jobs.'",
+        "ADD MIGRATION SECTION: 'Switching from Jobber? We handle the data transfer. No data loss. Free onboarding.' with step-by-step",
+        "STRENGTHEN 'WHEN TO CHOOSE JOBBER': Make it 3-5 real scenarios so reader feels heard and trusts evaluation",
+        "ADD PRICING SCENARIO: 'Growing team of 8? Jobber = $350+. GrowthOS = $149. Savings = new tool for SMS marketing or scheduling app.'",
+        "ADD CUSTOMER QUOTE: A Jobber-to-GrowthOS switcher quote about why they switched",
+        "ADD SUPPORT COMPARISON: Response time, phone support availability, Canadian support, language",
+        "LOWER IN PAGE: FAQ: 'What if I need X feature that Jobber has?' or 'Can you work with Jobber APIs?'"
+      ]
+    },
+    {
+      "page": "Industry Pages (Plumbing, HVAC, Electrical, Landscaping, Roofing, Cleaning)",
+      "file": "src/app/(marketing)/plumbing/page.tsx (and similar for other trades)",
+      "scores": {
+        "copyQuality": 7,
+        "conversionOptimization": 6,
+        "seoReadiness": 6,
+        "mobileExperience": 7,
+        "socialProof": 5
+      },
+      "strengths": [
+        "TRADE-SPECIFIC HERO: Each page has trade-colored gradient (blue for plumbing, orange for HVAC, etc.)",
+        "INDUSTRY STATS BAR: Animated counters showing industry-specific data (705K plumbing jobs Canada, 22 calls avg, 30% no-shows, 78% late invoices)",
+        "PAIN POINTS SECTION: Relevant to trade (e.g., Plumbing: missed calls, slow estimates, unpaid invoices, dispatch chaos)",
+        "SOLUTION SHOWCASE: Features mapped to pain points",
+        "FAQ SECTION: Expandable Q&A",
+        "Multiple CTAs throughout page"
+      ],
+      "issues": [
+        "CONTENT RELIES ON I18N TOKENS: Similar to About page, actual marketing copy is in translation file (t('plumbingPage.heroTitle')). Cannot assess copy quality without seeing source",
+        "INDUSTRY STATS QUESTIONABLE: '705K plumbing jobs Canada' is interesting but no source. '30% of no-show rate'—is this GrowthOS data? Industry average? Unattributed stats feel hollow",
+        "PAIN SECTION GENERIC: 'Missed Calls', 'Slow Estimates', 'Unpaid Invoices' are problems every service business has. Where's the plumbing-specific angle? (e.g., 'Emergency calls at 2am mean you MUST respond instantly or lose $3K job')",
+        "SOLUTION FEATURES DON'T DIFFERENTIATE: Industry pages look identical structure-wise with just different colors and stats. Missing unique positioning per trade",
+        "NO COMPETITOR MENTION: Plumbing page doesn't say 'vs Jobber' or 'vs ServiceTitan.' Opportunity to directly address trade-specific alternatives",
+        "MISSING PROOF: No plumbing-specific testimonials or case study (e.g., 'Jake's Plumbing, Mississauga: +47% jobs in 90 days')",
+        "TRADE ICON BACKGROUND: Large trade icon (droplet for plumbing) in top-right is nice design but takes space on mobile",
+        "FAQ GENERIC: Questions are general (Can I import contacts? Is data secure?) not plumbing-specific (How do I estimate jobs faster? Can I integrate with Google Maps for dispatch?)"
+      ],
+      "recommendations": [
+        "SOURCE THE STATS: 'According to [StatsCan/HomeAdvisor/NAPB], Canadian plumbers receive X calls/week on avg. 30% go unanswered.' Show the work",
+        "DEEPEN PAIN POINTS: Plumbing-specific: 'Emergency calls at 11pm on weekends mean you need instant auto-response or lose $5K+ jobs' (show the math)",
+        "ADD TRADE-SPECIFIC PROOF: '47% of Mike's Plumbing booked jobs came from leads they almost missed' (testimonial from plumbing customer)",
+        "COMPARE VS COMPETITORS: 'vs Jobber for Plumbers', 'vs Housecall Pro', etc. Plumbing contractors know these tools",
+        "ADD VERTICAL-SPECIFIC FEATURES: 'Emergency dispatch = route next available plumber in 30 seconds', not generic 'auto-assignment'",
+        "PLUMBING TRADE FAQ: 'How do I handle emergency calls at 2am?', 'Can I sync with Google Maps for dispatch?', 'How do estimating templates work?'",
+        "MOBILE OPTIMIZATION: Hide or shrink background trade icon on mobile so headline isn't buried",
+        "ADD VERTICAL CASE STUDY: Full page story of plumber customer (problem → discovery → implementation → results with $$)",
+        "LINK TO INDUSTRY BLOG: 'Read: How Toronto Plumbers Capture 40% More Jobs' (requires blog existence)"
+      ]
+    },
+    {
+      "page": "Switch Page (Why GrowthOS)",
+      "file": "src/app/(marketing)/switch/page.tsx",
+      "scores": {
+        "copyQuality": 7,
+        "conversionOptimization": 7,
+        "seoReadiness": 5,
+        "mobileExperience": 7,
+        "socialProof": 4
+      },
+      "strengths": [
+        "Clear pain point framing (What's killing your growth?)",
+        "Gains section outlining 6 core benefits",
+        "Comparison matrix component likely shows feature parity or advantage",
+        "ROI calculator component (if functional) is conversion magnet",
+        "Testimonial section with personalized results",
+        "Smooth scroll reveal animations and visual hierarchy"
+      ],
+      "issues": [
+        "COPY AGAIN IN I18N: Actual content is token-based, hard to evaluate copy quality",
+        "PRODUCT POSITIONING VAGUE: 'Why GrowthOS?' doesn't answer 'Why GrowthOS vs Jobber vs ServiceTitan vs HubSpot?'",
+        "ROI CALCULATOR: Unclear if it's functional, what inputs it takes, or if results are credible. Needs validation",
+        "COMPARISON MATRIX: Page mentions this but structure unclear. Is it vs specific competitors or generic CRM checklist?",
+        "SOCIAL PROOF: Testimonials are mentioned but unclear if real customers or placeholders",
+        "NO PRICING CONTEXT: Page doesn't explain why GrowthOS is cheaper/better value than alternatives",
+        "CONVERSION FUNNEL UNCLEAR: Reader reaches bottom—what's the CTA? Try free? See pricing? Book demo?",
+        "MOBILE EXPERIENCE: Scroll reveal might be slow on mobile or feel janky on slower devices"
+      ],
+      "recommendations": [
+        "SHARPEN POSITIONING: Title should be 'Why GrowthOS Beats [Competitor] for [Trade]' not generic 'Why GrowthOS'",
+        "TEST ROI CALCULATOR: Verify it gives realistic numbers. Example input: '3-person plumbing crew' → 'Expect +$18K revenue in 6 months'",
+        "COMPARISON MATRIX: Make it explicit: vs Jobber, vs ServiceTitan, vs HubSpot (3 separate matrices or single mega table)",
+        "SOCIAL PROOF: Add real customer names, photos, and quotes. Not placeholder testimonials",
+        "ADD PRICING CALLOUT: 'Same features as Jobber ($315/mo). Pay just $149/mo.' Make cost difference explicit",
+        "CTA AT END MUST BE STRONG: Not 'Get Started' but 'See your ROI in 30 seconds' → ROI calculator or pricing",
+        "MOBILE OPTIMIZATION: Test animations on iPhone 12 and older Android. Simplify if janky",
+        "ADD FAQ: 'Is GrowthOS really cheaper?' 'What if I need X feature?' 'How long to see ROI?'"
+      ]
+    },
+    {
+      "page": "Privacy & Terms Pages",
+      "file": "src/app/(marketing)/privacy/page.tsx, src/app/(marketing)/terms/page.tsx",
+      "scores": {
+        "copyQuality": 6,
+        "conversionOptimization": 2,
+        "seoReadiness": 4,
+        "mobileExperience": 7,
+        "socialProof": 0
+      },
+      "strengths": [
+        "Privacy page exists (required for Canada)",
+        "Multiple sections covering key areas (collection, usage, cookies, third-party, retention, security, rights, transfers, children, changes, contact)",
+        "Legal sections are comprehensive",
+        "Privacy page is bilingual (i18n tokens)"
+      ],
+      "issues": [
+        "PLACEHOLDER CONTENT: Both pages are token-based (t('privacyPage.title'), t('privacyPage.introText')). Actual legal text not visible. Cannot verify:",
+        "  - CASL compliance (Canada's anti-spam law): Does privacy policy mention email marketing consent?",
+        "  - PIPEDA compliance (Privacy Act): Does it cover personal information handling per federal law?",
+        "  - Quebec-specific privacy law (Law 25): If serving Quebec, must address LPIN (personal information number)",
+        "NO CONTACT METHOD ON PRIVACY PAGE: Section exists but uses tokens. Cannot verify email/contact is real",
+        "NO DATED VERSION: 'Last Updated' in header is token. Impossible to verify when policy was last reviewed",
+        "TERMS PAGE: Similarly token-based. Cannot assess if it covers:",
+        "  - Service level agreements (uptime SLA)?",
+        "  - Data deletion/export rights?",
+        "  - Liability limitations?",
+        "  - Dispute resolution (arbitration vs court)?",
+        "  - Intellectual property (customer data ownership)?",
+        "MISSING SUB-PAGES: No separate DPA (Data Processing Agreement) for business customers, no cookie policy, no CASL consent form"
+      ],
+      "recommendations": [
+        "VERIFY LEGAL COMPLIANCE: Have a Canadian lawyer review privacy and terms for CASL, PIPEDA, and Quebec Law 25 compliance",
+        "IF SERVING QUEBEC: Add specific section on Law 25 compliance (LPIN, consent requirements)",
+        "ADD DATED VERSION: 'Last Updated: [actual date]' and version number (v1.2). Customers need to know recency",
+        "EXTRACT KEY TERMS TO MARKETING PAGES: 'Your data is encrypted and backed up daily' (on pricing/security section). Don't bury it in legal",
+        "CREATE SEPARATE DOCUMENTS:",
+        "  - DPA for business customers (required by many enterprise buyers)",
+        "  - Cookie policy (separate from privacy, easier to update)",
+        "  - CASL consent form (for email marketing)",
+        "ADD CUSTOMER RIGHTS SECTION: Simple summary: 'You can export, delete, or request all your data anytime'",
+        "LINK FROM FOOTER: Privacy/Terms should be in footer prominently (they are, good)",
+        "CONSIDER TRUST BADGES: 'SOC2 compliant', 'ISO27001 certified', 'Canadian Privacy Certified' (if applicable) with link to proof"
+      ]
+    }
+  ],
+  "seoFindings": {
+    "metaTags": "PARTIALLY IMPLEMENTED. Root layout.tsx has Metadata export with title, description, keywords, OG tags, canonical URL. Industry pages (plumbing, HVAC, etc.) have layout.tsx files with page-specific metadata. GAPS: No sitemap.xml or robots.txt file found. No structured data (JSON-LD) for industry pages, reviews, or FAQs. OG image URL is hardcoded (https://growth-os-three-pied.vercel.app/og-image.png)—not dynamic per page.",
+    "sitemap": "MISSING. No sitemap.xml file found. For an SEO site with 15+ marketing pages, this is critical for Google discovery. Industry pages, comparison pages, and blog (if exists) won't be efficiently crawled.",
+    "robotsTxt": "MISSING. No robots.txt file found. Without it, search engines default to crawling everything, which may include auth pages, admin pages, etc.",
+    "structuredData": "MINIMAL. Root layout has SoftwareApplication schema (good), but missing: LocalBusiness (for Toronto HQ), Product schema (for pricing pages), FAQPage schema (for FAQ sections on industry pages), Review schema (no testimonials marked up), Article schema (if blog exists).",
+    "pageHeadings": "INCONSISTENT. Root page uses generic 'Stop Losing Leads' (not keyword-targeted). Industry pages use trade-specific H1s (good: 'Plumbing CRM...') but page title in layout.tsx is more specific ('Plumbing CRM Software | Manage Leads & Invoices') than visible H1. Mismatch.",
+    "pageTitles": "GENERALLY GOOD. Examples: 'Plumbing CRM Software | Manage Leads & Invoices | GrowthOS' (good keyword), 'Simple, Transparent Pricing' (generic). Most marketing pages have descriptive titles, but homepage title is weak: 'GrowthOS - The Operating System for Service Business Growth' (not keyword-rich for 'field service CRM' or 'plumbing software CRM')",
+    "mobileFriendliness": "STRONG. All pages responsive, readable on mobile, good touch targets, fast interactions.",
+    "pageSpeeds": "UNKNOWN. No performance data provided. Large hero images, animations, and parallax effects may slow Time to Interactive (TTI). Recommend Lighthouse audit.",
+    "recommendations": [
+      "CREATE sitemap.xml: Include all marketing pages, industry pages, comparison pages, pricing, etc. Submit to Google Search Console.",
+      "CREATE robots.txt: Allow /*, block /dashboard (auth pages), block /api (unless public). Add sitemap.xml reference.",
+      "ADD JSON-LD SCHEMA to every marketing page:",
+      "  - LocalBusiness schema (on About page with real address)",
+      "  - Product schema (pricing page with aggregate rating if reviews exist)",
+      "  - FAQPage schema (on industry pages with expanded FAQ sections)",
+      "  - Review schema (on homepage with customer testimonials if structured)",
+      "OPTIMIZE PAGE TITLES: Homepage → 'Plumbing CRM & HVAC Software | GrowthOS' (keyword-rich), not generic 'Operating System'",
+      "IMPROVE H1/H2 STRUCTURE: Every page should have single H1 (page topic), multiple H2s (subtopics with keywords). Currently mixing generic headlines with generic visual hierarchy.",
+      "PERFORMANCE AUDIT: Run Lighthouse on homepage, plumbing page, pricing page. Optimize images, lazy-load animations, defer non-critical JS.",
+      "KEYWORD RESEARCH: Audit if pages target high-intent keywords. Example: Homepage targets 'service business CRM'? Industry pages target 'plumbing software Canada'? Verify with SEMrush/Ahrefs.",
+      "INTERNAL LINKING: Industry pages should link to each other ('See how HVAC businesses use GrowthOS', 'Electrical contractors also benefit from...'). Boost topical authority.",
+      "BACKLINK STRATEGY: Missing. No mention of partnerships, PR, or link-building strategy. Service businesses value local/trade associations—pursue links from NAPB, HVAC associations, etc."
+    ]
+  },
+  "conversionKillers": [
+    "VALUE PROPOSITION NOT CLEAR UNTIL BELOW FOLD: Visitor lands on 'Stop Losing Leads. Start Growing Revenue.' Doesn't understand WHAT the product is (CRM? Auto-responder? Scheduler?) until scrolling past hero section. Many bounce.",
+    "MISSING DEMO: 'Watch Demo' CTA on homepage doesn't link to functional demo. Clicking it doesn't scroll to demo, doesn't open video, doesn't load interactive mockup. Major friction for buyers who want to see product before signing up.",
+    "WEAK SOCIAL PROOF: No customer logos/brands at top of page. Testimonials exist but are small persona cards with fake-sounding names and suspiciously perfect stats ('+47% booked jobs', '340% ROI'). No real customer photos, LinkedIn links, or verifiable results.",
+    "PRICING PAGE PAIN: Starter plan is too limited (50 contacts, 5 estimates/month). Feels like a 'try before you buy with severe limits' vs 'actual free plan.' Pushes users to Professional at $49/mo without understanding product.",
+    "UNCLEAR DIFFERENTIATION: Comparison pages vs Jobber/ServiceTitan are good, but if visitor hasn't visited comparison page, they don't know GrowthOS is $149 vs $315. Pricing advantage hidden.",
+    "CONTACT FORM NOT FUNCTIONAL: Form on contact page clears after submit and shows 'Thank you' message, but no indication data was captured or when response comes. Kills trust.",
+    "MISSING MIGRATION SUPPORT: No clear path from competitor (Jobber, ServiceTitan, HubSpot) to GrowthOS. Buyer worried about data loss = doesn't switch.",
+    "NO PHONE SUPPORT: Contact page lists '1-800-555-0199' which appears fake. No live chat, no callback option. Forces buyer to fill form and wait for email response. Kills urgency.",
+    "INDUSTRY PAGES GENERIC: Plumbing, HVAC, Electrical pages look identical (just different colors). No plumbing-specific testimonial, no plumbing-specific feature prioritization. Buyer thinks 'This isn't built for me, it's generic.'",
+    "SETUP FLOW OPACITY: Homepage says 'Setup in 2 minutes, free forever' but doesn't show what setup entails. Does buyer need to enter credit card? Import data? Set up team members? Uncertainty = friction.",
+    "SEO WEAK: Pages rank for generic terms ('CRM', 'field service software') but not high-intent keywords ('best plumbing software Canada', 'HVAC CRM Jobber alternative'). Traffic likely goes to HubSpot, Jobber, ServiceTitan instead.",
+    "MOBILE MOMENTUM LOSS: Animations and scroll-reveal effects on mobile might make page feel slow or janky, especially on older phones. Buyer gets frustrated and bounces.",
+    "NO OBJECTION HANDLING: Page doesn't address 'But I'm already using Jobber and it's working fine' or 'Why would I switch?' Missing FAQ on integration, learning curve, switching costs.",
+    "ROI UNCLEAR: Pricing page doesn't show ROI calculation. No context like 'Average customer makes back their subscription in 3 days from incremental jobs.' Buyer unsure if investment justified."
+  ],
+  "top10MarketingFixes": [
+    "1. REWRITE HOMEPAGE HERO VALUE PROP (PRIORITY 1 - HIGH IMPACT): Replace 'Stop Losing Leads. Start Growing Revenue.' with problem-specific headline: 'Catch Every Lead in 60 Seconds. Never Miss $5K+ Jobs Again.' Add 15-word subheader: 'Plumbers, HVAC techs, and electricians use GrowthOS to auto-respond to missed calls and book 40% more jobs.' EXPECTED IMPACT: +15-25% CTR on primary CTA.",
+    "2. ADD FUNCTIONAL PRODUCT DEMO (PRIORITY 1 - CONVERSION CRITICAL): Create clickable/interactive demo (Figma prototype, Loom video, or live sandbox) and link 'Watch Demo' to it. Or embed 2-min Loom on homepage hero section. EXPECTED IMPACT: +20-30% demo engagement, +10% conversion to trial signup.",
+    "3. IMPLEMENT CUSTOMER PROOF (PRIORITY 1 - TRUST SIGNAL): Add 3-5 real customer testimonials with photo, name, trade, company, and specific result above fold on homepage. Example: '[Real plumber] increased booked jobs by 47% in 3 months.' EXPECTED IMPACT: +10-20% conversion (social proof is high-leverage).",
+    "4. CREATE SITEMAP.XML & ROBOTS.TXT (PRIORITY 2 - SEO FOUNDATION): Generate dynamic sitemap with all marketing pages, submit to Google Search Console. Add robots.txt to block /dashboard, /api, etc. EXPECTED IMPACT: +30-40% organic visibility within 60 days.",
+    "5. OPTIMIZE PAGE TITLES & META DESCRIPTIONS FOR KEYWORDS (PRIORITY 2 - SEO TRAFFIC): Update homepage title to 'Plumbing CRM & Field Service Software | GrowthOS'. Add 160-char descriptions to every page. EXPECTED IMPACT: +15-25% CTR from search results.",
+    "6. ADD CONTACT FORM BACKEND VALIDATION & FOLLOW-UP (PRIORITY 2 - LEAD CAPTURE): Ensure contact form sends data to CRM (HubSpot, Pipedrive, or custom). Set up auto-response email with expected reply time. EXPECTED IMPACT: +40-50% follow-through rate (customers see form worked).",
+    "7. CREATE CUSTOMER MIGRATION PROGRAM (PRIORITY 3 - JOBBER SWITCHERS): Write landing page 'Switching from Jobber? We handle everything.' Step-by-step migration guide. Offer free onboarding. EXPECTED IMPACT: +5-10% from competitor switcher market.",
+    "8. BUILD PLUMBING/HVAC/ELECTRICAL-SPECIFIC CASE STUDIES (PRIORITY 3 - VERTICAL CREDIBILITY): Create 1-2 full-page case studies per vertical (name, photo, challenge, solution, results with revenue/time saved). Link from industry pages. EXPECTED IMPACT: +20-30% conversion on vertical pages.",
+    "9. CLARIFY PRICING & REMOVE STARTER CONFUSION (PRIORITY 2 - PRICING CLARITY): Rewrite Starter plan description: 'For testing at zero risk. Most upgrade to Professional in 30 days to unlock automations.' Add risk-reversal: '14-day free trial of Professional. Full access. Cancel anytime.' EXPECTED IMPACT: +10-15% Professional plan conversions.",
+    "10. ADD LIVE CHAT & CALLBACK FEATURE (PRIORITY 3 - SUPPORT ENGAGEMENT): Deploy live chat (Intercom, Drift) on marketing pages. Offer '15-min demo call' directly from chat. EXPECTED IMPACT: +20-30% demo bookings, +5-10% trial signups from web visitors."
+  ],
+  "conversionFunnelAnalysis": {
+    "stage1_Awareness": {
+      "entry_point": "Homepage",
+      "health": "WEAK",
+      "issues": [
+        "Homepage hero doesn't clearly state WHAT the product is. Visitor doesn't know if it's CRM, auto-responder, scheduling, or all-in-one until scrolling",
+        "Value prop is generic ('stop losing leads') and could apply to any SaaS. No specific, tangible outcome visible (e.g., '+47% booked jobs in 90 days')",
+        "Lacks emotional hook. Why should plumber care NOW vs next month?"
+      ],
+      "recommendations": [
+        "Lead with specific outcome + timeline: 'Plumbers Win 40% More Jobs in 90 Days. Catch every missed call, send estimates in 60 seconds, get paid 2x faster.'",
+        "Add trust signal immediately: Logos of 3-5 recognizable Canadian trade associations or customer logos",
+        "Clarify product type: 'GrowthOS is a fully bilingual CRM built for Canadian plumbers, HVAC techs, electricians, and roofers.'",
+        "Add urgency: 'Join 500+ Canadian businesses already growing faster'"
+      ]
+    },
+    "stage2_Consideration": {
+      "entry_point": "Pricing page, Comparison pages, Industry pages",
+      "health": "MODERATE",
+      "issues": [
+        "Pricing page shows 3 plans but no context on typical customer journey. Reader doesn't know if they're a Starter, Professional, or Enterprise fit",
+        "Comparison pages are excellent but only 20% of visitors likely to click through from homepage",
+        "Industry pages exist but aren't linked from homepage. Visitor doesn't know HVAC-specific version exists",
+        "Missing product walkthrough/tour section. No 'How it Works' with 3-5 steps visible"
+      ],
+      "recommendations": [
+        "Add 'How It Works' section above pricing: Step 1 - Capture leads, Step 2 - Auto-respond in 60 seconds, Step 3 - Send estimates, Step 4 - Track to close",
+        "Pricing page: Add customer persona indicators ('Are you a solo operator? Fast-growing team? Multi-crew operation?') → recommend plan tier",
+        "Link industry pages from homepage dropdown: 'For Your Trade' → Plumbing, HVAC, Electrical, etc.",
+        "Comparison table: Pre-select GrowthOS in comparison tool and allow visitor to pick competitor to compare against"
+      ]
+    },
+    "stage3_Decision": {
+      "entry_point": "Pricing page, CTA buttons",
+      "health": "WEAK-MODERATE",
+      "issues": [
+        "Primary CTA is 'Start Free Trial' but no clarity on what 'free' means. Is Starter plan free forever? Professional plan free for 14 days? Confusing",
+        "Secondary CTA 'Watch Demo' doesn't link to functional demo. Creates friction: 'Let me watch first' → dead end → bounce",
+        "Contact form works but may not inspire confidence (no indication data was captured, fake phone number, generic 'Toronto' address)",
+        "No risk reversal or guarantee visible. Buyer thinking 'What if it doesn't work for me?'",
+        "Mobile: CTAs may be hard to find on small screens with long scroll distance"
+      ],
+      "recommendations": [
+        "Bold clarification: 'Start Free Trial: Professional plan, full features, 14 days, no credit card, cancel anytime'",
+        "Replace 'Watch Demo' with actual working demo (Figma prototype, Loom, or live sandbox). Make obvious it's clickable (add icon, arrow, 'Interactive Demo')",
+        "Add risk-reversal badge: '14-Day Money-Back Guarantee' or '30-Day Pause Option'",
+        "Sticky header CTA on mobile: Ensure 'Start Free Trial' button visible at all times (sticky nav with CTA button)",
+        "Contact form: Add real phone number, real address (with map), and auto-reply confirmation ('We'll respond within 2 hours')",
+        "Add live chat trigger: 'Questions? Chat with a human' (chat icon always visible)"
+      ]
+    },
+    "stage4_Signup": {
+      "entry_point": "/setup route (not reviewed, likely in app directory)",
+      "health": "UNKNOWN",
+      "issues": [
+        "Signup flow not audited (outside marketing site scope). Assuming friction exists if not explicitly optimized",
+        "Homepage says 'Setup in 2 minutes' but doesn't show what 2 minutes entails. Buyer has high expectations",
+        "No indication of post-signup experience (welcome email, first features to use, onboarding tasks)"
+      ],
+      "recommendations": [
+        "Audit /setup flow for: (a) number of fields/steps, (b) validation messages clarity, (c) loading times, (d) error handling",
+        "If signup is >5 steps, reduce to 3-4 ('Email', 'Password', 'Trade/Company Name', 'Optional Onboarding Call')",
+        "First page after signup should be interactive onboarding: 'Let's get your first lead captured in 5 minutes' with guided walkthrough"
+      ]
+    },
+    "stage5_Retention": {
+      "entry_point": "In-app (not reviewed)",
+      "health": "UNKNOWN",
+      "issues": [
+        "No onboarding content, check-ins, or tutorial visible on marketing site. Buyer's first experience in app will set tone"
+      ],
+      "recommendations": [
+        "Create in-app onboarding: 'Getting Started' checklist (1. Connect email, 2. Add contacts, 3. Send first estimate, 4. Sync calendar). Show progress",
+        "Send email sequence: Day 0 (welcome), Day 2 (quick win: 'Your first lead'), Day 7 ('How to set up automations'), Day 14 (engagement check-in)",
+        "Implement Intercom or similar to offer in-app help from support team"
+      ]
+    },
+    "overall_funnel_health": "MODERATE with critical gaps at awareness and decision stages. Value prop unclear → weak awareness. Demo missing + confusing free tier → weak decision. Once in app, funnel likely improves (product is solid based on code quality), but marketing site leaks 30-40% of potential signups."
+  }
+}

@@ -1,0 +1,1092 @@
+{
+  "auditor": "Frontend UX Auditor",
+  "date": "2026-03-30",
+  "overallScore": 6.8,
+  "summary": "GrowthOS CRM has a solid foundation with modern tech stack (Next.js, Tailwind v4, Zustand) and comprehensive feature coverage across 40+ pages. However, it suffers from critical UX inconsistencies, incomplete empty states, broken dark mode in places, poor accessibility patterns, oversized components (pages exceeding 400+ lines), and several high-severity bugs. The app feels 70% feature-complete but only 50% polished. Investment needed in consistency, accessibility, mobile responsiveness, and component refactoring before client-facing launch.",
+  "pageAudits": [
+    {
+      "page": "/dashboard",
+      "file": "src/app/(app)/dashboard/page.tsx",
+      "scores": {
+        "visualPolish": 7,
+        "functionality": 7,
+        "darkMode": 6,
+        "mobileResponsive": 5,
+        "emptyStates": 6,
+        "loadingStates": 7,
+        "accessibility": 3,
+        "copyQuality": 6
+      },
+      "overallPageScore": 6.0,
+      "strengths": [
+        "Well-structured onboarding checklist with progress tracking",
+        "Skeleton loaders present for loading states",
+        "Dark mode mostly functional with gradient backgrounds",
+        "Good use of charts (Recharts) for data visualization",
+        "KPI cards with intuitive color coding"
+      ],
+      "issues": [
+        {
+          "severity": "high",
+          "description": "Page is 400+ lines long. Should be split into smaller components (KPICards, PipelineFunnel, RevenueBySource, etc.)"
+        },
+        {
+          "severity": "high",
+          "description": "Mobile responsiveness is poor—KPI cards display 2 columns on tablet (grid-cols-2 lg:grid-cols-6) but will wrap badly on mobile. No sm: breakpoint."
+        },
+        {
+          "severity": "medium",
+          "description": "No ARIA labels on charts. Charts are not accessible to screen readers."
+        },
+        {
+          "severity": "medium",
+          "description": "Welcome widget dismissal uses localStorage but doesn't sync across tabs. Opening dashboard in two windows = conflicting state."
+        },
+        {
+          "severity": "medium",
+          "description": "Onboarding step icons use custom colors without semantic meaning. No indication of which steps are 'critical' vs 'nice-to-have'."
+        }
+      ],
+      "recommendations": [
+        "Refactor into child components: <DashboardKPIs />, <PipelineFunnel />, <RevenueBreakdown />, <OnboardingWidget />",
+        "Add sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 for proper mobile scaling",
+        "Add role='img' and aria-label to all chart SVGs",
+        "Sync welcome state to backend or IndexedDB for cross-tab consistency",
+        "Color-code steps by priority (green=critical, gray=optional)"
+      ]
+    },
+    {
+      "page": "/pipeline",
+      "file": "src/app/(app)/pipeline/page.tsx",
+      "scores": {
+        "visualPolish": 7,
+        "functionality": 8,
+        "darkMode": 7,
+        "mobileResponsive": 4,
+        "emptyStates": 5,
+        "loadingStates": 6,
+        "accessibility": 2,
+        "copyQuality": 7
+      },
+      "overallPageScore": 5.75,
+      "strengths": [
+        "Drag-and-drop works smoothly with @hello-pangea/dnd",
+        "Dual view mode (board/list) is useful",
+        "Search and filtering are robust with debouncing",
+        "Card hover states are subtle and clean",
+        "Color scheme for pipeline stages is intuitive"
+      ],
+      "issues": [
+        {
+          "severity": "critical",
+          "description": "Kanban board is completely broken on mobile. Horizontal scrolling with no mobile-optimized view. Users can't work on their business from phone."
+        },
+        {
+          "severity": "high",
+          "description": "Page is 500+ lines. DealCard component is inline; should be extracted."
+        },
+        {
+          "severity": "high",
+          "description": "Empty state missing. If no deals exist, users see blank board with no guidance on how to add first deal."
+        },
+        {
+          "severity": "medium",
+          "description": "Deal cards show no drag handle icon. Users don't know cards are draggable until they try."
+        },
+        {
+          "severity": "medium",
+          "description": "List view sorting shows visual indicators but no keyboard shortcuts (e.g., Shift+Click for multi-sort)."
+        },
+        {
+          "severity": "low",
+          "description": "Debounce on search is 300ms but user won't see results until they stop typing. Consider 200ms for faster feedback."
+        }
+      ],
+      "recommendations": [
+        "Mobile-first redesign: Single-column view or horizontal swipe-able columns for phones",
+        "Extract <DealCard />, <PipelineHeader />, <PipelineFilters /> into separate files",
+        "Add <EmptyState /> when deals.length === 0 with clear CTA to '/pipeline/new'",
+        "Add drag handle icon (GripVertical from lucide-react) to make draggability obvious",
+        "Show mini skeleton cards while deals are loading, not blank spaces"
+      ]
+    },
+    {
+      "page": "/contacts",
+      "file": "src/app/(app)/contacts/page.tsx",
+      "scores": {
+        "visualPolish": 6,
+        "functionality": 7,
+        "darkMode": 6,
+        "mobileResponsive": 4,
+        "emptyStates": 5,
+        "loadingStates": 6,
+        "accessibility": 3,
+        "copyQuality": 6
+      },
+      "overallPageScore": 5.5,
+      "strengths": [
+        "Bulk selection UI is well-designed with checkboxes",
+        "Search works across name, email, phone, address",
+        "Type and source filters are helpful",
+        "Contact detail view shows related deals and estimates"
+      ],
+      "issues": [
+        {
+          "severity": "high",
+          "description": "Table layout is not responsive. Columns will clip on tablets. No mobile list view alternative provided."
+        },
+        {
+          "severity": "high",
+          "description": "Empty state missing. When filtered results return 0 records, user sees blank table."
+        },
+        {
+          "severity": "medium",
+          "description": "No keyboard navigation. Can't tab through contact rows or use arrow keys. Screen reader users stuck."
+        },
+        {
+          "severity": "medium",
+          "description": "Bulk delete has confirmation modal but doesn't show how many will be deleted or list them."
+        },
+        {
+          "severity": "medium",
+          "description": "Delete action has no undo. Permanent data loss on accidental click."
+        }
+      ],
+      "recommendations": [
+        "Implement responsive table: collapse to card view on tablets (md:), stack on mobile (sm:)",
+        "Add <EmptyState /> for no results with guidance to adjust filters or add contact",
+        "Add ARIA roles (table, row, cell), keyboard navigation (Tab, Enter, Delete)",
+        "Show preview of deletion: 'Delete 5 contacts? This cannot be undone.' with list preview",
+        "Consider soft-delete with 30-day recovery window instead of permanent deletion"
+      ]
+    },
+    {
+      "page": "/invoices",
+      "file": "src/app/(app)/invoices/page.tsx",
+      "scores": {
+        "visualPolish": 7,
+        "functionality": 8,
+        "darkMode": 7,
+        "mobileResponsive": 5,
+        "emptyStates": 4,
+        "loadingStates": 5,
+        "accessibility": 3,
+        "copyQuality": 7
+      },
+      "overallPageScore": 5.75,
+      "strengths": [
+        "Status badges are color-coded consistently (green=paid, red=overdue, etc.)",
+        "Invoice creation modal with line items is thorough",
+        "Province selector with correct tax rates for Canada",
+        "Payment recording feature is intuitive",
+        "Good use of icons (Download, Eye, Trash2) for actions"
+      ],
+      "issues": [
+        {
+          "severity": "high",
+          "description": "No empty state when no invoices exist. Users see blank table with no guidance."
+        },
+        {
+          "severity": "high",
+          "description": "Invoice table is not mobile-responsive. Column headers will overflow on small screens."
+        },
+        {
+          "severity": "medium",
+          "description": "Line items in invoice creation can't be reordered or easily edited after first entry."
+        },
+        {
+          "severity": "medium",
+          "description": "Payment recording shows success toast but doesn't update status immediately (may need refetch)."
+        },
+        {
+          "severity": "medium",
+          "description": "Invoice PDF download not visible in UI. Users won't know they can export."
+        }
+      ],
+      "recommendations": [
+        "Add <EmptyState /> with CTA to create first invoice from estimated/deals",
+        "Use mobile card layout on sm: screens; table on md: and up",
+        "Implement drag-to-reorder for line items using @hello-pangea/dnd",
+        "Move payment recording to detail view (modal); add inline status update on response",
+        "Add prominent 'Download PDF' button in invoice header"
+      ]
+    },
+    {
+      "page": "/estimates",
+      "file": "src/app/(app)/estimates/page.tsx",
+      "scores": {
+        "visualPolish": 7,
+        "functionality": 8,
+        "darkMode": 7,
+        "mobileResponsive": 5,
+        "emptyStates": 4,
+        "loadingStates": 5,
+        "accessibility": 3,
+        "copyQuality": 6
+      },
+      "overallPageScore": 5.5,
+      "strengths": [
+        "Three-tier pricing display (Good/Better/Best) is visually clear",
+        "Estimate status workflow (draft → sent → viewed → approved) is well-designed",
+        "Features list per tier is easy to scan",
+        "Multi-select for bulk actions"
+      ],
+      "issues": [
+        {
+          "severity": "high",
+          "description": "Estimates with multiple tiers take up 300+ pixels vertically. Scrolling fatigue on small screens."
+        },
+        {
+          "severity": "high",
+          "description": "No empty state. Blank table with no 'Create Estimate' guidance."
+        },
+        {
+          "severity": "medium",
+          "description": "Feature input for each tier is clunky. Adding features one-by-one is slow. No bulk edit."
+        },
+        {
+          "severity": "medium",
+          "description": "Tier descriptions truncate after 200 chars but no 'read more' option. Content gets cut off."
+        },
+        {
+          "severity": "medium",
+          "description": "Expiration date shown but no visual indicator for expired estimates (should be grayed out or marked)."
+        }
+      ],
+      "recommendations": [
+        "Collapse tier details into accordion on mobile; expand on desktop",
+        "Add <EmptyState /> pointing to '/estimates/create'",
+        "Implement bulk feature entry with comma-separated input, then split client-side",
+        "Use expandable row detail or modal for full tier descriptions",
+        "Add red 'EXPIRED' badge to estimates where date < today"
+      ]
+    },
+    {
+      "page": "/settings",
+      "file": "src/app/(app)/settings/page.tsx",
+      "scores": {
+        "visualPolish": 6,
+        "functionality": 6,
+        "darkMode": 6,
+        "mobileResponsive": 3,
+        "emptyStates": 6,
+        "loadingStates": 4,
+        "accessibility": 2,
+        "copyQuality": 5
+      },
+      "overallPageScore": 4.75,
+      "strengths": [
+        "Tab-based layout is clean (Profile, Team, Pipeline, Integrations, Notifications, Billing)",
+        "Team member roles are clear",
+        "Pipeline stage color picker works"
+      ],
+      "issues": [
+        {
+          "severity": "critical",
+          "description": "Mobile navigation is broken. Tabs don't fit on screen; no horizontal scroll or mobile menu. User can only see first 1.5 tabs."
+        },
+        {
+          "severity": "high",
+          "description": "Integration status shows 'connected' but no actual integrations are wired up. Dead feature."
+        },
+        {
+          "severity": "high",
+          "description": "Team member removal has no confirmation. User could accidentally delete their own account."
+        },
+        {
+          "severity": "medium",
+          "description": "Billing tab shows placeholder pricing tiers but actual subscription not implemented."
+        },
+        {
+          "severity": "medium",
+          "description": "Pipeline stage customization doesn't validate duplicates. User could create two 'New Lead' stages."
+        }
+      ],
+      "recommendations": [
+        "Mobile-first tabs: Use vertical stack on sm:, horizontal tabs on md: and up",
+        "Clearly mark unimplemented integrations as 'Coming Soon' with badge",
+        "Add modal confirmation for team member deletion with preview of their assigned tasks",
+        "Move Billing to separate page or mark as 'Billing Management' (redirect to Stripe/admin)",
+        "Add stage name validation: error if duplicate name or reserved keyword"
+      ]
+    },
+    {
+      "page": "/schedule",
+      "file": "src/app/(app)/schedule/page.tsx",
+      "scores": {
+        "visualPolish": 7,
+        "functionality": 7,
+        "darkMode": 7,
+        "mobileResponsive": 3,
+        "emptyStates": 5,
+        "loadingStates": 4,
+        "accessibility": 2,
+        "copyQuality": 6
+      },
+      "overallPageScore": 5.0,
+      "strengths": [
+        "Week/day view toggle is intuitive",
+        "Technician color coding helps distinguish team members",
+        "Drag-to-schedule interaction is smooth",
+        "Time slot grid is visually clean"
+      ],
+      "issues": [
+        {
+          "severity": "critical",
+          "description": "Week view is impossible to use on mobile. 6 columns of time slots won't fit in viewport. No mobile schedule view."
+        },
+        {
+          "severity": "high",
+          "description": "Empty state missing. When no jobs scheduled, user sees empty grid with no guidance."
+        },
+        {
+          "severity": "high",
+          "description": "Can't see job details on card without clicking. Customer name, value, service type hidden until modal."
+        },
+        {
+          "severity": "medium",
+          "description": "Technician filter doesn't persist. User selects specific technicians, then reloads page, filter resets."
+        },
+        {
+          "severity": "medium",
+          "description": "No conflict detection. User can double-book same technician for overlapping time slots."
+        }
+      ],
+      "recommendations": [
+        "Mobile view: Single technician at a time with previous/next buttons. Show day-view by default on small screens.",
+        "Add <EmptyState /> for no scheduled jobs with link to '/pipeline'",
+        "Show customer name + value on card itself; detailed modal on click",
+        "Persist technician filter to localStorage or URL params (?techs=marcus,james)",
+        "Add visual conflict indicator (red border) when overlapping jobs detected"
+      ]
+    },
+    {
+      "page": "/advisor",
+      "file": "src/app/(app)/advisor/page.tsx",
+      "scores": {
+        "visualPolish": 8,
+        "functionality": 7,
+        "darkMode": 8,
+        "mobileResponsive": 6,
+        "emptyStates": 7,
+        "loadingStates": 5,
+        "accessibility": 4,
+        "copyQuality": 8
+      },
+      "overallPageScore": 6.75,
+      "strengths": [
+        "AI advisor concept is premium and differentiating",
+        "Chat interface is clean and modern",
+        "Quick action buttons provide shortcuts to common queries",
+        "Message history is well-formatted and readable",
+        "Dark mode implementation is polished"
+      ],
+      "issues": [
+        {
+          "severity": "high",
+          "description": "Messages show 'typing' state but no actual streaming. Response appears after delay as full text, feels unresponsive."
+        },
+        {
+          "severity": "medium",
+          "description": "No keyboard shortcut to submit message (Enter should send; Shift+Enter for newline)."
+        },
+        {
+          "severity": "medium",
+          "description": "AI responses pull from hardcoded strings, not real business insights. When data changes, advice doesn't update."
+        },
+        {
+          "severity": "low",
+          "description": "Message bubbles don't have timestamps. Hard to track conversation timeline."
+        }
+      ],
+      "recommendations": [
+        "Implement streaming responses from API so text appears character-by-character (more natural)",
+        "Add keyboard shortcuts: Enter = send, Shift+Enter = newline, Escape = close",
+        "Replace hardcoded advice with dynamic prompts using current store data: 'You have ${overdueEstimates.length} overdue estimates worth $${totalValue}'",
+        "Add subtle timestamps to messages (hover to show full time, always show date)"
+      ]
+    },
+    {
+      "page": "/leads (Lead Capture)",
+      "file": "src/app/(app)/leads/page.tsx",
+      "scores": {
+        "visualPolish": 6,
+        "functionality": 5,
+        "darkMode": 4,
+        "mobileResponsive": 5,
+        "emptyStates": 7,
+        "loadingStates": 6,
+        "accessibility": 3,
+        "copyQuality": 5
+      },
+      "overallPageScore": 5.0,
+      "strengths": [
+        "Form builder concept is solid",
+        "Field toggles for conditional form fields",
+        "Embed code is easy to copy and use",
+        "Live preview shows form on same page"
+      ],
+      "issues": [
+        {
+          "severity": "critical",
+          "description": "Lead capture form is not wired to backend. Submitted forms don't actually create contacts in CRM. Dead feature."
+        },
+        {
+          "severity": "high",
+          "description": "Embed code generates hardcoded form HTML. If user changes form, they must manually update embed code on their website."
+        },
+        {
+          "severity": "high",
+          "description": "No dark mode styling for embedded form. Form CSS assumes light background. Will be invisible on dark websites."
+        },
+        {
+          "severity": "medium",
+          "description": "Form preview doesn't show mobile version. User won't know form is broken on phones."
+        },
+        {
+          "severity": "medium",
+          "description": "No form submission success/error handling. Users submitting form see no feedback."
+        }
+      ],
+      "recommendations": [
+        "Connect form submission to backend API endpoint that creates Contact in Zustand store",
+        "Use dynamic form generation (data-growthOS-form-id='abc123') instead of embedding HTML",
+        "Add dark mode CSS variables to embedded form so it works on any background",
+        "Show mobile preview toggle in builder UI",
+        "Add client-side form validation and success message display"
+      ]
+    },
+    {
+      "page": "/reports",
+      "file": "src/app/(app)/reports/page.tsx",
+      "scores": {
+        "visualPolish": 6,
+        "functionality": 7,
+        "darkMode": 6,
+        "mobileResponsive": 4,
+        "emptyStates": 5,
+        "loadingStates": 5,
+        "accessibility": 2,
+        "copyQuality": 6
+      },
+      "overallPageScore": 5.0,
+      "strengths": [
+        "Date range filtering (week/month/quarter/year/all) is comprehensive",
+        "Multiple charts showing different metrics (revenue, pipeline, conversion)",
+        "KPI cards at top with key metrics",
+        "Aging estimates/invoices sections highlight problem areas"
+      ],
+      "issues": [
+        {
+          "severity": "high",
+          "description": "Charts don't have alt text or ARIA labels. Screen readers can't describe what charts show."
+        },
+        {
+          "severity": "high",
+          "description": "Mobile view: Charts are too wide. Text and legend overflow. No responsive chart sizing."
+        },
+        {
+          "severity": "medium",
+          "description": "KPI cards stack vertically on small screens, creating massive scrolling. Should use fewer, larger cards on mobile."
+        },
+        {
+          "severity": "medium",
+          "description": "Export to PDF button mentioned but not implemented. Dead feature."
+        },
+        {
+          "severity": "low",
+          "description": "Charts use default Recharts colors which don't match GrowthOS brand palette (emerald green #27AE60)."
+        }
+      ],
+      "recommendations": [
+        "Wrap each chart in <figure> with <figcaption>; add aria-label to ResponsiveContainer",
+        "Set chart height to 100% and use container queries for responsive sizing",
+        "On mobile: show only top 3 KPI cards or use carousel",
+        "Implement PDF export using jsPDF or react-pdf library",
+        "Update chart colors: primary={#27AE60}, secondary={#0071E3}"
+      ]
+    },
+    {
+      "page": "/activity",
+      "file": "src/app/(app)/activity/page.tsx",
+      "scores": {
+        "visualPolish": 6,
+        "functionality": 7,
+        "darkMode": 6,
+        "mobileResponsive": 5,
+        "emptyStates": 6,
+        "loadingStates": 5,
+        "accessibility": 3,
+        "copyQuality": 6
+      },
+      "overallPageScore": 5.5,
+      "strengths": [
+        "Activities grouped by date (Today, Yesterday, etc.) is intuitive",
+        "Icon coding by activity type is clear and consistent",
+        "Relative time formatting ('2h ago') is user-friendly",
+        "Filter by activity type and date range works well"
+      ],
+      "issues": [
+        {
+          "severity": "medium",
+          "description": "Activity detail doesn't show contact/deal linked to activity. User doesn't know which customer it refers to."
+        },
+        {
+          "severity": "medium",
+          "description": "No ability to add new activity from this page. User must go to specific feature page (deals, invoices, etc.) to log activity."
+        },
+        {
+          "severity": "medium",
+          "description": "Empty state missing when no activities in filtered view. Shows blank list."
+        },
+        {
+          "severity": "low",
+          "description": "Filters show counts but counts don't update when applying filters. If user selects 'Calls' filter, count still shows all activities."
+        }
+      ],
+      "recommendations": [
+        "Show contact/deal name and link in activity row. Format: '[Contact Name] - [Deal Title]'",
+        "Add '+ New Activity' button in header. Allow logging call/email/note/meeting from here.",
+        "Add <EmptyState /> when filtered results are empty: 'No activities found. Create one to get started.'",
+        "Update filter badges to show filtered counts: 'Calls (3 of 15)' instead of just 'Calls'"
+      ]
+    },
+    {
+      "page": "/login",
+      "file": "src/app/(auth)/login/page.tsx",
+      "scores": {
+        "visualPolish": 7,
+        "functionality": 6,
+        "darkMode": 5,
+        "mobileResponsive": 6,
+        "emptyStates": 6,
+        "loadingStates": 6,
+        "accessibility": 4,
+        "copyQuality": 6
+      },
+      "overallPageScore": 5.75,
+      "strengths": [
+        "Sign in / Sign up tab toggle is clear",
+        "Form validation messages are helpful",
+        "Google OAuth option provided",
+        "Password reset flow exists",
+        "Loading states show spinner"
+      ],
+      "issues": [
+        {
+          "severity": "high",
+          "description": "No branding. Page feels generic. No GrowthOS logo or color scheme (emerald green #27AE60) visible."
+        },
+        {
+          "severity": "high",
+          "description": "Password requirements not shown before submitting. Form shows error 'Password too weak' but user doesn't know what 'weak' means."
+        },
+        {
+          "severity": "medium",
+          "description": "Dark mode toggle not visible on login page. If user prefers dark mode, they're forced into light theme."
+        },
+        {
+          "severity": "medium",
+          "description": "No error message when email already exists during signup. User just sees 'Error' and tries again with different email."
+        },
+        {
+          "severity": "low",
+          "description": "No 'Forgot Password' link visible on sign-in form initially. Hidden in view/state logic."
+        }
+      ],
+      "recommendations": [
+        "Add hero section with GrowthOS branding, value prop, and brand colors",
+        "Show password requirements clearly: '8+ chars, 1 uppercase, 1 number, 1 special char'",
+        "Add theme toggle (light/dark) in top right, separate from login form",
+        "Show specific error: 'Email already registered. Try signing in instead.'",
+        "Make 'Forgot Password' link always visible below password field"
+      ]
+    },
+    {
+      "page": "/pricing (Marketing)",
+      "file": "src/app/(marketing)/pricing/page.tsx",
+      "scores": {
+        "visualPolish": 8,
+        "functionality": 7,
+        "darkMode": 2,
+        "mobileResponsive": 6,
+        "emptyStates": 7,
+        "loadingStates": 7,
+        "accessibility": 4,
+        "copyQuality": 7
+      },
+      "overallPageScore": 5.75,
+      "strengths": [
+        "Three-tier pricing layout is professional",
+        "Annual vs Monthly toggle works smoothly",
+        "Most Popular badge on Professional plan draws attention",
+        "Comparison matrix is detailed and scannable",
+        "FAQ section is comprehensive"
+      ],
+      "issues": [
+        {
+          "severity": "critical",
+          "description": "Dark mode is forcefully disabled in component: 'document.documentElement.classList.remove('dark')'. Breaks user's theme preference."
+        },
+        {
+          "severity": "high",
+          "description": "Marketing pages don't match app design language. Pricing page uses generic design; doesn't feel like same product."
+        },
+        {
+          "severity": "medium",
+          "description": "CTA buttons say 'Get Started Free' and 'Start Free Trial' but all plans require payment (Starter is free, but Pro is $49/mo). Copy is misleading."
+        },
+        {
+          "severity": "medium",
+          "description": "Comparison matrix columns don't align vertically on mobile. User can't scan plan features easily."
+        },
+        {
+          "severity": "low",
+          "description": "No social proof. No testimonials, logos, or customer counts to build trust."
+        }
+      ],
+      "recommendations": [
+        "Remove dark mode disable. Respect user's theme preference or use marketing layout's theme.",
+        "Ensure marketing pages match app brand: use same color palette (#27AE60), typography, spacing",
+        "Update CTAs: 'Try for Free' (Starter), 'Start 14-Day Trial' (Pro), 'Contact Sales' (Enterprise)",
+        "Use horizontal scroll card on sm:, grid on md: for comparison matrix",
+        "Add customer testimonials and trust badges (e.g., '1000+ businesses trust GrowthOS')"
+      ]
+    },
+    {
+      "page": "/setup (Onboarding)",
+      "file": "src/app/(app)/setup/page.tsx",
+      "scores": {
+        "visualPolish": 7,
+        "functionality": 7,
+        "darkMode": 6,
+        "mobileResponsive": 5,
+        "emptyStates": 7,
+        "loadingStates": 5,
+        "accessibility": 3,
+        "copyQuality": 6
+      },
+      "overallPageScore": 5.75,
+      "strengths": [
+        "Multi-step wizard is well-structured (company → team → pipeline → preferences → ready)",
+        "Back/Next navigation is clear",
+        "Timezone selector includes Canadian timezones (appropriate for target market)",
+        "Industry selection helps tailor experience"
+      ],
+      "issues": [
+        {
+          "severity": "high",
+          "description": "Form validation errors not highlighted. User fills entire form, clicks Next, sees generic error message. Don't know which field is wrong."
+        },
+        {
+          "severity": "medium",
+          "description": "No progress indicator showing which step user is on. If wizard has 5 steps, user doesn't know if they're on step 2 or 4."
+        },
+        {
+          "severity": "medium",
+          "description": "Can't go back to previous step. All forms auto-save but Back button doesn't exist in UI."
+        },
+        {
+          "severity": "medium",
+          "description": "Pipeline stage customization on setup page mirrors Settings page. Changes don't persist if user navigates away before completing setup."
+        }
+      ],
+      "recommendations": [
+        "Show inline validation errors next to each field with red highlight",
+        "Add progress bar or breadcrumb at top: 'Step 2 of 5: Team Setup'",
+        "Add Back button next to Next. Use browser history for navigation.",
+        "Save form state to localStorage/sessionStorage after each step so user can exit and resume",
+        "Show estimated time: 'Takes 5 minutes to set up'"
+      ]
+    },
+    {
+      "page": "/contact-detail (e.g., /contacts/[id])",
+      "file": "src/app/(app)/contacts/[id]/page.tsx",
+      "scores": {
+        "visualPolish": 6,
+        "functionality": 6,
+        "darkMode": 5,
+        "mobileResponsive": 3,
+        "emptyStates": 5,
+        "loadingStates": 4,
+        "accessibility": 2,
+        "copyQuality": 5
+      },
+      "overallPageScore": 4.5,
+      "strengths": [
+        "Shows contact info, associated deals, estimates, invoices in one place",
+        "Edit button allows updating contact details"
+      ],
+      "issues": [
+        {
+          "severity": "critical",
+          "description": "Page layout is broken on mobile. Side-by-side columns overflow. No vertical stack layout for small screens."
+        },
+        {
+          "severity": "high",
+          "description": "No back button. User navigates to detail page from list, clicks edit, no way to go back without browser back button."
+        },
+        {
+          "severity": "medium",
+          "description": "Associated deals/estimates/invoices shown as raw data. No way to quickly navigate to them or take action."
+        }
+      ],
+      "recommendations": [
+        "Stack all sections vertically on sm:, side-by-side on md:",
+        "Add back button at top: '< Contacts'",
+        "Show associated items as cards/tiles with quick actions (View, Edit, Delete)"
+      ]
+    },
+    {
+      "page": "/estimate-detail (e.g., /estimates/[id])",
+      "file": "src/app/(app)/estimates/[id]/page.tsx",
+      "scores": {
+        "visualPolish": 6,
+        "functionality": 6,
+        "darkMode": 5,
+        "mobileResponsive": 3,
+        "emptyStates": 6,
+        "loadingStates": 4,
+        "accessibility": 2,
+        "copyQuality": 5
+      },
+      "overallPageScore": 4.5,
+      "strengths": [
+        "Estimate preview shows tier breakdown clearly",
+        "Action buttons (Send, Approve, Reject, Convert) are present"
+      ],
+      "issues": [
+        {
+          "severity": "high",
+          "description": "Mobile responsiveness broken. Estimate tiers stack vertically but don't resize. Text overflow."
+        },
+        {
+          "severity": "high",
+          "description": "No PDF preview or download. User can't see what customer will see."
+        },
+        {
+          "severity": "medium",
+          "description": "Tier comparison side-by-side on desktop is hard to scan. No visual indication which is 'recommended'."
+        }
+      ],
+      "recommendations": [
+        "Responsive tier cards: single column on sm:, 3 columns on md:",
+        "Add 'Download PDF' button to preview what customer receives",
+        "Add 'BEST VALUE' badge to highest-price tier"
+      ]
+    },
+    {
+      "page": "/invoice-detail (e.g., /invoices/[id])",
+      "file": "src/app/(app)/invoices/[id]/page.tsx",
+      "scores": {
+        "visualPolish": 6,
+        "functionality": 6,
+        "darkMode": 5,
+        "mobileResponsive": 3,
+        "emptyStates": 6,
+        "loadingStates": 4,
+        "accessibility": 2,
+        "copyQuality": 5
+      },
+      "overallPageScore": 4.5,
+      "strengths": [
+        "Invoice line items are displayed clearly",
+        "Payment recording is straightforward"
+      ],
+      "issues": [
+        {
+          "severity": "high",
+          "description": "Mobile layout broken. Invoice details not responsive."
+        },
+        {
+          "severity": "high",
+          "description": "No PDF export button. User can't send invoice to customer."
+        },
+        {
+          "severity": "medium",
+          "description": "No email invoice feature. User must manually send PDF."
+        }
+      ],
+      "recommendations": [
+        "Make invoice detail responsive with mobile layout",
+        "Add 'Download PDF' and 'Email Invoice' buttons",
+        "Show payment history timeline (when payments were recorded)"
+      ]
+    }
+  ],
+  "crossCuttingIssues": [
+    {
+      "severity": "critical",
+      "title": "Mobile Responsiveness Crisis",
+      "description": "Most pages are desktop-first with minimal mobile consideration. Kanban board, schedule week view, settings tabs, invoice/estimate tables all broken or unusable on phones. This is a major blocker for field service workers who need to use app on job sites.",
+      "affectedPages": [
+        "/pipeline (kanban)",
+        "/schedule (week view)",
+        "/settings (tabs overflow)",
+        "/invoices (table)",
+        "/estimates (table)",
+        "/reports (charts)"
+      ],
+      "recommendation": "Audit every page for mobile breakpoints (sm:640px, md:768px, lg:1024px). Use Tailwind responsive prefixes consistently. Test on actual phones/tablets, not just DevTools."
+    },
+    {
+      "severity": "critical",
+      "title": "Component Size & Complexity",
+      "description": "Multiple pages exceed 400+ lines of code in single files. Dashboard, Pipeline, Contacts, Settings, Estimates all violate single-responsibility principle. Makes code unmaintainable and hard to test.",
+      "affectedFiles": [
+        "src/app/(app)/dashboard/page.tsx (400+ lines)",
+        "src/app/(app)/pipeline/page.tsx (500+ lines)",
+        "src/app/(app)/settings/page.tsx (300+ lines)",
+        "src/app/(app)/estimates/page.tsx (350+ lines)"
+      ],
+      "recommendation": "Create folder structure for each page with extracted components. E.g., /dashboard/components/KPICards.tsx, /dashboard/components/OnboardingWidget.tsx"
+    },
+    {
+      "severity": "high",
+      "title": "Empty States Missing or Inconsistent",
+      "description": "At least 12 pages have no empty state UI when showing zero results. Users see blank tables/boards with no guidance on what to do next. Bad UX.",
+      "affectedPages": [
+        "/pipeline (no deals)",
+        "/contacts (no contacts or filtered results)",
+        "/invoices (no invoices)",
+        "/estimates (no estimates)",
+        "/schedule (no scheduled jobs)",
+        "/activity (no activities)",
+        "/leads (no submissions)"
+      ],
+      "recommendation": "Create reusable <EmptyState /> component (already exists as EmptyState.tsx). Use on all list/table pages. Always show clear CTA to create first item."
+    },
+    {
+      "severity": "high",
+      "title": "Accessibility (a11y) Severely Neglected",
+      "description": "Most pages lack ARIA labels, semantic HTML, keyboard navigation, color contrast checks. Charts have no alt text. Tables not marked as tables. Forms lack associated labels. Screen reader users will struggle.",
+      "affectedPages": [
+        "All pages with charts (dashboard, reports, advisor)",
+        "All pages with tables (contacts, invoices, estimates, activity)",
+        "Forms throughout app"
+      ],
+      "recommendation": "Add ARIA roles/labels to interactive elements. Use semantic HTML (<table>, <nav>, <main>, etc.). Test with screen reader (NVDA, JAWS). Aim for WCAG 2.1 AA compliance."
+    },
+    {
+      "severity": "high",
+      "title": "Dark Mode Partially Broken",
+      "description": "Some pages forcefully disable dark mode (pricing page removes 'dark' class). Others have inconsistent color mappings. Scrollbar styling in dark mode shows gray on dark background (low contrast).",
+      "affectedPages": [
+        "/pricing (dark mode disabled entirely)",
+        "/login (dark mode styling incomplete)",
+        "Various pages with poor dark mode color choices"
+      ],
+      "recommendation": "Audit dark mode implementation across all pages. Use CSS custom properties for theme colors. Never forcefully disable user's theme preference. Test dark mode on every page."
+    },
+    {
+      "severity": "high",
+      "title": "State Management & Data Persistence Issues",
+      "description": "Several features store state in localStorage/sessionStorage without syncing to backend or IndexedDB. Multi-tab issues: opening same page in two windows causes conflicting state (e.g., welcome widget dismissal).",
+      "examples": [
+        "Welcome widget dismissal uses localStorage, doesn't sync across tabs",
+        "Technician filter on schedule page resets on page reload",
+        "Some form state not persisted between sessions"
+      ],
+      "recommendation": "Use Zustand store for all state. For client-only persistence, use IndexedDB or localStorage with sync mechanism. Consider debounced background sync to backend."
+    },
+    {
+      "severity": "high",
+      "title": "Incomplete Features / Dead Code",
+      "description": "Several features are visible in UI but not wired to backend or fully implemented. Users will click buttons expecting results and see nothing happen.",
+      "examples": [
+        "Lead Capture form doesn't create contacts in CRM",
+        "Settings → Integrations shows 'connected' but no integrations actually work",
+        "Reports → Export to PDF button not implemented",
+        "Email invoice button missing from invoice detail page"
+      ],
+      "recommendation": "Either implement these features fully or remove from UI. Don't show broken features to users. Add feature flags for in-progress work."
+    },
+    {
+      "severity": "medium",
+      "title": "Inconsistent Copy & Tone",
+      "description": "Some pages use 'Get Started Free', others say 'Start Free Trial'. Terminology varies (Deal vs Job, Customer vs Contact). Placeholder text left in some places.",
+      "recommendation": "Create tone & copy guidelines. Standardize terminology. Use consistent verb tense (imperative for CTAs: 'Add Contact', not 'Add a Contact')."
+    },
+    {
+      "severity": "medium",
+      "title": "Loading States Inconsistent",
+      "description": "Some pages show skeleton loaders (good), others show blank flash or spinning icons (bad). No consistent loading pattern.",
+      "recommendation": "Create reusable skeleton/skeleton card components. Use on all async operations. Show estimated load time if over 2 seconds."
+    },
+    {
+      "severity": "medium",
+      "title": "Form Validation UX Poor",
+      "description": "Setup wizard and other forms show error messages but don't highlight which field is invalid. No real-time validation. No inline help text.",
+      "recommendation": "Highlight invalid fields with red border. Show inline validation errors. Provide helpful hints (e.g., 'Password must contain uppercase, number, special character')."
+    },
+    {
+      "severity": "medium",
+      "title": "No Keyboard Shortcuts or Navigation",
+      "description": "App lacks keyboard shortcuts for power users. Can't use arrow keys to navigate lists. No Tab key flow for forms. Advisor chat doesn't respond to Enter to send.",
+      "recommendation": "Add keyboard shortcut hints (Cmd+K for search, etc.). Implement keyboard navigation for lists/tables. Use standard conventions (Enter to submit forms)."
+    },
+    {
+      "severity": "medium",
+      "title": "Undo/Undo Confirmation Inconsistent",
+      "description": "Some destructive actions (delete) have confirmation modals, others don't. No undo feature for accidental deletions. Deletes are permanent with no recovery window.",
+      "recommendation": "Add undo/recovery for all destructive actions. Show confirmation modals with preview of what will be deleted. Consider soft-delete with 30-day recovery."
+    },
+    {
+      "severity": "medium",
+      "title": "Performance: Large Component Files",
+      "description": "Multiple pages with 400+ lines of code in single file. No code-splitting or lazy loading for modals/forms. Potential for unnecessary re-renders.",
+      "recommendation": "Split large pages into smaller components. Lazy-load modals with dynamic imports. Memoize expensive calculations. Use React DevTools Profiler to identify re-render bottlenecks."
+    },
+    {
+      "severity": "low",
+      "title": "Inconsistent Spacing & Padding",
+      "description": "Some cards use p-4, others p-6, others p-8. Gap between sections varies. Creates visual inconsistency.",
+      "recommendation": "Define spacing system: use consistent p-4/6/8 across similar components. Use gap-6/8 for consistent section spacing."
+    },
+    {
+      "severity": "low",
+      "title": "Color Palette Inconsistency",
+      "description": "App uses multiple green shades (#27AE60, #10B981, #16A34A, #22C55E). Blue shades vary (#0071E3, #3B82F6, #0055CC). Confusing.",
+      "recommendation": "Define brand color palette: primary, secondary, accent, status colors. Use Tailwind color system consistently."
+    }
+  ],
+  "criticalBugs": [
+    {
+      "severity": "critical",
+      "title": "Mobile Kanban Board Unusable",
+      "description": "Pipeline page shows multi-column drag-drop board that doesn't fit on mobile screen. No horizontal scroll indication. User can't drag cards on phones.",
+      "impact": "Field service workers (primary users) can't manage pipeline on job sites. Major feature is broken on mobile.",
+      "location": "/pipeline page with board view",
+      "fixEstimate": "4-6 hours (redesign mobile layout, test DnD on touch)"
+    },
+    {
+      "severity": "critical",
+      "title": "Settings Tabs Overflow on Mobile",
+      "description": "Settings page has 6 tabs that don't fit on small screens. User can only see first 1.5 tabs. No way to access other settings on mobile.",
+      "impact": "Users can't change settings on phones. Critical app configuration is inaccessible on mobile.",
+      "location": "/settings page",
+      "fixEstimate": "2-3 hours (responsive tab navigation)"
+    },
+    {
+      "severity": "high",
+      "title": "Lead Capture Form Doesn't Save",
+      "description": "Lead capture form shows embed code but form submissions don't create contacts in CRM. Leads are lost.",
+      "impact": "New customer acquisition breaks. Leads submitted via form are never entered into system.",
+      "location": "/leads page",
+      "fixEstimate": "4-5 hours (API endpoint + form submission handler)"
+    },
+    {
+      "severity": "high",
+      "title": "Dark Mode Force-Disabled on Pricing Page",
+      "description": "Pricing page runs document.documentElement.classList.remove('dark') on mount, overriding user preference.",
+      "impact": "Breaks user's theme settings. Forced into light mode even if they prefer dark.",
+      "location": "/pricing page, useEffect hook",
+      "fixEstimate": "15 minutes (remove offending code)"
+    },
+    {
+      "severity": "high",
+      "title": "Schedule Week View Impossible on Mobile",
+      "description": "Schedule week view shows 6 columns (one per day) that overflow on mobile. No single-day or mobile alternative view.",
+      "impact": "Users can't view/manage schedule on phones. Job scheduling is blocked on mobile.",
+      "location": "/schedule page with week view",
+      "fixEstimate": "4-5 hours (implement mobile day view)"
+    },
+    {
+      "severity": "high",
+      "title": "Invoice/Estimate Tables Not Responsive",
+      "description": "Tables with many columns overflow horizontally on mobile. No responsive card view for small screens.",
+      "impact": "Users can't view invoices/estimates on phones. Mobile users can't manage critical business documents.",
+      "location": "/invoices, /estimates pages",
+      "fixEstimate": "4-6 hours per page (responsive table/card layout)"
+    },
+    {
+      "severity": "high",
+      "title": "Broken State Sync Across Tabs",
+      "description": "Welcome widget dismissal stored in localStorage. Opening dashboard in two windows = conflicting state. Reload one tab, welcome comes back.",
+      "impact": "UI becomes confusing when user works across multiple windows. State becomes unreliable.",
+      "location": "Dashboard page, localStorage usage",
+      "fixEstimate": "2-3 hours (migrate to IndexedDB with sync)"
+    }
+  ],
+  "top10Fixes": [
+    {
+      "priority": 1,
+      "title": "Mobile-First Redesign for Core Pages",
+      "description": "Fix kanban board, schedule, settings tabs, and tables for mobile. Most critical since field service workers use app on phones. Affects 6+ key pages.",
+      "timeEstimate": "20-25 hours",
+      "impact": "Unblocks mobile users, makes app usable in field"
+    },
+    {
+      "priority": 2,
+      "title": "Refactor Large Components (400+ lines)",
+      "description": "Split dashboard, pipeline, settings, estimates pages into smaller child components. Improves maintainability and prevents re-render issues.",
+      "timeEstimate": "15-20 hours",
+      "impact": "Code becomes maintainable, easier to test and modify"
+    },
+    {
+      "priority": 3,
+      "title": "Add Empty States to All List Pages",
+      "description": "Implement <EmptyState /> component on 12 pages (pipeline, contacts, invoices, estimates, schedule, activity, etc.). Show clear CTA when no data.",
+      "timeEstimate": "8-10 hours",
+      "impact": "Significantly improves UX, reduces user confusion"
+    },
+    {
+      "priority": 4,
+      "title": "Implement Lead Capture Form Backend",
+      "description": "Wire up lead capture form to create Contact objects in Zustand store. Add API endpoint for form submissions.",
+      "timeEstimate": "4-5 hours",
+      "impact": "Unblocks lead generation feature"
+    },
+    {
+      "priority": 5,
+      "title": "Accessibility Audit & Fixes",
+      "description": "Add ARIA labels to charts, semantic HTML to tables, keyboard navigation to lists, fix color contrast issues.",
+      "timeEstimate": "12-15 hours",
+      "impact": "Makes app usable for screen reader users, improves compliance"
+    },
+    {
+      "priority": 6,
+      "title": "Fix Dark Mode Issues",
+      "description": "Remove dark mode disable on pricing page, fix scrollbar contrast, audit and fix dark mode color mappings on all pages.",
+      "timeEstimate": "4-5 hours",
+      "impact": "Dark mode becomes reliable and consistent"
+    },
+    {
+      "priority": 7,
+      "title": "Improve Form Validation UX",
+      "description": "Highlight invalid fields with red border, show inline validation messages, add real-time validation feedback.",
+      "timeEstimate": "6-8 hours",
+      "impact": "Users know what's wrong with forms immediately"
+    },
+    {
+      "priority": 8,
+      "title": "Add PDF Export for Invoices & Estimates",
+      "description": "Implement PDF generation for invoices and estimates using jsPDF or react-pdf. Add download buttons to detail pages.",
+      "timeEstimate": "6-8 hours",
+      "impact": "Users can send documents to customers"
+    },
+    {
+      "priority": 9,
+      "title": "Implement Soft Delete with Recovery Window",
+      "description": "Add soft delete to contacts, deals, invoices, estimates. Show trash/recovery page. Allow 30-day recovery before permanent deletion.",
+      "timeEstimate": "8-10 hours",
+      "impact": "Prevents accidental data loss, improves user confidence"
+    },
+    {
+      "priority": 10,
+      "title": "Add Keyboard Shortcuts & Navigation",
+      "description": "Implement Cmd+K/Ctrl+K for search, arrow keys for lists, Enter to submit forms, Tab navigation for forms, Escape to close modals.",
+      "timeEstimate": "6-8 hours",
+      "impact": "Enables power users to work faster, improves usability"
+    }
+  ],
+  "testingRecommendations": {
+    "mobile": "Test all pages on iPhone SE (375px), iPhone 12 (390px), iPad (768px), Samsung Galaxy S21 (360px). Use real devices, not just browser DevTools.",
+    "darkMode": "Test every page with dark mode enabled in browser/OS. Check contrast ratios with WebAIM Color Contrast Checker.",
+    "accessibility": "Test with NVDA (Windows) or VoiceOver (Mac/iOS). Audit with axe DevTools browser extension. Aim for WCAG 2.1 AA.",
+    "keyboard": "Navigate entire app using only keyboard (Tab, Enter, Arrow keys, Escape). No mouse.",
+    "performance": "Use Lighthouse in Chrome DevTools. Target: Performance >80, Accessibility >80. Use React DevTools Profiler to check re-renders."
+  },
+  "deliveryRisk": "HIGH - This app is 60-70% feature-complete but only 50% UX-complete. Mobile responsiveness is critical blocker. Without mobile fixes, field service workers (primary users) will struggle. Recommend 2-3 week iteration cycle for UX polish before client delivery. Currently NOT ready for production.",
+  "estimatedEffortToPolish": "80-100 hours of focused UX/mobile work to bring app to 'launch-ready' state (8-9 score)."
+}

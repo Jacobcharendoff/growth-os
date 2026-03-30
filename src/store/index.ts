@@ -4,12 +4,48 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { Contact, Deal, Activity, Estimate, Invoice, LeadSource, PipelineStage, EstimateStatus, InvoiceStatus } from '@/types';
 
+interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  color: string;
+}
+
+interface PipelineStageSetting {
+  id: string;
+  name: string;
+  color: string;
+}
+
+interface AppSettings {
+  companyName: string;
+  companyPhone: string;
+  companyEmail: string;
+  companyAddress: string;
+  industry: string;
+  timezone: string;
+  teamMembers: TeamMember[];
+  pipelineStages: PipelineStageSetting[];
+}
+
+interface AppNotification {
+  id: string;
+  type: 'deal_created' | 'deal_moved' | 'estimate_sent' | 'invoice_paid' | 'contact_added' | 'payment_received' | 'system';
+  title: string;
+  description: string;
+  read: boolean;
+  createdAt: number;
+  linkTo?: string;
+}
+
 interface GrowthOSStore {
   contacts: Contact[];
   deals: Deal[];
   activities: Activity[];
   estimates: Estimate[];
   invoices: Invoice[];
+  settings: AppSettings;
+  notifications: AppNotification[];
 
   // Contact operations
   addContact: (contact: Omit<Contact, 'id' | 'createdAt'>) => void;
@@ -45,11 +81,45 @@ interface GrowthOSStore {
   addActivity: (activity: Omit<Activity, 'id' | 'createdAt'>) => void;
   getActivities: (limit?: number) => Activity[];
 
+  // Settings operations
+  updateSettings: (updates: Partial<AppSettings>) => void;
+
+  // Notification operations
+  addNotification: (notification: Omit<AppNotification, 'id' | 'createdAt' | 'read'>) => void;
+  markNotificationRead: (id: string) => void;
+  markAllNotificationsRead: () => void;
+  getUnreadCount: () => number;
+
   // Initialize seed data
   initializeSeedData: () => void;
 }
 
 const generateId = () => typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2, 11);
+
+const DEFAULT_SETTINGS: AppSettings = {
+  companyName: 'ProPlumbers Inc.',
+  companyPhone: '(720) 555-0123',
+  companyEmail: 'info@proplumbers.com',
+  companyAddress: '1234 Main St, Denver, CO 80202',
+  industry: 'plumbing',
+  timezone: 'America/Denver',
+  teamMembers: [
+    { id: '1', name: 'Alex Johnson', role: 'owner', color: 'bg-blue-500' },
+    { id: '2', name: 'Marcus Thompson', role: 'manager', color: 'bg-emerald-500' },
+    { id: '3', name: 'Sarah Williams', role: 'technician', color: 'bg-purple-500' },
+    { id: '4', name: 'James Rodriguez', role: 'technician', color: 'bg-orange-500' },
+  ],
+  pipelineStages: [
+    { id: '1', name: 'New Lead', color: 'blue' },
+    { id: '2', name: 'Contacted', color: 'slate' },
+    { id: '3', name: 'Estimate Scheduled', color: 'purple' },
+    { id: '4', name: 'Estimate Sent', color: 'indigo' },
+    { id: '5', name: 'Booked', color: 'cyan' },
+    { id: '6', name: 'In Progress', color: 'amber' },
+    { id: '7', name: 'Completed', color: 'emerald' },
+    { id: '8', name: 'Invoiced', color: 'green' },
+  ],
+};
 
 const SEED_DATA = {
   contacts: [
@@ -373,6 +443,8 @@ export const useStore = create<GrowthOSStore>()(
       activities: [],
       estimates: [],
       invoices: [],
+      settings: DEFAULT_SETTINGS,
+      notifications: [],
 
       // Contact operations
       addContact: (contact) =>
@@ -402,27 +474,47 @@ export const useStore = create<GrowthOSStore>()(
       getContact: (id) => get().contacts.find((c) => c.id === id),
 
       // Deal operations
-      addDeal: (deal) =>
+      addDeal: (deal) => {
+        const id = generateId();
         set((state) => ({
           deals: [
             ...state.deals,
             {
-              id: generateId(),
+              id,
               createdAt: Date.now(),
               updatedAt: Date.now(),
               ...deal,
             },
           ],
-        })),
+        }));
+        // Add notification
+        get().addNotification({
+          type: 'deal_created',
+          title: `New job created: ${deal.title}`,
+          description: `Job value: $${deal.value}`,
+          linkTo: '/pipeline',
+        });
+      },
 
-      updateDeal: (id, updates) =>
+      updateDeal: (id, updates) => {
+        const oldDeal = get().getDeal(id);
         set((state) => ({
           deals: state.deals.map((d) =>
             d.id === id
               ? { ...d, ...updates, updatedAt: Date.now() }
               : d
           ),
-        })),
+        }));
+        // Add notification if stage changed
+        if (updates.stage && oldDeal && oldDeal.stage !== updates.stage) {
+          get().addNotification({
+            type: 'deal_moved',
+            title: `Job moved to ${updates.stage.replace(/_/g, ' ')}`,
+            description: oldDeal.title,
+            linkTo: '/pipeline',
+          });
+        }
+      },
 
       deleteDeal: (id) =>
         set((state) => ({
@@ -486,6 +578,7 @@ export const useStore = create<GrowthOSStore>()(
         get().estimates.filter((e) => e.contactId === contactId),
 
       updateEstimateStatus: (id, status) => {
+        const estimate = get().getEstimate(id);
         const now = Date.now();
         const updates: Partial<Estimate> = { status };
         if (status === 'sent') updates.sentAt = now;
@@ -496,6 +589,15 @@ export const useStore = create<GrowthOSStore>()(
             e.id === id ? { ...e, ...updates } : e
           ),
         }));
+        // Add notification if sent
+        if (status === 'sent' && estimate) {
+          get().addNotification({
+            type: 'estimate_sent',
+            title: `Estimate sent to ${estimate.customerName}`,
+            description: `${estimate.service} - ${estimate.number}`,
+            linkTo: '/estimates',
+          });
+        }
       },
 
       // Invoice operations
@@ -528,7 +630,8 @@ export const useStore = create<GrowthOSStore>()(
       getInvoicesByContact: (contactId) =>
         get().invoices.filter((inv) => inv.contactId === contactId),
 
-      recordPayment: (id, amount) =>
+      recordPayment: (id, amount) => {
+        const invoice = get().getInvoice(id);
         set((state) => ({
           invoices: state.invoices.map((inv) => {
             if (inv.id !== id) return inv;
@@ -536,7 +639,52 @@ export const useStore = create<GrowthOSStore>()(
             const newStatus: InvoiceStatus = newPaid >= inv.total ? 'paid' : 'partial';
             return { ...inv, amountPaid: newPaid, status: newStatus, paidAt: newPaid >= inv.total ? Date.now() : inv.paidAt };
           }),
+        }));
+        // Add notification
+        if (invoice) {
+          get().addNotification({
+            type: 'payment_received',
+            title: `Payment of $${amount} received`,
+            description: `From ${invoice.customerName} - ${invoice.number}`,
+            linkTo: '/invoices',
+          });
+        }
+      },
+
+      // Settings operations
+      updateSettings: (updates) =>
+        set((state) => ({
+          settings: { ...state.settings, ...updates },
         })),
+
+      // Notification operations
+      addNotification: (notification) =>
+        set((state) => ({
+          notifications: [
+            {
+              id: generateId(),
+              createdAt: Date.now(),
+              read: false,
+              ...notification,
+            },
+            ...state.notifications,
+          ],
+        })),
+
+      markNotificationRead: (id) =>
+        set((state) => ({
+          notifications: state.notifications.map((n) =>
+            n.id === id ? { ...n, read: true } : n
+          ),
+        })),
+
+      markAllNotificationsRead: () =>
+        set((state) => ({
+          notifications: state.notifications.map((n) => ({ ...n, read: true })),
+        })),
+
+      getUnreadCount: () =>
+        get().notifications.filter((n) => !n.read).length,
 
       // Seed data
       initializeSeedData: () => {
@@ -653,13 +801,15 @@ export const useStore = create<GrowthOSStore>()(
     }),
     {
       name: 'growth-os-storage',
-      version: 3,
+      version: 4,
       migrate: () => ({
         contacts: [],
         deals: [],
         activities: [],
         estimates: [],
         invoices: [],
+        settings: DEFAULT_SETTINGS,
+        notifications: [],
       }),
     }
   )

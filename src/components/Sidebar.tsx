@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 import { useLanguage } from './LanguageProvider';
+import { useStore } from '@/store';
 
 interface SidebarProps {
   mobileOpen?: boolean;
@@ -33,6 +34,8 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
   const { locale, setLocale, t } = useLanguage();
+  const { getUnreadCount } = useStore();
+  const unreadCount = getUnreadCount();
 
   const isDark = theme === 'dark';
 
@@ -45,7 +48,7 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
     { href: '/invoices', label: t('nav.invoices'), icon: Receipt },
     { href: '/automations', label: t('nav.autopilot'), icon: Zap },
     { href: '/messages', label: t('nav.messages'), icon: MessageSquare },
-    { href: '/notifications', label: t('nav.notifications'), icon: Bell },
+    { href: '/notifications', label: t('nav.notifications'), icon: Bell, badge: unreadCount > 0 ? unreadCount : undefined },
     { href: '/activity', label: t('nav.activity'), icon: ActivitySquare },
   ];
 
@@ -133,13 +136,14 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = pathname === item.href || (item.href === '/dashboard' && pathname === '/');
+          const badge = 'badge' in item ? item.badge : undefined;
 
           return (
             <Link
               key={item.href}
               href={item.href}
               onClick={onClose}
-              className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-200 ${
+              className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-200 relative ${
                 isActive
                   ? 'bg-[#27AE60] text-white shadow-lg shadow-emerald-600/20'
                   : `${navText} ${navHover}`
@@ -147,6 +151,11 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
             >
               <Icon className="w-5 h-5" />
               <span className="font-medium text-sm">{item.label}</span>
+              {badge && badge > 0 && (
+                <span className="ml-auto px-2 py-0.5 bg-red-500 text-white text-xs font-bold rounded-full">
+                  {badge}
+                </span>
+              )}
             </Link>
           );
         })}

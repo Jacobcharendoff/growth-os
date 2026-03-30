@@ -15,7 +15,9 @@ import {
   AlertCircle,
   Plus,
   X,
+  Clock,
 } from 'lucide-react';
+import { useTheme } from '@/components/ThemeProvider';
 
 interface Message {
   id: string;
@@ -232,6 +234,8 @@ type FilterTab = 'all' | 'sms' | 'email' | 'automated' | 'templates';
 
 export default function MessagesPage() {
   const { t } = useLanguage();
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
   const [selectedMessageId, setSelectedMessageId] = useState<string | null>(MOCK_MESSAGES[0]?.id);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState<FilterTab>('all');
@@ -289,8 +293,18 @@ export default function MessagesPage() {
 
   return (
     <div className="h-screen flex flex-col lg:flex-row bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900">
+      {/* Coming Soon Banner */}
+      <div className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/30 dark:to-orange-900/30 border-b border-amber-200 dark:border-amber-800 px-4 py-3 flex items-center gap-3">
+        <Clock className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
+        <div className="flex-1 min-w-0">
+          <p className="text-sm font-medium text-amber-900 dark:text-amber-100">
+            SMS & email messaging launching Q2 2026. Stay tuned for Twilio and email integration.
+          </p>
+        </div>
+      </div>
+
       {/* Left Sidebar - Filters */}
-      <div className="hidden lg:flex lg:w-56 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 dark:flex flex-col">
+      <div className="hidden lg:flex lg:w-56 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 dark:flex flex-col mt-14">
         <div className="p-4 border-b border-slate-200 dark:border-slate-700">
           <button
             onClick={() => {
@@ -337,7 +351,7 @@ export default function MessagesPage() {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
+      <div className="flex-1 flex flex-col lg:flex-row overflow-hidden mt-14">
         {/* Center Panel - Message List OR Templates */}
         <div className="w-full lg:w-96 border-r border-slate-200 dark:border-slate-700 flex flex-col bg-white dark:bg-slate-800 lg:border-r-4">
           {/* Search Bar */}
@@ -538,9 +552,10 @@ export default function MessagesPage() {
                   <textarea
                     value={composeData.message}
                     onChange={(e) => setComposeData({ ...composeData, message: e.target.value })}
-                    placeholder="Type your message..."
+                    placeholder="SMS & email messaging coming soon..."
+                    disabled
                     rows={10}
-                    className="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-900 dark:text-white resize-none"
+                    className="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-900 dark:text-white resize-none opacity-60 cursor-not-allowed bg-slate-100 dark:bg-slate-800"
                   />
                   {composeData.type === 'SMS' && (
                     <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
@@ -552,8 +567,8 @@ export default function MessagesPage() {
 
               {/* Compose Actions */}
               <div className="px-4 sm:px-8 py-4 sm:py-6 border-t border-slate-200 dark:border-slate-700 flex gap-4">
-                <button className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
-                  Send Message
+                <button disabled className="flex-1 px-6 py-3 bg-slate-300 dark:bg-slate-600 text-slate-500 dark:text-slate-400 rounded-lg cursor-not-allowed font-medium opacity-60">
+                  Send Message (Coming Q2 2026)
                 </button>
                 <button
                   onClick={() => setComposeMode(false)}
@@ -609,15 +624,22 @@ export default function MessagesPage() {
               </div>
 
               {/* Message Actions */}
-              <div className="px-4 sm:px-8 py-4 sm:py-6 border-t border-slate-200 dark:border-slate-700 flex gap-4">
-                <button className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center justify-center gap-2">
-                  <Send className="w-4 h-4" />
-                  Reply
-                </button>
-                <button className="flex-1 px-6 py-3 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors font-medium flex items-center justify-center gap-2">
-                  <Copy className="w-4 h-4" />
-                  Forward
-                </button>
+              <div className="px-4 sm:px-8 py-4 sm:py-6 border-t border-slate-200 dark:border-slate-700">
+                <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-3 mb-4">
+                  <p className="text-xs text-amber-700 dark:text-amber-300 font-medium">
+                    Messaging features launching Q2 2026 with Twilio SMS and email integration
+                  </p>
+                </div>
+                <div className="flex gap-4">
+                  <button disabled className="flex-1 px-6 py-3 bg-slate-300 dark:bg-slate-600 text-slate-500 dark:text-slate-400 rounded-lg cursor-not-allowed font-medium flex items-center justify-center gap-2 opacity-60">
+                    <Send className="w-4 h-4" />
+                    Reply (Coming Soon)
+                  </button>
+                  <button disabled className="flex-1 px-6 py-3 bg-slate-300 dark:bg-slate-600 text-slate-500 dark:text-slate-400 rounded-lg cursor-not-allowed font-medium flex items-center justify-center gap-2 opacity-60">
+                    <Copy className="w-4 h-4" />
+                    Forward (Coming Soon)
+                  </button>
+                </div>
               </div>
             </div>
           ) : (

@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { useLanguage } from '@/components/LanguageProvider';
+import { useTheme } from '@/components/ThemeProvider';
 import {
   Send,
   Sparkles,
@@ -190,6 +191,8 @@ function MessageBubble({ message }: { message: Message }) {
 // ─── Main Advisor Page ───────────────────────────────────────
 export default function AdvisorPage() {
   const { t } = useLanguage();
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -270,8 +273,13 @@ export default function AdvisorPage() {
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
               <Sparkles className="w-5 h-5 text-white" />
             </div>
-            <div>
-              <h1 className="text-[17px] font-semibold text-slate-900 dark:text-white">{t('advisor.title')}</h1>
+            <div className="flex-1">
+              <div className="flex items-center gap-2">
+                <h1 className="text-[17px] font-semibold text-slate-900 dark:text-white">{t('advisor.title')}</h1>
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 border border-blue-300 dark:border-blue-700">
+                  Beta
+                </span>
+              </div>
               <p className="text-[13px] text-emerald-600 dark:text-emerald-400 font-medium">{t('advisor.online')}</p>
             </div>
           </div>
@@ -347,7 +355,12 @@ export default function AdvisorPage() {
             <Sparkles className="w-5 h-5 text-white" />
           </div>
           <div className="flex-1">
-            <h1 className="text-[17px] font-semibold text-slate-900 dark:text-white">{t('advisor.title')}</h1>
+            <div className="flex items-center gap-2">
+              <h1 className="text-[17px] font-semibold text-slate-900 dark:text-white">{t('advisor.title')}</h1>
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 border border-blue-300 dark:border-blue-700">
+                Beta
+              </span>
+            </div>
             <p className="text-[13px] text-emerald-600 dark:text-emerald-400 font-medium">
               {isTyping ? t('advisor.typing') : t('advisor.online')}
             </p>
@@ -383,6 +396,13 @@ export default function AdvisorPage() {
         )}
 
         <div ref={messagesEndRef} />
+      </div>
+
+      {/* Beta Disclaimer */}
+      <div className="flex-shrink-0 bg-blue-50 dark:bg-blue-900/20 border-t border-blue-200 dark:border-blue-800 px-4 py-3">
+        <p className="text-xs text-blue-700 dark:text-blue-300">
+          <span className="font-semibold">Beta Notice:</span> Growth Advisor is in early beta. Responses are template-based and will be powered by AI in a future update.
+        </p>
       </div>
 
       {/* Quick Suggestions (show after advisor responds) */}

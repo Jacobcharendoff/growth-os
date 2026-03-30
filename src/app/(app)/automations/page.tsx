@@ -6,7 +6,7 @@ import {
   Zap, Play, Pause, Clock, Mail, MessageSquare, Star, DollarSign,
   Users, Calendar, ChevronRight, CheckCircle2, ArrowRight, Shield,
   Sparkles, TrendingUp, RotateCcw, Sun, Snowflake, Bell, Settings,
-  Copy, Eye, ToggleLeft, Lightbulb, Target, Heart, Phone
+  Copy, Eye, ToggleLeft, Lightbulb, Target, Heart, Phone, AlertCircle
 } from 'lucide-react';
 
 // ============================================================
@@ -403,6 +403,8 @@ export default function AutomationsPage() {
   const [playbooks, setPlaybooks] = useState<Playbook[]>(PLAYBOOKS);
   const [expandedPlaybook, setExpandedPlaybook] = useState<string | null>(null);
   const [previewTemplate, setPreviewTemplate] = useState<TemplatePreview | null>(null);
+  const [notifyEmail, setNotifyEmail] = useState('');
+  const [notifySubmitted, setNotifySubmitted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -437,8 +439,53 @@ export default function AutomationsPage() {
     setPlaybooks((prev) => prev.map((p) => ({ ...p, isActive: !p.isPremium ? true : p.isActive })));
   };
 
+  const handleNotifySubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (notifyEmail.trim()) {
+      setNotifySubmitted(true);
+      setNotifyEmail('');
+      setTimeout(() => setNotifySubmitted(false), 4000);
+    }
+  };
+
   return (
     <div className="p-4 sm:p-8 bg-slate-50 dark:bg-slate-950 min-h-screen">
+      {/* Coming Soon Banner */}
+      <div className="mb-8 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 border border-amber-200 dark:border-amber-800 rounded-2xl p-6 flex items-start gap-4">
+        <div className="shrink-0 mt-1">
+          <AlertCircle className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+        </div>
+        <div className="flex-1">
+          <h2 className="text-lg font-semibold text-amber-900 dark:text-amber-100 mb-1">
+            Autopilot Coming Soon
+          </h2>
+          <p className="text-sm text-amber-800 dark:text-amber-200 mb-4">
+            These playbooks are being prepared for launch and will be fully functional in Q2 2026. Check out the workflows below to see what's coming!
+          </p>
+          <form onSubmit={handleNotifySubmit} className="flex gap-2">
+            <input
+              type="email"
+              placeholder="your@email.com"
+              value={notifyEmail}
+              onChange={(e) => setNotifyEmail(e.target.value)}
+              className="flex-1 px-4 py-2 rounded-lg border border-amber-300 dark:border-amber-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+              required
+            />
+            <button
+              type="submit"
+              className="px-4 py-2 bg-amber-600 hover:bg-amber-700 dark:bg-amber-700 dark:hover:bg-amber-600 text-white rounded-lg font-medium text-sm transition-colors"
+            >
+              Notify Me
+            </button>
+          </form>
+          {notifySubmitted && (
+            <p className="text-xs text-emerald-600 dark:text-emerald-400 mt-2 font-medium">
+              ✓ Thanks! We'll notify you when Autopilot launches.
+            </p>
+          )}
+        </div>
+      </div>
+
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-2">
@@ -453,28 +500,19 @@ export default function AutomationsPage() {
       </div>
 
       {/* Impact Banner */}
-      <div className="bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-4 sm:p-8 mb-6 sm:mb-8 text-white relative overflow-hidden">
+      <div className="bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-4 sm:p-8 mb-6 sm:mb-8 text-white relative overflow-hidden opacity-75">
         <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <div className="relative">
           <div className="flex items-center justify-between flex-wrap gap-6">
             <div>
               <p className="text-slate-400 text-sm font-medium mb-1">{t('automations.status')}</p>
               <div className="flex items-center gap-4">
-                <div className="text-3xl sm:text-4xl font-bold">{activeCount} / {playbooks.length}</div>
+                <div className="text-3xl sm:text-4xl font-bold text-slate-500">{activeCount} / {playbooks.length}</div>
                 <div className="text-slate-400">
                   <p className="text-sm">{t('automations.playbooksActive')}</p>
-                  <p className="text-emerald-400 text-sm font-medium">{totalImpact}</p>
+                  <p className="text-slate-500 text-sm font-medium">Launching Q2 2026</p>
                 </div>
               </div>
-            </div>
-            <div className="flex gap-3">
-              <button
-                onClick={activateAll}
-                className="flex items-center gap-2 px-6 py-3 bg-emerald-500 hover:bg-emerald-400 text-white rounded-xl font-semibold transition-all hover:shadow-lg hover:shadow-emerald-500/25"
-              >
-                <Play className="w-4 h-4" />
-                {t('automations.activateAllFree')}
-              </button>
             </div>
           </div>
 
@@ -536,12 +574,17 @@ export default function AutomationsPage() {
           return (
             <div
               key={playbook.id}
-              className={`bg-white dark:bg-slate-800 rounded-2xl border transition-all ${
-                playbook.isActive
-                  ? 'border-emerald-300 dark:border-emerald-700 shadow-md shadow-emerald-100 dark:shadow-emerald-900/30'
-                  : 'border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md'
+              className={`bg-white dark:bg-slate-800 rounded-2xl border transition-all relative overflow-hidden opacity-90 ${
+                'border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md'
               }`}
             >
+              {/* Available in Q2 2026 overlay */}
+              <div className="absolute top-4 right-4 z-10">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 border border-amber-300 dark:border-amber-700">
+                  <Clock className="w-3 h-3" />
+                  Q2 2026
+                </span>
+              </div>
               {/* Playbook Header */}
               <div className="p-6">
                 <div className="flex items-start justify-between gap-4">
@@ -557,12 +600,6 @@ export default function AutomationsPage() {
                       {playbook.isPremium && (
                         <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-gradient-to-r from-amber-100 dark:from-amber-900 to-yellow-100 dark:to-yellow-900 text-amber-700 dark:text-amber-300">
                           Pro
-                        </span>
-                      )}
-                      {playbook.isActive && (
-                        <span className="flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300">
-                          <span className="w-1.5 h-1.5 bg-emerald-500 dark:bg-emerald-400 rounded-full animate-pulse" />
-                          Active
                         </span>
                       )}
                     </div>
@@ -583,123 +620,43 @@ export default function AutomationsPage() {
                   <div className="flex items-center gap-3 shrink-0">
                     <button
                       onClick={() => setExpandedPlaybook(isExpanded ? null : playbook.id)}
-                      className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition"
+                      className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
+                      disabled
+                      title="Available when Autopilot launches"
                     >
                       <Eye className="w-4 h-4" />
-                      {isExpanded ? 'Collapse' : 'Preview'}
+                      Preview
                     </button>
                     <button
                       onClick={() => togglePlaybook(playbook.id)}
-                      className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all ${
-                        playbook.isActive
-                          ? 'bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-200 dark:hover:bg-emerald-800'
-                          : 'bg-blue-600 dark:bg-blue-700 text-white hover:bg-blue-700 dark:hover:bg-blue-800 shadow-lg shadow-blue-600/20 dark:shadow-blue-700/30'
-                      }`}
+                      disabled
+                      title="Available when Autopilot launches"
+                      className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all bg-slate-300 dark:bg-slate-600 text-slate-500 dark:text-slate-400 cursor-not-allowed opacity-60`}
                     >
-                      {playbook.isActive ? (
-                        <>
-                          <Pause className="w-4 h-4" />
-                          Pause
-                        </>
-                      ) : (
-                        <>
-                          <Play className="w-4 h-4" />
-                          Activate
-                        </>
-                      )}
+                      <Play className="w-4 h-4" />
+                      Activate
                     </button>
                   </div>
                 </div>
               </div>
 
-              {/* Expanded: Workflow Steps + Templates */}
-              {isExpanded && (
-                <div className="border-t border-slate-100 dark:border-slate-700">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-slate-100 dark:divide-slate-700">
-                    {/* Workflow Steps */}
-                    <div className="p-6">
-                      <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-                        <Zap className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                        Workflow Steps
-                      </h4>
-                      <div className="space-y-1">
-                        {playbook.steps.map((step, i) => (
-                          <div key={i} className="flex items-start gap-3 relative">
-                            {/* Connector Line */}
-                            {i < playbook.steps.length - 1 && (
-                              <div className="absolute left-4 top-8 w-px h-full bg-slate-200 dark:bg-slate-700" style={{ transform: 'translateX(-0.5px)' }} />
-                            )}
-                            <StepIcon icon={step.icon} type={step.type} />
-                            <div className="pb-4 min-w-0">
-                              <div className="text-sm font-medium text-slate-900 dark:text-white">{step.label}</div>
-                              <div className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 leading-relaxed">{step.detail}</div>
-                            </div>
-                          </div>
-                        ))}
+              {/* Greyed out workflow steps preview */}
+              <div className="border-t border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/30 px-6 py-4">
+                <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mb-3">Workflow Preview:</p>
+                <div className="flex items-center gap-2 flex-wrap opacity-60">
+                  {playbook.steps.slice(0, 4).map((step, i) => (
+                    <div key={i} className="flex items-center gap-1">
+                      <div className="w-6 h-6 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs text-slate-500">
+                        <Zap className="w-3 h-3" />
                       </div>
+                      {i < 3 && <ChevronRight className="w-3 h-3 text-slate-300" />}
                     </div>
-
-                    {/* Templates */}
-                    <div className="p-6 bg-slate-50/50 dark:bg-slate-900/50">
-                      <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-                        <Mail className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                        Pre-Built Templates ({playbook.templates.length})
-                      </h4>
-                      <div className="space-y-3">
-                        {playbook.templates.map((template, i) => (
-                          <button
-                            key={i}
-                            onClick={() => setPreviewTemplate(previewTemplate?.name === template.name ? null : template)}
-                            className={`w-full text-left p-4 rounded-xl border transition-all ${
-                              previewTemplate?.name === template.name
-                                ? 'border-blue-300 dark:border-blue-700 bg-blue-50 dark:bg-blue-900/30'
-                                : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-blue-200 dark:hover:border-blue-700 hover:bg-blue-50/50 dark:hover:bg-blue-900/20'
-                            }`}
-                          >
-                            <div className="flex items-center justify-between mb-1">
-                              <div className="flex items-center gap-2">
-                                {template.type === 'email' ? (
-                                  <Mail className="w-3.5 h-3.5 text-blue-500 dark:text-blue-400" />
-                                ) : (
-                                  <MessageSquare className="w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400" />
-                                )}
-                                <span className="text-sm font-medium text-slate-900 dark:text-white">{template.name}</span>
-                              </div>
-                              <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-                                template.type === 'email' ? 'bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400' : 'bg-emerald-100 dark:bg-emerald-900 text-emerald-600 dark:text-emerald-400'
-                              }`}>
-                                {template.type.toUpperCase()}
-                              </span>
-                            </div>
-                            {template.subject && (
-                              <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">Subject: {template.subject}</div>
-                            )}
-
-                            {/* Template Preview */}
-                            {previewTemplate?.name === template.name && (
-                              <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700">
-                                <pre className="text-xs text-slate-600 dark:text-slate-400 whitespace-pre-wrap font-sans leading-relaxed">
-                                  {template.body}
-                                </pre>
-                                <div className="flex gap-2 mt-3">
-                                  <button className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium bg-blue-600 dark:bg-blue-700 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-800 transition">
-                                    <Settings className="w-3 h-3" />
-                                    Customize
-                                  </button>
-                                  <button className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition">
-                                    <Copy className="w-3 h-3" />
-                                    Duplicate
-                                  </button>
-                                </div>
-                              </div>
-                            )}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
+                  ))}
+                  {playbook.steps.length > 4 && (
+                    <span className="text-xs text-slate-500 dark:text-slate-400">+{playbook.steps.length - 4} more</span>
+                  )}
                 </div>
-              )}
+              </div>
             </div>
           );
         })}
@@ -707,17 +664,17 @@ export default function AutomationsPage() {
 
       {/* Bottom CTA */}
       <div className="mt-12 text-center">
-        <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-8 max-w-2xl mx-auto">
+        <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-2xl border border-blue-200 dark:border-blue-800 p-8 max-w-2xl mx-auto">
           <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-xl flex items-center justify-center mx-auto mb-4">
-            <Lightbulb className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+            <Sparkles className="w-6 h-6 text-blue-600 dark:text-blue-400" />
           </div>
-          <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Want a custom playbook?</h3>
+          <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Custom Playbooks Coming Soon</h3>
           <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">
             Build your own automation from scratch using our visual workflow builder.
             Combine triggers, conditions, and actions to create the perfect sequence for your business.
           </p>
-          <button className="px-6 py-3 bg-slate-900 dark:bg-slate-700 text-white rounded-xl font-semibold hover:bg-slate-800 dark:hover:bg-slate-600 transition-all hover:shadow-lg">
-            Build Custom Playbook
+          <button disabled className="px-6 py-3 bg-slate-300 dark:bg-slate-600 text-slate-500 dark:text-slate-400 rounded-xl font-semibold cursor-not-allowed opacity-60">
+            Build Custom Playbook (Q2 2026)
           </button>
         </div>
       </div>

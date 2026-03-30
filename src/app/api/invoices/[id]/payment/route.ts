@@ -7,11 +7,20 @@ import {
   apiSuccess,
   validateRequest,
 } from '@/lib/api-helpers';
+import { getStripe } from '@/lib/stripe';
 
 const recordPaymentSchema = z.object({
   amount: z.number().min(0.01),
   notes: z.string().optional(),
+  useStripe: z.boolean().optional(),
+  currency: z.enum(['cad', 'usd']).default('cad').optional(),
 });
+
+interface PaymentResponse {
+  invoice?: Record<string, any>;
+  clientSecret?: string;
+  paymentIntentId?: string;
+}
 
 export async function POST(
   request: NextRequest,
@@ -39,11 +48,32 @@ export async function POST(
       return apiError('Invoice not found', 404);
     }
 
-    const newAmountPaid = invoice.amount_paid + validation.data.amount;
+    // If Stripe is configured and requested, create a payment intent instead
+    const stripe = getStripe();
+    if (validation.data.useStripe && stripe) {
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: Math.round(validation.data.amount * 100), // Convert to cents
+        currency: (validation.data.currency || 'cad').toLowerCase(),
+        metadata: {
+          invoiceId: id,
+          orgId: user.orgId,
+        },
+      });
+
+      const response: PaymentResponse = {
+        clientSecret: paymentIntent.client_secret!,
+        paymentIntentId: paymentIntent.id,
+      };
+
+      return apiSuccess(response, 200);
+    }
+
+    // Otherwise, fall back to recording manual payment
+    const newAmountPaid = parseFloat(invoice.amount_paid.toString()) + validation.data.amount;
     let newStatus = invoice.status;
 
     // Auto-update status
-    if (newAmountPaid >= invoice.total) {
+    if (newAmountPaid >= parseFloat(invoice.total.toString())) {
       newStatus = 'paid';
     } else if (newAmountPaid > 0) {
       newStatus = 'partial';
@@ -65,7 +95,8 @@ export async function POST(
       return apiError(error.message, 500);
     }
 
-    return apiSuccess(data);
+    const response: PaymentResponse = { invoice: data };
+    return apiSuccess(response);
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
     return apiError(message, error instanceof Error && message === 'Not authenticated' ? 401 : 500);

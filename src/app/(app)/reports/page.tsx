@@ -67,8 +67,8 @@ export default function ReportsPage() {
 
   if (!mounted) {
     return (
-      <div className={`min-h-screen ${isDark ? 'bg-slate-950' : 'bg-gray-50'} p-8 animate-pulse`}>
-        <div className={`h-8 ${isDark ? 'bg-slate-700' : 'bg-gray-200'} rounded w-48 mb-6`}></div>
+      <div className={`min-h-screen ${isDark ? 'bg-slate-950' : 'bg-slate-50'} p-8 animate-pulse`}>
+        <div className={`h-8 ${isDark ? 'bg-slate-700' : 'bg-slate-200'} rounded w-48 mb-6`}></div>
       </div>
     );
   }
@@ -304,22 +304,22 @@ export default function ReportsPage() {
   };
 
   // Color utilities for dark mode
-  const cardBg = isDark ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200';
-  const cardText = isDark ? 'text-slate-300' : 'text-gray-600';
+  const cardBg = isDark ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200';
+  const cardText = isDark ? 'text-slate-300' : 'text-slate-600';
   const tableBg = isDark ? 'bg-slate-800' : 'bg-white';
-  const tableRow = isDark ? 'border-slate-700' : 'border-gray-200';
-  const tableText = isDark ? 'text-slate-300' : 'text-gray-700';
+  const tableRow = isDark ? 'border-slate-700' : 'border-slate-200';
+  const tableText = isDark ? 'text-slate-300' : 'text-slate-700';
 
   return (
-    <div className={`min-h-screen ${isDark ? 'bg-slate-950' : 'bg-gray-50'}`}>
+    <div className={`min-h-screen ${isDark ? 'bg-slate-950' : 'bg-slate-50'}`}>
       {/* Header */}
-      <div className={`sticky top-0 z-10 ${isDark ? 'bg-slate-900 border-slate-700' : 'bg-white border-gray-200'} border-b backdrop-blur-sm bg-opacity-80`}>
+      <div className={`sticky top-0 z-10 ${isDark ? 'bg-slate-900 border-slate-700' : 'bg-white border-slate-200'} border-b backdrop-blur-sm bg-opacity-80`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <BarChart3 className="w-8 h-8" style={{ color: '#27AE60' }} />
               <div>
-                <h1 className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>Reports & Analytics</h1>
+                <h1 className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Reports & Analytics</h1>
                 <p className={`text-sm ${cardText}`}>Business performance metrics and insights</p>
               </div>
             </div>
@@ -345,7 +345,7 @@ export default function ReportsPage() {
                       ? 'bg-[#27AE60] text-white'
                       : isDark
                         ? 'bg-slate-700 text-slate-300 hover:bg-slate-600'
-                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                        : 'bg-slate-200 text-slate-700 hover:bg-slate-300'
                   }`}
                 >
                   {range === 'week' && 'This Week'}
@@ -396,7 +396,7 @@ export default function ReportsPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-6 mb-8">
           {/* Revenue Over Time */}
           <div className={`${cardBg} border rounded-xl p-6`}>
-            <h2 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'} mb-4`}>Revenue Over Time (6 months)</h2>
+            <h2 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-slate-900'} mb-4`}>Revenue Over Time (6 months)</h2>
             <div className="flex items-end gap-2 h-64">
               {monthlyRevenue.map((item, idx) => {
                 const maxRevenue = Math.max(...monthlyRevenue.map(m => m.revenue), 1);
@@ -417,7 +417,7 @@ export default function ReportsPage() {
 
           {/* Pipeline by Stage */}
           <div className={`${cardBg} border rounded-xl p-6`}>
-            <h2 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'} mb-4`}>Pipeline by Stage</h2>
+            <h2 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-slate-900'} mb-4`}>Pipeline by Stage</h2>
             <div className="space-y-3 h-64 overflow-y-auto">
               {stageData.map((item, idx) => {
                 const maxCount = Math.max(...stageData.map(s => s.count), 1);
@@ -425,10 +425,10 @@ export default function ReportsPage() {
                 return (
                   <div key={idx}>
                     <div className="flex justify-between items-center mb-1">
-                      <span className={`text-sm font-medium ${isDark ? 'text-slate-300' : 'text-gray-700'}`}>{item.stage}</span>
-                      <span className={`text-sm font-bold ${isDark ? 'text-slate-400' : 'text-gray-600'}`}>{item.count}</span>
+                      <span className={`text-sm font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>{item.stage}</span>
+                      <span className={`text-sm font-bold ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>{item.count}</span>
                     </div>
-                    <div className={`${isDark ? 'bg-slate-700' : 'bg-gray-200'} rounded h-2 overflow-hidden`}>
+                    <div className={`${isDark ? 'bg-slate-700' : 'bg-slate-200'} rounded h-2 overflow-hidden`}>
                       <div
                         className="h-full rounded transition-all"
                         style={{ width: `${widthPercent}%`, backgroundColor: item.color }}
@@ -442,7 +442,7 @@ export default function ReportsPage() {
 
           {/* Lead Sources Pie Chart */}
           <div className={`${cardBg} border rounded-xl p-6`}>
-            <h2 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'} mb-4`}>Lead Sources Distribution</h2>
+            <h2 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-slate-900'} mb-4`}>Lead Sources Distribution</h2>
             <div className="flex items-center justify-center h-64">
               <svg viewBox="0 0 200 200" className="w-40 h-40">
                 {leadSources.length > 0 ? (
@@ -499,15 +499,15 @@ export default function ReportsPage() {
 
           {/* Estimate Conversion Funnel */}
           <div className={`${cardBg} border rounded-xl p-6`}>
-            <h2 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'} mb-4`}>Estimate Conversion Funnel</h2>
+            <h2 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-slate-900'} mb-4`}>Estimate Conversion Funnel</h2>
             <div className="space-y-3 h-64 flex flex-col justify-center">
               {estimateConversion.map((item, idx) => (
                 <div key={idx}>
                   <div className="flex justify-between items-center mb-1">
-                    <span className={`text-sm font-medium ${isDark ? 'text-slate-300' : 'text-gray-700'}`}>{item.status}</span>
+                    <span className={`text-sm font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>{item.status}</span>
                     <span className="text-sm font-bold text-[#27AE60]">{item.percentage}%</span>
                   </div>
-                  <div className={`${isDark ? 'bg-slate-700' : 'bg-gray-200'} rounded-full h-3 overflow-hidden`}>
+                  <div className={`${isDark ? 'bg-slate-700' : 'bg-slate-200'} rounded-full h-3 overflow-hidden`}>
                     <div
                       className="h-full rounded-full transition-all bg-gradient-to-r from-[#27AE60] to-[#229954]"
                       style={{ width: `${item.percentage}%` }}
@@ -524,11 +524,11 @@ export default function ReportsPage() {
           {/* Top Performing Services */}
           <div className={`${cardBg} border rounded-xl overflow-hidden`}>
             <div className="px-6 py-4 border-b border-inherit bg-opacity-50">
-              <h2 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>Top Performing Services</h2>
+              <h2 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>Top Performing Services</h2>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
-                <thead className={`${isDark ? 'bg-slate-700 text-slate-200' : 'bg-gray-100 text-gray-700'}`}>
+                <thead className={`${isDark ? 'bg-slate-700 text-slate-200' : 'bg-slate-100 text-slate-700'}`}>
                   <tr>
                     <th className="px-4 py-2 text-left font-semibold">Service</th>
                     <th className="px-4 py-2 text-right font-semibold">Revenue</th>
@@ -557,11 +557,11 @@ export default function ReportsPage() {
           {/* Aging Estimates */}
           <div className={`${cardBg} border rounded-xl overflow-hidden`}>
             <div className="px-6 py-4 border-b border-inherit bg-opacity-50">
-              <h2 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>Aging Estimates</h2>
+              <h2 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>Aging Estimates</h2>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
-                <thead className={`${isDark ? 'bg-slate-700 text-slate-200' : 'bg-gray-100 text-gray-700'}`}>
+                <thead className={`${isDark ? 'bg-slate-700 text-slate-200' : 'bg-slate-100 text-slate-700'}`}>
                   <tr>
                     <th className="px-4 py-2 text-left font-semibold">Est. #</th>
                     <th className="px-4 py-2 text-right font-semibold">Days</th>
@@ -593,11 +593,11 @@ export default function ReportsPage() {
           {/* Outstanding Invoices */}
           <div className={`${cardBg} border rounded-xl overflow-hidden`}>
             <div className="px-6 py-4 border-b border-inherit bg-opacity-50">
-              <h2 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>Outstanding Invoices</h2>
+              <h2 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>Outstanding Invoices</h2>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
-                <thead className={`${isDark ? 'bg-slate-700 text-slate-200' : 'bg-gray-100 text-gray-700'}`}>
+                <thead className={`${isDark ? 'bg-slate-700 text-slate-200' : 'bg-slate-100 text-slate-700'}`}>
                   <tr>
                     <th className="px-4 py-2 text-left font-semibold">Inv. #</th>
                     <th className="px-4 py-2 text-right font-semibold">Amount</th>

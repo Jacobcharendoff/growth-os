@@ -62,16 +62,16 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
 
   // Theme-aware color classes
   const sidebarBg = 'bg-white dark:bg-slate-900';
-  const sidebarBorder = isDark ? 'border-slate-700' : 'border-gray-200';
-  const brandText = isDark ? 'text-white' : 'text-gray-900';
+  const sidebarBorder = isDark ? 'border-slate-700' : 'border-slate-200';
+  const brandText = isDark ? 'text-white' : 'text-slate-900';
   const brandAccent = isDark ? 'text-emerald-400' : 'text-[#27AE60]';
-  const navText = isDark ? 'text-slate-300' : 'text-gray-600';
-  const navHover = isDark ? 'hover:bg-slate-700/50 hover:text-white' : 'hover:bg-gray-100 hover:text-gray-900';
-  const sectionBorder = isDark ? 'border-slate-700' : 'border-gray-200';
-  const badgeBg = isDark ? 'bg-slate-700 text-slate-300' : 'bg-gray-100 text-gray-600';
-  const footerText = isDark ? 'text-slate-500' : 'text-gray-400';
-  const mobileCloseBtn = isDark ? 'text-slate-400 hover:text-white' : 'text-gray-400 hover:text-gray-900';
-  const progressBg = isDark ? 'bg-slate-700/50' : 'bg-gray-200';
+  const navText = isDark ? 'text-slate-300' : 'text-slate-600';
+  const navHover = isDark ? 'hover:bg-slate-700/50 hover:text-white' : 'hover:bg-slate-100 hover:text-slate-900';
+  const sectionBorder = isDark ? 'border-slate-700' : 'border-slate-200';
+  const badgeBg = isDark ? 'bg-slate-700 text-slate-300' : 'bg-slate-100 text-slate-600';
+  const footerText = isDark ? 'text-slate-500' : 'text-slate-400';
+  const mobileCloseBtn = isDark ? 'text-slate-400 hover:text-white' : 'text-slate-400 hover:text-slate-900';
+  const progressBg = isDark ? 'bg-slate-700/50' : 'bg-slate-200';
 
   const sidebarContent = (
     <>
@@ -172,29 +172,29 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
         {/* Language Toggle — Switch style */}
         <div className="flex items-center justify-between px-3 py-2">
           <div className="flex items-center gap-2.5">
-            <Globe className={`w-4 h-4 ${isDark ? 'text-slate-400' : 'text-gray-500'}`} />
-            <span className={`text-sm font-medium ${isDark ? 'text-slate-300' : 'text-gray-700'}`}>
+            <Globe className={`w-4 h-4 ${isDark ? 'text-slate-400' : 'text-slate-500'}`} />
+            <span className={`text-sm font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
               {t('nav.language') || 'Language'}
             </span>
           </div>
           <button
             onClick={() => setLocale(locale === 'en' ? 'fr' : 'en')}
             className={`relative inline-flex items-center h-8 rounded-full px-1 transition-colors ${
-              isDark ? 'bg-slate-700' : 'bg-gray-200'
+              isDark ? 'bg-slate-700' : 'bg-slate-200'
             }`}
             aria-label="Toggle language"
           >
             <span className={`inline-flex items-center justify-center h-6 px-2.5 rounded-full text-xs font-bold transition-all ${
               locale === 'en'
                 ? 'bg-[#27AE60] text-white shadow-sm'
-                : isDark ? 'text-slate-400' : 'text-gray-500'
+                : isDark ? 'text-slate-400' : 'text-slate-500'
             }`}>
               EN
             </span>
             <span className={`inline-flex items-center justify-center h-6 px-2.5 rounded-full text-xs font-bold transition-all ${
               locale === 'fr'
                 ? 'bg-[#27AE60] text-white shadow-sm'
-                : isDark ? 'text-slate-400' : 'text-gray-500'
+                : isDark ? 'text-slate-400' : 'text-slate-500'
             }`}>
               FR
             </span>
@@ -209,14 +209,14 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
             ) : (
               <Sun className="w-4 h-4 text-amber-500" />
             )}
-            <span className={`text-sm font-medium ${isDark ? 'text-slate-300' : 'text-gray-700'}`}>
+            <span className={`text-sm font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
               {isDark ? t('nav.darkMode') : t('nav.lightMode')}
             </span>
           </div>
           <button
             onClick={toggleTheme}
             className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors ${
-              isDark ? 'bg-[#27AE60]' : 'bg-gray-300'
+              isDark ? 'bg-[#27AE60]' : 'bg-slate-300'
             }`}
             aria-label="Toggle dark mode"
           >

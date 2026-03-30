@@ -199,7 +199,7 @@ export function QuickAdd() {
       <div
         ref={containerRef}
         className={`relative w-full sm:max-w-md rounded-xl shadow-2xl transition-all duration-200 ${
-          isDark ? 'bg-slate-800 border border-slate-700' : 'bg-white border border-gray-200'
+          isDark ? 'bg-slate-800 border border-slate-700' : 'bg-white border border-slate-200'
         }`}
       >
         {/* Close Button */}
@@ -208,7 +208,7 @@ export function QuickAdd() {
           className={`absolute top-4 right-4 p-2 rounded-lg transition-colors duration-200 ${
             isDark
               ? 'text-slate-400 hover:text-white hover:bg-slate-700'
-              : 'text-gray-400 hover:text-gray-600 hover:bg-gray-100'
+              : 'text-slate-400 hover:text-slate-600 hover:bg-slate-100'
           }`}
         >
           <X className="w-5 h-5" />
@@ -217,7 +217,7 @@ export function QuickAdd() {
         {/* Tabs */}
         <div
           className={`flex border-b transition-colors duration-200 ${
-            isDark ? 'border-slate-700' : 'border-gray-200'
+            isDark ? 'border-slate-700' : 'border-slate-200'
           }`}
         >
           {(['contact', 'deal', 'activity'] as const).map((tab) => (
@@ -231,7 +231,7 @@ export function QuickAdd() {
                 activeTab === tab
                   ? `border-[#27AE60] ${isDark ? 'text-emerald-400' : 'text-[#27AE60]'}`
                   : `border-transparent ${
-                      isDark ? 'text-slate-400 hover:text-slate-300' : 'text-gray-500 hover:text-gray-700'
+                      isDark ? 'text-slate-400 hover:text-slate-300' : 'text-slate-500 hover:text-slate-700'
                     }`
               }`}
               style={{
@@ -251,7 +251,7 @@ export function QuickAdd() {
               <div>
                 <label
                   className={`block text-sm font-medium mb-2 ${
-                    isDark ? 'text-slate-300' : 'text-gray-700'
+                    isDark ? 'text-slate-300' : 'text-slate-700'
                   }`}
                 >
                   Name <span className="text-red-500">*</span>
@@ -265,10 +265,10 @@ export function QuickAdd() {
                     errors.name
                       ? isDark
                         ? 'border-red-500 bg-slate-700 text-white'
-                        : 'border-red-500 bg-red-50 text-gray-900'
+                        : 'border-red-500 bg-red-50 text-slate-900'
                       : isDark
                         ? 'border-slate-600 bg-slate-700 text-white hover:border-slate-500'
-                        : 'border-gray-300 bg-white text-gray-900 hover:border-gray-400'
+                        : 'border-slate-300 bg-white text-slate-900 hover:border-slate-400'
                   }`}
                 />
               </div>
@@ -276,7 +276,7 @@ export function QuickAdd() {
               <div>
                 <label
                   className={`block text-sm font-medium mb-2 ${
-                    isDark ? 'text-slate-300' : 'text-gray-700'
+                    isDark ? 'text-slate-300' : 'text-slate-700'
                   }`}
                 >
                   Email
@@ -289,7 +289,7 @@ export function QuickAdd() {
                   className={`w-full px-3 py-2 rounded-lg border transition-colors duration-200 ${
                     isDark
                       ? 'border-slate-600 bg-slate-700 text-white hover:border-slate-500'
-                      : 'border-gray-300 bg-white text-gray-900 hover:border-gray-400'
+                      : 'border-slate-300 bg-white text-slate-900 hover:border-slate-400'
                   }`}
                 />
               </div>
@@ -297,7 +297,7 @@ export function QuickAdd() {
               <div>
                 <label
                   className={`block text-sm font-medium mb-2 ${
-                    isDark ? 'text-slate-300' : 'text-gray-700'
+                    isDark ? 'text-slate-300' : 'text-slate-700'
                   }`}
                 >
                   Phone
@@ -310,7 +310,7 @@ export function QuickAdd() {
                   className={`w-full px-3 py-2 rounded-lg border transition-colors duration-200 ${
                     isDark
                       ? 'border-slate-600 bg-slate-700 text-white hover:border-slate-500'
-                      : 'border-gray-300 bg-white text-gray-900 hover:border-gray-400'
+                      : 'border-slate-300 bg-white text-slate-900 hover:border-slate-400'
                   }`}
                 />
               </div>
@@ -318,7 +318,7 @@ export function QuickAdd() {
               <div>
                 <label
                   className={`block text-sm font-medium mb-2 ${
-                    isDark ? 'text-slate-300' : 'text-gray-700'
+                    isDark ? 'text-slate-300' : 'text-slate-700'
                   }`}
                 >
                   Type
@@ -331,7 +331,7 @@ export function QuickAdd() {
                   className={`w-full px-3 py-2 rounded-lg border transition-colors duration-200 ${
                     isDark
                       ? 'border-slate-600 bg-slate-700 text-white hover:border-slate-500'
-                      : 'border-gray-300 bg-white text-gray-900 hover:border-gray-400'
+                      : 'border-slate-300 bg-white text-slate-900 hover:border-slate-400'
                   }`}
                 >
                   <option value="lead">Lead</option>
@@ -346,7 +346,7 @@ export function QuickAdd() {
                   loading
                     ? isDark
                       ? 'bg-slate-700 text-slate-400 cursor-not-allowed'
-                      : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                      : 'bg-slate-200 text-slate-400 cursor-not-allowed'
                     : isDark
                       ? 'bg-[#27AE60] hover:bg-emerald-500 text-white'
                       : 'bg-[#27AE60] hover:bg-emerald-500 text-white'
@@ -364,7 +364,7 @@ export function QuickAdd() {
               <div>
                 <label
                   className={`block text-sm font-medium mb-2 ${
-                    isDark ? 'text-slate-300' : 'text-gray-700'
+                    isDark ? 'text-slate-300' : 'text-slate-700'
                   }`}
                 >
                   Title <span className="text-red-500">*</span>
@@ -378,10 +378,10 @@ export function QuickAdd() {
                     errors.title
                       ? isDark
                         ? 'border-red-500 bg-slate-700 text-white'
-                        : 'border-red-500 bg-red-50 text-gray-900'
+                        : 'border-red-500 bg-red-50 text-slate-900'
                       : isDark
                         ? 'border-slate-600 bg-slate-700 text-white hover:border-slate-500'
-                        : 'border-gray-300 bg-white text-gray-900 hover:border-gray-400'
+                        : 'border-slate-300 bg-white text-slate-900 hover:border-slate-400'
                   }`}
                 />
               </div>
@@ -389,7 +389,7 @@ export function QuickAdd() {
               <div>
                 <label
                   className={`block text-sm font-medium mb-2 ${
-                    isDark ? 'text-slate-300' : 'text-gray-700'
+                    isDark ? 'text-slate-300' : 'text-slate-700'
                   }`}
                 >
                   Contact <span className="text-red-500">*</span>
@@ -401,10 +401,10 @@ export function QuickAdd() {
                     errors.contactId
                       ? isDark
                         ? 'border-red-500 bg-slate-700 text-white'
-                        : 'border-red-500 bg-red-50 text-gray-900'
+                        : 'border-red-500 bg-red-50 text-slate-900'
                       : isDark
                         ? 'border-slate-600 bg-slate-700 text-white hover:border-slate-500'
-                        : 'border-gray-300 bg-white text-gray-900 hover:border-gray-400'
+                        : 'border-slate-300 bg-white text-slate-900 hover:border-slate-400'
                   }`}
                 >
                   <option value="">Select a contact</option>
@@ -419,7 +419,7 @@ export function QuickAdd() {
               <div>
                 <label
                   className={`block text-sm font-medium mb-2 ${
-                    isDark ? 'text-slate-300' : 'text-gray-700'
+                    isDark ? 'text-slate-300' : 'text-slate-700'
                   }`}
                 >
                   Value ($)
@@ -433,7 +433,7 @@ export function QuickAdd() {
                   className={`w-full px-3 py-2 rounded-lg border transition-colors duration-200 ${
                     isDark
                       ? 'border-slate-600 bg-slate-700 text-white hover:border-slate-500'
-                      : 'border-gray-300 bg-white text-gray-900 hover:border-gray-400'
+                      : 'border-slate-300 bg-white text-slate-900 hover:border-slate-400'
                   }`}
                 />
               </div>
@@ -441,7 +441,7 @@ export function QuickAdd() {
               <div>
                 <label
                   className={`block text-sm font-medium mb-2 ${
-                    isDark ? 'text-slate-300' : 'text-gray-700'
+                    isDark ? 'text-slate-300' : 'text-slate-700'
                   }`}
                 >
                   Stage
@@ -452,7 +452,7 @@ export function QuickAdd() {
                   className={`w-full px-3 py-2 rounded-lg border transition-colors duration-200 ${
                     isDark
                       ? 'border-slate-600 bg-slate-700 text-white hover:border-slate-500'
-                      : 'border-gray-300 bg-white text-gray-900 hover:border-gray-400'
+                      : 'border-slate-300 bg-white text-slate-900 hover:border-slate-400'
                   }`}
                 >
                   {settings.pipelineStages.map((s) => (
@@ -470,7 +470,7 @@ export function QuickAdd() {
                   loading
                     ? isDark
                       ? 'bg-slate-700 text-slate-400 cursor-not-allowed'
-                      : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                      : 'bg-slate-200 text-slate-400 cursor-not-allowed'
                     : isDark
                       ? 'bg-[#27AE60] hover:bg-emerald-500 text-white'
                       : 'bg-[#27AE60] hover:bg-emerald-500 text-white'
@@ -488,7 +488,7 @@ export function QuickAdd() {
               <div>
                 <label
                   className={`block text-sm font-medium mb-2 ${
-                    isDark ? 'text-slate-300' : 'text-gray-700'
+                    isDark ? 'text-slate-300' : 'text-slate-700'
                   }`}
                 >
                   Type
@@ -501,7 +501,7 @@ export function QuickAdd() {
                   className={`w-full px-3 py-2 rounded-lg border transition-colors duration-200 ${
                     isDark
                       ? 'border-slate-600 bg-slate-700 text-white hover:border-slate-500'
-                      : 'border-gray-300 bg-white text-gray-900 hover:border-gray-400'
+                      : 'border-slate-300 bg-white text-slate-900 hover:border-slate-400'
                   }`}
                 >
                   <option value="call">Call</option>
@@ -514,7 +514,7 @@ export function QuickAdd() {
               <div>
                 <label
                   className={`block text-sm font-medium mb-2 ${
-                    isDark ? 'text-slate-300' : 'text-gray-700'
+                    isDark ? 'text-slate-300' : 'text-slate-700'
                   }`}
                 >
                   Description <span className="text-red-500">*</span>
@@ -528,10 +528,10 @@ export function QuickAdd() {
                     errors.description
                       ? isDark
                         ? 'border-red-500 bg-slate-700 text-white'
-                        : 'border-red-500 bg-red-50 text-gray-900'
+                        : 'border-red-500 bg-red-50 text-slate-900'
                       : isDark
                         ? 'border-slate-600 bg-slate-700 text-white hover:border-slate-500'
-                        : 'border-gray-300 bg-white text-gray-900 hover:border-gray-400'
+                        : 'border-slate-300 bg-white text-slate-900 hover:border-slate-400'
                   }`}
                 />
               </div>
@@ -539,7 +539,7 @@ export function QuickAdd() {
               <div>
                 <label
                   className={`block text-sm font-medium mb-2 ${
-                    isDark ? 'text-slate-300' : 'text-gray-700'
+                    isDark ? 'text-slate-300' : 'text-slate-700'
                   }`}
                 >
                   Contact
@@ -550,7 +550,7 @@ export function QuickAdd() {
                   className={`w-full px-3 py-2 rounded-lg border transition-colors duration-200 ${
                     isDark
                       ? 'border-slate-600 bg-slate-700 text-white hover:border-slate-500'
-                      : 'border-gray-300 bg-white text-gray-900 hover:border-gray-400'
+                      : 'border-slate-300 bg-white text-slate-900 hover:border-slate-400'
                   }`}
                 >
                   <option value="">Select a contact (optional)</option>
@@ -565,7 +565,7 @@ export function QuickAdd() {
               <div>
                 <label
                   className={`block text-sm font-medium mb-2 ${
-                    isDark ? 'text-slate-300' : 'text-gray-700'
+                    isDark ? 'text-slate-300' : 'text-slate-700'
                   }`}
                 >
                   Deal
@@ -576,7 +576,7 @@ export function QuickAdd() {
                   className={`w-full px-3 py-2 rounded-lg border transition-colors duration-200 ${
                     isDark
                       ? 'border-slate-600 bg-slate-700 text-white hover:border-slate-500'
-                      : 'border-gray-300 bg-white text-gray-900 hover:border-gray-400'
+                      : 'border-slate-300 bg-white text-slate-900 hover:border-slate-400'
                   }`}
                 >
                   <option value="">Select a deal (optional)</option>
@@ -591,7 +591,7 @@ export function QuickAdd() {
                   loading
                     ? isDark
                       ? 'bg-slate-700 text-slate-400 cursor-not-allowed'
-                      : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                      : 'bg-slate-200 text-slate-400 cursor-not-allowed'
                     : isDark
                       ? 'bg-[#27AE60] hover:bg-emerald-500 text-white'
                       : 'bg-[#27AE60] hover:bg-emerald-500 text-white'

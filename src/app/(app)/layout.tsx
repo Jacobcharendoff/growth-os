@@ -17,19 +17,19 @@ function AppContent({ children }: { children: React.ReactNode }) {
   const isDark = theme === 'dark';
 
   return (
-    <div className={`min-h-screen flex transition-colors duration-200 ${isDark ? 'bg-slate-950' : 'bg-gray-50'}`}>
+    <div className={`min-h-screen flex transition-colors duration-200 ${isDark ? 'bg-slate-950' : 'bg-slate-50'}`}>
       <Sidebar mobileOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       <div className="flex-1 flex flex-col min-w-0">
         {/* Mobile header */}
         <header
           className={`lg:hidden flex items-center justify-between px-4 py-3 border-b sticky top-0 z-30 transition-colors duration-200 ${
-            isDark ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'
+            isDark ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200'
           }`}
         >
           <button
             onClick={() => setSidebarOpen(true)}
-            className={`p-2 -ml-2 rounded-lg ${isDark ? 'text-slate-300 hover:text-white hover:bg-slate-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'}`}
+            className={`p-2 -ml-2 rounded-lg ${isDark ? 'text-slate-300 hover:text-white hover:bg-slate-700' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'}`}
           >
             <Menu className="w-5 h-5" />
           </button>
@@ -38,7 +38,7 @@ function AppContent({ children }: { children: React.ReactNode }) {
               <Zap className="w-4 h-4 text-white" />
             </div>
             <span
-              className={`font-bold text-sm ${isDark ? 'text-white' : 'text-gray-900'}`}
+              className={`font-bold text-sm ${isDark ? 'text-white' : 'text-slate-900'}`}
             >
               Growth
               <span className={isDark ? 'text-emerald-400' : 'text-[#27AE60]'}>

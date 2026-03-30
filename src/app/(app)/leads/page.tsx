@@ -119,15 +119,15 @@ document.getElementById('growthosForm')?.querySelector('form')?.addEventListener
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 transition-colors duration-200">
       {/* Header */}
-      <div className="border-b border-gray-200 dark:border-slate-800 bg-gradient-to-r from-gray-50 to-white dark:from-slate-900 dark:to-slate-950">
+      <div className="border-b border-slate-200 dark:border-slate-800 bg-gradient-to-r from-slate-50 to-white dark:from-slate-900 dark:to-slate-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex items-center gap-3 mb-2">
             <FileInput className="w-8 h-8 text-[#27AE60]" />
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
               Lead Capture Form
             </h1>
           </div>
-          <p className="text-gray-600 dark:text-slate-400 mt-1">
+          <p className="text-slate-600 dark:text-slate-400 mt-1">
             Embed this form on your website to capture leads directly into your pipeline
           </p>
         </div>
@@ -138,10 +138,10 @@ document.getElementById('growthosForm')?.querySelector('form')?.addEventListener
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
           {/* Left Column - Configuration */}
           <div className="space-y-4 sm:space-y-6">
-            <div className="bg-white dark:bg-slate-900 rounded-lg border border-gray-200 dark:border-slate-800 p-4 sm:p-6">
+            <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-4 sm:p-6">
               <div className="flex items-center gap-2 mb-6">
                 <Settings className="w-5 h-5 text-[#27AE60]" />
-                <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                <h2 className="text-xl font-bold text-slate-900 dark:text-white">
                   Configuration
                 </h2>
               </div>
@@ -149,33 +149,33 @@ document.getElementById('growthosForm')?.querySelector('form')?.addEventListener
               <div className="space-y-5">
                 {/* Form Title */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                     Form Title
                   </label>
                   <input
                     type="text"
                     value={formTitle}
                     onChange={(e) => setFormTitle(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#27AE60]"
+                    className="w-full px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#27AE60]"
                   />
                 </div>
 
                 {/* Button Text */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                     Button Text
                   </label>
                   <input
                     type="text"
                     value={buttonText}
                     onChange={(e) => setButtonText(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#27AE60]"
+                    className="w-full px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#27AE60]"
                   />
                 </div>
 
                 {/* Button Color */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                     Button Color
                   </label>
                   <div className="flex items-center gap-3">
@@ -183,39 +183,39 @@ document.getElementById('growthosForm')?.querySelector('form')?.addEventListener
                       type="color"
                       value={buttonColor}
                       onChange={(e) => setButtonColor(e.target.value)}
-                      className="w-12 h-10 rounded cursor-pointer border border-gray-300 dark:border-slate-700"
+                      className="w-12 h-10 rounded cursor-pointer border border-slate-300 dark:border-slate-700"
                     />
                     <input
                       type="text"
                       value={buttonColor}
                       onChange={(e) => setButtonColor(e.target.value)}
-                      className="flex-1 px-3 py-2 border border-gray-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-white text-sm font-mono focus:outline-none focus:ring-2 focus:ring-[#27AE60]"
+                      className="flex-1 px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm font-mono focus:outline-none focus:ring-2 focus:ring-[#27AE60]"
                     />
                   </div>
                 </div>
 
                 {/* Success Message */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                     Success Message
                   </label>
                   <textarea
                     value={successMessage}
                     onChange={(e) => setSuccessMessage(e.target.value)}
                     rows={3}
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#27AE60]"
+                    className="w-full px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#27AE60]"
                   />
                 </div>
 
                 {/* Pipeline Stage */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                     Auto-assign to Pipeline Stage
                   </label>
                   <select
                     value={pipelineStage}
                     onChange={(e) => setPipelineStage(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#27AE60]"
+                    className="w-full px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#27AE60]"
                   >
                     <option>New Lead</option>
                     <option>Contacted</option>
@@ -226,7 +226,7 @@ document.getElementById('growthosForm')?.querySelector('form')?.addEventListener
 
                 {/* Fields Selection */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-3">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
                     Form Fields
                   </label>
                   <div className="space-y-2">
@@ -252,18 +252,18 @@ document.getElementById('growthosForm')?.querySelector('form')?.addEventListener
                             toggleField(key as keyof typeof includeFields)
                           }
                           disabled={key === 'name' || key === 'email'}
-                          className="w-4 h-4 rounded border-gray-300 text-[#27AE60] focus:ring-[#27AE60] disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="w-4 h-4 rounded border-slate-300 text-[#27AE60] focus:ring-[#27AE60] disabled:opacity-50 disabled:cursor-not-allowed"
                         />
                         <span
                           className={`text-sm ${
                             key === 'name' || key === 'email'
-                              ? 'text-gray-500 dark:text-slate-500'
-                              : 'text-gray-700 dark:text-slate-300'
+                              ? 'text-slate-500 dark:text-slate-500'
+                              : 'text-slate-700 dark:text-slate-300'
                           }`}
                         >
                           {label}
                           {(key === 'name' || key === 'email') && (
-                            <span className="ml-1 text-gray-400 text-xs">
+                            <span className="ml-1 text-slate-400 text-xs">
                               (always on)
                             </span>
                           )}
@@ -278,68 +278,68 @@ document.getElementById('growthosForm')?.querySelector('form')?.addEventListener
 
           {/* Right Column - Live Preview */}
           <div className="space-y-4 sm:space-y-6">
-            <div className="bg-white dark:bg-slate-900 rounded-lg border border-gray-200 dark:border-slate-800 overflow-hidden">
-              <div className="border-b border-gray-200 dark:border-slate-800 bg-gray-100 dark:bg-slate-800 px-4 py-3 flex items-center gap-2">
-                <Eye className="w-4 h-4 text-gray-600 dark:text-slate-400" />
-                <span className="text-sm font-medium text-gray-700 dark:text-slate-300">
+            <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
+              <div className="border-b border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800 px-4 py-3 flex items-center gap-2">
+                <Eye className="w-4 h-4 text-slate-600 dark:text-slate-400" />
+                <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
                   Live Preview
                 </span>
               </div>
 
               {/* Mock Browser Frame */}
-              <div className="bg-gray-50 dark:bg-slate-950 p-3 sm:p-6">
-                <div className="bg-white dark:bg-slate-900 rounded-lg shadow-lg border border-gray-200 dark:border-slate-800 overflow-hidden">
+              <div className="bg-slate-50 dark:bg-slate-950 p-3 sm:p-6">
+                <div className="bg-white dark:bg-slate-900 rounded-lg shadow-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
                   {/* Browser URL Bar */}
-                  <div className="bg-gray-100 dark:bg-slate-800 px-4 py-3 border-b border-gray-200 dark:border-slate-700">
-                    <p className="text-xs text-gray-600 dark:text-slate-400 font-mono">
+                  <div className="bg-slate-100 dark:bg-slate-800 px-4 py-3 border-b border-slate-200 dark:border-slate-700">
+                    <p className="text-xs text-slate-600 dark:text-slate-400 font-mono">
                       https://yourwebsite.com
                     </p>
                   </div>
 
                   {/* Form Preview */}
                   <div className="p-3 sm:p-6">
-                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                    <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
                       {formTitle}
                     </h3>
-                    <p className="text-sm text-gray-600 dark:text-slate-400 mb-6">
+                    <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">
                       Enter your details and we'll be in touch shortly.
                     </p>
 
                     <div className="space-y-4">
                       {/* Name */}
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                           Full Name
                         </label>
                         <input
                           type="text"
                           disabled
-                          className="w-full px-3 py-2 border border-gray-300 dark:border-slate-700 rounded-md bg-gray-50 dark:bg-slate-800 text-gray-900 dark:text-white text-sm"
+                          className="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-md bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm"
                         />
                       </div>
 
                       {/* Email */}
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                           Email Address
                         </label>
                         <input
                           type="email"
                           disabled
-                          className="w-full px-3 py-2 border border-gray-300 dark:border-slate-700 rounded-md bg-gray-50 dark:bg-slate-800 text-gray-900 dark:text-white text-sm"
+                          className="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-md bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm"
                         />
                       </div>
 
                       {/* Phone */}
                       {includeFields.phone && (
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
+                          <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                             Phone Number
                           </label>
                           <input
                             type="tel"
                             disabled
-                            className="w-full px-3 py-2 border border-gray-300 dark:border-slate-700 rounded-md bg-gray-50 dark:bg-slate-800 text-gray-900 dark:text-white text-sm"
+                            className="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-md bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm"
                           />
                         </div>
                       )}
@@ -347,13 +347,13 @@ document.getElementById('growthosForm')?.querySelector('form')?.addEventListener
                       {/* Address */}
                       {includeFields.address && (
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
+                          <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                             Address
                           </label>
                           <input
                             type="text"
                             disabled
-                            className="w-full px-3 py-2 border border-gray-300 dark:border-slate-700 rounded-md bg-gray-50 dark:bg-slate-800 text-gray-900 dark:text-white text-sm"
+                            className="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-md bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm"
                           />
                         </div>
                       )}
@@ -361,10 +361,10 @@ document.getElementById('growthosForm')?.querySelector('form')?.addEventListener
                       {/* Service Needed */}
                       {includeFields.serviceNeeded && (
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
+                          <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                             Service Needed
                           </label>
-                          <select disabled className="w-full px-3 py-2 border border-gray-300 dark:border-slate-700 rounded-md bg-gray-50 dark:bg-slate-800 text-gray-900 dark:text-white text-sm">
+                          <select disabled className="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-md bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm">
                             <option>Select a service...</option>
                           </select>
                         </div>
@@ -373,13 +373,13 @@ document.getElementById('growthosForm')?.querySelector('form')?.addEventListener
                       {/* Preferred Date */}
                       {includeFields.preferredDate && (
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
+                          <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                             Preferred Date
                           </label>
                           <input
                             type="date"
                             disabled
-                            className="w-full px-3 py-2 border border-gray-300 dark:border-slate-700 rounded-md bg-gray-50 dark:bg-slate-800 text-gray-900 dark:text-white text-sm"
+                            className="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-md bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm"
                           />
                         </div>
                       )}
@@ -387,13 +387,13 @@ document.getElementById('growthosForm')?.querySelector('form')?.addEventListener
                       {/* Message */}
                       {includeFields.message && (
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
+                          <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                             Message
                           </label>
                           <textarea
                             disabled
                             rows={4}
-                            className="w-full px-3 py-2 border border-gray-300 dark:border-slate-700 rounded-md bg-gray-50 dark:bg-slate-800 text-gray-900 dark:text-white text-sm"
+                            className="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-md bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm"
                           />
                         </div>
                       )}
@@ -415,19 +415,19 @@ document.getElementById('growthosForm')?.querySelector('form')?.addEventListener
         </div>
 
         {/* Embed Code Section */}
-        <div className="mt-6 sm:mt-8 bg-white dark:bg-slate-900 rounded-lg border border-gray-200 dark:border-slate-800 p-4 sm:p-6">
+        <div className="mt-6 sm:mt-8 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-4 sm:p-6">
           <div className="flex items-center gap-2 mb-4">
             <Code className="w-5 h-5 text-[#27AE60]" />
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white">
               Embed Code
             </h2>
           </div>
-          <p className="text-sm text-gray-600 dark:text-slate-400 mb-4">
+          <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
             Copy this code and paste it into your website. This form will send submissions to your GrowthOS dashboard.
           </p>
 
           <div className="relative">
-            <pre className="bg-gray-900 dark:bg-slate-950 text-gray-100 p-2 sm:p-4 rounded-lg overflow-x-auto text-xs leading-4 sm:leading-5 max-h-96 overflow-y-auto">
+            <pre className="bg-slate-900 dark:bg-slate-950 text-slate-100 p-2 sm:p-4 rounded-lg overflow-x-auto text-xs leading-4 sm:leading-5 max-h-96 overflow-y-auto">
               <code className="text-[11px] sm:text-xs">{embedCode}</code>
             </pre>
             <button

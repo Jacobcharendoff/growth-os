@@ -519,8 +519,54 @@ export default function InvoicesPage() {
         </div>
       </div>
 
-      {/* Table */}
-      <div className={`${isDark ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200'} rounded-xl shadow-sm border overflow-hidden`}>
+      {/* Mobile Card View */}
+      <div className={`md:hidden ${isDark ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200'} rounded-xl shadow-sm border overflow-hidden`}>
+        {filteredInvoices.length > 0 ? (
+          <div className={`divide-y ${isDark ? 'divide-slate-700' : 'divide-slate-200'}`}>
+            {filteredInvoices.map((invoice) => (
+              <div
+                key={invoice.id}
+                onClick={() => router.push(`/invoices/${invoice.id}`)}
+                className={`p-4 cursor-pointer transition-colors ${isDark ? 'hover:bg-slate-700' : 'hover:bg-slate-50'}`}
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0 flex-1">
+                    <p className={`font-semibold text-sm ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                      {invoice.number}
+                    </p>
+                    <p className={`text-sm mt-0.5 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                      {invoice.customerName}
+                    </p>
+                    <p className={`text-xs mt-1 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                      Due {new Date(invoice.dueDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                    </p>
+                  </div>
+                  <div className="flex flex-col items-end gap-1 shrink-0">
+                    <span className={`text-sm font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                      ${invoice.total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    </span>
+                    <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-semibold border ${STATUS_COLORS[invoice.status]}`}>
+                      {invoice.status.charAt(0).toUpperCase() + invoice.status.slice(1)}
+                    </span>
+                    {invoice.amountPaid > 0 && (
+                      <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+                        ${invoice.amountPaid.toLocaleString('en-US', { minimumFractionDigits: 2 })} paid
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="px-6 py-8 text-center">
+            <p className={isDark ? 'text-slate-400' : 'text-slate-500'}>No invoices found</p>
+          </div>
+        )}
+      </div>
+
+      {/* Desktop Table */}
+      <div className={`hidden md:block ${isDark ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200'} rounded-xl shadow-sm border overflow-hidden`}>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead className={`${isDark ? 'bg-slate-700 border-slate-600' : 'bg-slate-50 border-slate-200'} border-b`}>

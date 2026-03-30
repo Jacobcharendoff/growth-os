@@ -82,6 +82,7 @@ export default function PipelinePage() {
   const [sortColumn, setSortColumn] = useState<'title' | 'contact' | 'value' | 'days'>('title');
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc');
   const [hoveredCardId, setHoveredCardId] = useState<string | null>(null);
+  const [mobileSelectedStage, setMobileSelectedStage] = useState<PipelineStage>('new_lead');
 
   useEffect(() => {
     setMounted(true);
@@ -350,7 +351,74 @@ export default function PipelinePage() {
 
       {/* Board View */}
       {viewMode === 'board' && (
-        <div className="flex-1 overflow-x-auto overflow-y-hidden bg-slate-50 dark:bg-slate-950 p-3 sm:p-6">
+        <div className="flex-1 overflow-hidden bg-slate-50 dark:bg-slate-950">
+          {/* Mobile: Stage Tab Strip + Vertical Deal List */}
+          <div className="md:hidden flex flex-col h-full">
+            {/* Scrollable stage tabs */}
+            <div className="overflow-x-auto flex-shrink-0 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
+              <div className="flex min-w-max">
+                {PIPELINE_STAGES_CONFIG.map(({ stage, labelKey }) => {
+                  const count = getDealsByStage(stage).length;
+                  return (
+                    <button
+                      key={stage}
+                      onClick={() => setMobileSelectedStage(stage)}
+                      className={`flex-shrink-0 px-4 py-3 text-xs font-semibold border-b-2 transition-colors whitespace-nowrap ${
+                        mobileSelectedStage === stage
+                          ? 'border-[#27AE60] text-[#27AE60] bg-emerald-50 dark:bg-emerald-950'
+                          : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white'
+                      }`}
+                    >
+                      {t(labelKey as any)} ({count})
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+            {/* Mobile stage summary */}
+            <div className="px-4 py-3 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+              <span className="text-sm font-semibold text-slate-900 dark:text-white">
+                {getStageMetrics(mobileSelectedStage).count} jobs
+              </span>
+              <span className="text-sm font-bold text-[#27AE60]">
+                ${getStageMetrics(mobileSelectedStage).value.toLocaleString()}
+              </span>
+            </div>
+            {/* Mobile deal cards list */}
+            <div className="flex-1 overflow-y-auto p-3 space-y-3">
+              {getDealsByStage(mobileSelectedStage).length === 0 ? (
+                <div className="text-center py-12 text-slate-400 dark:text-slate-500">
+                  <p className="text-sm">No jobs in this stage</p>
+                </div>
+              ) : (
+                getDealsByStage(mobileSelectedStage).map((deal) => {
+                  const contact = getContact(deal.contactId);
+                  const daysInStage = getDaysInStage(deal);
+                  const ring = getLeadSourceRing(deal.source);
+                  return (
+                    <Link
+                      key={deal.id}
+                      href={`/pipeline/${deal.id}`}
+                      className="block p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm active:shadow-md transition-all"
+                    >
+                      <div className="flex justify-between items-start mb-2">
+                        <h4 className="font-semibold text-slate-900 dark:text-white text-sm">{deal.title}</h4>
+                        <span className="text-xs bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 px-2 py-0.5 rounded">{daysInStage}d</span>
+                      </div>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">{contact?.name} &middot; {deal.assignedTo}</p>
+                      <div className="flex justify-between items-center">
+                        <span className="font-bold text-slate-900 dark:text-white">${deal.value.toLocaleString()}</span>
+                        <span className="text-xs bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 px-2 py-0.5 rounded font-medium">{ring}</span>
+                      </div>
+                    </Link>
+                  );
+                })
+              )}
+            </div>
+          </div>
+
+          {/* Desktop: Full Kanban Board */}
+          <div className="hidden md:block overflow-x-auto overflow-y-hidden p-3 sm:p-6 h-full">
           <DragDropContext onDragEnd={handleDragEnd}>
             <div className="flex gap-3 sm:gap-6 min-w-max">
               {PIPELINE_STAGES_CONFIG.map(({ stage, labelKey, color }) => {
@@ -477,6 +545,7 @@ export default function PipelinePage() {
               })}
             </div>
           </DragDropContext>
+          </div>
         </div>
       )}
 

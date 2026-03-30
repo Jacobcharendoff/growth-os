@@ -248,15 +248,15 @@ export default function TemplatesPage() {
   return (
     <div className={`min-h-screen ${isDark ? 'bg-slate-950' : 'bg-white'} transition-colors duration-200`}>
       {/* Header */}
-      <div className={`border-b ${isDark ? 'border-slate-800 bg-slate-900' : 'border-gray-200 bg-gradient-to-r from-gray-50 to-white'}`}>
+      <div className={`border-b ${isDark ? 'border-slate-800 bg-slate-900' : 'border-slate-200 bg-gradient-to-r from-slate-50 to-white'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
           <div className="flex items-center gap-3 mb-2">
             <Mail className="w-8 h-8 text-[#27AE60]" />
-            <h1 className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+            <h1 className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
               Email Templates
             </h1>
           </div>
-          <p className={isDark ? 'text-slate-400' : 'text-gray-600'}>
+          <p className={isDark ? 'text-slate-400' : 'text-slate-600'}>
             Pre-built professional email templates for your Canadian service business
           </p>
         </div>
@@ -275,7 +275,7 @@ export default function TemplatesPage() {
                   ? 'bg-[#27AE60] text-white shadow-lg shadow-emerald-600/20'
                   : isDark
                     ? 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
               }`}
             >
               {filter}
@@ -291,12 +291,12 @@ export default function TemplatesPage() {
               className={`rounded-lg border ${
                 isDark
                   ? 'bg-slate-900 border-slate-800 hover:border-slate-700'
-                  : 'bg-white border-gray-200 hover:border-gray-300'
+                  : 'bg-white border-slate-200 hover:border-slate-300'
               } transition-all duration-200 hover:shadow-lg overflow-hidden`}
             >
               {/* Card Header */}
-              <div className={`p-6 ${isDark ? 'border-slate-800' : 'border-gray-200'} border-b`}>
-                <h3 className={`text-lg font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+              <div className={`p-6 ${isDark ? 'border-slate-800' : 'border-slate-200'} border-b`}>
+                <h3 className={`text-lg font-bold mb-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>
                   {template.name}
                 </h3>
                 <div className="flex items-center gap-2 mb-3">
@@ -308,19 +308,19 @@ export default function TemplatesPage() {
                     {template.category}
                   </span>
                 </div>
-                <p className={`text-sm ${isDark ? 'text-slate-400' : 'text-gray-600'}`}>
+                <p className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                   {template.description}
                 </p>
               </div>
 
               {/* Card Footer */}
-              <div className={`px-6 py-4 ${isDark ? 'bg-slate-800/50' : 'bg-gray-50'} flex gap-2`}>
+              <div className={`px-6 py-4 ${isDark ? 'bg-slate-800/50' : 'bg-slate-50'} flex gap-2`}>
                 <button
                   onClick={() => setPreviewTemplate(template)}
                   className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg font-medium transition-all duration-200 ${
                     isDark
                       ? 'bg-slate-700 text-slate-100 hover:bg-slate-600'
-                      : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                      : 'bg-white text-slate-700 border border-slate-300 hover:bg-slate-50'
                   }`}
                 >
                   <Eye className="w-4 h-4" />
@@ -348,14 +348,14 @@ export default function TemplatesPage() {
           >
             {/* Modal Header */}
             <div
-              className={`sticky top-0 ${isDark ? 'bg-slate-800' : 'bg-gray-50'} px-4 sm:px-6 py-4 border-b ${isDark ? 'border-slate-700' : 'border-gray-200'} flex items-center justify-between`}
+              className={`sticky top-0 ${isDark ? 'bg-slate-800' : 'bg-slate-50'} px-4 sm:px-6 py-4 border-b ${isDark ? 'border-slate-700' : 'border-slate-200'} flex items-center justify-between`}
             >
-              <h2 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+              <h2 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
                 {previewTemplate.name}
               </h2>
               <button
                 onClick={() => setPreviewTemplate(null)}
-                className={`p-1 rounded-lg ${isDark ? 'hover:bg-slate-700' : 'hover:bg-gray-100'}`}
+                className={`p-1 rounded-lg ${isDark ? 'hover:bg-slate-700' : 'hover:bg-slate-100'}`}
               >
                 <X className="w-6 h-6" />
               </button>
@@ -364,36 +364,36 @@ export default function TemplatesPage() {
             {/* Email Preview */}
             <div className={`p-3 sm:p-6 ${isDark ? 'bg-slate-950' : 'bg-white'}`}>
               {/* Mock Email Client */}
-              <div className={`rounded-lg border ${isDark ? 'border-slate-700 bg-slate-900' : 'border-gray-300 bg-white'} overflow-hidden shadow-lg`}>
+              <div className={`rounded-lg border ${isDark ? 'border-slate-700 bg-slate-900' : 'border-slate-300 bg-white'} overflow-hidden shadow-lg`}>
                 {/* Email Header */}
-                <div className={`${isDark ? 'bg-slate-800' : 'bg-gray-100'} px-4 py-4 border-b ${isDark ? 'border-slate-700' : 'border-gray-300'}`}>
+                <div className={`${isDark ? 'bg-slate-800' : 'bg-slate-100'} px-4 py-4 border-b ${isDark ? 'border-slate-700' : 'border-slate-300'}`}>
                   <div className="mb-3">
-                    <p className={`text-sm font-semibold ${isDark ? 'text-slate-300' : 'text-gray-700'}`}>
+                    <p className={`text-sm font-semibold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                       From: {previewTemplate.from}
                     </p>
                   </div>
                   <div>
-                    <p className={`text-sm font-semibold ${isDark ? 'text-slate-300' : 'text-gray-700'}`}>
+                    <p className={`text-sm font-semibold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                       Subject: {previewTemplate.subject}
                     </p>
                   </div>
                 </div>
 
                 {/* Email Body */}
-                <div className={`p-6 ${isDark ? 'text-slate-300' : 'text-gray-700'} whitespace-pre-wrap text-sm leading-relaxed`}>
+                <div className={`p-6 ${isDark ? 'text-slate-300' : 'text-slate-700'} whitespace-pre-wrap text-sm leading-relaxed`}>
                   {previewTemplate.body}
                 </div>
               </div>
             </div>
 
             {/* Modal Footer */}
-            <div className={`sticky bottom-0 ${isDark ? 'bg-slate-800' : 'bg-gray-50'} px-4 sm:px-6 py-4 border-t ${isDark ? 'border-slate-700' : 'border-gray-200'} flex gap-2 sm:gap-3`}>
+            <div className={`sticky bottom-0 ${isDark ? 'bg-slate-800' : 'bg-slate-50'} px-4 sm:px-6 py-4 border-t ${isDark ? 'border-slate-700' : 'border-slate-200'} flex gap-2 sm:gap-3`}>
               <button
                 onClick={() => setPreviewTemplate(null)}
                 className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all duration-200 ${
                   isDark
                     ? 'bg-slate-700 text-slate-100 hover:bg-slate-600'
-                    : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                    : 'bg-white text-slate-700 border border-slate-300 hover:bg-slate-50'
                 }`}
               >
                 Close

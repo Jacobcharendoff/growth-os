@@ -342,15 +342,15 @@ export default function ContactsImportPage() {
         onDrop={handleDrop}
         className={`border-2 border-dashed rounded-lg p-12 text-center transition ${
           isDark
-            ? 'border-gray-600 bg-gray-800/50 hover:border-green-500'
-            : 'border-gray-300 bg-gray-50 hover:border-green-500'
+            ? 'border-slate-600 bg-slate-800/50 hover:border-green-500'
+            : 'border-slate-300 bg-slate-50 hover:border-green-500'
         }`}
       >
-        <Upload className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-        <p className={`text-lg font-medium mb-2 ${isDark ? 'text-gray-200' : 'text-gray-900'}`}>
+        <Upload className="mx-auto h-12 w-12 text-slate-400 mb-4" />
+        <p className={`text-lg font-medium mb-2 ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>
           Drag and drop your CSV file here
         </p>
-        <p className={`text-sm mb-4 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+        <p className={`text-sm mb-4 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
           or
         </p>
         <label className="inline-block">
@@ -369,7 +369,7 @@ export default function ContactsImportPage() {
             Browse Files
           </span>
         </label>
-        <p className={`text-xs mt-4 ${isDark ? 'text-gray-500' : 'text-gray-500'}`}>
+        <p className={`text-xs mt-4 ${isDark ? 'text-slate-500' : 'text-slate-500'}`}>
           Supports CSV and XLSX files
         </p>
       </div>
@@ -379,8 +379,8 @@ export default function ContactsImportPage() {
           onClick={downloadSampleCSV}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition ${
             isDark
-              ? 'bg-gray-700 text-gray-200 hover:bg-gray-600'
-              : 'bg-gray-200 text-gray-900 hover:bg-gray-300'
+              ? 'bg-slate-700 text-slate-200 hover:bg-slate-600'
+              : 'bg-slate-200 text-slate-900 hover:bg-slate-300'
           }`}
         >
           <Download className="h-4 w-4" />
@@ -396,7 +396,7 @@ export default function ContactsImportPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* CSV Columns */}
         <div>
-          <h3 className={`text-sm font-semibold mb-4 ${isDark ? 'text-gray-200' : 'text-gray-900'}`}>
+          <h3 className={`text-sm font-semibold mb-4 ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>
             CSV Columns
           </h3>
           <div className="space-y-3">
@@ -404,10 +404,10 @@ export default function ContactsImportPage() {
               <div
                 key={column}
                 className={`p-3 rounded-lg ${
-                  isDark ? 'bg-gray-700 border border-gray-600' : 'bg-gray-100 border border-gray-300'
+                  isDark ? 'bg-slate-700 border border-slate-600' : 'bg-slate-100 border border-slate-300'
                 }`}
               >
-                <p className={`text-sm font-medium ${isDark ? 'text-gray-200' : 'text-gray-900'}`}>
+                <p className={`text-sm font-medium ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>
                   {column}
                 </p>
               </div>
@@ -417,7 +417,7 @@ export default function ContactsImportPage() {
 
         {/* Field Mappings */}
         <div>
-          <h3 className={`text-sm font-semibold mb-4 ${isDark ? 'text-gray-200' : 'text-gray-900'}`}>
+          <h3 className={`text-sm font-semibold mb-4 ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>
             Map to GrowthOS Fields
           </h3>
           <div className="space-y-3">
@@ -433,8 +433,8 @@ export default function ContactsImportPage() {
                 }
                 className={`w-full px-3 py-2 rounded-lg text-sm font-medium transition ${
                   isDark
-                    ? 'bg-gray-700 border border-gray-600 text-gray-200'
-                    : 'bg-white border border-gray-300 text-gray-900'
+                    ? 'bg-slate-700 border border-slate-600 text-slate-200'
+                    : 'bg-white border border-slate-300 text-slate-900'
                 }`}
               >
                 <option value="Skip">Skip</option>
@@ -453,27 +453,27 @@ export default function ContactsImportPage() {
 
       {/* Preview */}
       <div>
-        <h3 className={`text-sm font-semibold mb-3 ${isDark ? 'text-gray-200' : 'text-gray-900'}`}>
+        <h3 className={`text-sm font-semibold mb-3 ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>
           Preview (First 3 Rows)
         </h3>
         <div className="overflow-x-auto">
           <table
             className={`w-full text-sm ${
-              isDark ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-300'
+              isDark ? 'bg-slate-800 border border-slate-700' : 'bg-white border border-slate-300'
             }`}
           >
             <thead>
-              <tr className={isDark ? 'bg-gray-700 border-b border-gray-600' : 'bg-gray-100 border-b border-gray-300'}>
-                <th className={`px-3 py-2 text-left font-medium ${isDark ? 'text-gray-200' : 'text-gray-900'}`}>
+              <tr className={isDark ? 'bg-slate-700 border-b border-slate-600' : 'bg-slate-100 border-b border-slate-300'}>
+                <th className={`px-3 py-2 text-left font-medium ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>
                   Name
                 </th>
-                <th className={`px-3 py-2 text-left font-medium ${isDark ? 'text-gray-200' : 'text-gray-900'}`}>
+                <th className={`px-3 py-2 text-left font-medium ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>
                   Email
                 </th>
-                <th className={`px-3 py-2 text-left font-medium ${isDark ? 'text-gray-200' : 'text-gray-900'}`}>
+                <th className={`px-3 py-2 text-left font-medium ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>
                   Phone
                 </th>
-                <th className={`px-3 py-2 text-left font-medium ${isDark ? 'text-gray-200' : 'text-gray-900'}`}>
+                <th className={`px-3 py-2 text-left font-medium ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>
                   Type
                 </th>
               </tr>
@@ -484,18 +484,18 @@ export default function ContactsImportPage() {
                 return (
                   <tr
                     key={idx}
-                    className={`border-t ${isDark ? 'border-gray-700 hover:bg-gray-700' : 'border-gray-300 hover:bg-gray-50'}`}
+                    className={`border-t ${isDark ? 'border-slate-700 hover:bg-slate-700' : 'border-slate-300 hover:bg-slate-50'}`}
                   >
-                    <td className={`px-3 py-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                    <td className={`px-3 py-2 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                       {mapped?.name || '-'}
                     </td>
-                    <td className={`px-3 py-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                    <td className={`px-3 py-2 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                       {mapped?.email || '-'}
                     </td>
-                    <td className={`px-3 py-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                    <td className={`px-3 py-2 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                       {mapped?.phone || '-'}
                     </td>
-                    <td className={`px-3 py-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                    <td className={`px-3 py-2 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                       {mapped?.type || '-'}
                     </td>
                   </tr>
@@ -521,7 +521,7 @@ export default function ContactsImportPage() {
     return (
       <div className="space-y-6">
         {/* Progress Bar */}
-        <div className="w-full bg-gray-300 rounded-full h-2">
+        <div className="w-full bg-slate-300 rounded-full h-2">
           <div
             className="bg-green-600 h-2 rounded-full transition-all duration-300"
             style={{ width: '100%' }}
@@ -576,27 +576,27 @@ export default function ContactsImportPage() {
         {/* Details Table */}
         {importResults.details.length > 0 && (
           <div>
-            <h3 className={`text-sm font-semibold mb-3 ${isDark ? 'text-gray-200' : 'text-gray-900'}`}>
+            <h3 className={`text-sm font-semibold mb-3 ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>
               Import Details
             </h3>
             <div className="overflow-x-auto max-h-64 overflow-y-auto">
               <table
                 className={`w-full text-sm ${
-                  isDark ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-300'
+                  isDark ? 'bg-slate-800 border border-slate-700' : 'bg-white border border-slate-300'
                 }`}
               >
                 <thead>
-                  <tr className={isDark ? 'bg-gray-700 border-b border-gray-600 sticky top-0' : 'bg-gray-100 border-b border-gray-300 sticky top-0'}>
-                    <th className={`px-3 py-2 text-left font-medium ${isDark ? 'text-gray-200' : 'text-gray-900'}`}>
+                  <tr className={isDark ? 'bg-slate-700 border-b border-slate-600 sticky top-0' : 'bg-slate-100 border-b border-slate-300 sticky top-0'}>
+                    <th className={`px-3 py-2 text-left font-medium ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>
                       Row
                     </th>
-                    <th className={`px-3 py-2 text-left font-medium ${isDark ? 'text-gray-200' : 'text-gray-900'}`}>
+                    <th className={`px-3 py-2 text-left font-medium ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>
                       Name
                     </th>
-                    <th className={`px-3 py-2 text-left font-medium ${isDark ? 'text-gray-200' : 'text-gray-900'}`}>
+                    <th className={`px-3 py-2 text-left font-medium ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>
                       Status
                     </th>
-                    <th className={`px-3 py-2 text-left font-medium ${isDark ? 'text-gray-200' : 'text-gray-900'}`}>
+                    <th className={`px-3 py-2 text-left font-medium ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>
                       Message
                     </th>
                   </tr>
@@ -605,12 +605,12 @@ export default function ContactsImportPage() {
                   {importResults.details.map((detail, idx) => (
                     <tr
                       key={idx}
-                      className={`border-t ${isDark ? 'border-gray-700 hover:bg-gray-700' : 'border-gray-300 hover:bg-gray-50'}`}
+                      className={`border-t ${isDark ? 'border-slate-700 hover:bg-slate-700' : 'border-slate-300 hover:bg-slate-50'}`}
                     >
-                      <td className={`px-3 py-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                      <td className={`px-3 py-2 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                         {detail.row}
                       </td>
-                      <td className={`px-3 py-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                      <td className={`px-3 py-2 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                         {detail.name}
                       </td>
                       <td className="px-3 py-2">
@@ -630,7 +630,7 @@ export default function ContactsImportPage() {
                           </span>
                         )}
                       </td>
-                      <td className={`px-3 py-2 text-xs ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                      <td className={`px-3 py-2 text-xs ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                         {detail.message}
                       </td>
                     </tr>
@@ -645,7 +645,7 @@ export default function ContactsImportPage() {
   };
 
   return (
-    <div className={`min-h-screen ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <div className={`min-h-screen ${isDark ? 'bg-slate-900' : 'bg-slate-50'}`}>
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
@@ -653,8 +653,8 @@ export default function ContactsImportPage() {
             onClick={() => router.push('/contacts')}
             className={`flex items-center gap-2 px-3 py-2 rounded-lg mb-6 font-medium transition ${
               isDark
-                ? 'text-gray-300 hover:bg-gray-800'
-                : 'text-gray-600 hover:bg-gray-200'
+                ? 'text-slate-300 hover:bg-slate-800'
+                : 'text-slate-600 hover:bg-slate-200'
             }`}
           >
             <ArrowLeft className="h-4 w-4" />
@@ -662,14 +662,14 @@ export default function ContactsImportPage() {
           </button>
 
           <div className="flex items-center gap-4">
-            <div className={`p-3 rounded-lg ${isDark ? 'bg-gray-800' : 'bg-white'}`}>
+            <div className={`p-3 rounded-lg ${isDark ? 'bg-slate-800' : 'bg-white'}`}>
               <FileSpreadsheet className="h-8 w-8 text-green-600" />
             </div>
             <div>
-              <h1 className={`text-3xl font-bold ${isDark ? 'text-gray-100' : 'text-gray-900'}`}>
+              <h1 className={`text-3xl font-bold ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>
                 Import Contacts
               </h1>
-              <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+              <p className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                 Step {step === 'upload' ? 1 : step === 'map' ? 2 : 3} of 3
               </p>
             </div>
@@ -688,8 +688,8 @@ export default function ContactsImportPage() {
                       : 'bg-green-600 text-white'
                     : step === 'results' || (step === 'map' && s !== 'upload') || (step === 'upload' && s === 'upload')
                       ? isDark
-                        ? 'bg-gray-700 text-gray-300'
-                        : 'bg-gray-300 text-gray-600'
+                        ? 'bg-slate-700 text-slate-300'
+                        : 'bg-slate-300 text-slate-600'
                       : isDark
                         ? 'bg-green-900/50 text-green-400'
                         : 'bg-green-100 text-green-700'
@@ -717,8 +717,8 @@ export default function ContactsImportPage() {
                     ['upload', 'map', 'results'].indexOf(step) > idx
                       ? 'bg-green-600'
                       : isDark
-                        ? 'bg-gray-700'
-                        : 'bg-gray-300'
+                        ? 'bg-slate-700'
+                        : 'bg-slate-300'
                   }`}
                 />
               )}
@@ -729,7 +729,7 @@ export default function ContactsImportPage() {
         {/* Step Content */}
         <div
           className={`rounded-lg p-8 ${
-            isDark ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'
+            isDark ? 'bg-slate-800 border border-slate-700' : 'bg-white border border-slate-200'
           }`}
         >
           {step === 'upload' && renderUploadStep()}
@@ -745,8 +745,8 @@ export default function ContactsImportPage() {
                 onClick={() => setStep('upload')}
                 className={`flex-1 px-6 py-3 rounded-lg font-medium transition ${
                   isDark
-                    ? 'bg-gray-700 text-gray-200 hover:bg-gray-600'
-                    : 'bg-gray-200 text-gray-900 hover:bg-gray-300'
+                    ? 'bg-slate-700 text-slate-200 hover:bg-slate-600'
+                    : 'bg-slate-200 text-slate-900 hover:bg-slate-300'
                 }`}
               >
                 Back
@@ -789,8 +789,8 @@ export default function ContactsImportPage() {
                 }}
                 className={`flex-1 px-6 py-3 rounded-lg font-medium transition ${
                   isDark
-                    ? 'bg-gray-700 text-gray-200 hover:bg-gray-600'
-                    : 'bg-gray-200 text-gray-900 hover:bg-gray-300'
+                    ? 'bg-slate-700 text-slate-200 hover:bg-slate-600'
+                    : 'bg-slate-200 text-slate-900 hover:bg-slate-300'
                 }`}
               >
                 Import More

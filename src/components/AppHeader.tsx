@@ -140,7 +140,7 @@ function AppHeader() {
   return (
     <header
       className={`hidden lg:flex sticky top-0 z-40 h-14 lg:h-16 border-b transition-colors duration-200 items-center px-4 lg:px-6 ${
-        isDark ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'
+        isDark ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200'
       }`}
     >
       <div className="flex-1 flex items-center gap-6">
@@ -148,7 +148,7 @@ function AppHeader() {
         <div className="hidden lg:block">
           <h1
             className={`text-lg font-semibold tracking-tight ${
-              isDark ? 'text-white' : 'text-gray-900'
+              isDark ? 'text-white' : 'text-slate-900'
             }`}
           >
             {getPageTitle()}
@@ -161,8 +161,8 @@ function AppHeader() {
           className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-all duration-200 ${
             isDark
               ? 'bg-slate-700 border-slate-600 hover:border-slate-500 text-slate-400'
-              : 'bg-gray-100 border-gray-200 hover:border-gray-300 text-gray-500'
-          } hover:${isDark ? 'bg-slate-600' : 'bg-gray-150'}`}
+              : 'bg-slate-100 border-slate-200 hover:border-slate-300 text-slate-500'
+          } hover:${isDark ? 'bg-slate-600' : 'bg-slate-150'}`}
         >
           <Search className="w-4 h-4" />
           <span className="text-sm">Search...</span>
@@ -190,7 +190,7 @@ function AppHeader() {
           className={`relative flex items-center justify-center w-9 h-9 rounded-lg transition-all duration-200 ${
             isDark
               ? 'hover:bg-slate-700 text-slate-300'
-              : 'hover:bg-gray-100 text-gray-600'
+              : 'hover:bg-slate-100 text-slate-600'
           }`}
           title="Notifications"
         >
@@ -209,7 +209,7 @@ function AppHeader() {
             className={`flex items-center gap-2 px-2.5 py-1.5 rounded-lg transition-all duration-200 ${
               isDark
                 ? 'hover:bg-slate-700'
-                : 'hover:bg-gray-100'
+                : 'hover:bg-slate-100'
             }`}
             title="User menu"
           >
@@ -224,7 +224,7 @@ function AppHeader() {
             </div>
             <ChevronDown
               className={`w-4 h-4 transition-transform duration-200 ${
-                isDark ? 'text-slate-400' : 'text-gray-500'
+                isDark ? 'text-slate-400' : 'text-slate-500'
               } ${dropdownOpen ? 'rotate-180' : ''}`}
             />
           </button>
@@ -235,25 +235,25 @@ function AppHeader() {
               className={`absolute right-0 mt-2 w-56 rounded-lg shadow-lg border transition-all duration-200 ${
                 isDark
                   ? 'bg-slate-800 border-slate-700'
-                  : 'bg-white border-gray-200'
+                  : 'bg-white border-slate-200'
               }`}
             >
               {/* User Info */}
               <div
                 className={`px-4 py-3 border-b ${
-                  isDark ? 'border-slate-700' : 'border-gray-200'
+                  isDark ? 'border-slate-700' : 'border-slate-200'
                 }`}
               >
                 <p
                   className={`text-sm font-semibold ${
-                    isDark ? 'text-white' : 'text-gray-900'
+                    isDark ? 'text-white' : 'text-slate-900'
                   }`}
                 >
                   {getUserDisplayName()}
                 </p>
                 <p
                   className={`text-xs ${
-                    isDark ? 'text-slate-400' : 'text-gray-500'
+                    isDark ? 'text-slate-400' : 'text-slate-500'
                   }`}
                 >
                   {getUserEmail()}
@@ -266,7 +266,7 @@ function AppHeader() {
                 className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-colors duration-200 ${
                   isDark
                     ? 'text-slate-300 hover:bg-slate-700 hover:text-white'
-                    : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+                    : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'
                 }`}
               >
                 <LogOut className="w-4 h-4" />

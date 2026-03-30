@@ -23,11 +23,11 @@ export default function ErrorBoundary({
           </div>
         </div>
 
-        <h1 className="text-2xl font-bold text-center text-gray-900 mb-3">
+        <h1 className="text-2xl font-bold text-center text-slate-900 mb-3">
           Something went wrong
         </h1>
 
-        <p className="text-center text-gray-600 mb-8">
+        <p className="text-center text-slate-600 mb-8">
           We encountered an unexpected error. Please try again or contact support if the problem persists.
         </p>
 
@@ -40,7 +40,7 @@ export default function ErrorBoundary({
 
         <button
           onClick={() => window.location.href = '/'}
-          className="w-full mt-3 bg-slate-100 hover:bg-slate-200 text-gray-900 font-semibold py-3 rounded-lg transition-colors duration-200"
+          className="w-full mt-3 bg-slate-100 hover:bg-slate-200 text-slate-900 font-semibold py-3 rounded-lg transition-colors duration-200"
         >
           Go Home
         </button>

@@ -102,6 +102,11 @@ export default function SchedulePage() {
   useEffect(() => {
     setMounted(true);
     initializeSeedData();
+    // Force day view on mobile screens
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      setViewMode('day');
+      setSelectedDayForDayView(new Date());
+    }
   }, []);
 
   // Get schedulable deals (filter by stage)
@@ -615,8 +620,8 @@ export default function SchedulePage() {
               </button>
             </div>
 
-            {/* View Mode Toggle */}
-            <div className="flex items-center gap-2">
+            {/* View Mode Toggle - hidden on mobile (always day view) */}
+            <div className="hidden md:flex items-center gap-2">
               <button
                 onClick={() => setViewMode('week')}
                 className={`px-3 py-1.5 rounded-lg text-sm font-medium transition ${

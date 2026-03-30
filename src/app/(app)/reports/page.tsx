@@ -360,9 +360,9 @@ export default function ReportsPage() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* KPI Summary Row */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-8">
           {/* Total Revenue */}
           <div className={`${cardBg} border rounded-xl p-6`}>
             <p className={`text-sm font-medium ${cardText} mb-2`}>Total Revenue</p>
@@ -393,7 +393,7 @@ export default function ReportsPage() {
         </div>
 
         {/* Charts Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-6 mb-8">
           {/* Revenue Over Time */}
           <div className={`${cardBg} border rounded-xl p-6`}>
             <h2 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'} mb-4`}>Revenue Over Time (6 months)</h2>
@@ -520,7 +520,7 @@ export default function ReportsPage() {
         </div>
 
         {/* Tables Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {/* Top Performing Services */}
           <div className={`${cardBg} border rounded-xl overflow-hidden`}>
             <div className="px-6 py-4 border-b border-inherit bg-opacity-50">

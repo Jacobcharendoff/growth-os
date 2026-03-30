@@ -134,11 +134,11 @@ document.getElementById('growthosForm')?.querySelector('form')?.addEventListener
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
           {/* Left Column - Configuration */}
-          <div className="space-y-6">
-            <div className="bg-white dark:bg-slate-900 rounded-lg border border-gray-200 dark:border-slate-800 p-6">
+          <div className="space-y-4 sm:space-y-6">
+            <div className="bg-white dark:bg-slate-900 rounded-lg border border-gray-200 dark:border-slate-800 p-4 sm:p-6">
               <div className="flex items-center gap-2 mb-6">
                 <Settings className="w-5 h-5 text-[#27AE60]" />
                 <h2 className="text-xl font-bold text-gray-900 dark:text-white">
@@ -277,7 +277,7 @@ document.getElementById('growthosForm')?.querySelector('form')?.addEventListener
           </div>
 
           {/* Right Column - Live Preview */}
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <div className="bg-white dark:bg-slate-900 rounded-lg border border-gray-200 dark:border-slate-800 overflow-hidden">
               <div className="border-b border-gray-200 dark:border-slate-800 bg-gray-100 dark:bg-slate-800 px-4 py-3 flex items-center gap-2">
                 <Eye className="w-4 h-4 text-gray-600 dark:text-slate-400" />
@@ -287,7 +287,7 @@ document.getElementById('growthosForm')?.querySelector('form')?.addEventListener
               </div>
 
               {/* Mock Browser Frame */}
-              <div className="bg-gray-50 dark:bg-slate-950 p-6">
+              <div className="bg-gray-50 dark:bg-slate-950 p-3 sm:p-6">
                 <div className="bg-white dark:bg-slate-900 rounded-lg shadow-lg border border-gray-200 dark:border-slate-800 overflow-hidden">
                   {/* Browser URL Bar */}
                   <div className="bg-gray-100 dark:bg-slate-800 px-4 py-3 border-b border-gray-200 dark:border-slate-700">
@@ -297,7 +297,7 @@ document.getElementById('growthosForm')?.querySelector('form')?.addEventListener
                   </div>
 
                   {/* Form Preview */}
-                  <div className="p-6">
+                  <div className="p-3 sm:p-6">
                     <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
                       {formTitle}
                     </h3>
@@ -415,7 +415,7 @@ document.getElementById('growthosForm')?.querySelector('form')?.addEventListener
         </div>
 
         {/* Embed Code Section */}
-        <div className="mt-8 bg-white dark:bg-slate-900 rounded-lg border border-gray-200 dark:border-slate-800 p-6">
+        <div className="mt-6 sm:mt-8 bg-white dark:bg-slate-900 rounded-lg border border-gray-200 dark:border-slate-800 p-4 sm:p-6">
           <div className="flex items-center gap-2 mb-4">
             <Code className="w-5 h-5 text-[#27AE60]" />
             <h2 className="text-xl font-bold text-gray-900 dark:text-white">
@@ -427,8 +427,8 @@ document.getElementById('growthosForm')?.querySelector('form')?.addEventListener
           </p>
 
           <div className="relative">
-            <pre className="bg-gray-900 dark:bg-slate-950 text-gray-100 p-4 rounded-lg overflow-x-auto text-xs leading-5 max-h-96 overflow-y-auto">
-              <code>{embedCode}</code>
+            <pre className="bg-gray-900 dark:bg-slate-950 text-gray-100 p-2 sm:p-4 rounded-lg overflow-x-auto text-xs leading-4 sm:leading-5 max-h-96 overflow-y-auto">
+              <code className="text-[11px] sm:text-xs">{embedCode}</code>
             </pre>
             <button
               onClick={copyToClipboard}

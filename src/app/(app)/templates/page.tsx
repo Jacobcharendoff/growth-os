@@ -249,7 +249,7 @@ export default function TemplatesPage() {
     <div className={`min-h-screen ${isDark ? 'bg-slate-950' : 'bg-white'} transition-colors duration-200`}>
       {/* Header */}
       <div className={`border-b ${isDark ? 'border-slate-800 bg-slate-900' : 'border-gray-200 bg-gradient-to-r from-gray-50 to-white'}`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
           <div className="flex items-center gap-3 mb-2">
             <Mail className="w-8 h-8 text-[#27AE60]" />
             <h1 className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
@@ -263,9 +263,9 @@ export default function TemplatesPage() {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* Filter Tabs */}
-        <div className="flex flex-wrap gap-2 mb-8">
+        <div className="flex flex-wrap gap-2 mb-6 sm:mb-8">
           {filters.map((filter) => (
             <button
               key={filter}
@@ -284,7 +284,7 @@ export default function TemplatesPage() {
         </div>
 
         {/* Templates Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {filteredTemplates.map((template) => (
             <div
               key={template.id}
@@ -340,15 +340,15 @@ export default function TemplatesPage() {
 
       {/* Preview Modal */}
       {previewTemplate && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-3 sm:p-4">
           <div
-            className={`rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto ${
+            className={`rounded-lg w-full sm:max-w-2xl max-h-[90vh] sm:max-h-[85vh] overflow-y-auto ${
               isDark ? 'bg-slate-900' : 'bg-white'
             }`}
           >
             {/* Modal Header */}
             <div
-              className={`sticky top-0 ${isDark ? 'bg-slate-800' : 'bg-gray-50'} px-6 py-4 border-b ${isDark ? 'border-slate-700' : 'border-gray-200'} flex items-center justify-between`}
+              className={`sticky top-0 ${isDark ? 'bg-slate-800' : 'bg-gray-50'} px-4 sm:px-6 py-4 border-b ${isDark ? 'border-slate-700' : 'border-gray-200'} flex items-center justify-between`}
             >
               <h2 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
                 {previewTemplate.name}
@@ -362,7 +362,7 @@ export default function TemplatesPage() {
             </div>
 
             {/* Email Preview */}
-            <div className={`p-6 ${isDark ? 'bg-slate-950' : 'bg-white'}`}>
+            <div className={`p-3 sm:p-6 ${isDark ? 'bg-slate-950' : 'bg-white'}`}>
               {/* Mock Email Client */}
               <div className={`rounded-lg border ${isDark ? 'border-slate-700 bg-slate-900' : 'border-gray-300 bg-white'} overflow-hidden shadow-lg`}>
                 {/* Email Header */}
@@ -387,7 +387,7 @@ export default function TemplatesPage() {
             </div>
 
             {/* Modal Footer */}
-            <div className={`sticky bottom-0 ${isDark ? 'bg-slate-800' : 'bg-gray-50'} px-6 py-4 border-t ${isDark ? 'border-slate-700' : 'border-gray-200'} flex gap-3`}>
+            <div className={`sticky bottom-0 ${isDark ? 'bg-slate-800' : 'bg-gray-50'} px-4 sm:px-6 py-4 border-t ${isDark ? 'border-slate-700' : 'border-gray-200'} flex gap-2 sm:gap-3`}>
               <button
                 onClick={() => setPreviewTemplate(null)}
                 className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all duration-200 ${

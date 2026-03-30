@@ -187,7 +187,7 @@ export function QuickAdd() {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center sm:items-center p-4 sm:p-0">
       {/* Backdrop */}
       <div
         className={`absolute inset-0 transition-opacity duration-200 ${
@@ -198,7 +198,7 @@ export function QuickAdd() {
       {/* Modal */}
       <div
         ref={containerRef}
-        className={`relative w-full max-w-md mx-4 rounded-xl shadow-2xl transition-all duration-200 ${
+        className={`relative w-full sm:max-w-md rounded-xl shadow-2xl transition-all duration-200 ${
           isDark ? 'bg-slate-800 border border-slate-700' : 'bg-white border border-gray-200'
         }`}
       >
@@ -244,7 +244,7 @@ export function QuickAdd() {
         </div>
 
         {/* Content */}
-        <div className="p-6">
+        <div className="p-4 sm:p-6">
           {/* Contact Form */}
           {activeTab === 'contact' && (
             <form onSubmit={handleAddContact} className="space-y-4">

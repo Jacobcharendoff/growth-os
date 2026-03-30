@@ -139,7 +139,7 @@ function AppHeader() {
 
   return (
     <header
-      className={`sticky top-0 z-40 h-14 lg:h-16 border-b transition-colors duration-200 flex items-center px-4 lg:px-6 ${
+      className={`hidden lg:flex sticky top-0 z-40 h-14 lg:h-16 border-b transition-colors duration-200 items-center px-4 lg:px-6 ${
         isDark ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'
       }`}
     >

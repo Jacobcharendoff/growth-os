@@ -227,10 +227,10 @@ export function CommandBar() {
           />
 
           {/* Modal */}
-          <div className="absolute inset-x-0 top-0 pt-20 pointer-events-none flex justify-center">
+          <div className="absolute inset-x-0 top-0 pt-16 sm:pt-20 pointer-events-none flex justify-center px-2 sm:px-0">
             <div
               ref={containerRef}
-              className={`pointer-events-auto w-full max-w-xl mx-4 rounded-xl shadow-2xl overflow-hidden transition-all duration-200 ${
+              className={`pointer-events-auto w-full sm:max-w-xl rounded-xl shadow-2xl overflow-hidden transition-all duration-200 ${
                 isDark ? 'bg-slate-900 border border-slate-700' : 'bg-white border border-slate-200'
               }`}
             >
@@ -378,7 +378,7 @@ export function CommandBar() {
               {/* Footer - keyboard hints */}
               {results.length > 0 && (
                 <div
-                  className={`px-4 py-3 text-xs border-t flex items-center justify-between ${
+                  className={`hidden sm:flex px-4 py-3 text-xs border-t items-center justify-between ${
                     isDark
                       ? 'bg-slate-800 border-slate-700 text-slate-400'
                       : 'bg-slate-50 border-slate-200 text-slate-500'

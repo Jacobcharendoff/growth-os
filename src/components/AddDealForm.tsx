@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
+import { FormEvent, useState, useEffect } from 'react';
 import { useStore } from '@/store';
 import { Contact, LeadSource } from '@/types';
 
@@ -29,9 +29,10 @@ export function AddDealForm({ contacts, onClose }: AddDealFormProps) {
     source: 'referral' as LeadSource,
     assignedTo: 'Team',
     notes: '',
+    scheduledDate: '',
   });
 
-  const { addDeal } = useStore();
+  const { addDeal, addActivity } = useStore();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -49,7 +50,18 @@ export function AddDealForm({ contacts, onClose }: AddDealFormProps) {
       source: formData.source,
       assignedTo: formData.assignedTo,
       notes: formData.notes,
+      scheduledDate: formData.scheduledDate ? new Date(formData.scheduledDate).getTime() : undefined,
     });
+
+    // Get the newly created deal (last one added)
+    // We'll log this activity after a brief delay to ensure the deal is added
+    setTimeout(() => {
+      addActivity({
+        contactId: formData.contactId,
+        type: 'note',
+        description: `Created new job: ${formData.title}`,
+      });
+    }, 0);
 
     onClose();
   };
@@ -57,7 +69,7 @@ export function AddDealForm({ contacts, onClose }: AddDealFormProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-slate-700 mb-1">
+        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
           Contact *
         </label>
         <select
@@ -65,7 +77,7 @@ export function AddDealForm({ contacts, onClose }: AddDealFormProps) {
           onChange={(e) =>
             setFormData({ ...formData, contactId: e.target.value })
           }
-          className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           {contacts.map((c) => (
             <option key={c.id} value={c.id}>
@@ -76,8 +88,8 @@ export function AddDealForm({ contacts, onClose }: AddDealFormProps) {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-slate-700 mb-1">
-          Deal Title *
+        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+          Job Title *
         </label>
         <input
           type="text"
@@ -86,12 +98,12 @@ export function AddDealForm({ contacts, onClose }: AddDealFormProps) {
             setFormData({ ...formData, title: e.target.value })
           }
           placeholder="e.g., Water Heater Replacement"
-          className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-slate-700 mb-1">
+        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
           Value ($) *
         </label>
         <input
@@ -101,12 +113,12 @@ export function AddDealForm({ contacts, onClose }: AddDealFormProps) {
             setFormData({ ...formData, value: e.target.value })
           }
           placeholder="1000"
-          className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-slate-700 mb-1">
+        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
           Lead Source
         </label>
         <select
@@ -117,7 +129,7 @@ export function AddDealForm({ contacts, onClose }: AddDealFormProps) {
               source: e.target.value as LeadSource,
             })
           }
-          className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           {LEAD_SOURCES.map(({ value, label }) => (
             <option key={value} value={value}>
@@ -128,7 +140,7 @@ export function AddDealForm({ contacts, onClose }: AddDealFormProps) {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-slate-700 mb-1">
+        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
           Assigned To
         </label>
         <select
@@ -136,7 +148,7 @@ export function AddDealForm({ contacts, onClose }: AddDealFormProps) {
           onChange={(e) =>
             setFormData({ ...formData, assignedTo: e.target.value })
           }
-          className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="Team">Team</option>
           <option value="Marcus">Marcus</option>
@@ -145,7 +157,21 @@ export function AddDealForm({ contacts, onClose }: AddDealFormProps) {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-slate-700 mb-1">
+        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+          Scheduled Date
+        </label>
+        <input
+          type="datetime-local"
+          value={formData.scheduledDate}
+          onChange={(e) =>
+            setFormData({ ...formData, scheduledDate: e.target.value })
+          }
+          className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
           Notes
         </label>
         <textarea
@@ -153,9 +179,9 @@ export function AddDealForm({ contacts, onClose }: AddDealFormProps) {
           onChange={(e) =>
             setFormData({ ...formData, notes: e.target.value })
           }
-          placeholder="Add any notes about this deal..."
+          placeholder="Add any notes about this job..."
           rows={3}
-          className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
 
@@ -164,12 +190,12 @@ export function AddDealForm({ contacts, onClose }: AddDealFormProps) {
           type="submit"
           className="flex-1 bg-blue-600 text-white font-medium py-2 rounded-lg hover:bg-blue-700 transition-colors"
         >
-          Create Deal
+          Create Job
         </button>
         <button
           type="button"
           onClick={onClose}
-          className="flex-1 bg-slate-200 text-slate-900 font-medium py-2 rounded-lg hover:bg-slate-300 transition-colors"
+          className="flex-1 bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white font-medium py-2 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors"
         >
           Cancel
         </button>

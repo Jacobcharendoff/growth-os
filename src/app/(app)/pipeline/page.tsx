@@ -1,14 +1,14 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, FormEvent } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/components/LanguageProvider';
 import { useStore } from '@/store';
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd';
-import { Deal, PipelineStage, Contact, getLeadSourceRing } from '@/types';
+import { Deal, PipelineStage, Contact, LeadSource, getLeadSourceRing } from '@/types';
 import { Modal } from '@/components/Modal';
 import { AddDealForm } from '@/components/AddDealForm';
-import { Plus, Search, X, Eye, List } from 'lucide-react';
+import { Plus, Search, X, Eye, List, Edit, Phone, MessageSquare, Trash2 } from 'lucide-react';
 
 function useDebounce<T>(value: T, delay: number): T {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -30,11 +30,48 @@ const PIPELINE_STAGES_CONFIG: { stage: PipelineStage; labelKey: string; color: s
   { stage: 'invoiced', labelKey: 'pipeline.invoiced', color: 'bg-indigo-100 dark:bg-indigo-900 border-indigo-300 dark:border-indigo-700' },
 ];
 
+const LEAD_SOURCES: { value: LeadSource; label: string }[] = [
+  { value: 'existing_customer', label: 'Existing Customer' },
+  { value: 'reactivation', label: 'Reactivation' },
+  { value: 'cross_sell', label: 'Cross-Sell' },
+  { value: 'referral', label: 'Referral' },
+  { value: 'review', label: 'Review' },
+  { value: 'neighborhood', label: 'Neighborhood' },
+  { value: 'google_lsa', label: 'Google LSA' },
+  { value: 'seo', label: 'SEO' },
+  { value: 'gbp', label: 'Google Business' },
+];
+
+const PIPELINE_STAGES: { stage: PipelineStage; label: string }[] = [
+  { stage: 'new_lead', label: 'New Lead' },
+  { stage: 'contacted', label: 'Contacted' },
+  { stage: 'estimate_scheduled', label: 'Estimate Scheduled' },
+  { stage: 'estimate_sent', label: 'Estimate Sent' },
+  { stage: 'booked', label: 'Booked' },
+  { stage: 'in_progress', label: 'In Progress' },
+  { stage: 'completed', label: 'Completed' },
+  { stage: 'invoiced', label: 'Invoiced' },
+];
+
+interface EditFormData {
+  contactId: string;
+  title: string;
+  value: string;
+  stage: PipelineStage;
+  source: LeadSource;
+  assignedTo: string;
+  notes: string;
+  scheduledDate: string;
+}
+
 export default function PipelinePage() {
   const { t } = useLanguage();
-  const { deals, contacts, initializeSeedData, updateDeal, getContact } = useStore();
+  const { deals, contacts, initializeSeedData, updateDeal, deleteDeal, getContact, addActivity, addDeal } = useStore();
   const [mounted, setMounted] = useState(false);
   const [isAddDealOpen, setIsAddDealOpen] = useState(false);
+  const [isEditDealOpen, setIsEditDealOpen] = useState(false);
+  const [editingDeal, setEditingDeal] = useState<Deal | null>(null);
+  const [deleteConfirmDealId, setDeleteConfirmDealId] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<'board' | 'list'>('board');
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
@@ -44,6 +81,7 @@ export default function PipelinePage() {
   const [filteredDeals, setFilteredDeals] = useState<Deal[]>([]);
   const [sortColumn, setSortColumn] = useState<'title' | 'contact' | 'value' | 'days'>('title');
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc');
+  const [hoveredCardId, setHoveredCardId] = useState<string | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -92,7 +130,69 @@ export default function PipelinePage() {
     if (source.droppableId === destination.droppableId && source.index === destination.index) return;
 
     const newStage = destination.droppableId as PipelineStage;
+    const deal = deals.find(d => d.id === draggableId);
     updateDeal(draggableId, { stage: newStage });
+
+    // Log activity for stage transition
+    if (deal) {
+      const stageLabel = PIPELINE_STAGES.find(s => s.stage === newStage)?.label || newStage;
+      addActivity({
+        dealId: draggableId,
+        contactId: deal.contactId,
+        type: 'note',
+        description: `Moved ${deal.title} to ${stageLabel}`,
+      });
+    }
+  };
+
+  const handleOpenEdit = (deal: Deal) => {
+    setEditingDeal(deal);
+    setIsEditDealOpen(true);
+  };
+
+  const handleEditSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    if (!editingDeal) return;
+
+    const formData = new FormData(e.currentTarget as HTMLFormElement);
+    const updatedDeal = {
+      contactId: formData.get('contactId') as string,
+      title: formData.get('title') as string,
+      value: parseInt(formData.get('value') as string),
+      stage: formData.get('stage') as PipelineStage,
+      source: formData.get('source') as LeadSource,
+      assignedTo: formData.get('assignedTo') as string,
+      notes: formData.get('notes') as string,
+      scheduledDate: formData.get('scheduledDate') ? new Date(formData.get('scheduledDate') as string).getTime() : undefined,
+    };
+
+    updateDeal(editingDeal.id, updatedDeal);
+
+    // Log activity
+    addActivity({
+      dealId: editingDeal.id,
+      contactId: editingDeal.contactId,
+      type: 'note',
+      description: `Updated job: ${updatedDeal.title}`,
+    });
+
+    setIsEditDealOpen(false);
+    setEditingDeal(null);
+  };
+
+  const handleDeleteDeal = (dealId: string) => {
+    const deal = deals.find(d => d.id === dealId);
+    if (!deal) return;
+
+    deleteDeal(dealId);
+    addActivity({
+      dealId: dealId,
+      contactId: deal.contactId,
+      type: 'note',
+      description: `Deleted job: ${deal.title}`,
+    });
+
+    setDeleteConfirmDealId(null);
   };
 
   const calculateMetrics = () => {
@@ -294,41 +394,76 @@ export default function PipelinePage() {
                             const contact = getContact(deal.contactId);
                             const daysInStage = getDaysInStage(deal);
                             const ring = getLeadSourceRing(deal.source);
+                            const isHovered = hoveredCardId === deal.id;
 
                             return (
                               <Draggable key={deal.id} draggableId={deal.id} index={index}>
                                 {(provided, snapshot) => (
-                                  <Link href={`/pipeline/${deal.id}`}>
-                                    <div
-                                      ref={provided.innerRef}
-                                      {...provided.draggableProps}
-                                      {...provided.dragHandleProps}
-                                      className={`p-4 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 cursor-move transition-all hover:shadow-lg active:shadow-xl ${
-                                        snapshot.isDragging ? 'shadow-2xl rotate-2' : ''
-                                      }`}
-                                    >
-                                      <div className="flex justify-between items-start gap-2 mb-2">
-                                        <h4 className="font-semibold text-slate-900 dark:text-white text-sm line-clamp-2">
-                                          {deal.title}
-                                        </h4>
-                                        <span className="flex-shrink-0 text-xs bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 px-2 py-1 rounded">
-                                          {daysInStage}d
-                                        </span>
-                                      </div>
-                                      <p className="text-xs text-slate-600 dark:text-slate-400 mb-3">{contact?.name}</p>
-                                      <div className="flex justify-between items-end mb-2">
-                                        <span className="font-bold text-lg text-slate-900 dark:text-white">
-                                          ${deal.value.toLocaleString()}
-                                        </span>
-                                        <span className="text-xs font-medium bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900 dark:to-pink-900 text-purple-700 dark:text-purple-300 px-2 py-1 rounded">
-                                          {ring}
-                                        </span>
-                                      </div>
-                                      <div className="text-xs text-slate-500 dark:text-slate-400">
-                                        {deal.assignedTo}
-                                      </div>
+                                  <div
+                                    ref={provided.innerRef}
+                                    {...provided.draggableProps}
+                                    {...provided.dragHandleProps}
+                                    className={`p-4 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 cursor-move transition-all hover:shadow-lg active:shadow-xl relative group ${
+                                      snapshot.isDragging ? 'shadow-2xl rotate-2' : ''
+                                    }`}
+                                    onMouseEnter={() => setHoveredCardId(deal.id)}
+                                    onMouseLeave={() => setHoveredCardId(null)}
+                                  >
+                                    <div className="flex justify-between items-start gap-2 mb-2">
+                                      <h4 className="font-semibold text-slate-900 dark:text-white text-sm line-clamp-2">
+                                        {deal.title}
+                                      </h4>
+                                      <span className="flex-shrink-0 text-xs bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 px-2 py-1 rounded">
+                                        {daysInStage}d
+                                      </span>
                                     </div>
-                                  </Link>
+                                    <p className="text-xs text-slate-600 dark:text-slate-400 mb-3">{contact?.name}</p>
+                                    <div className="flex justify-between items-end mb-2">
+                                      <span className="font-bold text-lg text-slate-900 dark:text-white">
+                                        ${deal.value.toLocaleString()}
+                                      </span>
+                                      <span className="text-xs font-medium bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900 dark:to-pink-900 text-purple-700 dark:text-purple-300 px-2 py-1 rounded">
+                                        {ring}
+                                      </span>
+                                    </div>
+                                    <div className="text-xs text-slate-500 dark:text-slate-400 mb-3">
+                                      {deal.assignedTo}
+                                    </div>
+
+                                    {/* Quick Actions on Hover */}
+                                    {isHovered && (
+                                      <div className="absolute top-2 right-2 flex gap-1 bg-white dark:bg-slate-700 rounded-lg shadow-md border border-slate-200 dark:border-slate-600 p-1">
+                                        <button
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleOpenEdit(deal);
+                                          }}
+                                          className="p-1 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-600 rounded transition-colors"
+                                          title="Edit job"
+                                        >
+                                          <Edit className="w-4 h-4" />
+                                        </button>
+                                        <button
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                          }}
+                                          className="p-1 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-600 rounded transition-colors"
+                                          title="Call contact"
+                                        >
+                                          <Phone className="w-4 h-4" />
+                                        </button>
+                                        <button
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                          }}
+                                          className="p-1 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-600 rounded transition-colors"
+                                          title="Add note"
+                                        >
+                                          <MessageSquare className="w-4 h-4" />
+                                        </button>
+                                      </div>
+                                    )}
+                                  </div>
                                 )}
                               </Draggable>
                             );
@@ -431,13 +566,220 @@ export default function PipelinePage() {
       <Modal
         isOpen={isAddDealOpen}
         onClose={() => setIsAddDealOpen(false)}
-        title="Add New Job"
+        title={t('pipeline.addDeal')}
       >
         <AddDealForm
           contacts={contacts}
-          onClose={() => setIsAddDealOpen(false)}
+          onClose={() => {
+            setIsAddDealOpen(false);
+            // Add activity after deal creation
+            const lastDeal = deals[deals.length - 1];
+            if (lastDeal) {
+              addActivity({
+                dealId: lastDeal.id,
+                contactId: lastDeal.contactId,
+                type: 'note',
+                description: `Created new job: ${lastDeal.title}`,
+              });
+            }
+          }}
         />
       </Modal>
+
+      {/* Edit Job Modal */}
+      <Modal
+        isOpen={isEditDealOpen}
+        onClose={() => {
+          setIsEditDealOpen(false);
+          setEditingDeal(null);
+        }}
+        title="Edit Job"
+      >
+        {editingDeal && (
+          <form onSubmit={handleEditSubmit} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                Contact *
+              </label>
+              <select
+                name="contactId"
+                defaultValue={editingDeal.contactId}
+                className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                {contacts.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                Job Title *
+              </label>
+              <input
+                type="text"
+                name="title"
+                defaultValue={editingDeal.title}
+                placeholder="e.g., Water Heater Replacement"
+                className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                Value ($) *
+              </label>
+              <input
+                type="number"
+                name="value"
+                defaultValue={editingDeal.value}
+                placeholder="1000"
+                className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                Stage
+              </label>
+              <select
+                name="stage"
+                defaultValue={editingDeal.stage}
+                className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                {PIPELINE_STAGES.map(({ stage, label }) => (
+                  <option key={stage} value={stage}>
+                    {label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                Lead Source
+              </label>
+              <select
+                name="source"
+                defaultValue={editingDeal.source}
+                className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                {LEAD_SOURCES.map(({ value, label }) => (
+                  <option key={value} value={value}>
+                    {label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                Assigned To
+              </label>
+              <select
+                name="assignedTo"
+                defaultValue={editingDeal.assignedTo}
+                className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="Team">Team</option>
+                <option value="Marcus">Marcus</option>
+                <option value="James">James</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                Scheduled Date
+              </label>
+              <input
+                type="datetime-local"
+                name="scheduledDate"
+                defaultValue={
+                  editingDeal.scheduledDate
+                    ? new Date(editingDeal.scheduledDate).toISOString().slice(0, 16)
+                    : ''
+                }
+                className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                Notes
+              </label>
+              <textarea
+                name="notes"
+                defaultValue={editingDeal.notes}
+                placeholder="Add any notes about this job..."
+                rows={3}
+                className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            <div className="flex gap-3 pt-4">
+              <button
+                type="submit"
+                className="flex-1 bg-blue-600 text-white font-medium py-2 rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                Save Changes
+              </button>
+              <button
+                type="button"
+                onClick={() => setDeleteConfirmDealId(editingDeal.id)}
+                className="flex items-center justify-center gap-2 px-3 py-2 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 font-medium rounded-lg hover:bg-red-200 dark:hover:bg-red-800 transition-colors"
+                title="Delete job"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsEditDealOpen(false);
+                  setEditingDeal(null);
+                }}
+                className="flex-1 bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white font-medium py-2 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        )}
+      </Modal>
+
+      {/* Delete Confirmation Modal */}
+      {deleteConfirmDealId && (
+        <Modal
+          isOpen={true}
+          onClose={() => setDeleteConfirmDealId(null)}
+          title="Delete Job"
+        >
+          <div className="space-y-4">
+            <p className="text-slate-700 dark:text-slate-300">
+              Are you sure you want to delete this job? This action cannot be undone.
+            </p>
+            <div className="flex gap-3">
+              <button
+                onClick={() => {
+                  handleDeleteDeal(deleteConfirmDealId);
+                  setIsEditDealOpen(false);
+                  setEditingDeal(null);
+                }}
+                className="flex-1 bg-red-600 text-white font-medium py-2 rounded-lg hover:bg-red-700 transition-colors"
+              >
+                Delete
+              </button>
+              <button
+                onClick={() => setDeleteConfirmDealId(null)}
+                className="flex-1 bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white font-medium py-2 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 }

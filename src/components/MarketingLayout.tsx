@@ -338,31 +338,31 @@ export function Footer() {
 export function CTASection() {
   const { t } = useLanguage();
   return (
-    <section className="relative py-20 sm:py-28 bg-[#2C3E50] overflow-hidden">
+    <section className="relative py-20 sm:py-28 bg-gradient-to-r from-[#2C3E50] via-slate-700 to-[#2C3E50] overflow-hidden">
       <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(255,255,255,0.05) 0%, transparent 50%)' }} />
       <div className="relative max-w-4xl mx-auto px-6 text-center">
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
-          {t('cta.stopLosingLeads')}
+          Ready to stop leaving money on the table?
         </h2>
         <p className="text-lg sm:text-xl text-blue-100 mb-10 max-w-2xl mx-auto">
-          {t('cta.ctaDescription')}
+          Join 500+ Canadian service businesses already using GrowthOS. Start your free trial today — no credit card required.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link
             href="/setup"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-white text-blue-700 text-base font-semibold rounded-full hover:bg-blue-50 transition-all shadow-xl hover:shadow-2xl hover:-translate-y-0.5"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-[#27AE60] hover:bg-[#229954] text-white text-base font-semibold rounded-full transition-all shadow-xl shadow-emerald-600/25 hover:shadow-emerald-500/40 hover:-translate-y-0.5"
           >
-            {t('cta.startFreeTrial')}
+            Start Free Trial
             <ArrowRight className="w-5 h-5" />
           </Link>
           <Link
             href="/contact"
             className="inline-flex items-center gap-2 px-8 py-4 bg-white/10 text-white text-base font-semibold rounded-full hover:bg-white/20 transition-all border border-white/20"
           >
-            {t('marketing.bookDemo')}
+            Schedule Demo
           </Link>
         </div>
-        <p className="mt-6 text-sm text-blue-200">{t('cta.noCardRequired')}</p>
+        <p className="mt-6 text-sm text-blue-200">No credit card required · Setup in 2 minutes · Cancel anytime</p>
       </div>
     </section>
   );

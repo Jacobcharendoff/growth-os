@@ -260,38 +260,17 @@ function Hero() {
 
           {/* Headline with rotating trade name */}
           <h1 className="hero-reveal hero-reveal-delay-2 text-3xl sm:text-5xl lg:text-7xl font-bold tracking-tight text-gray-900 leading-[1.1] mb-2">
-            {t('hero.growthEngine')}
+            Stop Losing Leads.
             <br />
-            for{' '}
-            <span className="relative inline-block">
-              <span
-                className={`inline-flex items-center gap-3 bg-gradient-to-r ${trades[tradeIndex].color} bg-clip-text text-transparent`}
-                style={{
-                  opacity: isTransitioning ? 0 : 1,
-                  transform: isTransitioning ? 'translateY(20px)' : 'translateY(0)',
-                  transition: `all 0.4s ${smooth}`,
-                }}
-              >
-                {trades[tradeIndex].name}
-              </span>
-              {/* Underline accent */}
-              <span className={`absolute -bottom-2 left-0 right-0 h-1 rounded-full bg-gradient-to-r ${trades[tradeIndex].color} opacity-30`}
-                style={{ transition: `all 0.4s ${smooth}` }}
-              />
-            </span>
+            Start Growing Revenue.
           </h1>
 
-          {/* Trade icon row — shows all trades, highlights current */}
+          {/* Trade icon row — shows all trades */}
           <div className="hero-reveal hero-reveal-delay-2 flex items-center justify-center gap-2 mt-6 mb-8">
             {trades.map((trade, i) => (
               <div
                 key={trade.name}
-                className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-500 ${
-                  i === tradeIndex
-                    ? `bg-gradient-to-br ${trade.color} text-white shadow-lg scale-110`
-                    : 'bg-gray-100 text-gray-400 scale-100'
-                }`}
-                style={{ transition: `all 0.5s ${smooth}` }}
+                className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-500 bg-gradient-to-br ${trade.color} text-white shadow-lg`}
               >
                 {trade.icon}
               </div>
@@ -299,8 +278,8 @@ function Hero() {
           </div>
 
           {/* Subheadline */}
-          <p className="hero-reveal hero-reveal-delay-3 text-lg sm:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
-            {t('hero.neverMissLead')}
+          <p className="hero-reveal hero-reveal-delay-3 text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            Plumbers, HVAC techs, and electricians lose 30–40% of incoming leads. GrowthOS catches every one. Auto-assign leads, schedule instantly, and never miss a call again.
           </p>
 
           {/* Social Proof — moved above CTA */}
@@ -323,42 +302,45 @@ function Hero() {
             </div>
           </div>
 
-          {/* CTA */}
-          <div className="hero-reveal hero-reveal-delay-4 mt-8 flex justify-center">
+          {/* CTA Buttons */}
+          <div className="hero-reveal hero-reveal-delay-4 mt-8 flex justify-center gap-4 flex-wrap">
             <Link
               href="/setup"
               className="inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-[#27AE60] hover:bg-[#229954] text-white text-base font-semibold rounded-2xl transition-all shadow-lg shadow-emerald-600/25 hover:shadow-emerald-500/40 hover:-translate-y-0.5"
             >
-              {t('hero.startFreeNoCard')}
+              Start Free Trial
               <ArrowRight className="w-5 h-5" />
+            </Link>
+            <Link
+              href="#demo"
+              className="inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-white hover:bg-gray-50 text-gray-900 text-base font-semibold rounded-2xl transition-all border border-gray-300 shadow-sm hover:shadow-md"
+            >
+              Watch Demo
             </Link>
           </div>
 
-          {/* Price Anchor */}
-          <p className="hero-reveal hero-reveal-delay-4 text-sm text-slate-500 dark:text-slate-400 mt-3">
-            Free 14-day trial. Plans from <span className="font-semibold text-slate-700 dark:text-slate-300">$79/mo CAD</span>
-          </p>
-
-          {/* Risk Reversal Messaging */}
-          <div className="hero-reveal hero-reveal-delay-4 flex items-center gap-4 mt-4 text-sm text-slate-500 dark:text-slate-400 flex-wrap justify-center">
+          {/* Trust Badges */}
+          <div className="hero-reveal hero-reveal-delay-4 flex items-center gap-4 mt-6 text-sm text-gray-600 flex-wrap justify-center">
             <span className="flex items-center gap-1.5">
               <svg className="w-4 h-4 text-[#27AE60]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/></svg>
               No credit card required
             </span>
+            <span className="text-gray-300">·</span>
             <span className="flex items-center gap-1.5">
               <svg className="w-4 h-4 text-[#27AE60]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/></svg>
-              Cancel anytime
+              Free forever up to 5 users
             </span>
+            <span className="text-gray-300">·</span>
             <span className="flex items-center gap-1.5">
               <svg className="w-4 h-4 text-[#27AE60]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/></svg>
-              Setup in 10 minutes
+              Setup in 2 minutes
             </span>
           </div>
 
           {/* Social Proof - New Line */}
-          <div className="hero-reveal hero-reveal-delay-4 mt-6 flex items-center justify-center gap-2 text-sm text-gray-500">
+          <div className="hero-reveal hero-reveal-delay-4 mt-6 flex items-center justify-center gap-2 text-sm text-gray-600 font-medium">
             <Check className="w-4 h-4 text-emerald-500" />
-            <span>{t('hero.socialProof')}</span>
+            <span>Trusted by 500+ Canadian service businesses</span>
           </div>
 
           {/* Canada-first trust bar */}
@@ -926,37 +908,37 @@ function Features() {
   const features = [
     {
       icon: <Phone className="w-6 h-6" />,
-      title: t('features.answerEveryCall'),
+      title: "Never Miss a Lead Again",
       description: t('features.answerEveryCallDesc'),
       gradient: "from-emerald-500 to-teal-600",
     },
     {
       icon: <Layers className="w-6 h-6" />,
-      title: t('features.seeAllJobs'),
+      title: "See All Your Jobs at a Glance",
       description: t('features.seeAllJobsDesc'),
       gradient: "from-[#2C3E50] to-[#27AE60]",
     },
     {
       icon: <MessageSquare className="w-6 h-6" />,
-      title: t('features.estimatesThatClose'),
+      title: "Estimates That Actually Close",
       description: t('features.estimatesThatCloseDesc'),
       gradient: "from-purple-500 to-violet-600",
     },
     {
       icon: <Star className="w-6 h-6" />,
-      title: t('features.getReviews'),
+      title: "Get 5-Star Reviews on Autopilot",
       description: t('features.getReviewsDesc'),
       gradient: "from-amber-500 to-orange-600",
     },
     {
       icon: <Receipt className="w-6 h-6" />,
-      title: t('features.invoiceSameDay'),
+      title: "Get Paid 2x Faster",
       description: t('features.invoiceSameDayDesc'),
       gradient: "from-rose-500 to-pink-600",
     },
     {
       icon: <TrendingUp className="w-6 h-6" />,
-      title: t('features.knowWhatMakes'),
+      title: "Know Your Numbers",
       description: t('features.knowWhatMakesDesc'),
       gradient: "from-slate-500 to-gray-600",
     },
@@ -967,16 +949,16 @@ function Features() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="scroll-fade-up text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-100 mb-6">
-            <span className="text-xs font-semibold text-blue-600 uppercase tracking-wider">{t('features.whatYouGet')}</span>
+            <span className="text-xs font-semibold text-blue-600 uppercase tracking-wider">Everything You Need</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight">
-            {t('features.sixProblemsSolved')}{" "}
+            Six Problems Solved{" "}
             <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              {t('features.oneDashboard')}
+              One Dashboard
             </span>
           </h2>
-          <p className="mt-4 text-lg text-gray-500">
-            {t('features.description')}
+          <p className="mt-4 text-lg text-gray-600">
+            The complete toolkit for capturing leads, booking jobs, invoicing faster, and growing your business.
           </p>
         </div>
 

@@ -1,573 +1,731 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { useLanguage } from '@/components/LanguageProvider';
+import { useRouter } from 'next/navigation';
+import { useStore } from '@/store';
+import { useTheme } from '@/components/ThemeProvider';
 import {
-  CheckCircle2, Circle, ChevronRight, Building2, Users, UserPlus,
-  Star, Zap, FileText, CreditCard, Calendar, ArrowRight, Sparkles,
-  Phone, MapPin, Globe, Camera, Plus, X, Clock, Trophy, Rocket,
-  AlertCircle, PartyPopper, TrendingUp, Shield, Heart, Mail,
-  MousePointerClick,
+  ChevronLeft, ChevronRight, Building2, Users, Settings,
+  Palette, CheckCircle2, ArrowRight, AlertCircle, Trash2,
 } from 'lucide-react';
-import { GuidedTour, TOURS } from '@/components/GuidedTour';
 
-// ============================================================
-// TYPES
-// ============================================================
+type StepName = 'company' | 'team' | 'pipeline' | 'preferences' | 'ready';
 
-interface SetupStep {
-  id: string;
-  title: string;
-  description: string;
-  whyItMatters: string;
-  icon: React.ReactNode;
-  category: 'foundation' | 'growth' | 'autopilot';
-  estimatedTime: string;
-  isCompleted: boolean;
-  fields?: FormField[];
-  linkTo?: string;
-  linkLabel?: string;
+interface FormErrors {
+  [key: string]: string;
 }
 
-interface FormField {
+interface TeamMember {
   id: string;
-  label: string;
-  type: 'text' | 'tel' | 'email' | 'url' | 'textarea' | 'select' | 'file';
-  placeholder: string;
-  required: boolean;
-  options?: string[];
-  hint?: string;
+  name: string;
+  role: string;
 }
 
-// ============================================================
-// SETUP STEPS — The guided onboarding flow
-// ============================================================
+interface PipelineStage {
+  id: string;
+  name: string;
+  color: string;
+}
 
-const INITIAL_STEPS: SetupStep[] = [
-  {
-    id: 'company-profile',
-    title: 'Set Up Your Company',
-    description: 'Add your business name, phone number, and logo. This info appears on every estimate, invoice, and message your customers see.',
-    whyItMatters: 'Customers trust businesses that look professional. A complete profile increases conversion by 23%.',
-    icon: <Building2 className="w-6 h-6" />,
-    category: 'foundation',
-    estimatedTime: '2 min',
-    isCompleted: false,
-    fields: [
-      { id: 'company_name', label: 'Business Name', type: 'text', placeholder: 'e.g., Denver Pro Plumbing', required: true },
-      { id: 'phone', label: 'Business Phone', type: 'tel', placeholder: '(555) 123-4567', required: true, hint: 'This is the number customers will call' },
-      { id: 'email', label: 'Business Email', type: 'email', placeholder: 'info@denverproplumbing.com', required: true },
-      { id: 'address', label: 'Business Address', type: 'text', placeholder: '123 Main St, Denver, CO 80202', required: false },
-      { id: 'website', label: 'Website', type: 'url', placeholder: 'https://denverproplumbing.com', required: false },
-      { id: 'trade', label: 'Primary Trade', type: 'select', placeholder: 'Select your trade...', required: true, options: ['Plumbing', 'HVAC', 'Electrical', 'Landscaping', 'Cleaning', 'Roofing', 'General Contracting', 'Pest Control', 'Painting', 'Other'] },
-    ],
-  },
-  {
-    id: 'service-area',
-    title: 'Define Your Service Area',
-    description: 'Tell us where you work so we can help you target the right customers and filter leads by location.',
-    whyItMatters: 'Knowing your service area helps optimize scheduling and reduces drive time between jobs.',
-    icon: <MapPin className="w-6 h-6" />,
-    category: 'foundation',
-    estimatedTime: '1 min',
-    isCompleted: false,
-    fields: [
-      { id: 'service_zip', label: 'Primary ZIP Code', type: 'text', placeholder: '80202', required: true },
-      { id: 'service_radius', label: 'Service Radius', type: 'select', placeholder: 'How far will you travel?', required: true, options: ['10 miles', '15 miles', '25 miles', '50 miles', '75+ miles'] },
-      { id: 'service_cities', label: 'Cities You Serve', type: 'text', placeholder: 'e.g., Denver, Aurora, Lakewood, Arvada', required: false, hint: 'Separate with commas' },
-    ],
-  },
-  {
-    id: 'add-team',
-    title: 'Add Your First Team Member',
-    description: 'Add a technician or office staff member. Jobs and leads get assigned to team members for accountability.',
-    whyItMatters: 'Assigned leads are 3x more likely to get followed up. No more leads falling through the cracks.',
-    icon: <UserPlus className="w-6 h-6" />,
-    category: 'foundation',
-    estimatedTime: '2 min',
-    isCompleted: false,
-    fields: [
-      { id: 'member_name', label: 'Full Name', type: 'text', placeholder: 'e.g., Marcus Johnson', required: true },
-      { id: 'member_role', label: 'Role', type: 'select', placeholder: 'Select role...', required: true, options: ['Technician', 'Office Manager', 'Dispatcher', 'Owner/Operator', 'Apprentice'] },
-      { id: 'member_phone', label: 'Cell Phone', type: 'tel', placeholder: '(555) 987-6543', required: true, hint: 'For job notifications and dispatch alerts' },
-      { id: 'member_email', label: 'Email', type: 'email', placeholder: 'marcus@email.com', required: false },
-    ],
-  },
-  {
-    id: 'add-customers',
-    title: 'Import Your Customers',
-    description: 'Add your first 5 customers or import from a spreadsheet. These are the people who already know and trust you — your Ring 1.',
-    whyItMatters: 'Your existing customers are 5x more likely to book than cold leads. Start with the people who already love you.',
-    icon: <Users className="w-6 h-6" />,
-    category: 'foundation',
-    estimatedTime: '3 min',
-    isCompleted: false,
-    linkTo: '/contacts',
-    linkLabel: 'Go to Contacts to add customers',
-    fields: [
-      { id: 'customer_name', label: 'Customer Name', type: 'text', placeholder: 'e.g., John Smith', required: true },
-      { id: 'customer_phone', label: 'Phone', type: 'tel', placeholder: '(555) 123-4567', required: true },
-      { id: 'customer_email', label: 'Email', type: 'email', placeholder: 'john@email.com', required: false },
-      { id: 'customer_address', label: 'Service Address', type: 'text', placeholder: '456 Oak Street, Denver, CO', required: false },
-    ],
-  },
-  {
-    id: 'google-review',
-    title: 'Connect Your Google Review Link',
-    description: 'Paste your Google Business Profile review link so we can automatically send review requests after every job.',
-    whyItMatters: 'Businesses with 50+ Google reviews get 266% more leads than those with fewer than 10.',
-    icon: <Star className="w-6 h-6" />,
-    category: 'growth',
-    estimatedTime: '2 min',
-    isCompleted: false,
-    fields: [
-      { id: 'review_link', label: 'Google Review Link', type: 'url', placeholder: 'https://g.page/r/your-business/review', required: true, hint: 'Search "Google Business Profile" → click your business → Share → "Ask for reviews" → copy the link' },
-      { id: 'review_goal', label: 'Monthly Review Goal', type: 'select', placeholder: 'How many reviews per month?', required: false, options: ['5 reviews/month', '10 reviews/month', '15 reviews/month', '20+ reviews/month'] },
-    ],
-  },
-  {
-    id: 'activate-autopilot',
-    title: 'Activate Your First Autopilot Playbook',
-    description: 'Turn on at least one automation to start working smarter. We recommend "Speed to Lead" — it responds to new leads in under 60 seconds.',
-    whyItMatters: 'Businesses that respond within 5 minutes are 100x more likely to connect with a lead than those who wait 30 minutes.',
-    icon: <Zap className="w-6 h-6" />,
-    category: 'autopilot',
-    estimatedTime: '1 min',
-    isCompleted: false,
-    linkTo: '/automations',
-    linkLabel: 'Go to Autopilot to activate',
-  },
-  {
-    id: 'first-estimate',
-    title: 'Create Your First Estimate',
-    description: 'Build a Good/Better/Best estimate to see how GrowthOS helps you upsell and close more jobs.',
-    whyItMatters: 'Good/Better/Best pricing increases average ticket size by 28%. The "Better" option is chosen 62% of the time.',
-    icon: <FileText className="w-6 h-6" />,
-    category: 'growth',
-    estimatedTime: '3 min',
-    isCompleted: false,
-    linkTo: '/estimates',
-    linkLabel: 'Go to Estimates to create one',
-  },
-  {
-    id: 'payment-setup',
-    title: 'Set Up Online Payments',
-    description: 'Connect Stripe so customers can pay invoices online with one click. Faster payments = healthier cash flow.',
-    whyItMatters: 'Businesses that offer online payments get paid 14 days faster on average.',
-    icon: <CreditCard className="w-6 h-6" />,
-    category: 'growth',
-    estimatedTime: '5 min',
-    isCompleted: false,
-    linkTo: '/settings',
-    linkLabel: 'Go to Settings → Integrations',
-  },
+const INDUSTRIES = [
+  'plumbing', 'hvac', 'electrical', 'landscaping',
+  'cleaning', 'roofing', 'general_contracting', 'other'
 ];
 
-// ============================================================
-// CATEGORY CONFIG
-// ============================================================
-
-const CATEGORIES = {
-  foundation: { label: 'Foundation', color: 'blue', description: 'Get the basics right' },
-  growth: { label: 'Growth Setup', color: 'emerald', description: 'Set up your growth engine' },
-  autopilot: { label: 'Autopilot', color: 'purple', description: 'Turn on the automation' },
+const INDUSTRY_LABELS: Record<string, string> = {
+  plumbing: 'Plumbing',
+  hvac: 'HVAC',
+  electrical: 'Electrical',
+  landscaping: 'Landscaping',
+  cleaning: 'Cleaning',
+  roofing: 'Roofing',
+  general_contracting: 'General Contracting',
+  other: 'Other',
 };
 
-// ============================================================
-// MAIN COMPONENT
-// ============================================================
+const TEAM_ROLES = [
+  { id: 'owner', label: 'Owner' },
+  { id: 'technician', label: 'Technician' },
+  { id: 'office_manager', label: 'Office Manager' },
+  { id: 'sales', label: 'Sales' },
+];
+
+const DEFAULT_PIPELINE_STAGES: PipelineStage[] = [
+  { id: '1', name: 'New Lead', color: 'bg-blue-500' },
+  { id: '2', name: 'Contacted', color: 'bg-slate-500' },
+  { id: '3', name: 'Estimate Scheduled', color: 'bg-purple-500' },
+  { id: '4', name: 'Estimate Sent', color: 'bg-indigo-500' },
+  { id: '5', name: 'Booked', color: 'bg-cyan-500' },
+  { id: '6', name: 'In Progress', color: 'bg-amber-500' },
+  { id: '7', name: 'Completed', color: 'bg-emerald-500' },
+  { id: '8', name: 'Invoiced', color: 'bg-green-500' },
+];
+
+const CANADIAN_TIMEZONES = [
+  { id: 'America/Vancouver', label: 'Pacific Time (BC)' },
+  { id: 'America/Edmonton', label: 'Mountain Time (AB)' },
+  { id: 'America/Winnipeg', label: 'Central Time (SK/MB)' },
+  { id: 'America/Toronto', label: 'Eastern Time (ON)' },
+  { id: 'America/Halifax', label: 'Atlantic Time (NS)' },
+];
 
 export default function SetupPage() {
-  const { t } = useLanguage();
+  const router = useRouter();
+  const { theme } = useTheme();
+  const { settings, updateSettings } = useStore();
+  const isDark = theme === 'dark';
+
+  const [step, setStep] = useState<StepName>('company');
+  const [errors, setErrors] = useState<FormErrors>({});
   const [mounted, setMounted] = useState(false);
-  const [steps, setSteps] = useState<SetupStep[]>(INITIAL_STEPS);
-  const [activeStepId, setActiveStepId] = useState<string | null>(null);
-  const [formData, setFormData] = useState<Record<string, string>>({});
-  const [showCelebration, setShowCelebration] = useState(false);
-  const [activeTourId, setActiveTourId] = useState<string | null>(null);
+
+  // Company step
+  const [companyName, setCompanyName] = useState(settings.companyName || '');
+  const [phone, setPhone] = useState(settings.companyPhone || '');
+  const [email, setEmail] = useState(settings.companyEmail || '');
+  const [address, setAddress] = useState(settings.companyAddress || '');
+  const [industry, setIndustry] = useState(settings.industry || 'plumbing');
+
+  // Team step
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>(
+    settings.teamMembers?.map(m => ({ id: m.id, name: m.name, role: m.role })) || [
+      { id: '0', name: 'You', role: 'owner' }
+    ]
+  );
+  const [newMemberName, setNewMemberName] = useState('');
+  const [newMemberRole, setNewMemberRole] = useState('technician');
+
+  // Pipeline step
+  const [pipelineStages, setPipelineStages] = useState<PipelineStage[]>(
+    settings.pipelineStages || DEFAULT_PIPELINE_STAGES
+  );
+  const [editingStageId, setEditingStageId] = useState<string | null>(null);
+  const [editingName, setEditingName] = useState('');
+
+  // Preferences step
+  const [language, setLanguage] = useState('en');
+  const [currency, setCurrency] = useState('CAD');
+  const [timezone, setTimezone] = useState(settings.timezone || 'America/Toronto');
+  const [darkMode, setDarkMode] = useState(isDark);
 
   useEffect(() => {
     setMounted(true);
-    // Auto-open the first incomplete step
-    const firstIncomplete = INITIAL_STEPS.find((s) => !s.isCompleted);
-    if (firstIncomplete) setActiveStepId(firstIncomplete.id);
   }, []);
 
-  if (!mounted) return <div className="p-8">{t('common.loading')}</div>;
+  if (!mounted) return null;
 
-  const completedCount = steps.filter((s) => s.isCompleted).length;
-  const totalSteps = steps.length;
-  const progressPercent = Math.round((completedCount / totalSteps) * 100);
-  const allComplete = completedCount === totalSteps;
+  // Validation
+  const validateCompanyStep = (): boolean => {
+    const newErrors: FormErrors = {};
+    if (!companyName.trim()) newErrors.companyName = 'Company name is required';
+    if (!phone.trim()) newErrors.phone = 'Phone number is required';
+    if (!email.trim()) newErrors.email = 'Email is required';
+    if (email && !email.includes('@')) newErrors.email = 'Valid email required';
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
-  const completeStep = (stepId: string) => {
-    setSteps((prev) =>
-      prev.map((s) => (s.id === stepId ? { ...s, isCompleted: true } : s))
-    );
-
-    // Auto-advance to next incomplete step
-    const currentIndex = steps.findIndex((s) => s.id === stepId);
-    const nextIncomplete = steps.find((s, i) => i > currentIndex && !s.isCompleted);
-    if (nextIncomplete) {
-      setActiveStepId(nextIncomplete.id);
-    } else {
-      setActiveStepId(null);
-      // Check if all complete
-      const newCompleted = steps.filter((s) => s.isCompleted).length + 1;
-      if (newCompleted === totalSteps) {
-        setShowCelebration(true);
-      }
+  const validateTeamStep = (): boolean => {
+    if (teamMembers.length === 0) {
+      setErrors({ general: 'At least one team member required' });
+      return false;
     }
-    setFormData({});
+    setErrors({});
+    return true;
   };
 
-  const skipStep = (stepId: string) => {
-    const currentIndex = steps.findIndex((s) => s.id === stepId);
-    const nextStep = steps.find((s, i) => i > currentIndex);
-    if (nextStep) setActiveStepId(nextStep.id);
+  const handleNext = () => {
+    switch (step) {
+      case 'company':
+        if (validateCompanyStep()) {
+          updateSettings({
+            companyName,
+            companyPhone: phone,
+            companyEmail: email,
+            companyAddress: address,
+            industry,
+          });
+          setStep('team');
+        }
+        break;
+      case 'team':
+        if (validateTeamStep()) {
+          updateSettings({
+            teamMembers: teamMembers.map(m => ({
+              id: m.id,
+              name: m.name,
+              role: m.role,
+              color: `bg-${['blue', 'emerald', 'purple', 'orange'][Math.floor(Math.random() * 4)]}-500`,
+            })),
+          });
+          setStep('pipeline');
+        }
+        break;
+      case 'pipeline':
+        updateSettings({ pipelineStages });
+        setStep('preferences');
+        break;
+      case 'preferences':
+        updateSettings({ timezone });
+        setStep('ready');
+        break;
+      default:
+        break;
+    }
   };
 
-  const activeStep = steps.find((s) => s.id === activeStepId);
-
-  // Motivation messages based on progress
-  const getMotivation = () => {
-    if (completedCount === 0) return t('setup.getStartedMotivation1');
-    if (completedCount <= 2) return t('setup.getStartedMotivation2');
-    if (completedCount <= 4) return t('setup.getStartedMotivation3');
-    if (completedCount <= 6) return t('setup.getStartedMotivation4');
-    if (completedCount < totalSteps) return t('setup.getStartedMotivation5');
-    return t('setup.getStartedMotivation6');
+  const handleBack = () => {
+    const steps: StepName[] = ['company', 'team', 'pipeline', 'preferences', 'ready'];
+    const currentIndex = steps.indexOf(step);
+    if (currentIndex > 0) {
+      setStep(steps[currentIndex - 1]);
+    }
   };
+
+  const handleLaunch = () => {
+    updateSettings({
+      companyName,
+      companyPhone: phone,
+      companyEmail: email,
+      companyAddress: address,
+      industry,
+      teamMembers: teamMembers.map(m => ({
+        id: m.id,
+        name: m.name,
+        role: m.role,
+        color: `bg-${['blue', 'emerald', 'purple', 'orange'][Math.floor(Math.random() * 4)]}-500`,
+      })),
+      pipelineStages,
+      timezone,
+    });
+    localStorage.setItem('growth-os-onboarded', 'true');
+    router.push('/dashboard');
+  };
+
+  const addTeamMember = () => {
+    if (!newMemberName.trim()) {
+      setErrors({ newMember: 'Name is required' });
+      return;
+    }
+    setTeamMembers([
+      ...teamMembers,
+      {
+        id: Date.now().toString(),
+        name: newMemberName,
+        role: newMemberRole,
+      },
+    ]);
+    setNewMemberName('');
+    setNewMemberRole('technician');
+    setErrors({});
+  };
+
+  const removeTeamMember = (id: string) => {
+    setTeamMembers(teamMembers.filter(m => m.id !== id));
+  };
+
+  const startEditingStage = (id: string, name: string) => {
+    setEditingStageId(id);
+    setEditingName(name);
+  };
+
+  const saveEditingStage = () => {
+    if (editingStageId && editingName.trim()) {
+      setPipelineStages(pipelineStages.map(s =>
+        s.id === editingStageId ? { ...s, name: editingName } : s
+      ));
+    }
+    setEditingStageId(null);
+    setEditingName('');
+  };
+
+  const resetPipeline = () => {
+    setPipelineStages(DEFAULT_PIPELINE_STAGES);
+  };
+
+  // Step indicator
+  const steps: { name: StepName; label: string }[] = [
+    { name: 'company', label: 'Company' },
+    { name: 'team', label: 'Team' },
+    { name: 'pipeline', label: 'Pipeline' },
+    { name: 'preferences', label: 'Preferences' },
+    { name: 'ready', label: 'Ready' },
+  ];
+
+  const currentStepIndex = steps.findIndex(s => s.name === step);
 
   return (
-    <div className="p-4 sm:p-8 bg-slate-50 dark:bg-slate-950 min-h-screen">
-      {/* Guided Tour Overlay */}
-      {activeTourId && TOURS[activeTourId] && (
-        <GuidedTour
-          tour={TOURS[activeTourId]}
-          onComplete={() => {
-            setActiveTourId(null);
-          }}
-          onClose={() => setActiveTourId(null)}
-        />
-      )}
-
-      {/* Celebration Overlay */}
-      {showCelebration && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-8">
-          <div className="bg-white dark:bg-slate-800 rounded-3xl p-10 max-w-lg text-center shadow-2xl animate-in">
-            <div className="w-20 h-20 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6">
-              <PartyPopper className="w-10 h-10 text-white" />
-            </div>
-            <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-3">{t('setup.youreAllSet')}</h2>
-            <p className="text-slate-600 dark:text-slate-400 mb-2">
-              {t('setup.allSetDesc')}
-            </p>
-            <p className="text-slate-500 dark:text-slate-500 text-sm mb-8">
-              {t('setup.allSetSubtitle')}
-            </p>
-            <div className="flex gap-3">
-              <Link
-                href="/dashboard"
-                className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-all hover:shadow-lg text-center"
-              >
-                {t('setup.goToDashboard')}
-              </Link>
-              <button
-                onClick={() => setShowCelebration(false)}
-                className="flex-1 px-6 py-3 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-xl font-semibold hover:bg-slate-200 dark:hover:bg-slate-600 transition-all text-center"
-              >
-                {t('setup.reviewSetup')}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
+    <div className={`min-h-screen transition-colors duration-200 ${isDark ? 'bg-slate-950' : 'bg-slate-50'}`}>
       {/* Header */}
-      <div className="mb-8">
-        <div className="flex items-center gap-3 mb-2">
-          <div className="w-10 h-10 bg-[#2C3E50] rounded-xl flex items-center justify-center">
-            <Rocket className="w-5 h-5 text-white" />
-          </div>
-          <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">{t('setup.title')}</h1>
-            <p className="text-slate-600 dark:text-slate-400">{t('setup.subtitle')}</p>
-          </div>
+      <div className={`border-b transition-colors duration-200 ${isDark ? 'border-slate-800 bg-slate-900' : 'border-slate-200 bg-white'}`}>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <h1 className={`text-3xl font-bold transition-colors duration-200 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+            Welcome to GrowthOS
+          </h1>
+          <p className={`text-sm mt-1 transition-colors duration-200 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+            Let's set up your business in under 2 minutes
+          </p>
         </div>
       </div>
 
-      {/* Progress Card */}
-      <div className="bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-4 sm:p-8 mb-6 sm:mb-8 text-white relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-        <div className="relative">
-          <div className="flex items-center justify-between flex-wrap gap-6 mb-6">
-            <div>
-              <p className="text-slate-400 text-sm font-medium mb-1">{t('setup.setupProgress')}</p>
-              <div className="flex items-baseline gap-3">
-                <span className="text-5xl font-bold">{progressPercent}%</span>
-                <span className="text-slate-400 text-sm">{completedCount} of {totalSteps} {t('setup.stepsComplete')}</span>
+      {/* Progress bar */}
+      <div className={`transition-colors duration-200 ${isDark ? 'bg-slate-900' : 'bg-white'}`}>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex items-center justify-between mb-4">
+            {steps.map((s, i) => (
+              <div key={s.name} className="flex items-center">
+                <div
+                  className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm transition-all duration-200 ${
+                    i < currentStepIndex
+                      ? 'bg-green-500 text-white'
+                      : i === currentStepIndex
+                        ? 'bg-green-600 text-white ring-4 ring-green-200 dark:ring-green-900'
+                        : isDark
+                          ? 'bg-slate-700 text-slate-400'
+                          : 'bg-slate-200 text-slate-600'
+                  }`}
+                >
+                  {i < currentStepIndex ? <CheckCircle2 className="w-5 h-5" /> : i + 1}
+                </div>
+                {i < steps.length - 1 && (
+                  <div
+                    className={`h-1 w-8 sm:w-12 mx-2 transition-all duration-200 ${
+                      i < currentStepIndex
+                        ? 'bg-green-500'
+                        : isDark
+                          ? 'bg-slate-700'
+                          : 'bg-slate-200'
+                    }`}
+                  />
+                )}
               </div>
-              <p className="text-blue-300 text-sm mt-2">{getMotivation()}</p>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="text-center">
-                <Clock className="w-5 h-5 text-slate-400 mx-auto mb-1" />
-                <p className="text-xs text-slate-400">{t('setup.estTimeLeft')}</p>
-                <p className="text-lg font-bold">
-                  {Math.max(0, (totalSteps - completedCount) * 2)} min
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Progress Bar */}
-          <div className="w-full bg-slate-700 rounded-full h-3 overflow-hidden">
-            <div
-              className="h-full rounded-full transition-all duration-700 ease-out"
-              style={{
-                width: `${progressPercent}%`,
-                background: allComplete
-                  ? 'linear-gradient(90deg, #10B981, #34D399)'
-                  : 'linear-gradient(90deg, #3B82F6, #60A5FA)',
-              }}
-            />
-          </div>
-
-          {/* Step Dots */}
-          <div className="flex justify-between mt-4 px-1">
-            {steps.map((step, i) => (
-              <button
-                key={step.id}
-                onClick={() => setActiveStepId(step.id)}
-                className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
-                  step.isCompleted
-                    ? 'bg-emerald-500 text-white'
-                    : activeStepId === step.id
-                      ? 'bg-blue-500 text-white ring-2 ring-blue-300 ring-offset-2 ring-offset-slate-900'
-                      : 'bg-slate-700 text-slate-400 hover:bg-slate-600'
-                }`}
-              >
-                {step.isCompleted ? <CheckCircle2 className="w-4 h-4" /> : i + 1}
-              </button>
             ))}
           </div>
+          <div className="text-center">
+            <p className={`text-sm font-medium transition-colors duration-200 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+              Step {currentStepIndex + 1} of {steps.length}: {steps[currentStepIndex].label}
+            </p>
+          </div>
         </div>
       </div>
 
-      {/* Steps List */}
-      <div className="space-y-3">
-        {steps.map((step, index) => {
-          const isActive = activeStepId === step.id;
-          const categoryConfig = CATEGORIES[step.category];
+      {/* Main content */}
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className={`rounded-2xl shadow-lg transition-all duration-200 ${isDark ? 'bg-slate-800' : 'bg-white'} p-8`}>
+          {/* Step 1: Company Info */}
+          {step === 'company' && (
+            <div>
+              <h2 className={`text-2xl font-bold mb-2 transition-colors duration-200 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                Welcome to GrowthOS
+              </h2>
+              <p className={`mb-6 transition-colors duration-200 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                Let's start with your company information
+              </p>
 
-          return (
-            <div
-              key={step.id}
-              className={`bg-white dark:bg-slate-800 rounded-2xl border transition-all ${
-                step.isCompleted
-                  ? 'border-emerald-200 dark:border-emerald-800 bg-emerald-50/30 dark:bg-emerald-900/20'
-                  : isActive
-                    ? 'border-blue-300 dark:border-blue-700 shadow-lg shadow-blue-100 dark:shadow-blue-900/30'
-                    : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
-              }`}
-            >
-              {/* Step Header */}
-              <button
-                onClick={() => setActiveStepId(isActive ? null : step.id)}
-                className="w-full p-6 flex items-center gap-4 text-left"
-              >
-                {/* Step Number / Check */}
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${
-                  step.isCompleted
-                    ? 'bg-emerald-100 dark:bg-emerald-900 text-emerald-600 dark:text-emerald-400'
-                    : isActive
-                      ? 'bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400'
-                      : 'bg-slate-100 dark:bg-slate-700 text-slate-400 dark:text-slate-500'
-                }`}>
-                  {step.isCompleted ? (
-                    <CheckCircle2 className="w-6 h-6" />
-                  ) : (
-                    step.icon
-                  )}
+              <div className="space-y-4">
+                <div>
+                  <label className={`block text-sm font-medium mb-2 transition-colors duration-200 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                    Company Name <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={companyName}
+                    onChange={e => setCompanyName(e.target.value)}
+                    placeholder="Your Business Name"
+                    className={`w-full px-4 py-2 rounded-lg border transition-colors duration-200 ${
+                      errors.companyName
+                        ? 'border-red-500'
+                        : isDark
+                          ? 'border-slate-700'
+                          : 'border-slate-300'
+                    } ${isDark ? 'bg-slate-700 text-white' : 'bg-white'} focus:outline-none focus:ring-2 focus:ring-green-500`}
+                  />
+                  {errors.companyName && <p className="text-red-500 text-sm mt-1">{errors.companyName}</p>}
                 </div>
 
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-3 mb-1">
-                    <h3 className={`text-lg font-bold ${
-                      step.isCompleted ? 'text-emerald-700 dark:text-emerald-400' : 'text-slate-900 dark:text-white'
-                    }`}>
-                      {step.isCompleted && 'Done — '}{step.title}
-                    </h3>
-                    <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
-                      step.category === 'foundation'
-                        ? 'bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400'
-                        : step.category === 'growth'
-                          ? 'bg-emerald-100 dark:bg-emerald-900 text-emerald-600 dark:text-emerald-400'
-                          : 'bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-400'
-                    }`}>
-                      {categoryConfig.label}
-                    </span>
-                    <span className="text-xs text-slate-400 dark:text-slate-500 flex items-center gap-1">
-                      <Clock className="w-3 h-3" />
-                      {step.estimatedTime}
-                    </span>
-                  </div>
-                  <p className="text-sm text-slate-500 dark:text-slate-400 line-clamp-1">{step.description}</p>
+                <div>
+                  <label className={`block text-sm font-medium mb-2 transition-colors duration-200 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                    Phone Number <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="tel"
+                    value={phone}
+                    onChange={e => setPhone(e.target.value)}
+                    placeholder="(555) 123-4567"
+                    className={`w-full px-4 py-2 rounded-lg border transition-colors duration-200 ${
+                      errors.phone
+                        ? 'border-red-500'
+                        : isDark
+                          ? 'border-slate-700'
+                          : 'border-slate-300'
+                    } ${isDark ? 'bg-slate-700 text-white' : 'bg-white'} focus:outline-none focus:ring-2 focus:ring-green-500`}
+                  />
+                  {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
                 </div>
 
-                <ChevronRight className={`w-5 h-5 text-slate-400 dark:text-slate-500 shrink-0 transition-transform ${
-                  isActive ? 'rotate-90' : ''
-                }`} />
-              </button>
+                <div>
+                  <label className={`block text-sm font-medium mb-2 transition-colors duration-200 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                    Email <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    placeholder="info@yourbusiness.com"
+                    className={`w-full px-4 py-2 rounded-lg border transition-colors duration-200 ${
+                      errors.email
+                        ? 'border-red-500'
+                        : isDark
+                          ? 'border-slate-700'
+                          : 'border-slate-300'
+                    } ${isDark ? 'bg-slate-700 text-white' : 'bg-white'} focus:outline-none focus:ring-2 focus:ring-green-500`}
+                  />
+                  {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+                </div>
 
-              {/* Expanded Content */}
-              {isActive && !step.isCompleted && (
-                <div className="px-6 pb-6 border-t border-slate-100 dark:border-slate-700">
-                  <div className="pt-5">
-                    {/* Why It Matters */}
-                    <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 mb-6">
-                      <div className="flex items-start gap-2">
-                        <TrendingUp className="w-4 h-4 text-amber-600 dark:text-amber-500 mt-0.5 shrink-0" />
-                        <div>
-                          <p className="text-sm font-semibold text-amber-800 dark:text-amber-300 mb-0.5">Why this matters</p>
-                          <p className="text-sm text-amber-700 dark:text-amber-400">{step.whyItMatters}</p>
-                        </div>
-                      </div>
-                    </div>
+                <div>
+                  <label className={`block text-sm font-medium mb-2 transition-colors duration-200 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                    Address
+                  </label>
+                  <input
+                    type="text"
+                    value={address}
+                    onChange={e => setAddress(e.target.value)}
+                    placeholder="123 Main St, City, Province"
+                    className={`w-full px-4 py-2 rounded-lg border transition-colors duration-200 ${isDark ? 'border-slate-700 bg-slate-700 text-white' : 'border-slate-300'} focus:outline-none focus:ring-2 focus:ring-green-500`}
+                  />
+                </div>
 
-                    {/* Form Fields */}
-                    {step.fields && (
-                      <div className="space-y-4 mb-6">
-                        {step.fields.map((field) => (
-                          <div key={field.id}>
-                            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-                              {field.label}
-                              {field.required && <span className="text-rose-500 dark:text-rose-400 ml-1">*</span>}
-                            </label>
-                            {field.type === 'select' ? (
-                              <select
-                                value={formData[field.id] || ''}
-                                onChange={(e) => setFormData({ ...formData, [field.id]: e.target.value })}
-                                className="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-blue-500 dark:focus:border-blue-400 text-sm bg-white dark:bg-slate-900 dark:text-white"
-                              >
-                                <option value="">{field.placeholder}</option>
-                                {field.options?.map((opt) => (
-                                  <option key={opt} value={opt}>{opt}</option>
-                                ))}
-                              </select>
-                            ) : field.type === 'textarea' ? (
-                              <textarea
-                                value={formData[field.id] || ''}
-                                onChange={(e) => setFormData({ ...formData, [field.id]: e.target.value })}
-                                placeholder={field.placeholder}
-                                rows={3}
-                                className="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-blue-500 dark:focus:border-blue-400 text-sm resize-none bg-white dark:bg-slate-900 dark:text-white"
-                              />
-                            ) : (
-                              <input
-                                type={field.type}
-                                value={formData[field.id] || ''}
-                                onChange={(e) => setFormData({ ...formData, [field.id]: e.target.value })}
-                                placeholder={field.placeholder}
-                                className="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-blue-500 dark:focus:border-blue-400 text-sm bg-white dark:bg-slate-900 dark:text-white"
-                              />
-                            )}
-                            {field.hint && (
-                              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1.5 flex items-center gap-1">
-                                <AlertCircle className="w-3 h-3" />
-                                {field.hint}
-                              </p>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    )}
+                <div>
+                  <label className={`block text-sm font-medium mb-2 transition-colors duration-200 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                    Industry <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    value={industry}
+                    onChange={e => setIndustry(e.target.value)}
+                    className={`w-full px-4 py-2 rounded-lg border transition-colors duration-200 ${isDark ? 'border-slate-700 bg-slate-700 text-white' : 'border-slate-300'} focus:outline-none focus:ring-2 focus:ring-green-500`}
+                  >
+                    {INDUSTRIES.map(ind => (
+                      <option key={ind} value={ind}>
+                        {INDUSTRY_LABELS[ind]}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            </div>
+          )}
 
-                    {/* Link to page (for steps without forms) */}
-                    {step.linkTo && !step.fields && (
-                      <Link
-                        href={step.linkTo}
-                        className="flex items-center gap-2 px-5 py-3 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 rounded-xl font-medium hover:bg-blue-100 dark:hover:bg-blue-900/50 transition mb-6 text-sm"
-                      >
-                        <ArrowRight className="w-4 h-4" />
-                        {step.linkLabel}
-                      </Link>
-                    )}
+          {/* Step 2: Team */}
+          {step === 'team' && (
+            <div>
+              <h2 className={`text-2xl font-bold mb-2 transition-colors duration-200 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                Who's on your team?
+              </h2>
+              <p className={`mb-6 transition-colors duration-200 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                Add team members (optional)
+              </p>
 
-                    {/* Walk Me Through It Button */}
-                    {TOURS[step.id] && (
-                      <button
-                        onClick={() => setActiveTourId(step.id)}
-                        className="flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-blue-50 dark:from-blue-900/30 to-purple-50 dark:to-purple-900/30 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-400 rounded-xl font-medium hover:from-blue-100 dark:hover:from-blue-900/50 hover:to-purple-100 dark:hover:to-purple-900/50 transition-all mb-4 w-full justify-center text-sm"
-                      >
-                        <MousePointerClick className="w-4 h-4" />
-                        {t('setup.walkMeThroughThisStep')}
-                      </button>
-                    )}
-
-                    {/* Actions */}
-                    <div className="flex items-center gap-3">
-                      <button
-                        onClick={() => completeStep(step.id)}
-                        className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-all hover:shadow-lg hover:shadow-blue-600/20"
-                      >
-                        <CheckCircle2 className="w-4 h-4" />
-                        {step.fields ? t('setup.saveAndContinue') : t('setup.markComplete')}
-                      </button>
-                      <button
-                        onClick={() => skipStep(step.id)}
-                        className="px-4 py-3 text-sm text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 font-medium transition"
-                      >
-                        Skip for now
-                      </button>
-                      {step.linkTo && step.fields && (
-                        <Link
-                          href={step.linkTo}
-                          className="ml-auto text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium flex items-center gap-1"
-                        >
-                          {step.linkLabel}
-                          <ChevronRight className="w-4 h-4" />
-                        </Link>
-                      )}
-                    </div>
-                  </div>
+              {errors.general && (
+                <div className="mb-4 p-3 bg-red-100 dark:bg-red-900 border border-red-300 dark:border-red-700 rounded-lg text-red-700 dark:text-red-300 text-sm flex items-center gap-2">
+                  <AlertCircle className="w-4 h-4" />
+                  {errors.general}
                 </div>
               )}
-            </div>
-          );
-        })}
-      </div>
 
-      {/* Bottom Help Section */}
-      <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6">
-          <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-xl flex items-center justify-center mb-3">
-            <Phone className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+              {/* Team members list */}
+              <div className="space-y-3 mb-6">
+                {teamMembers.map(member => (
+                  <div
+                    key={member.id}
+                    className={`flex items-center justify-between p-4 rounded-lg border transition-colors duration-200 ${isDark ? 'border-slate-700 bg-slate-700' : 'border-slate-200 bg-slate-50'}`}
+                  >
+                    <div>
+                      <p className={`font-medium transition-colors duration-200 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                        {member.name}
+                      </p>
+                      <p className={`text-sm transition-colors duration-200 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                        {TEAM_ROLES.find(r => r.id === member.role)?.label || member.role}
+                      </p>
+                    </div>
+                    {member.id !== '0' && (
+                      <button
+                        onClick={() => removeTeamMember(member.id)}
+                        className="p-2 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/20 text-red-600 dark:text-red-400 transition-colors"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              {/* Add new member */}
+              <div className={`border-t transition-colors duration-200 ${isDark ? 'border-slate-700 pt-6' : 'border-slate-200 pt-6'}`}>
+                <p className={`text-sm font-medium mb-3 transition-colors duration-200 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                  Add a team member
+                </p>
+                <div className="space-y-3">
+                  <div>
+                    <input
+                      type="text"
+                      value={newMemberName}
+                      onChange={e => setNewMemberName(e.target.value)}
+                      placeholder="Member name"
+                      className={`w-full px-4 py-2 rounded-lg border transition-colors duration-200 ${isDark ? 'border-slate-700 bg-slate-700 text-white' : 'border-slate-300'} focus:outline-none focus:ring-2 focus:ring-green-500`}
+                    />
+                    {errors.newMember && <p className="text-red-500 text-sm mt-1">{errors.newMember}</p>}
+                  </div>
+                  <div className="flex gap-3">
+                    <select
+                      value={newMemberRole}
+                      onChange={e => setNewMemberRole(e.target.value)}
+                      className={`flex-1 px-4 py-2 rounded-lg border transition-colors duration-200 ${isDark ? 'border-slate-700 bg-slate-700 text-white' : 'border-slate-300'} focus:outline-none focus:ring-2 focus:ring-green-500`}
+                    >
+                      {TEAM_ROLES.map(role => (
+                        <option key={role.id} value={role.id}>
+                          {role.label}
+                        </option>
+                      ))}
+                    </select>
+                    <button
+                      onClick={addTeamMember}
+                      className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-colors"
+                    >
+                      Add
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Step 3: Pipeline */}
+          {step === 'pipeline' && (
+            <div>
+              <h2 className={`text-2xl font-bold mb-2 transition-colors duration-200 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                Customize your pipeline
+              </h2>
+              <p className={`mb-6 transition-colors duration-200 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                Rename stages to match your business
+              </p>
+
+              <div className="space-y-3 mb-6">
+                {pipelineStages.map(stage => (
+                  <div
+                    key={stage.id}
+                    className={`flex items-center gap-4 p-4 rounded-lg border transition-colors duration-200 ${isDark ? 'border-slate-700 bg-slate-700' : 'border-slate-200 bg-slate-50'}`}
+                  >
+                    <div className={`w-4 h-4 rounded-full ${stage.color}`} />
+                    {editingStageId === stage.id ? (
+                      <input
+                        type="text"
+                        value={editingName}
+                        onChange={e => setEditingName(e.target.value)}
+                        onBlur={saveEditingStage}
+                        onKeyDown={e => e.key === 'Enter' && saveEditingStage()}
+                        autoFocus
+                        className={`flex-1 px-3 py-1 rounded border transition-colors duration-200 ${isDark ? 'border-slate-600 bg-slate-800 text-white' : 'border-slate-300'} focus:outline-none focus:ring-2 focus:ring-green-500`}
+                      />
+                    ) : (
+                      <button
+                        onClick={() => startEditingStage(stage.id, stage.name)}
+                        className={`flex-1 text-left font-medium transition-colors duration-200 ${isDark ? 'text-white hover:text-slate-200' : 'text-slate-900 hover:text-slate-700'}`}
+                      >
+                        {stage.name}
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              <button
+                onClick={resetPipeline}
+                className={`w-full py-2 rounded-lg border transition-colors duration-200 ${isDark ? 'border-slate-700 text-slate-400 hover:text-white hover:border-slate-600' : 'border-slate-300 text-slate-600 hover:text-slate-900'}`}
+              >
+                Reset to defaults
+              </button>
+            </div>
+          )}
+
+          {/* Step 4: Preferences */}
+          {step === 'preferences' && (
+            <div>
+              <h2 className={`text-2xl font-bold mb-2 transition-colors duration-200 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                Your preferences
+              </h2>
+              <p className={`mb-6 transition-colors duration-200 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                Customize how GrowthOS works for you
+              </p>
+
+              <div className="space-y-6">
+                {/* Language */}
+                <div>
+                  <label className={`block text-sm font-medium mb-3 transition-colors duration-200 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                    Language
+                  </label>
+                  <div className="flex gap-3">
+                    {['en', 'fr'].map(lang => (
+                      <button
+                        key={lang}
+                        onClick={() => setLanguage(lang)}
+                        className={`flex-1 py-2 rounded-lg border-2 font-medium transition-all ${
+                          language === lang
+                            ? 'border-green-500 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400'
+                            : isDark
+                              ? 'border-slate-700 text-slate-300 hover:border-slate-600'
+                              : 'border-slate-300 text-slate-600 hover:border-slate-400'
+                        }`}
+                      >
+                        {lang === 'en' ? 'English' : 'Français'}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Currency */}
+                <div>
+                  <label className={`block text-sm font-medium mb-3 transition-colors duration-200 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                    Currency
+                  </label>
+                  <div className="flex gap-3">
+                    {['CAD', 'USD'].map(cur => (
+                      <button
+                        key={cur}
+                        onClick={() => setCurrency(cur)}
+                        className={`flex-1 py-2 rounded-lg border-2 font-medium transition-all ${
+                          currency === cur
+                            ? 'border-green-500 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400'
+                            : isDark
+                              ? 'border-slate-700 text-slate-300 hover:border-slate-600'
+                              : 'border-slate-300 text-slate-600 hover:border-slate-400'
+                        }`}
+                      >
+                        {cur}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Timezone */}
+                <div>
+                  <label className={`block text-sm font-medium mb-2 transition-colors duration-200 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                    Timezone
+                  </label>
+                  <select
+                    value={timezone}
+                    onChange={e => setTimezone(e.target.value)}
+                    className={`w-full px-4 py-2 rounded-lg border transition-colors duration-200 ${isDark ? 'border-slate-700 bg-slate-700 text-white' : 'border-slate-300'} focus:outline-none focus:ring-2 focus:ring-green-500`}
+                  >
+                    {CANADIAN_TIMEZONES.map(tz => (
+                      <option key={tz.id} value={tz.id}>
+                        {tz.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Dark Mode */}
+                <div className="flex items-center justify-between p-4 rounded-lg border transition-colors duration-200" style={{
+                  borderColor: isDark ? '#334155' : '#e2e8f0',
+                  backgroundColor: isDark ? '#1e293b' : '#f8fafc'
+                }}>
+                  <div className="flex items-center gap-3">
+                    <Palette className={`w-5 h-5 transition-colors duration-200 ${isDark ? 'text-slate-400' : 'text-slate-600'}`} />
+                    <label className={`font-medium transition-colors duration-200 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                      Dark Mode
+                    </label>
+                  </div>
+                  <button
+                    onClick={() => setDarkMode(!darkMode)}
+                    className={`w-12 h-6 rounded-full transition-colors ${darkMode ? 'bg-green-500' : 'bg-slate-300'}`}
+                  >
+                    <div
+                      className={`w-5 h-5 bg-white rounded-full transform transition-transform ${darkMode ? 'translate-x-6' : 'translate-x-0.5'}`}
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Step 5: Ready */}
+          {step === 'ready' && (
+            <div className="text-center">
+              <div className="w-20 h-20 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mx-auto mb-6">
+                <CheckCircle2 className="w-10 h-10 text-green-600 dark:text-green-400" />
+              </div>
+              <h2 className={`text-3xl font-bold mb-3 transition-colors duration-200 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                You're all set!
+              </h2>
+              <p className={`mb-8 transition-colors duration-200 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                Your GrowthOS is ready to go. Here are some quick tips to get started:
+              </p>
+
+              <div className="space-y-3 mb-8 text-left">
+                <div className={`p-4 rounded-lg border transition-colors duration-200 ${isDark ? 'border-slate-700 bg-slate-700' : 'border-slate-200 bg-slate-50'}`}>
+                  <p className={`font-medium transition-colors duration-200 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                    Add your first lead
+                  </p>
+                  <p className={`text-sm transition-colors duration-200 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                    Start building your pipeline with real opportunities
+                  </p>
+                </div>
+                <div className={`p-4 rounded-lg border transition-colors duration-200 ${isDark ? 'border-slate-700 bg-slate-700' : 'border-slate-200 bg-slate-50'}`}>
+                  <p className={`font-medium transition-colors duration-200 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                    Create an estimate
+                  </p>
+                  <p className={`text-sm transition-colors duration-200 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                    Send professional estimates that convert more leads
+                  </p>
+                </div>
+                <div className={`p-4 rounded-lg border transition-colors duration-200 ${isDark ? 'border-slate-700 bg-slate-700' : 'border-slate-200 bg-slate-50'}`}>
+                  <p className={`font-medium transition-colors duration-200 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                    Import your contacts
+                  </p>
+                  <p className={`text-sm transition-colors duration-200 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                    Bring in your existing customers to start tracking history
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Footer buttons */}
+          <div className={`flex gap-3 mt-8 pt-6 border-t transition-colors duration-200 ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
+            <button
+              onClick={handleBack}
+              disabled={step === 'company'}
+              className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all ${
+                step === 'company'
+                  ? `opacity-50 cursor-not-allowed ${isDark ? 'bg-slate-700 text-slate-500' : 'bg-slate-200 text-slate-400'}`
+                  : isDark
+                    ? 'bg-slate-700 text-white hover:bg-slate-600'
+                    : 'bg-slate-200 text-slate-900 hover:bg-slate-300'
+              }`}
+            >
+              <ChevronLeft className="w-4 h-4" />
+              Back
+            </button>
+
+            {step === 'ready' ? (
+              <button
+                onClick={handleLaunch}
+                className="ml-auto flex items-center gap-2 px-8 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold transition-all hover:shadow-lg shadow-green-500/20"
+              >
+                Launch GrowthOS
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            ) : (
+              <button
+                onClick={handleNext}
+                className="ml-auto flex items-center gap-2 px-8 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold transition-all hover:shadow-lg shadow-green-500/20"
+              >
+                Next
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            )}
           </div>
-          <h4 className="font-bold text-slate-900 dark:text-white mb-1">{t('setup.needHelp')}</h4>
-          <p className="text-sm text-slate-600 dark:text-slate-400">
-            Our team is here to help you get set up. Call us at (888) 555-GROW or chat with us anytime.
-          </p>
-        </div>
-        <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6">
-          <div className="w-10 h-10 bg-emerald-100 dark:bg-emerald-900 rounded-xl flex items-center justify-center mb-3">
-            <Shield className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
-          </div>
-          <h4 className="font-bold text-slate-900 dark:text-white mb-1">{t('setup.dataSafe')}</h4>
-          <p className="text-sm text-slate-600 dark:text-slate-400">
-            Everything you enter is encrypted and secure. We never sell your data. You own it, period.
-          </p>
-        </div>
-        <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6">
-          <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900 rounded-xl flex items-center justify-center mb-3">
-            <Heart className="w-5 h-5 text-purple-600 dark:text-purple-400" />
-          </div>
-          <h4 className="font-bold text-slate-900 dark:text-white mb-1">{t('setup.builtForTrades')}</h4>
-          <p className="text-sm text-slate-600 dark:text-slate-400">
-            GrowthOS was built by people who understand service businesses. Every feature is designed for the way you actually work.
-          </p>
         </div>
       </div>
     </div>

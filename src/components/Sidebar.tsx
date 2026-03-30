@@ -22,6 +22,7 @@ import {
   Globe,
   BarChart3,
   FileInput,
+  Mail,
 } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 import { useLanguage } from './LanguageProvider';
@@ -53,6 +54,7 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
     { href: '/notifications', label: t('nav.notifications'), icon: Bell, badge: unreadCount > 0 ? unreadCount : undefined },
     { href: '/activity', label: t('nav.activity'), icon: ActivitySquare },
     { href: '/leads', label: 'Lead Capture', icon: FileInput },
+    { href: '/templates', label: 'Templates', icon: Mail },
     { href: '/reports', label: 'Reports', icon: BarChart3 },
   ];
 

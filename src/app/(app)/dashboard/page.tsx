@@ -35,6 +35,12 @@ import {
   Rocket,
   ArrowRight,
   ChevronRight,
+  Check,
+  ChevronDown,
+  X,
+  FileText,
+  Settings,
+  Upload,
 } from 'lucide-react';
 import Link from 'next/link';
 import { Modal } from '@/components/Modal';
@@ -59,18 +65,92 @@ const RING_COLORS = {
 
 export default function Dashboard() {
   const { t } = useLanguage();
-  const { contacts, deals, activities, invoices, initializeSeedData, getActivities } = useStore();
+  const { contacts, deals, activities, invoices, settings, initializeSeedData, getActivities } = useStore();
   const [isAddDealOpen, setIsAddDealOpen] = useState(false);
   const [isFABExpanded, setIsFABExpanded] = useState(false);
   const [dateRange, setDateRange] = useState<'today' | 'week' | 'month' | 'quarter'>(
     'month'
   );
   const [mounted, setMounted] = useState(false);
+  const [welcomeDismissed, setWelcomeDismissed] = useState(false);
+  const [isWelcomeExpanded, setIsWelcomeExpanded] = useState(true);
 
   useEffect(() => {
     setMounted(true);
     initializeSeedData();
+    // Check if welcome widget was dismissed
+    const isDismissed = localStorage.getItem('growth-os-welcome-dismissed') === 'true';
+    setWelcomeDismissed(isDismissed);
   }, []);
+
+  // Define onboarding steps with completion checks
+  const onboardingSteps = [
+    {
+      id: 'add-contact',
+      title: 'Add your first contact',
+      description: 'Start building your contact database',
+      href: '/contacts',
+      completed: contacts.length > 0,
+      icon: Target,
+    },
+    {
+      id: 'create-deal',
+      title: 'Create a deal',
+      description: 'Add your first job to the pipeline',
+      href: '/pipeline',
+      completed: deals.length > 0,
+      icon: Zap,
+    },
+    {
+      id: 'send-estimate',
+      title: 'Send an estimate',
+      description: 'Create and send your first quote',
+      href: '/estimates',
+      completed: false, // This would need estimates check from store
+      icon: FileText,
+    },
+    {
+      id: 'company-info',
+      title: 'Set up your company info',
+      description: 'Configure your business details',
+      href: '/setup',
+      completed: !!settings.companyName && settings.companyName !== 'ProPlumbers Inc.',
+      icon: Settings,
+    },
+    {
+      id: 'pipeline-stages',
+      title: 'Customize your pipeline stages',
+      description: 'Tailor pipeline to your workflow',
+      href: '/settings',
+      completed: false, // This would need customization check
+      icon: Settings,
+    },
+    {
+      id: 'import-contacts',
+      title: 'Import contacts from CSV',
+      description: 'Bulk import your existing contacts',
+      href: '/contacts/import',
+      completed: false,
+      icon: Upload,
+    },
+  ];
+
+  const completedSteps = onboardingSteps.filter(step => step.completed).length;
+  const completionPercentage = Math.round((completedSteps / onboardingSteps.length) * 100);
+  const allStepsCompleted = completedSteps === onboardingSteps.length;
+
+  // Auto-hide when all steps completed
+  useEffect(() => {
+    if (allStepsCompleted && !welcomeDismissed) {
+      setWelcomeDismissed(true);
+      localStorage.setItem('growth-os-welcome-dismissed', 'true');
+    }
+  }, [allStepsCompleted, welcomeDismissed]);
+
+  const handleDismissWelcome = () => {
+    setWelcomeDismissed(true);
+    localStorage.setItem('growth-os-welcome-dismissed', 'true');
+  };
 
   if (!mounted) {
     return (
@@ -261,6 +341,119 @@ export default function Dashboard() {
           ))}
         </div>
       </div>
+
+      {/* Getting Started Welcome Widget */}
+      {!welcomeDismissed && !allStepsCompleted && (
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm p-6 mb-8 border border-slate-100 dark:border-slate-700 transition-all">
+          {/* Header */}
+          <div className="flex items-start justify-between gap-4 mb-4">
+            <div className="flex-1">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-8 h-8 bg-[#2C3E50] rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Rocket className="w-5 h-5 text-[#27AE60]" />
+                </div>
+                <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
+                  Welcome to GrowthOS!
+                </h2>
+              </div>
+              <p className="text-sm text-slate-600 dark:text-slate-400">
+                Complete these steps to get the most out of your CRM.
+              </p>
+            </div>
+            <div className="flex gap-2 flex-shrink-0">
+              <button
+                onClick={() => setIsWelcomeExpanded(!isWelcomeExpanded)}
+                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors text-slate-600 dark:text-slate-400"
+                aria-label="Toggle welcome widget"
+              >
+                <ChevronDown
+                  className={`w-5 h-5 transition-transform ${isWelcomeExpanded ? '' : '-rotate-90'}`}
+                />
+              </button>
+              <button
+                onClick={handleDismissWelcome}
+                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                aria-label="Dismiss welcome widget"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+
+          {/* Expanded Content */}
+          {isWelcomeExpanded && (
+            <>
+              {/* Progress Bar */}
+              <div className="mb-6">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-xs font-semibold text-slate-600 dark:text-slate-400">
+                    PROGRESS
+                  </span>
+                  <span className="text-sm font-bold text-[#27AE60]">
+                    {completedSteps} of {onboardingSteps.length}
+                  </span>
+                </div>
+                <div className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-gradient-to-r from-[#27AE60] to-[#229954] transition-all duration-500"
+                    style={{ width: `${completionPercentage}%` }}
+                  />
+                </div>
+              </div>
+
+              {/* Checklist Items */}
+              <div className="space-y-3">
+                {onboardingSteps.map((step) => {
+                  const IconComponent = step.icon;
+                  return (
+                    <Link
+                      key={step.id}
+                      href={step.href}
+                      className={`flex items-start gap-4 p-4 rounded-lg border-2 transition-all ${
+                        step.completed
+                          ? 'bg-green-50 dark:bg-green-950/20 border-[#27AE60] dark:border-green-700'
+                          : 'bg-slate-50 dark:bg-slate-700/50 border-slate-200 dark:border-slate-600 hover:border-[#27AE60] dark:hover:border-[#27AE60]'
+                      }`}
+                    >
+                      {/* Checkbox */}
+                      <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 mt-0.5 ${
+                        step.completed
+                          ? 'bg-[#27AE60] border-[#27AE60]'
+                          : 'border-slate-300 dark:border-slate-500'
+                      }`}>
+                        {step.completed && (
+                          <Check className="w-4 h-4 text-white" />
+                        )}
+                      </div>
+
+                      {/* Content */}
+                      <div className="flex-1 min-w-0">
+                        <h3 className={`font-semibold text-sm sm:text-base ${
+                          step.completed
+                            ? 'text-[#27AE60] line-through'
+                            : 'text-slate-900 dark:text-white'
+                        }`}>
+                          {step.title}
+                        </h3>
+                        <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1">
+                          {step.description}
+                        </p>
+                      </div>
+
+                      {/* Action Arrow */}
+                      {!step.completed && (
+                        <div className="text-[#27AE60] flex-shrink-0 mt-0.5">
+                          <ArrowRight className="w-5 h-5" />
+                        </div>
+                      )}
+                    </Link>
+                  );
+                })}
+              </div>
+            </>
+          )}
+        </div>
+      )}
 
       {/* Onboarding Banner */}
       <div className="bg-[#2C3E50] rounded-2xl p-6 mb-8 text-white relative overflow-hidden">

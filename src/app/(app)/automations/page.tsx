@@ -2,11 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import { useLanguage } from '@/components/LanguageProvider';
+import { useStore } from '@/store';
 import {
   Zap, Play, Pause, Clock, Mail, MessageSquare, Star, DollarSign,
   Users, Calendar, ChevronRight, CheckCircle2, ArrowRight, Shield,
   Sparkles, TrendingUp, RotateCcw, Sun, Snowflake, Bell, Settings,
-  Copy, Eye, ToggleLeft, Lightbulb, Target, Heart, Phone, AlertCircle
+  Copy, Eye, ToggleLeft, Lightbulb, Target, Heart, Phone, AlertCircle,
+  X, Filter, Trash2
 } from 'lucide-react';
 
 // ============================================================
@@ -393,24 +395,210 @@ const StepIcon = ({ icon, type }: { icon: string; type: string }) => {
 };
 
 // ============================================================
+// HELPER: Get relative time
+// ============================================================
+
+const getRelativeTime = (timestamp: number): string => {
+  const seconds = Math.floor((Date.now() - timestamp) / 1000);
+  if (seconds < 60) return 'just now';
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `${minutes}m ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.floor(hours / 24);
+  return `${days}d ago`;
+};
+
+// ============================================================
 // MAIN COMPONENT
 // ============================================================
 
 export default function AutomationsPage() {
   const { t } = useLanguage();
+  const store = useStore() as any;
   const [mounted, setMounted] = useState(false);
   const [activeCategory, setActiveCategory] = useState<PlaybookCategory>('all');
-  const [playbooks, setPlaybooks] = useState<Playbook[]>(PLAYBOOKS);
   const [expandedPlaybook, setExpandedPlaybook] = useState<string | null>(null);
   const [previewTemplate, setPreviewTemplate] = useState<TemplatePreview | null>(null);
-  const [notifyEmail, setNotifyEmail] = useState('');
-  const [notifySubmitted, setNotifySubmitted] = useState(false);
+  const [activityFilter, setActivityFilter] = useState<string | null>(null);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
   if (!mounted) return <div className="p-8">{t('common.loading')}</div>;
+
+  // Helper function to simulate playbook actions
+  const simulatePlaybookActions = (playbookId: string, playbookName: string) => {
+    const contacts = store.contacts || [];
+    const deals = store.deals || [];
+    const estimates = store.estimates || [];
+    const invoices = store.invoices || [];
+
+    switch (playbookId) {
+      case 'speed-to-lead': {
+        // For each lead contact, simulate SMS and email
+        const leads = contacts.filter((c: any) => c.type === 'lead');
+        leads.forEach((lead: any) => {
+          store.addSimulatedAction({
+            playbookId,
+            playbookName,
+            type: 'sms',
+            recipientName: lead.name,
+            recipientContact: lead.phone,
+            message: `Hi ${lead.name.split(' ')[0]}, thanks for reaching out! We got your request and someone will call you within the hour.`,
+            status: 'sent',
+          });
+          store.addSimulatedAction({
+            playbookId,
+            playbookName,
+            type: 'email',
+            recipientName: lead.name,
+            recipientContact: lead.email,
+            subject: 'We Got Your Request!',
+            message: `Thank you for contacting ProPlumbers. We received your request and we're excited to help. A team member will call you within the hour.`,
+            status: 'sent',
+          });
+        });
+        break;
+      }
+      case 'estimate-follow-up': {
+        // For each estimate with status 'sent', simulate follow-up SMS
+        const sentEstimates = estimates.filter((e: any) => e.status === 'sent');
+        sentEstimates.forEach((est: any) => {
+          const contact = contacts.find((c: any) => c.id === est.contactId);
+          if (contact) {
+            store.addSimulatedAction({
+              playbookId,
+              playbookName,
+              type: 'sms',
+              recipientName: contact.name,
+              recipientContact: contact.phone,
+              message: `Hey ${contact.name.split(' ')[0]}, just checking in — did you get a chance to look over the estimate we sent? Happy to answer any questions!`,
+              status: 'sent',
+            });
+          }
+        });
+        break;
+      }
+      case 'review-machine': {
+        // For each deal with stage 'completed', simulate review request SMS
+        const completedDeals = deals.filter((d: any) => d.stage === 'completed');
+        completedDeals.forEach((deal: any) => {
+          const contact = contacts.find((c: any) => c.id === deal.contactId);
+          if (contact) {
+            store.addSimulatedAction({
+              playbookId,
+              playbookName,
+              type: 'sms',
+              recipientName: contact.name,
+              recipientContact: contact.phone,
+              message: `Hi ${contact.name.split(' ')[0]}! Thanks for choosing ProPlumbers. If we did a great job, we'd really appreciate a quick Google review!`,
+              status: 'sent',
+            });
+          }
+        });
+        break;
+      }
+      case 'payment-chaser': {
+        // For each invoice with status 'sent' or 'overdue', simulate payment reminder
+        const unpaidInvoices = invoices.filter((i: any) => i.status === 'sent' || i.status === 'overdue');
+        unpaidInvoices.forEach((inv: any) => {
+          const contact = contacts.find((c: any) => c.id === inv.contactId);
+          if (contact) {
+            store.addSimulatedAction({
+              playbookId,
+              playbookName,
+              type: 'sms',
+              recipientName: contact.name,
+              recipientContact: contact.phone,
+              message: `Hi ${contact.name.split(' ')[0]}, friendly reminder that your invoice #${inv.number} for $${inv.amount} is due. You can pay securely online. — ProPlumbers`,
+              status: 'sent',
+            });
+          }
+        });
+        break;
+      }
+      case 'appointment-reminders': {
+        // For each deal with stage 'booked', simulate confirmation email
+        const bookedDeals = deals.filter((d: any) => d.stage === 'booked');
+        bookedDeals.forEach((deal: any) => {
+          const contact = contacts.find((c: any) => c.id === deal.contactId);
+          if (contact) {
+            store.addSimulatedAction({
+              playbookId,
+              playbookName,
+              type: 'email',
+              recipientName: contact.name,
+              recipientContact: contact.email,
+              subject: 'Your appointment is confirmed!',
+              message: `Hi ${contact.name.split(' ')[0]}, your appointment is confirmed. A team member will be at your address soon. What to expect: technician will call when 15 minutes away.`,
+              status: 'sent',
+            });
+          }
+        });
+        break;
+      }
+      case 'reactivation-engine': {
+        // For contacts not linked to any recent deals, simulate reactivation email
+        const contactsWithDeals = new Set(deals.map((d: any) => d.contactId));
+        const inactiveContacts = contacts.filter((c: any) => !contactsWithDeals.has(c.id));
+        inactiveContacts.forEach((contact: any) => {
+          store.addSimulatedAction({
+            playbookId,
+            playbookName,
+            type: 'email',
+            recipientName: contact.name,
+            recipientContact: contact.email,
+            subject: 'It\'s been a while, ' + contact.name.split(' ')[0] + '!',
+            message: `Hi ${contact.name.split(' ')[0]}, it's been a while since we last worked together. As a valued past customer, we'd love to offer you 10% off your next service. Check out our seasonal specials!`,
+            status: 'sent',
+          });
+        });
+        break;
+      }
+      case 'referral-program': {
+        // For recently completed deals, simulate referral ask SMS
+        const recentlyCompletedDeals = deals.filter((d: any) => d.stage === 'completed');
+        recentlyCompletedDeals.forEach((deal: any) => {
+          const contact = contacts.find((c: any) => c.id === deal.contactId);
+          if (contact) {
+            store.addSimulatedAction({
+              playbookId,
+              playbookName,
+              type: 'sms',
+              recipientName: contact.name,
+              recipientContact: contact.phone,
+              message: `Thanks for the awesome review, ${contact.name.split(' ')[0]}! Know any neighbors or friends who need plumbing? Send them our way and you BOTH get $50 off!`,
+              status: 'sent',
+            });
+          }
+        });
+        break;
+      }
+    }
+  };
+
+  const togglePlaybook = (id: string) => {
+    const isActive = store.activePlaybooks?.[id]?.isActive ?? false;
+    store.togglePlaybook(id);
+    // Simulate actions when toggling ON
+    if (!isActive) {
+      const playbook = PLAYBOOKS.find(p => p.id === id);
+      if (playbook) {
+        simulatePlaybookActions(id, playbook.name);
+      }
+    }
+  };
+
+  const activateAll = () => {
+    store.activateAllPlaybooks();
+    // Simulate actions for all non-premium playbooks
+    const nonPremium = PLAYBOOKS.filter(p => !p.isPremium);
+    nonPremium.forEach(p => {
+      simulatePlaybookActions(p.id, p.name);
+    });
+  };
 
   const categories: { id: PlaybookCategory; label: string; icon: React.ReactNode }[] = [
     { id: 'all', label: t('automations.allPlaybooks'), icon: <Sparkles className="w-4 h-4" /> },
@@ -421,70 +609,34 @@ export default function AutomationsPage() {
   ];
 
   const filtered = activeCategory === 'all'
-    ? playbooks
-    : playbooks.filter((p) => p.category === activeCategory);
+    ? PLAYBOOKS
+    : PLAYBOOKS.filter((p) => p.category === activeCategory);
 
-  const activeCount = playbooks.filter((p) => p.isActive).length;
-  const totalImpact = playbooks.filter((p) => p.isActive).length > 0
-    ? '+$19,400/mo potential'
-    : 'Activate playbooks to see impact';
-
-  const togglePlaybook = (id: string) => {
-    setPlaybooks((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, isActive: !p.isActive } : p))
-    );
-  };
-
-  const activateAll = () => {
-    setPlaybooks((prev) => prev.map((p) => ({ ...p, isActive: !p.isPremium ? true : p.isActive })));
-  };
-
-  const handleNotifySubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (notifyEmail.trim()) {
-      setNotifySubmitted(true);
-      setNotifyEmail('');
-      setTimeout(() => setNotifySubmitted(false), 4000);
-    }
-  };
+  const activePlaybookIds = store.getActivePlaybookIds?.() ?? [];
+  const activeCount = activePlaybookIds.length;
+  const simulatedActions = store.getSimulatedActions?.() ?? [];
+  const filteredActions = activityFilter
+    ? simulatedActions.filter((a: any) => a.playbookId === activityFilter)
+    : simulatedActions;
 
   return (
     <div className="p-4 sm:p-8 bg-slate-50 dark:bg-slate-950 min-h-screen">
-      {/* Coming Soon Banner */}
-      <div className="mb-8 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 border border-amber-200 dark:border-amber-800 rounded-2xl p-6 flex items-start gap-4">
-        <div className="shrink-0 mt-1">
-          <AlertCircle className="w-5 h-5 text-amber-600 dark:text-amber-400" />
-        </div>
-        <div className="flex-1">
-          <h2 className="text-lg font-semibold text-amber-900 dark:text-amber-100 mb-1">
-            Autopilot Coming Soon
-          </h2>
-          <p className="text-sm text-amber-800 dark:text-amber-200 mb-4">
-            These playbooks are being prepared for launch and will be fully functional in Q2 2026. Check out the workflows below to see what's coming!
-          </p>
-          <form onSubmit={handleNotifySubmit} className="flex gap-2">
-            <input
-              type="email"
-              placeholder="your@email.com"
-              value={notifyEmail}
-              onChange={(e) => setNotifyEmail(e.target.value)}
-              className="flex-1 px-4 py-2 rounded-lg border border-amber-300 dark:border-amber-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
-              required
-            />
-            <button
-              type="submit"
-              className="px-4 py-2 bg-amber-600 hover:bg-amber-700 dark:bg-amber-700 dark:hover:bg-amber-600 text-white rounded-lg font-medium text-sm transition-colors"
-            >
-              Notify Me
-            </button>
-          </form>
-          {notifySubmitted && (
-            <p className="text-xs text-emerald-600 dark:text-emerald-400 mt-2 font-medium">
-              ✓ Thanks! We'll notify you when Autopilot launches.
+      {/* Autopilot Status Bar */}
+      {activeCount > 0 && (
+        <div className="mb-8 bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 border border-emerald-200 dark:border-emerald-800 rounded-2xl p-6 flex items-start gap-4">
+          <div className="shrink-0 mt-1">
+            <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+          </div>
+          <div className="flex-1">
+            <h2 className="text-lg font-semibold text-emerald-900 dark:text-emerald-100 mb-1">
+              Autopilot Active
+            </h2>
+            <p className="text-sm text-emerald-800 dark:text-emerald-200">
+              {activeCount} playbook{activeCount !== 1 ? 's' : ''} running. {simulatedActions.length} action{simulatedActions.length !== 1 ? 's' : ''} simulated in this session.
             </p>
-          )}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Header */}
       <div className="mb-8">
@@ -500,17 +652,17 @@ export default function AutomationsPage() {
       </div>
 
       {/* Impact Banner */}
-      <div className="bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-4 sm:p-8 mb-6 sm:mb-8 text-white relative overflow-hidden opacity-75">
+      <div className="bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-4 sm:p-8 mb-6 sm:mb-8 text-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <div className="relative">
           <div className="flex items-center justify-between flex-wrap gap-6">
             <div>
               <p className="text-slate-400 text-sm font-medium mb-1">{t('automations.status')}</p>
               <div className="flex items-center gap-4">
-                <div className="text-3xl sm:text-4xl font-bold text-slate-500">{activeCount} / {playbooks.length}</div>
+                <div className="text-3xl sm:text-4xl font-bold">{activeCount} / {PLAYBOOKS.length}</div>
                 <div className="text-slate-400">
                   <p className="text-sm">{t('automations.playbooksActive')}</p>
-                  <p className="text-slate-500 text-sm font-medium">Launching Q2 2026</p>
+                  <p className="text-slate-500 text-sm font-medium">{activeCount > 0 ? `${simulatedActions.length} actions simulated` : 'Activate playbooks to get started'}</p>
                 </div>
               </div>
             </div>
@@ -519,10 +671,10 @@ export default function AutomationsPage() {
           {/* Quick Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
             {[
-              { label: t('automations.emailsPerMonth'), value: '~240', icon: <Mail className="w-4 h-4" /> },
-              { label: t('automations.textsPerMonth'), value: '~180', icon: <MessageSquare className="w-4 h-4" /> },
-              { label: t('automations.hoursSavedPerMonth'), value: '47', icon: <Clock className="w-4 h-4" /> },
-              { label: t('automations.estRevenueImpact'), value: '+$19.4K', icon: <TrendingUp className="w-4 h-4" /> },
+              { label: t('automations.emailsPerMonth'), value: simulatedActions.filter((a: any) => a.type === 'email').length.toString(), icon: <Mail className="w-4 h-4" /> },
+              { label: t('automations.textsPerMonth'), value: simulatedActions.filter((a: any) => a.type === 'sms').length.toString(), icon: <MessageSquare className="w-4 h-4" /> },
+              { label: t('automations.hoursSavedPerMonth'), value: (simulatedActions.length * 5).toString(), icon: <Clock className="w-4 h-4" /> },
+              { label: t('automations.estRevenueImpact'), value: `+$${activeCount > 0 ? (activeCount * 2900) : 0}`, icon: <TrendingUp className="w-4 h-4" /> },
             ].map((stat) => (
               <div key={stat.label} className="bg-white/5 rounded-xl p-4 border border-white/10">
                 <div className="flex items-center gap-2 text-slate-400 text-xs mb-2">
@@ -571,20 +723,20 @@ export default function AutomationsPage() {
       <div className="space-y-4">
         {filtered.map((playbook) => {
           const isExpanded = expandedPlaybook === playbook.id;
+          const isActive = store.activePlaybooks?.[playbook.id]?.isActive ?? false;
           return (
             <div
               key={playbook.id}
-              className={`bg-white dark:bg-slate-800 rounded-2xl border transition-all relative overflow-hidden opacity-90 ${
-                'border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md'
+              className={`bg-white dark:bg-slate-800 rounded-2xl border transition-all relative overflow-hidden ${
+                isActive
+                  ? 'border-emerald-300 dark:border-emerald-700 shadow-lg shadow-emerald-500/10 dark:shadow-emerald-500/5'
+                  : 'border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md'
               }`}
             >
-              {/* Available in Q2 2026 overlay */}
-              <div className="absolute top-4 right-4 z-10">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 border border-amber-300 dark:border-amber-700">
-                  <Clock className="w-3 h-3" />
-                  Q2 2026
-                </span>
-              </div>
+              {isActive && (
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-400 to-teal-400" />
+              )}
+
               {/* Playbook Header */}
               <div className="p-6">
                 <div className="flex items-start justify-between gap-4">
@@ -600,6 +752,11 @@ export default function AutomationsPage() {
                       {playbook.isPremium && (
                         <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-gradient-to-r from-amber-100 dark:from-amber-900 to-yellow-100 dark:to-yellow-900 text-amber-700 dark:text-amber-300">
                           Pro
+                        </span>
+                      )}
+                      {isActive && (
+                        <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700">
+                          Active
                         </span>
                       )}
                     </div>
@@ -620,30 +777,39 @@ export default function AutomationsPage() {
                   <div className="flex items-center gap-3 shrink-0">
                     <button
                       onClick={() => setExpandedPlaybook(isExpanded ? null : playbook.id)}
-                      className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
-                      disabled
-                      title="Available when Autopilot launches"
+                      className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition"
                     >
                       <Eye className="w-4 h-4" />
                       Preview
                     </button>
                     <button
                       onClick={() => togglePlaybook(playbook.id)}
-                      disabled
-                      title="Available when Autopilot launches"
-                      className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all bg-slate-300 dark:bg-slate-600 text-slate-500 dark:text-slate-400 cursor-not-allowed opacity-60`}
+                      className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all ${
+                        isActive
+                          ? 'bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-600 dark:hover:bg-emerald-700 text-white'
+                          : 'bg-slate-900 dark:bg-slate-700 hover:bg-slate-800 dark:hover:bg-slate-600 text-white'
+                      }`}
                     >
-                      <Play className="w-4 h-4" />
-                      Activate
+                      {isActive ? (
+                        <>
+                          <Pause className="w-4 h-4" />
+                          Pause
+                        </>
+                      ) : (
+                        <>
+                          <Play className="w-4 h-4" />
+                          Activate
+                        </>
+                      )}
                     </button>
                   </div>
                 </div>
               </div>
 
-              {/* Greyed out workflow steps preview */}
+              {/* Workflow steps preview */}
               <div className="border-t border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/30 px-6 py-4">
                 <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mb-3">Workflow Preview:</p>
-                <div className="flex items-center gap-2 flex-wrap opacity-60">
+                <div className="flex items-center gap-2 flex-wrap">
                   {playbook.steps.slice(0, 4).map((step, i) => (
                     <div key={i} className="flex items-center gap-1">
                       <div className="w-6 h-6 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs text-slate-500">
@@ -657,27 +823,186 @@ export default function AutomationsPage() {
                   )}
                 </div>
               </div>
+
+              {/* Template Preview Modal - shown when expanded */}
+              {isExpanded && (
+                <div className="border-t border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-900 px-6 py-6">
+                  <h4 className="font-semibold text-slate-900 dark:text-white mb-4">Message Templates</h4>
+                  <div className="space-y-4">
+                    {playbook.templates.map((template, idx) => (
+                      <div key={idx} className="bg-slate-50 dark:bg-slate-800 rounded-lg p-4 border border-slate-200 dark:border-slate-700">
+                        <div className="flex items-center gap-2 mb-2">
+                          {template.type === 'email' ? (
+                            <Mail className="w-4 h-4 text-blue-600" />
+                          ) : (
+                            <MessageSquare className="w-4 h-4 text-emerald-600" />
+                          )}
+                          <span className="text-sm font-semibold text-slate-900 dark:text-white">{template.name}</span>
+                          <span className="px-2 py-0.5 rounded text-xs font-medium bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300">
+                            {template.type.toUpperCase()}
+                          </span>
+                        </div>
+                        {template.subject && (
+                          <div className="mb-2">
+                            <p className="text-xs text-slate-500 dark:text-slate-400">Subject:</p>
+                            <p className="text-sm text-slate-700 dark:text-slate-300">{template.subject}</p>
+                          </div>
+                        )}
+                        <div>
+                          <p className="text-xs text-slate-500 dark:text-slate-400">Message:</p>
+                          <p className="text-sm text-slate-700 dark:text-slate-300 whitespace-pre-wrap">{template.body}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           );
         })}
       </div>
 
-      {/* Bottom CTA */}
-      <div className="mt-12 text-center">
-        <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-2xl border border-blue-200 dark:border-blue-800 p-8 max-w-2xl mx-auto">
-          <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-xl flex items-center justify-center mx-auto mb-4">
-            <Sparkles className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+      {/* Automation Activity Log */}
+      <div className="mt-12 mb-12">
+        <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+          {/* Header */}
+          <div className="p-6 border-b border-slate-200 dark:border-slate-700">
+            <div className="flex items-center justify-between gap-4 flex-wrap">
+              <div>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white">Automation Activity Log</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+                  {filteredActions.length} simulated action{filteredActions.length !== 1 ? 's' : ''}
+                </p>
+              </div>
+              <div className="flex items-center gap-2 flex-wrap">
+                {/* Filter Dropdown */}
+                <div className="relative inline-block">
+                  <select
+                    value={activityFilter ?? ''}
+                    onChange={(e) => setActivityFilter(e.target.value || null)}
+                    className="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500 appearance-none pr-8"
+                  >
+                    <option value="">All Playbooks</option>
+                    {PLAYBOOKS.filter(p => store.activePlaybooks?.[p.id]?.isActive).map(p => (
+                      <option key={p.id} value={p.id}>{p.name}</option>
+                    ))}
+                  </select>
+                  <Filter className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-600 dark:text-slate-400 pointer-events-none" />
+                </div>
+                {/* Clear Button */}
+                <button
+                  onClick={() => store.clearSimulatedActions?.()}
+                  disabled={simulatedActions.length === 0}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                    simulatedActions.length === 0
+                      ? 'bg-slate-100 dark:bg-slate-700 text-slate-400 dark:text-slate-500 cursor-not-allowed'
+                      : 'bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300'
+                  }`}
+                  title="Clear all simulated actions"
+                >
+                  <Trash2 className="w-4 h-4" />
+                  Clear
+                </button>
+              </div>
+            </div>
           </div>
-          <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Custom Playbooks Coming Soon</h3>
-          <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">
-            Build your own automation from scratch using our visual workflow builder.
-            Combine triggers, conditions, and actions to create the perfect sequence for your business.
-          </p>
-          <button disabled className="px-6 py-3 bg-slate-300 dark:bg-slate-600 text-slate-500 dark:text-slate-400 rounded-xl font-semibold cursor-not-allowed opacity-60">
-            Build Custom Playbook (Q2 2026)
-          </button>
+
+          {/* Activity Feed */}
+          <div className="max-h-96 overflow-y-auto">
+            {filteredActions.length === 0 ? (
+              <div className="p-8 text-center">
+                <Bell className="w-12 h-12 text-slate-300 dark:text-slate-600 mx-auto mb-3 opacity-50" />
+                <p className="text-slate-600 dark:text-slate-400 text-sm font-medium">
+                  No automation activity yet. Activate a playbook to see simulated actions.
+                </p>
+              </div>
+            ) : (
+              <div className="divide-y divide-slate-100 dark:divide-slate-700">
+                {filteredActions.map((action: any) => {
+                  const playbook = PLAYBOOKS.find(p => p.id === action.playbookId);
+                  const categoryColors: Record<string, string> = {
+                    lead_capture: 'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300',
+                    follow_up: 'bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300',
+                    retention: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300',
+                    revenue: 'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300',
+                  };
+                  const categoryColor = playbook ? categoryColors[playbook.category as PlaybookCategory] : '';
+                  return (
+                    <div key={action.id} className="p-4 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors flex items-start gap-4">
+                      {/* Type Icon */}
+                      <div className="shrink-0 mt-0.5">
+                        {action.type === 'email' ? (
+                          <div className="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+                            <Mail className="w-4 h-4" />
+                          </div>
+                        ) : action.type === 'sms' ? (
+                          <div className="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+                            <MessageSquare className="w-4 h-4" />
+                          </div>
+                        ) : (
+                          <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400 flex items-center justify-center">
+                            <Bell className="w-4 h-4" />
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Content */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap mb-1">
+                          <span className={`px-2 py-0.5 rounded text-xs font-semibold ${categoryColor}`}>
+                            {playbook?.name}
+                          </span>
+                          <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium ${
+                            action.status === 'sent'
+                              ? 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300'
+                              : 'bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300'
+                          }`}>
+                            <CheckCircle2 className="w-3 h-3" />
+                            {action.status.charAt(0).toUpperCase() + action.status.slice(1)}
+                          </span>
+                        </div>
+                        <p className="text-sm font-medium text-slate-900 dark:text-white mb-1">
+                          To: {action.recipientName}
+                        </p>
+                        <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-2 mb-2">
+                          {action.message.length > 80
+                            ? action.message.substring(0, 80) + '...'
+                            : action.message}
+                        </p>
+                        <p className="text-xs text-slate-500 dark:text-slate-400">
+                          {getRelativeTime(action.triggeredAt)}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
         </div>
       </div>
+
+      {/* Activate All CTA */}
+      {activeCount === 0 && (
+        <div className="text-center">
+          <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-2xl border border-blue-200 dark:border-blue-800 p-8 max-w-2xl mx-auto">
+            <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <Zap className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+            </div>
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Get Started with Autopilot</h3>
+            <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">
+              Activate your first playbook to start automating your business workflows.
+              Watch simulated actions appear in the activity log below.
+            </p>
+            <button
+              onClick={activateAll}
+              className="px-6 py-3 bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 text-white rounded-xl font-semibold transition-colors"
+            >
+              Activate All Free Playbooks
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

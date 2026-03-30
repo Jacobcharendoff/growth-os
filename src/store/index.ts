@@ -38,6 +38,25 @@ interface AppNotification {
   linkTo?: string;
 }
 
+interface AutomationPlaybook {
+  id: string;
+  isActive: boolean;
+  activatedAt?: number;
+}
+
+interface SimulatedAction {
+  id: string;
+  playbookId: string;
+  playbookName: string;
+  type: 'email' | 'sms' | 'notification';
+  recipientName: string;
+  recipientContact?: string;
+  subject?: string;
+  message: string;
+  triggeredAt: number;
+  status: 'sent' | 'pending' | 'scheduled';
+}
+
 interface GrowthOSStore {
   contacts: Contact[];
   deals: Deal[];
@@ -89,6 +108,17 @@ interface GrowthOSStore {
   markNotificationRead: (id: string) => void;
   markAllNotificationsRead: () => void;
   getUnreadCount: () => number;
+
+  // Automation playbook operations
+  activePlaybooks: Record<string, AutomationPlaybook>;
+  simulatedActions: SimulatedAction[];
+  togglePlaybook: (id: string) => void;
+  activateAllPlaybooks: () => void;
+  deactivateAllPlaybooks: () => void;
+  getActivePlaybookIds: () => string[];
+  addSimulatedAction: (action: Omit<SimulatedAction, 'id' | 'triggeredAt'>) => void;
+  getSimulatedActions: (playbookId?: string) => SimulatedAction[];
+  clearSimulatedActions: () => void;
 
   // Initialize seed data
   initializeSeedData: () => void;
@@ -445,6 +475,8 @@ export const useStore = create<GrowthOSStore>()(
       invoices: [],
       settings: DEFAULT_SETTINGS,
       notifications: [],
+      activePlaybooks: {},
+      simulatedActions: [],
 
       // Contact operations
       addContact: (contact) =>
@@ -686,6 +718,68 @@ export const useStore = create<GrowthOSStore>()(
       getUnreadCount: () =>
         get().notifications.filter((n) => !n.read).length,
 
+      // Automation playbook operations
+      togglePlaybook: (id) =>
+        set((state) => ({
+          activePlaybooks: {
+            ...state.activePlaybooks,
+            [id]: {
+              id,
+              isActive: !state.activePlaybooks[id]?.isActive,
+              activatedAt: !state.activePlaybooks[id]?.isActive ? Date.now() : state.activePlaybooks[id]?.activatedAt,
+            },
+          },
+        })),
+
+      activateAllPlaybooks: () => {
+        const playbookIds = ['speed-to-lead', 'estimate-follow-up', 'review-machine', 'payment-chaser', 'appointment-reminders', 'reactivation-engine', 'referral-program'];
+        const newPlaybooks: Record<string, AutomationPlaybook> = {};
+        playbookIds.forEach((id) => {
+          newPlaybooks[id] = { id, isActive: true, activatedAt: Date.now() };
+        });
+        set((state) => ({
+          activePlaybooks: { ...state.activePlaybooks, ...newPlaybooks },
+        }));
+      },
+
+      deactivateAllPlaybooks: () =>
+        set((state) => {
+          const updated: Record<string, AutomationPlaybook> = {};
+          Object.keys(state.activePlaybooks).forEach((key) => {
+            updated[key] = { ...state.activePlaybooks[key], isActive: false };
+          });
+          return { activePlaybooks: updated };
+        }),
+
+      getActivePlaybookIds: () =>
+        Object.values(get().activePlaybooks)
+          .filter((pb) => pb.isActive)
+          .map((pb) => pb.id),
+
+      addSimulatedAction: (action) =>
+        set((state) => ({
+          simulatedActions: [
+            {
+              id: generateId(),
+              triggeredAt: Date.now(),
+              ...action,
+            },
+            ...state.simulatedActions,
+          ],
+        })),
+
+      getSimulatedActions: (playbookId) => {
+        const actions = playbookId
+          ? get().simulatedActions.filter((a) => a.playbookId === playbookId)
+          : get().simulatedActions;
+        return actions.sort((a, b) => b.triggeredAt - a.triggeredAt);
+      },
+
+      clearSimulatedActions: () =>
+        set(() => ({
+          simulatedActions: [],
+        })),
+
       // Seed data
       initializeSeedData: () => {
         const state = get();
@@ -801,7 +895,7 @@ export const useStore = create<GrowthOSStore>()(
     }),
     {
       name: 'growth-os-storage',
-      version: 4,
+      version: 5,
       migrate: () => ({
         contacts: [],
         deals: [],
@@ -810,6 +904,8 @@ export const useStore = create<GrowthOSStore>()(
         invoices: [],
         settings: DEFAULT_SETTINGS,
         notifications: [],
+        activePlaybooks: {},
+        simulatedActions: [],
       }),
     }
   )

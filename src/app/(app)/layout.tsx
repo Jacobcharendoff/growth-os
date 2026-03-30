@@ -8,6 +8,7 @@ import { ToastProvider } from '@/components/ToastProvider';
 import AppHeader from '@/components/AppHeader';
 import { QuickAdd } from '@/components/QuickAdd';
 import { KeyboardShortcuts } from '@/components/KeyboardShortcuts';
+import { DataSyncProvider } from '@/components/DataSyncProvider';
 import { Menu, Zap } from 'lucide-react';
 
 function AppContent({ children }: { children: React.ReactNode }) {
@@ -73,9 +74,11 @@ export default function AppLayout({
   return (
     <ThemeProvider>
       <AuthProvider>
-        <ToastProvider>
-          <AppContent>{children}</AppContent>
-        </ToastProvider>
+        <DataSyncProvider>
+          <ToastProvider>
+            <AppContent>{children}</AppContent>
+          </ToastProvider>
+        </DataSyncProvider>
       </AuthProvider>
     </ThemeProvider>
   );

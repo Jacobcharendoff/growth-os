@@ -299,18 +299,21 @@ export default function SetupPage() {
                           setSelectedProvince(prov.id);
                           if (errors.province) setErrors((prev) => ({ ...prev, province: '' }));
                         }}
-                        className={`p-3 rounded-lg border-2 transition-all text-sm font-semibold ${
+                        className={`p-3 rounded-lg border-2 transition-all text-left ${
                           isSelected
-                            ? `border-emerald-500 ${isDark ? 'bg-emerald-900/30' : 'bg-emerald-50'} text-emerald-600 dark:text-emerald-400`
-                            : `border-gray-200 dark:border-gray-700 ${isDark ? 'bg-gray-800 text-gray-200 hover:bg-gray-700' : 'bg-gray-50 text-gray-700 hover:bg-gray-100'}`
+                            ? `border-emerald-500 ${isDark ? 'bg-emerald-900/30' : 'bg-emerald-50'} ring-2 ring-emerald-500/50`
+                            : `border-gray-200 dark:border-gray-700 ${isDark ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-50 hover:bg-gray-100'}`
                         }`}
                       >
-                        {prov.id}
-                        {isSelected && (
-                          <div className={`text-xs mt-1 ${isDark ? 'text-emerald-300' : 'text-emerald-600'}`}>
-                            {prov.taxRate}% tax
-                          </div>
-                        )}
+                        <p className={`text-sm font-bold ${isSelected ? 'text-emerald-600 dark:text-emerald-400' : isDark ? 'text-gray-200' : 'text-gray-900'}`}>
+                          {prov.id}
+                        </p>
+                        <p className={`text-xs ${isSelected ? (isDark ? 'text-emerald-300' : 'text-emerald-600') : (isDark ? 'text-gray-500' : 'text-gray-400')}`}>
+                          {prov.label}
+                        </p>
+                        <p className={`text-xs mt-1 ${isSelected ? (isDark ? 'text-emerald-300' : 'text-emerald-600') : (isDark ? 'text-gray-500' : 'text-gray-400')}`}>
+                          {prov.taxRate}% tax
+                        </p>
                       </button>
                     );
                   })}
@@ -349,10 +352,10 @@ export default function SetupPage() {
                     isDark ? 'text-white' : 'text-gray-900'
                   }`}
                 >
-                  Your Superpowers
+                  Your Priorities
                 </h1>
                 <p className={`text-xl ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-                  What do you want GrowthOS to help with first?
+                  What should GrowthOS tackle first for your business?
                 </p>
               </div>
 
@@ -402,10 +405,13 @@ export default function SetupPage() {
               {/* Stat */}
               <div className={`p-6 rounded-xl ${isDark ? 'bg-gray-800' : 'bg-gray-100'}`}>
                 <p className={`text-center text-lg font-semibold ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>
-                  Businesses using GrowthOS see an average
+                  Service businesses using a CRM see an average
                   <span className="text-emerald-600 dark:text-emerald-400 block text-2xl mt-2">
                     47% increase in booked jobs
                   </span>
+                </p>
+                <p className={`text-center text-xs mt-2 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+                  Based on industry data from CRM-adopting service businesses in North America
                 </p>
               </div>
 

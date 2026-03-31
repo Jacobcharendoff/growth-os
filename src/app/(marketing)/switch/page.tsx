@@ -199,26 +199,51 @@ export default function WhyGrowthOSPage() {
         .hero-gradient-orb {
           position: absolute;
           border-radius: 50%;
-          filter: blur(60px);
-          opacity: 0.3;
+          filter: blur(80px);
+          opacity: 0.25;
         }
 
         .orb-1 {
-          width: 300px;
-          height: 300px;
-          background: linear-gradient(135deg, #27AE60, #229954);
-          top: 10%;
-          left: 10%;
+          width: 500px;
+          height: 500px;
+          background: radial-gradient(circle, rgba(39,174,96,0.4) 0%, rgba(34,153,84,0.1) 70%, transparent 100%);
+          top: -5%;
+          left: -5%;
           animation: float 20s ease-in-out infinite;
         }
 
         .orb-2 {
-          width: 250px;
-          height: 250px;
-          background: linear-gradient(135deg, #1e5e35, #27AE60);
-          bottom: 20%;
-          right: 10%;
+          width: 400px;
+          height: 400px;
+          background: radial-gradient(circle, rgba(16,185,129,0.3) 0%, rgba(5,150,105,0.1) 70%, transparent 100%);
+          bottom: -10%;
+          right: -5%;
           animation: float 25s ease-in-out infinite reverse;
+        }
+
+        .orb-3 {
+          width: 300px;
+          height: 300px;
+          background: radial-gradient(circle, rgba(56,189,248,0.15) 0%, transparent 70%);
+          top: 40%;
+          left: 50%;
+          transform: translateX(-50%);
+          animation: float 18s ease-in-out infinite 3s;
+        }
+
+        .hero-grid {
+          background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+          background-size: 60px 60px;
+        }
+
+        .hero-glow-line {
+          position: absolute;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, rgba(39,174,96,0.3), transparent);
+          width: 60%;
+          left: 20%;
+          bottom: 0;
         }
 
         @keyframes float {
@@ -258,12 +283,17 @@ export default function WhyGrowthOSPage() {
 
       <MarketingLayout>
         {/* SECTION 1: HERO */}
-        <section className="relative w-full overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900 to-slate-850 py-20 sm:py-32 px-4 sm:px-6 lg:px-8 pt-28">
+        <section className="relative w-full overflow-hidden bg-[#0a0f1a] py-20 sm:py-32 px-4 sm:px-6 lg:px-8 pt-28">
+          {/* Layered background */}
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-[#0c1220] to-[#0a1628]" />
+          <div className="absolute inset-0 hero-grid" />
           {/* Decorative gradient orbs */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <div className="hero-gradient-orb orb-1"></div>
             <div className="hero-gradient-orb orb-2"></div>
+            <div className="hero-gradient-orb orb-3"></div>
           </div>
+          <div className="hero-glow-line" />
 
           <div className="relative z-10 max-w-5xl mx-auto text-center">
             {/* Badge */}

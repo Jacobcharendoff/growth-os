@@ -182,10 +182,10 @@ export function ComparisonMatrix() {
           <table className="w-full">
             <thead>
               <tr>
-                <th className="text-left px-6 py-4 font-bold text-slate-900 bg-white sticky left-0 z-10 w-40">
+                <th className="text-left px-6 py-4 font-bold text-slate-900 bg-white sticky left-0 z-10 min-w-[180px]">
                   {t('compare.feature')}
                 </th>
-                <th className="text-center px-6 py-4 bg-gradient-to-b from-blue-50 to-blue-100/50 border-b-2 border-blue-200">
+                <th className="text-center px-6 py-4 bg-gradient-to-b from-blue-50 to-blue-100/50 border-b-2 border-blue-200 min-w-[140px]">
                   <div className="flex items-center justify-center gap-2 mb-2">
                     <span className="font-black text-slate-900 text-lg">GrowthOS</span>
                     <Crown className="w-5 h-5 text-blue-600" />
@@ -208,28 +208,24 @@ export function ComparisonMatrix() {
             <tbody>
               {categories.map((category) => {
                 const categoryRows = comparisonData.filter((row) => row.category === category.id);
-                return (
-                  <tbody key={category.id}>
-                    {categoryRows.map((row, idx) => (
-                      <tr
-                        key={`${category.id}-${idx}`}
-                        className={`border-b border-slate-200 hover:bg-slate-50/50 transition-colors ${
-                          row.highlight ? 'bg-blue-50/30' : ''
-                        }`}
-                      >
-                        <td className="px-6 py-4 font-medium text-slate-900 bg-white sticky left-0 z-10 w-40">
-                          {row.feature}
-                        </td>
-                        <td className="px-6 py-4 text-center bg-blue-50/50">
-                          {renderValue(row.growthOS)}
-                        </td>
-                        <td className="px-6 py-4 text-center text-slate-700">{renderValue(row.serviceTitan)}</td>
-                        <td className="px-6 py-4 text-center text-slate-700">{renderValue(row.jobber)}</td>
-                        <td className="px-6 py-4 text-center text-slate-700">{renderValue(row.housecallPro)}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                );
+                return categoryRows.map((row, idx) => (
+                  <tr
+                    key={`${category.id}-${idx}`}
+                    className={`border-b border-slate-200 hover:bg-slate-50/50 transition-colors ${
+                      row.highlight ? 'bg-blue-50/30' : ''
+                    }`}
+                  >
+                    <td className="px-6 py-4 font-medium text-slate-900 bg-white sticky left-0 z-10 min-w-[180px]">
+                      {row.feature}
+                    </td>
+                    <td className="px-6 py-4 text-center bg-blue-50/50 min-w-[140px]">
+                      {renderValue(row.growthOS)}
+                    </td>
+                    <td className="px-6 py-4 text-center text-slate-700 min-w-[140px]">{renderValue(row.serviceTitan)}</td>
+                    <td className="px-6 py-4 text-center text-slate-700 min-w-[120px]">{renderValue(row.jobber)}</td>
+                    <td className="px-6 py-4 text-center text-slate-700 min-w-[140px]">{renderValue(row.housecallPro)}</td>
+                  </tr>
+                ));
               })}
             </tbody>
           </table>

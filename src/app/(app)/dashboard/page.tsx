@@ -65,7 +65,7 @@ const RING_COLORS = {
 
 export default function Dashboard() {
   const { t } = useLanguage();
-  const { contacts, deals, activities, invoices, settings, initializeSeedData, getActivities } = useStore();
+  const { contacts, deals, activities, invoices, settings, initializeSeedData, getActivities, setupCompleted, clearSampleData, setSetupCompleted } = useStore();
   const [isAddDealOpen, setIsAddDealOpen] = useState(false);
   const [isFABExpanded, setIsFABExpanded] = useState(false);
   const [dateRange, setDateRange] = useState<'today' | 'week' | 'month' | 'quarter'>(
@@ -314,6 +314,28 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 p-4 md:p-8">
+      {/* Sample Data Banner */}
+      {!setupCompleted && contacts.length > 0 && (
+        <div className="mb-4 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <span className="text-amber-600 dark:text-amber-400 text-lg">&#9888;</span>
+            <div>
+              <p className="font-semibold text-amber-800 dark:text-amber-200 text-sm">You&apos;re viewing sample data</p>
+              <p className="text-amber-700 dark:text-amber-300 text-xs">This demo data helps you explore GrowthOS. Clear it when you&apos;re ready to add your own.</p>
+            </div>
+          </div>
+          <button
+            onClick={() => {
+              clearSampleData();
+              setSetupCompleted(true);
+            }}
+            className="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium rounded-lg transition-colors whitespace-nowrap"
+          >
+            Clear Sample Data
+          </button>
+        </div>
+      )}
+
       {/* Header with Date Range */}
       <div className="mb-6 sm:mb-8">
         <h1 className="text-2xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-2">{t('dashboard.title')}</h1>
@@ -465,7 +487,7 @@ export default function Dashboard() {
             </div>
             <div>
               <h3 className="text-lg font-bold">{t('dashboard.finishSetup')}</h3>
-              <p className="text-white/70 text-sm">Complete your setup to unlock the full power of autopilot. Takes about 15 minutes.</p>
+              <p className="text-white/70 text-sm">Complete your setup to unlock the full power of autopilot. Takes under 5 minutes.</p>
             </div>
           </div>
           <Link

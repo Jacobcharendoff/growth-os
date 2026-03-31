@@ -99,7 +99,7 @@ const EXAMPLE_CONTACT: SetupContact = {
 export default function SetupPage() {
   const router = useRouter();
   const { theme } = useTheme();
-  const { settings, updateSettings, addContact, addDeal } = useStore();
+  const { settings, updateSettings, addContact, addDeal, setSetupCompleted } = useStore();
   const isDark = theme === 'dark';
 
   const [step, setStep] = useState<StepName>('company');
@@ -307,6 +307,7 @@ export default function SetupPage() {
       companyProvince: province,
     });
     localStorage.setItem('growth-os-onboarded', 'true');
+    setSetupCompleted(true);
     router.push('/dashboard');
   };
 

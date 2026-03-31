@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useLanguage } from '@/components/LanguageProvider';
 import { useStore } from '@/store';
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd';
-import { Deal, PipelineStage, Contact, LeadSource, getLeadSourceRing } from '@/types';
+import { Deal, PipelineStage, Contact, LeadSource, getLeadSourceRing, getRingDisplayLabel } from '@/types';
 import { Modal } from '@/components/Modal';
 import { AddDealForm } from '@/components/AddDealForm';
 import { Plus, Search, X, Eye, List, Edit, Phone, MessageSquare, Trash2 } from 'lucide-react';
@@ -370,7 +370,7 @@ export default function PipelinePage() {
                       }`}
                       role="tab"
                       aria-selected={mobileSelectedStage === stage}
-                      aria-label={`${t(labelKey as any)} stage with ${count} jobs`}
+                      aria-label={`${t(labelKey as any)} stage with ${count} ${count === 1 ? 'job' : 'jobs'}`}
                     >
                       {t(labelKey as any)} ({count})
                     </button>
@@ -381,7 +381,7 @@ export default function PipelinePage() {
             {/* Mobile stage summary */}
             <div className="px-4 py-3 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
               <span className="text-sm font-semibold text-slate-900 dark:text-white">
-                {getStageMetrics(mobileSelectedStage).count} jobs
+                {getStageMetrics(mobileSelectedStage).count} {getStageMetrics(mobileSelectedStage).count === 1 ? 'job' : 'jobs'}
               </span>
               <span className="text-sm font-bold text-[#27AE60]">
                 ${getStageMetrics(mobileSelectedStage).value.toLocaleString()}
@@ -411,7 +411,7 @@ export default function PipelinePage() {
                       <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">{contact?.name} &middot; {deal.assignedTo}</p>
                       <div className="flex justify-between items-center">
                         <span className="font-bold text-slate-900 dark:text-white">${deal.value.toLocaleString()}</span>
-                        <span className="text-xs bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 px-2 py-0.5 rounded font-medium">{ring}</span>
+                        <span className="text-xs bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 px-2 py-0.5 rounded font-medium">{getRingDisplayLabel(ring)}</span>
                       </div>
                     </Link>
                   );
@@ -438,7 +438,7 @@ export default function PipelinePage() {
                         className={`flex-shrink-0 w-64 sm:w-80 rounded-lg border-2 transition-all ${color} ${
                           snapshot.isDraggingOver ? 'shadow-xl ring-2 ring-blue-400' : 'shadow'
                         }`}
-                        aria-label={`${label} column with ${metrics.count} jobs`}
+                        aria-label={`${label} column with ${metrics.count} ${metrics.count === 1 ? 'job' : 'jobs'}`}
                       >
                         {/* Column Header */}
                         <div className="sticky top-0 p-4 border-b border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 rounded-t-md">
@@ -453,7 +453,7 @@ export default function PipelinePage() {
                             </button>
                           </div>
                           <div className="flex justify-between text-xs">
-                            <span className="text-slate-600 dark:text-slate-400">{metrics.count} jobs</span>
+                            <span className="text-slate-600 dark:text-slate-400">{metrics.count} {metrics.count === 1 ? 'job' : 'jobs'}</span>
                             <span className="font-semibold text-slate-900 dark:text-white">
                               ${metrics.value.toLocaleString()}
                             </span>
@@ -495,7 +495,7 @@ export default function PipelinePage() {
                                         ${deal.value.toLocaleString()}
                                       </span>
                                       <span className="text-xs font-medium bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900 dark:to-pink-900 text-purple-700 dark:text-purple-300 px-2 py-1 rounded">
-                                        {ring}
+                                        {getRingDisplayLabel(ring)}
                                       </span>
                                     </div>
                                     <div className="text-xs text-slate-500 dark:text-slate-400 mb-3">
@@ -598,7 +598,7 @@ export default function PipelinePage() {
                     </td>
                     <td className="px-4 py-3">
                       <span className="text-xs bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 px-2 py-1 rounded font-medium">
-                        {ring}
+                        {getRingDisplayLabel(ring)}
                       </span>
                     </td>
                     <td className="px-4 py-3 text-slate-600 dark:text-slate-400">{deal.assignedTo}</td>

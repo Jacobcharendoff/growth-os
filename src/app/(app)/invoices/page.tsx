@@ -109,16 +109,19 @@ export default function InvoicesPage() {
       inv.number.toLowerCase().includes(searchTerm.toLowerCase()) ||
       inv.customerName.toLowerCase().includes(searchTerm.toLowerCase());
 
-    const matchesStatus = filterStatus === 'all' || inv.status === filterStatus;
+    const isOverdue = inv.status !== 'paid' && inv.dueDate < Date.now();
+    const matchesStatus = filterStatus === 'all'
+      || (filterStatus === 'overdue' ? isOverdue : inv.status === filterStatus);
 
     return matchesSearch && matchesStatus;
   });
 
-  // Calculate stats
-  const outstandingInvoices = invoices.filter((i) => i.status === 'sent' || i.status === 'viewed' || i.status === 'draft');
+  // Calculate stats — use date-based overdue detection (matches dashboard logic)
+  const now = Date.now();
+  const overdueInvoices = invoices.filter((i) => i.status !== 'paid' && i.dueDate < now);
+  const outstandingInvoices = invoices.filter((i) => (i.status === 'sent' || i.status === 'viewed' || i.status === 'draft') && i.dueDate >= now);
   const paidInvoices = invoices.filter((i) => i.status === 'paid');
-  const partialInvoices = invoices.filter((i) => i.status === 'partial');
-  const overdueInvoices = invoices.filter((i) => i.status === 'overdue');
+  const partialInvoices = invoices.filter((i) => i.status === 'partial' && i.dueDate >= now);
 
   const outstandingAmount = outstandingInvoices.reduce((sum, i) => sum + (i.total - i.amountPaid), 0);
   const paidThisMonth = paidInvoices
@@ -495,6 +498,7 @@ export default function InvoicesPage() {
           {(['all', 'draft', 'sent', 'paid', 'overdue', 'partial'] as const).map((status) => {
             let count = 0;
             if (status === 'all') count = invoices.length;
+            else if (status === 'overdue') count = overdueInvoices.length;
             else count = invoices.filter((i) => i.status === status).length;
 
             return (

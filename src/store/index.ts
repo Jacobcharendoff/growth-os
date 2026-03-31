@@ -121,8 +121,15 @@ interface GrowthOSStore {
   getSimulatedActions: (playbookId?: string) => SimulatedAction[];
   clearSimulatedActions: () => void;
 
+  // Setup state
+  setupCompleted: boolean;
+  setSetupCompleted: (completed: boolean) => void;
+
   // Initialize seed data
   initializeSeedData: () => void;
+
+  // Clear all sample/seed data (fresh start after setup)
+  clearSampleData: () => void;
 }
 
 const generateId = () => typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2, 11);
@@ -479,6 +486,7 @@ export const useStore = create<GrowthOSStore>()(
       notifications: [],
       activePlaybooks: {},
       simulatedActions: [],
+      setupCompleted: false,
 
       // Contact operations
       addContact: (contact) =>
@@ -894,6 +902,25 @@ export const useStore = create<GrowthOSStore>()(
           });
         });
       },
+
+      // Setup state
+      setSetupCompleted: (completed: boolean) =>
+        set(() => ({
+          setupCompleted: completed,
+        })),
+
+      // Clear all sample/seed data for a fresh start
+      clearSampleData: () =>
+        set(() => ({
+          contacts: [],
+          deals: [],
+          activities: [],
+          estimates: [],
+          invoices: [],
+          notifications: [],
+          activePlaybooks: {},
+          simulatedActions: [],
+        })),
     }),
     {
       name: 'growth-os-storage',

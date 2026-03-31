@@ -135,3 +135,20 @@ export function getLeadSourceRing(source: LeadSource): LeadSourceRing {
   if (ring2.includes(source)) return 'ring_2';
   return 'ring_3';
 }
+
+// Human-readable display labels for lead source rings
+export const RING_DISPLAY_LABELS: Record<LeadSourceRing, string> = {
+  ring_1: 'Ring 1',
+  ring_2: 'Ring 2',
+  ring_3: 'Ring 3',
+};
+
+export const RING_DISPLAY_SUBTITLES: Record<LeadSourceRing, string> = {
+  ring_1: 'Harvest',
+  ring_2: 'Amplify',
+  ring_3: 'Acquire',
+};
+
+export function getRingDisplayLabel(ring: LeadSourceRing): string {
+  return RING_DISPLAY_LABELS[ring];
+}

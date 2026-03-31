@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { Sidebar } from '@/components/Sidebar';
 import { ThemeProvider, useTheme } from '@/components/ThemeProvider';
 import { AuthProvider } from '@/components/AuthProvider';
@@ -15,6 +16,18 @@ function AppContent({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { theme } = useTheme();
   const isDark = theme === 'dark';
+  const pathname = usePathname();
+
+  // Full-screen pages that should render without sidebar/header (e.g. onboarding wizard)
+  const isFullScreenPage = pathname === '/setup';
+
+  if (isFullScreenPage) {
+    return (
+      <div className={`min-h-screen transition-colors duration-200 ${isDark ? 'bg-slate-950' : 'bg-slate-50'}`}>
+        <main className="min-h-screen">{children}</main>
+      </div>
+    );
+  }
 
   return (
     <div className={`min-h-screen flex transition-colors duration-200 ${isDark ? 'bg-slate-950' : 'bg-slate-50'}`}>

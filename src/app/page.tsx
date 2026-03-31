@@ -1024,12 +1024,104 @@ function AutopilotSection() {
   );
 }
 
+// ─── Parallax Scroll Hook ─────────────────────────────────────
+function useParallaxScroll(sectionRef: React.RefObject<HTMLDivElement | null>) {
+  const leftColRef = useRef<HTMLDivElement>(null);
+  const rightColRef = useRef<HTMLDivElement>(null);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    // Check for prefers-reduced-motion
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+
+    const handleMotionPreference = (e: MediaQueryListEvent) => {
+      setPrefersReducedMotion(e.matches);
+    };
+
+    mediaQuery.addEventListener('change', handleMotionPreference);
+    return () => mediaQuery.removeEventListener('change', handleMotionPreference);
+  }, []);
+
+  useEffect(() => {
+    if (!sectionRef.current || prefersReducedMotion) return;
+
+    // Check if on mobile (disable parallax on small screens)
+    const isMobile = window.innerWidth < 768;
+    if (isMobile) return;
+
+    const handleScroll = () => {
+      if (!sectionRef.current || !leftColRef.current || !rightColRef.current) return;
+
+      const section = sectionRef.current;
+      const sectionRect = section.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      // Calculate how far into the viewport the section is (0 = top, 1 = bottom)
+      const sectionProgress = Math.max(
+        0,
+        Math.min(
+          1,
+          1 - (sectionRect.top / windowHeight)
+        )
+      );
+
+      // Calculate scroll distance in pixels
+      const scrollDistance = sectionProgress * 100; // Max 100px of parallax movement
+
+      // Left column: moves at 0.85x speed (slower, lag effect)
+      const leftTranslateY = scrollDistance * 0.85;
+
+      // Right column: moves at 1.15x speed (faster, floating effect)
+      const rightTranslateY = scrollDistance * 1.15;
+
+      // Apply GPU-accelerated transforms
+      leftColRef.current.style.transform = `translate3d(0, ${leftTranslateY}px, 0)`;
+      rightColRef.current.style.transform = `translate3d(0, -${rightTranslateY}px, 0)`;
+
+      // Fade in feature items with stagger
+      const featureItems = leftColRef.current.querySelectorAll('.parallax-feature-item');
+      featureItems.forEach((item, index) => {
+        const itemRect = item.getBoundingClientRect();
+        const itemProgress = Math.max(
+          0,
+          Math.min(1, 1 - (itemRect.top / windowHeight))
+        );
+
+        const opacity = Math.min(1, itemProgress * 2); // Fade in more aggressively
+        (item as HTMLElement).style.opacity = opacity.toString();
+      });
+    };
+
+    // Use requestAnimationFrame for smooth performance
+    let animationFrameId: number;
+    const rafHandleScroll = () => {
+      handleScroll();
+      animationFrameId = requestAnimationFrame(rafHandleScroll);
+    };
+
+    window.addEventListener('scroll', () => {
+      cancelAnimationFrame(animationFrameId);
+      animationFrameId = requestAnimationFrame(rafHandleScroll);
+    });
+
+    return () => {
+      window.removeEventListener('scroll', () => {});
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [prefersReducedMotion]);
+
+  return { leftColRef, rightColRef };
+}
+
 // ─── Growth Advisor Demo (Animated Chat) ────────────────────
 function AdvisorDemo() {
   const { t } = useLanguage();
   const [visibleMessages, setVisibleMessages] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const { leftColRef, rightColRef } = useParallaxScroll(sectionRef);
 
   const conversation = [
     { sender: 'advisor' as const, text: "Hey Mike 👋 Quick morning update — you closed 8 jobs this month for $34,200. That's 18% up from last month." },
@@ -1078,11 +1170,11 @@ function AdvisorDemo() {
   }, [hasStarted, visibleMessages, conversation.length]);
 
   return (
-    <section id="advisor-demo" className="py-24 lg:py-32 bg-gradient-to-b from-slate-50 to-white">
+    <section id="advisor-demo" ref={sectionRef} className="py-24 lg:py-32 bg-gradient-to-b from-slate-50 to-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Left: Copy */}
-          <div className="scroll-fade-left text-center lg:text-left">
+          <div ref={leftColRef} className="parallax-left-column scroll-fade-left text-center lg:text-left">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-purple-50 border border-purple-100 mb-6">
               <Sparkles className="w-3.5 h-3.5 text-purple-600" />
               <span className="text-xs font-semibold text-purple-600 uppercase tracking-wider">{t('advisor.title')}</span>
@@ -1104,7 +1196,7 @@ function AdvisorDemo() {
               ].map((item) => {
                 const Icon = item.icon;
                 return (
-                  <div key={item.text} className="flex items-center gap-3">
+                  <div key={item.text} className="parallax-feature-item flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0">
                       <Icon className="w-4 h-4 text-purple-600" />
                     </div>
@@ -1124,7 +1216,7 @@ function AdvisorDemo() {
           </div>
 
           {/* Right: Animated Chat */}
-          <div className="scroll-fade-right relative">
+          <div ref={rightColRef} className="parallax-right-column scroll-fade-right relative">
             {/* Phone frame */}
             <div className="mx-auto max-w-[340px] bg-white rounded-[2.5rem] shadow-2xl shadow-slate-900/10 border border-gray-200 overflow-hidden">
               {/* Status bar */}
@@ -1312,80 +1404,6 @@ function AnimatedStars() {
   );
 }
 
-// ─── Testimonials ─────────────────────────────────────────────
-function TestimonialsSection() {
-  const testimonials = [
-    {
-      quote: "We went from missing half our calls to responding in under a minute. Booked 47% more jobs in the first quarter.",
-      name: "Mike Reynolds",
-      role: "Owner",
-      company: "Reynolds Plumbing",
-      city: "Toronto ON",
-      initials: "MR",
-      color: "bg-blue-500",
-      stars: 5,
-    },
-    {
-      quote: "Finally, a CRM that handles Quebec tax and works in French. My team was set up in 15 minutes.",
-      name: "Julie Lavoie",
-      role: "Manager",
-      company: "Lavoie Chauffage",
-      city: "Montreal QC",
-      initials: "JL",
-      color: "bg-red-500",
-      stars: 5,
-    },
-    {
-      quote: "The autopilot feature alone paid for itself. New leads get a text before I even see the notification.",
-      name: "Steve Kim",
-      role: "Owner",
-      company: "Kim Electric",
-      city: "Vancouver BC",
-      initials: "SK",
-      color: "bg-amber-500",
-      stars: 5,
-    },
-  ];
-
-  return (
-    <section className="py-16 lg:py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="scroll-fade-up text-center max-w-3xl mx-auto mb-12">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight">
-            Don't take our word for it.
-          </h2>
-        </div>
-
-        <div className="stagger-children scroll-fade-up grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {testimonials.map((testimonial) => (
-            <div key={testimonial.name} className="scroll-fade-up p-6 rounded-2xl bg-white border border-gray-200 hover:shadow-lg transition-all">
-              {/* Stars */}
-              <div className="flex items-center gap-1 mb-4">
-                {[...Array(testimonial.stars)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
-                ))}
-              </div>
-
-              {/* Quote */}
-              <p className="text-gray-600 leading-relaxed mb-6 text-sm">&ldquo;{testimonial.quote}&rdquo;</p>
-
-              {/* Author */}
-              <div className="flex items-center gap-3">
-                <div className={`w-10 h-10 rounded-full ${testimonial.color} flex items-center justify-center text-white text-sm font-bold`}>
-                  {testimonial.initials}
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-gray-900">{testimonial.name}</p>
-                  <p className="text-xs text-gray-500">{testimonial.role} — {testimonial.company}, {testimonial.city}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
 
 // ─── Pricing ──────────────────────────────────────────────────
 function PricingTeaser() {
@@ -1521,7 +1539,6 @@ export default function LandingPage() {
       <InteractiveExplorer />
       <InteractiveProductTour />
       <SocialProof />
-      <TestimonialsSection />
       <LogoWall />
       <AutopilotSection />
       <ROICalculator />

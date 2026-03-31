@@ -185,11 +185,18 @@ export default function SetupPage() {
   return (
     <div className={`min-h-screen ${isDark ? 'bg-gray-950' : 'bg-white'}`}>
       {/* Progress Bar */}
-      <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-gray-200 dark:bg-gray-800">
-        <div
-          className="h-full bg-gradient-to-r from-emerald-500 to-emerald-600 transition-all duration-500"
-          style={{ width: `${progressPercent}%` }}
-        />
+      <div className="fixed top-0 left-0 right-0 z-50">
+        <div className="h-1 bg-gray-200 dark:bg-gray-800">
+          <div
+            className="h-full bg-gradient-to-r from-emerald-500 to-emerald-600 transition-all duration-500"
+            style={{ width: `${progressPercent}%` }}
+          />
+        </div>
+        <div className="flex justify-center py-2">
+          <p className={`text-xs font-medium ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+            Step {currentStep === 'business' ? 1 : currentStep === 'superpowers' ? 2 : 3} of 3
+          </p>
+        </div>
       </div>
 
       <div className="relative min-h-screen flex items-center justify-center px-4 pt-20 pb-8">
@@ -316,7 +323,13 @@ export default function SetupPage() {
               </div>
 
               {/* Navigation */}
-              <div className="flex justify-end pt-6">
+              <div className="flex justify-between items-center pt-6">
+                <button
+                  onClick={() => router.push('/dashboard')}
+                  className={`text-sm font-medium transition-colors ${isDark ? 'text-gray-500 hover:text-gray-300' : 'text-gray-400 hover:text-gray-600'}`}
+                >
+                  Skip setup
+                </button>
                 <button
                   onClick={handleNextStep}
                   className="px-8 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg flex items-center gap-2 transition-all transform hover:scale-105 active:scale-95"
@@ -397,7 +410,7 @@ export default function SetupPage() {
               </div>
 
               {/* Navigation */}
-              <div className="flex justify-between pt-6">
+              <div className="flex justify-between items-center pt-6">
                 <button
                   onClick={handlePrevStep}
                   className={`px-8 py-3 font-semibold rounded-lg border-2 transition-all ${
@@ -408,12 +421,28 @@ export default function SetupPage() {
                 >
                   Back
                 </button>
-                <button
-                  onClick={handleNextStep}
-                  className="px-8 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg flex items-center gap-2 transition-all transform hover:scale-105 active:scale-95"
-                >
-                  Next <ArrowRight size={20} />
-                </button>
+                <div className="flex items-center gap-4">
+                  <button
+                    onClick={() => {
+                      setSelectedPriorities({
+                        'speed-to-lead': true,
+                        'win-estimates': true,
+                        'get-reviews': true,
+                        'never-miss-followup': true,
+                      });
+                      setCurrentStep('celebrate');
+                    }}
+                    className={`text-sm font-medium transition-colors ${isDark ? 'text-gray-500 hover:text-gray-300' : 'text-gray-400 hover:text-gray-600'}`}
+                  >
+                    Enable all & skip
+                  </button>
+                  <button
+                    onClick={handleNextStep}
+                    className="px-8 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg flex items-center gap-2 transition-all transform hover:scale-105 active:scale-95"
+                  >
+                    Next <ArrowRight size={20} />
+                  </button>
+                </div>
               </div>
             </div>
           )}
@@ -574,30 +603,49 @@ export default function SetupPage() {
 }
 
 function Confetti() {
-  const pieces = Array.from({ length: 40 }, (_, i) => {
+  const [pieces, setPieces] = useState<Array<{
+    duration: number;
+    delay: number;
+    left: number;
+    rotation: number;
+    color: string;
+    isCircle: boolean;
+  }>>([]);
+
+  useEffect(() => {
     const colors = ['#27AE60', '#3B82F6', '#F97316', '#A855F7', '#EC4899', '#10B981'];
-    const duration = 3 + Math.random() * 2;
-    const delay = Math.random() * 0.5;
-    const left = Math.random() * 100;
-    const rotation = Math.random() * 360;
-
-    return (
-      <div
-        key={i}
-        className="confetti-piece"
-        style={{
-          left: `${left}%`,
-          top: '-10px',
-          width: '8px',
-          height: '8px',
-          backgroundColor: colors[Math.floor(Math.random() * colors.length)],
-          borderRadius: Math.random() > 0.5 ? '50%' : '0',
-          animation: `fall ${duration}s linear ${delay}s forwards`,
-          transform: `rotate(${rotation}deg)`,
-        }}
-      />
+    setPieces(
+      Array.from({ length: 40 }, () => ({
+        duration: 3 + Math.random() * 2,
+        delay: Math.random() * 0.5,
+        left: Math.random() * 100,
+        rotation: Math.random() * 360,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        isCircle: Math.random() > 0.5,
+      }))
     );
-  });
+  }, []);
 
-  return <>{pieces}</>;
+  if (pieces.length === 0) return null;
+
+  return (
+    <>
+      {pieces.map((p, i) => (
+        <div
+          key={i}
+          className="confetti-piece"
+          style={{
+            left: `${p.left}%`,
+            top: '-10px',
+            width: '8px',
+            height: '8px',
+            backgroundColor: p.color,
+            borderRadius: p.isCircle ? '50%' : '0',
+            animation: `fall ${p.duration}s linear ${p.delay}s forwards`,
+            transform: `rotate(${p.rotation}deg)`,
+          }}
+        />
+      ))}
+    </>
+  );
 }

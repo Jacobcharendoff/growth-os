@@ -323,7 +323,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-slate-500">&copy; {new Date().getFullYear()} GrowthOS. All rights reserved. {t('marketing.madeInCanada')}.</p>
+          <p className="text-xs text-slate-500" suppressHydrationWarning>&copy; {new Date().getFullYear()} GrowthOS. All rights reserved. {t('marketing.madeInCanada')}.</p>
           <div className="flex items-center gap-4">
             <a href="mailto:hello@growthos.ca" className="text-slate-500 hover:text-white transition-colors"><Mail className="w-5 h-5" /></a>
             <a href="tel:+18005550199" className="text-slate-500 hover:text-white transition-colors"><Phone className="w-5 h-5" /></a>

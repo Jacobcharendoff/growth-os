@@ -85,9 +85,17 @@ function LoginPageInner() {
           type: 'success',
           text: t('auth.signedInSuccessfully'),
         });
+        // Use hard navigation so middleware sees the fresh auth cookies
         setTimeout(() => {
-          router.push(redirectTo);
+          window.location.href = redirectTo;
         }, 500);
+      } else {
+        // Session is null — user exists but may not be confirmed
+        setMessage({
+          type: 'error',
+          text: 'Sign-in succeeded but no session was created. Please try again or contact support.',
+        });
+        setLoading(false);
       }
     } catch (err) {
       setMessage({

@@ -18,7 +18,7 @@ import {
   ChevronDown,
 } from 'lucide-react';
 
-type ActivityTypeFilter = 'all' | 'call' | 'email' | 'meeting' | 'note' | 'estimate' | 'payment';
+type ActivityTypeFilter = 'all' | 'calls_meetings' | 'notes_records';
 type DateRangeFilter = 'today' | 'week' | 'month' | 'all';
 
 const ACTIVITY_ICONS: Record<string, React.ReactNode> = {
@@ -32,12 +32,8 @@ const ACTIVITY_ICONS: Record<string, React.ReactNode> = {
 
 const ACTIVITY_TYPE_LABELS: Record<ActivityTypeFilter, string> = {
   all: 'All',
-  call: 'Calls',
-  email: 'Emails',
-  meeting: 'Meetings',
-  note: 'Notes',
-  estimate: 'Estimates',
-  payment: 'Payments',
+  calls_meetings: 'Calls & Meetings',
+  notes_records: 'Notes & Records',
 };
 
 interface GroupedActivity {
@@ -132,9 +128,16 @@ export default function ActivityPage() {
   const filteredActivities = useMemo(() => {
     return activities.filter((activity) => {
       // Type filter
-      if (selectedType !== 'all' && activity.type !== selectedType) {
-        return false;
+      if (selectedType === 'calls_meetings') {
+        if (activity.type !== 'call' && activity.type !== 'meeting') {
+          return false;
+        }
+      } else if (selectedType === 'notes_records') {
+        if (activity.type !== 'note' && activity.type !== 'email' && activity.type !== 'estimate' && activity.type !== 'payment') {
+          return false;
+        }
       }
+      // 'all' shows everything, no type filter needed
 
       // Date range filter
       if (activity.createdAt < filterStartDate) {

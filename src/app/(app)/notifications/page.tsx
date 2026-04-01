@@ -15,7 +15,7 @@ import {
   Trash2,
 } from 'lucide-react';
 
-type FilterTab = 'all' | 'unread' | 'deals' | 'contacts' | 'system';
+type FilterTab = 'all' | 'unread' | 'deals_payments';
 
 interface NotificationConfig {
   icon: React.ComponentType<{ className?: string }>;
@@ -111,21 +111,16 @@ function getRelativeTime(createdAt: number): string {
 
 function getNotificationType(
   type: string
-): 'deals' | 'contacts' | 'system' | null {
+): 'deals_payments' | null {
   if (
     type === 'deal_created' ||
-    type === 'deal_moved'
+    type === 'deal_moved' ||
+    type === 'payment_received'
   ) {
-    return 'deals';
+    return 'deals_payments';
   }
-  if (type === 'contact_added') {
-    return 'contacts';
-  }
-  if (type === 'system') {
-    return 'system';
-  }
-  // payment_received, estimate_sent map to deals
-  return 'deals';
+  // All other types (contact_added, estimate_sent, system) don't match the new filter
+  return null;
 }
 
 export default function NotificationsPage() {
@@ -162,10 +157,9 @@ export default function NotificationsPage() {
   const filteredNotifications = notifications.filter((notif) => {
     if (filterTab === 'all') return true;
     if (filterTab === 'unread') return !notif.read;
-    const notifType = getNotificationType(notif.type);
-    if (filterTab === 'deals') return notifType === 'deals';
-    if (filterTab === 'contacts') return notifType === 'contacts';
-    if (filterTab === 'system') return notifType === 'system';
+    if (filterTab === 'deals_payments') {
+      return notif.type === 'deal_created' || notif.type === 'deal_moved' || notif.type === 'payment_received';
+    }
     return true;
   });
 
@@ -188,9 +182,7 @@ export default function NotificationsPage() {
   const filterTabs: Array<{ id: FilterTab; label: string }> = [
     { id: 'all', label: t('notifications.all') || 'All' },
     { id: 'unread', label: t('notifications.unreadTab') || 'Unread' },
-    { id: 'deals', label: 'Deals' },
-    { id: 'contacts', label: 'Contacts' },
-    { id: 'system', label: 'System' },
+    { id: 'deals_payments', label: 'Deals & Payments' },
   ];
 
   const renderNotificationCard = (notif: any) => {
@@ -418,14 +410,10 @@ export default function NotificationsPage() {
             <p className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
               {filterTab === 'unread'
                 ? t('notifications.noUnread') || 'No unread notifications'
-                : filterTab === 'deals'
-                  ? 'No deal notifications'
-                  : filterTab === 'contacts'
-                    ? 'No contact notifications'
-                    : filterTab === 'system'
-                      ? 'No system notifications'
-                      : t('notifications.noNotifications') ||
-                        'No notifications yet'}
+                : filterTab === 'deals_payments'
+                  ? 'No deal & payment notifications'
+                  : t('notifications.noNotifications') ||
+                    'No notifications yet'}
             </p>
             <p className="text-sm text-slate-600 dark:text-slate-400">
               {filterTab === 'unread'

@@ -741,27 +741,25 @@ export default function EstimatesPage() {
                 </div>
 
                 {/* Deal Selector */}
-                {relatedDeals.length > 0 && (
-                  <div>
-                    <label className={`block text-sm font-semibold ${isDark ? 'text-white' : 'text-slate-900'} mb-2`}>
-                      Link to Deal (Optional)
-                    </label>
-                    <select
-                      value={formData.dealId || ''}
-                      onChange={(e) => setFormData({ ...formData, dealId: e.target.value || undefined })}
-                      className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 ${
-                        isDark ? 'bg-slate-900 border-slate-600 text-white' : 'bg-white border-slate-300 text-slate-900'
-                      }`}
-                    >
-                      <option value="">No deal linked</option>
-                      {relatedDeals.map((deal) => (
-                        <option key={deal.id} value={deal.id}>
-                          {deal.title} (${deal.value})
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                )}
+                <div>
+                  <label className={`block text-sm font-semibold ${isDark ? 'text-white' : 'text-slate-900'} mb-2`}>
+                    Link to Deal (Optional)
+                  </label>
+                  <select
+                    value={formData.dealId || ''}
+                    onChange={(e) => setFormData({ ...formData, dealId: e.target.value || undefined })}
+                    className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 ${
+                      isDark ? 'bg-slate-900 border-slate-600 text-white' : 'bg-white border-slate-300 text-slate-900'
+                    }`}
+                  >
+                    <option value="">No deal linked</option>
+                    {relatedDeals.map((deal) => (
+                      <option key={deal.id} value={deal.id}>
+                        {deal.title} (${deal.value})
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
                 {/* Service Description */}
                 <div>

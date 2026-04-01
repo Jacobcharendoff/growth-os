@@ -28,7 +28,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
-type TabType = 'overview' | 'deals' | 'estimates' | 'invoices' | 'activity' | 'notes';
+type TabType = 'overview' | 'jobs-estimates' | 'invoices-payments';
 
 const ACTIVITY_ICONS = {
   call: CallIcon,
@@ -396,26 +396,33 @@ export default function ContactDetailPage() {
               isDark ? 'border-slate-700' : 'border-slate-200'
             } overflow-x-auto`}
           >
-            {(['overview', 'deals', 'estimates', 'invoices', 'activity', 'notes'] as TabType[]).map(
-              (tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  className={`px-4 py-3 font-medium text-sm whitespace-nowrap border-b-2 transition-colors ${
-                    activeTab === tab
-                      ? `border-emerald-500 ${
-                          isDark ? 'text-emerald-400' : 'text-emerald-600'
-                        }`
-                      : `border-transparent ${
-                          isDark
-                            ? 'text-slate-400 hover:text-slate-300'
-                            : 'text-slate-600 hover:text-slate-900'
-                        }`
-                  }`}
-                >
-                  {tab.charAt(0).toUpperCase() + tab.slice(1)}
-                </button>
-              )
+            {(['overview', 'jobs-estimates', 'invoices-payments'] as TabType[]).map(
+              (tab) => {
+                const tabLabels: Record<TabType, string> = {
+                  'overview': 'Overview',
+                  'jobs-estimates': 'Jobs & Estimates',
+                  'invoices-payments': 'Invoices & Payments',
+                };
+                return (
+                  <button
+                    key={tab}
+                    onClick={() => setActiveTab(tab)}
+                    className={`px-4 py-3 font-medium text-sm whitespace-nowrap border-b-2 transition-colors ${
+                      activeTab === tab
+                        ? `border-emerald-500 ${
+                            isDark ? 'text-emerald-400' : 'text-emerald-600'
+                          }`
+                        : `border-transparent ${
+                            isDark
+                              ? 'text-slate-400 hover:text-slate-300'
+                              : 'text-slate-600 hover:text-slate-900'
+                          }`
+                    }`}
+                  >
+                    {tabLabels[tab]}
+                  </button>
+                );
+              }
             )}
           </div>
 
@@ -568,367 +575,385 @@ export default function ContactDetailPage() {
                     </div>
                   </div>
                 )}
-              </div>
-            )}
 
-            {/* Deals Tab */}
-            {activeTab === 'deals' && (
-              <div className="space-y-4">
-                {deals.length > 0 ? (
-                  deals.map((deal) => (
-                    <Link
-                      key={deal.id}
-                      href={`/pipeline`}
-                      className={`block p-4 rounded-lg border ${
-                        isDark
-                          ? 'border-slate-700 hover:bg-slate-800'
-                          : 'border-slate-200 hover:bg-slate-50'
-                      } transition-colors`}
+                {/* Notes Section */}
+                <div className={`border-t ${isDark ? 'border-slate-700' : 'border-slate-200'} pt-6`}>
+                  <div className="flex items-center justify-between mb-4">
+                    <h3
+                      className={`font-semibold ${
+                        isDark ? 'text-white' : 'text-slate-900'
+                      }`}
                     >
-                      <div className="flex items-start justify-between mb-2">
-                        <h4
-                          className={`font-semibold ${
-                            isDark ? 'text-white' : 'text-slate-900'
-                          }`}
-                        >
-                          {deal.title}
-                        </h4>
-                        <p
-                          className={`font-bold ${
-                            isDark ? 'text-emerald-400' : 'text-emerald-600'
-                          }`}
-                        >
-                          ${deal.value.toLocaleString()}
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <span
-                          className={`text-xs px-2 py-1 rounded ${
+                      Notes
+                    </h3>
+                    {!editingNotes && (
+                      <button
+                        onClick={() => setEditingNotes(true)}
+                        className={`text-sm font-medium ${
+                          isDark
+                            ? 'text-blue-400 hover:text-blue-300'
+                            : 'text-blue-600 hover:text-blue-700'
+                        }`}
+                      >
+                        Edit
+                      </button>
+                    )}
+                  </div>
+
+                  {editingNotes ? (
+                    <div className="space-y-3">
+                      <textarea
+                        value={notes}
+                        onChange={(e) => setNotes(e.target.value)}
+                        className={`w-full px-4 py-3 rounded-lg text-sm border ${
+                          isDark
+                            ? 'bg-slate-800 border-slate-700 text-white placeholder-slate-500 focus:border-blue-500'
+                            : 'bg-white border-slate-300 text-slate-900 placeholder-slate-400 focus:border-blue-500'
+                        } focus:outline-none focus:ring-2 focus:ring-blue-500/20`}
+                        rows={6}
+                        placeholder="Add notes about this contact..."
+                      />
+                      <div className="flex gap-2 justify-end">
+                        <button
+                          onClick={() => {
+                            setEditingNotes(false);
+                            setNotes(contact.notes);
+                          }}
+                          className={`px-3 py-2 rounded-lg text-sm font-medium border ${
                             isDark
-                              ? 'bg-slate-700 text-slate-200'
-                              : 'bg-slate-100 text-slate-700'
-                          } capitalize`}
-                        >
-                          {deal.stage.replace(/_/g, ' ')}
-                        </span>
-                        <span
-                          className={`text-xs ${
-                            isDark ? 'text-slate-400' : 'text-slate-600'
+                              ? 'border-slate-600 text-slate-300 hover:bg-slate-800'
+                              : 'border-slate-300 text-slate-700 hover:bg-slate-50'
                           }`}
                         >
-                          {deal.assignedTo}
-                        </span>
-                      </div>
-                    </Link>
-                  ))
-                ) : (
-                  <p
-                    className={`text-center py-8 ${
-                      isDark ? 'text-slate-400' : 'text-slate-600'
-                    }`}
-                  >
-                    No deals found
-                  </p>
-                )}
-              </div>
-            )}
-
-            {/* Estimates Tab */}
-            {activeTab === 'estimates' && (
-              <div className="space-y-4">
-                {estimates.length > 0 ? (
-                  estimates.map((estimate) => (
-                    <div
-                      key={estimate.id}
-                      className={`p-4 rounded-lg border ${
-                        isDark
-                          ? 'border-slate-700'
-                          : 'border-slate-200'
-                      }`}
-                    >
-                      <div className="flex items-start justify-between mb-2">
-                        <div>
-                          <h4
-                            className={`font-semibold ${
-                              isDark ? 'text-white' : 'text-slate-900'
-                            }`}
-                          >
-                            {estimate.service}
-                          </h4>
-                          <p
-                            className={`text-sm ${
-                              isDark ? 'text-slate-400' : 'text-slate-600'
-                            }`}
-                          >
-                            {estimate.number}
-                          </p>
-                        </div>
-                        <span
-                          className={`text-sm px-2 py-1 rounded ${
-                            estimate.status === 'approved'
-                              ? isDark
-                                ? 'bg-emerald-900 text-emerald-200'
-                                : 'bg-emerald-100 text-emerald-700'
-                              : estimate.status === 'sent'
-                              ? isDark
-                                ? 'bg-blue-900 text-blue-200'
-                                : 'bg-blue-100 text-blue-700'
-                              : isDark
-                              ? 'bg-slate-700 text-slate-200'
-                              : 'bg-slate-100 text-slate-700'
-                          } font-medium capitalize`}
+                          Cancel
+                        </button>
+                        <button
+                          onClick={handleSaveNotes}
+                          disabled={isSavingNotes}
+                          className={`px-3 py-2 rounded-lg text-sm font-medium text-white ${
+                            isDark
+                              ? 'bg-emerald-600 hover:bg-emerald-700'
+                              : 'bg-emerald-600 hover:bg-emerald-700'
+                          } disabled:opacity-50`}
                         >
-                          {estimate.status}
-                        </span>
+                          {isSavingNotes ? 'Saving...' : 'Save'}
+                        </button>
                       </div>
-                      {estimate.selectedTier && (
-                        <p
-                          className={`text-sm ${
-                            isDark ? 'text-slate-400' : 'text-slate-600'
-                          }`}
-                        >
-                          Tier: {estimate.selectedTier}
-                        </p>
-                      )}
                     </div>
-                  ))
-                ) : (
-                  <p
-                    className={`text-center py-8 ${
-                      isDark ? 'text-slate-400' : 'text-slate-600'
-                    }`}
-                  >
-                    No estimates found
-                  </p>
-                )}
+                  ) : (
+                    <p
+                      className={`whitespace-pre-wrap text-sm ${
+                        isDark
+                          ? 'text-slate-300'
+                          : 'text-slate-700'
+                      }`}
+                    >
+                      {notes || 'No notes yet. Click Edit to add notes about this contact.'}
+                    </p>
+                  )}
+                </div>
               </div>
             )}
 
-            {/* Invoices Tab */}
-            {activeTab === 'invoices' && (
-              <div className="space-y-4">
-                {invoices.length > 0 ? (
-                  invoices.map((invoice) => (
-                    <div
-                      key={invoice.id}
-                      className={`p-4 rounded-lg border ${
-                        isDark
-                          ? 'border-slate-700'
-                          : 'border-slate-200'
-                      }`}
-                    >
-                      <div className="flex items-start justify-between mb-2">
-                        <div>
-                          <h4
-                            className={`font-semibold ${
-                              isDark ? 'text-white' : 'text-slate-900'
-                            }`}
-                          >
-                            {invoice.number}
-                          </h4>
-                          <p
-                            className={`text-sm ${
-                              isDark ? 'text-slate-400' : 'text-slate-600'
-                            }`}
-                          >
-                            {new Date(invoice.dueDate).toLocaleDateString()}
-                          </p>
-                        </div>
-                        <div className="text-right">
-                          <p
-                            className={`font-bold ${
-                              isDark ? 'text-white' : 'text-slate-900'
-                            }`}
-                          >
-                            ${invoice.total.toLocaleString()}
-                          </p>
-                          <span
-                            className={`text-xs px-2 py-1 rounded font-medium capitalize mt-1 inline-block ${
-                              invoice.status === 'paid'
-                                ? isDark
-                                  ? 'bg-emerald-900 text-emerald-200'
-                                  : 'bg-emerald-100 text-emerald-700'
-                                : invoice.status === 'overdue'
-                                ? isDark
-                                  ? 'bg-red-900 text-red-200'
-                                  : 'bg-red-100 text-red-700'
-                                : isDark
-                                ? 'bg-slate-700 text-slate-200'
-                                : 'bg-slate-100 text-slate-700'
-                            }`}
-                          >
-                            {invoice.status}
-                          </span>
-                        </div>
-                      </div>
+            {/* Jobs & Estimates Tab */}
+            {activeTab === 'jobs-estimates' && (
+              <div className="space-y-6">
+                {/* Deals Section */}
+                <div>
+                  <h3
+                    className={`text-sm font-semibold mb-4 ${
+                      isDark ? 'text-slate-200' : 'text-slate-900'
+                    }`}
+                  >
+                    Deals
+                  </h3>
+                  <div className="space-y-4">
+                    {deals.length > 0 ? (
+                      deals.map((deal) => (
+                        <Link
+                          key={deal.id}
+                          href={`/pipeline`}
+                          className={`block p-4 rounded-lg border ${
+                            isDark
+                              ? 'border-slate-700 hover:bg-slate-800'
+                              : 'border-slate-200 hover:bg-slate-50'
+                          } transition-colors`}
+                        >
+                          <div className="flex items-start justify-between mb-2">
+                            <h4
+                              className={`font-semibold ${
+                                isDark ? 'text-white' : 'text-slate-900'
+                              }`}
+                            >
+                              {deal.title}
+                            </h4>
+                            <p
+                              className={`font-bold ${
+                                isDark ? 'text-emerald-400' : 'text-emerald-600'
+                              }`}
+                            >
+                              ${deal.value.toLocaleString()}
+                            </p>
+                          </div>
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <span
+                              className={`text-xs px-2 py-1 rounded ${
+                                isDark
+                                  ? 'bg-slate-700 text-slate-200'
+                                  : 'bg-slate-100 text-slate-700'
+                              } capitalize`}
+                            >
+                              {deal.stage.replace(/_/g, ' ')}
+                            </span>
+                            <span
+                              className={`text-xs ${
+                                isDark ? 'text-slate-400' : 'text-slate-600'
+                              }`}
+                            >
+                              {deal.assignedTo}
+                            </span>
+                          </div>
+                        </Link>
+                      ))
+                    ) : (
                       <p
-                        className={`text-sm ${
+                        className={`text-center py-4 ${
                           isDark ? 'text-slate-400' : 'text-slate-600'
                         }`}
                       >
-                        Paid: ${invoice.amountPaid.toLocaleString()}
+                        No deals found
                       </p>
-                    </div>
-                  ))
-                ) : (
-                  <p
-                    className={`text-center py-8 ${
-                      isDark ? 'text-slate-400' : 'text-slate-600'
+                    )}
+                  </div>
+                </div>
+
+                {/* Estimates Section */}
+                <div className={`border-t ${isDark ? 'border-slate-700' : 'border-slate-200'} pt-6`}>
+                  <h3
+                    className={`text-sm font-semibold mb-4 ${
+                      isDark ? 'text-slate-200' : 'text-slate-900'
                     }`}
                   >
-                    No invoices found
-                  </p>
-                )}
+                    Estimates
+                  </h3>
+                  <div className="space-y-4">
+                    {estimates.length > 0 ? (
+                      estimates.map((estimate) => (
+                        <div
+                          key={estimate.id}
+                          className={`p-4 rounded-lg border ${
+                            isDark
+                              ? 'border-slate-700'
+                              : 'border-slate-200'
+                          }`}
+                        >
+                          <div className="flex items-start justify-between mb-2">
+                            <div>
+                              <h4
+                                className={`font-semibold ${
+                                  isDark ? 'text-white' : 'text-slate-900'
+                                }`}
+                              >
+                                {estimate.service}
+                              </h4>
+                              <p
+                                className={`text-sm ${
+                                  isDark ? 'text-slate-400' : 'text-slate-600'
+                                }`}
+                              >
+                                {estimate.number}
+                              </p>
+                            </div>
+                            <span
+                              className={`text-sm px-2 py-1 rounded ${
+                                estimate.status === 'approved'
+                                  ? isDark
+                                    ? 'bg-emerald-900 text-emerald-200'
+                                    : 'bg-emerald-100 text-emerald-700'
+                                  : estimate.status === 'sent'
+                                  ? isDark
+                                    ? 'bg-blue-900 text-blue-200'
+                                    : 'bg-blue-100 text-blue-700'
+                                  : isDark
+                                  ? 'bg-slate-700 text-slate-200'
+                                  : 'bg-slate-100 text-slate-700'
+                              } font-medium capitalize`}
+                            >
+                              {estimate.status}
+                            </span>
+                          </div>
+                          {estimate.selectedTier && (
+                            <p
+                              className={`text-sm ${
+                                isDark ? 'text-slate-400' : 'text-slate-600'
+                              }`}
+                            >
+                              Tier: {estimate.selectedTier}
+                            </p>
+                          )}
+                        </div>
+                      ))
+                    ) : (
+                      <p
+                        className={`text-center py-4 ${
+                          isDark ? 'text-slate-400' : 'text-slate-600'
+                        }`}
+                      >
+                        No estimates found
+                      </p>
+                    )}
+                  </div>
+                </div>
               </div>
             )}
 
-            {/* Activity Tab */}
-            {activeTab === 'activity' && (
-              <div className="space-y-4">
-                {contactActivities.length > 0 ? (
-                  contactActivities.map((activity, index) => {
-                    const IconComponent = ACTIVITY_ICONS[activity.type];
-                    return (
-                      <div key={activity.id} className="flex gap-4">
-                        <div className="flex flex-col items-center">
-                          <div
-                            className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                              isDark ? 'bg-slate-800' : 'bg-slate-100'
-                            }`}
-                          >
-                            <IconComponent
-                              className={`w-5 h-5 ${
-                                isDark
-                                  ? 'text-slate-400'
-                                  : 'text-slate-600'
-                              }`}
-                            />
+            {/* Invoices & Payments Tab */}
+            {activeTab === 'invoices-payments' && (
+              <div className="space-y-6">
+                {/* Invoices Section */}
+                <div>
+                  <h3
+                    className={`text-sm font-semibold mb-4 ${
+                      isDark ? 'text-slate-200' : 'text-slate-900'
+                    }`}
+                  >
+                    Invoices
+                  </h3>
+                  <div className="space-y-4">
+                    {invoices.length > 0 ? (
+                      invoices.map((invoice) => (
+                        <div
+                          key={invoice.id}
+                          className={`p-4 rounded-lg border ${
+                            isDark
+                              ? 'border-slate-700'
+                              : 'border-slate-200'
+                          }`}
+                        >
+                          <div className="flex items-start justify-between mb-2">
+                            <div>
+                              <h4
+                                className={`font-semibold ${
+                                  isDark ? 'text-white' : 'text-slate-900'
+                                }`}
+                              >
+                                {invoice.number}
+                              </h4>
+                              <p
+                                className={`text-sm ${
+                                  isDark ? 'text-slate-400' : 'text-slate-600'
+                                }`}
+                              >
+                                {new Date(invoice.dueDate).toLocaleDateString()}
+                              </p>
+                            </div>
+                            <div className="text-right">
+                              <p
+                                className={`font-bold ${
+                                  isDark ? 'text-white' : 'text-slate-900'
+                                }`}
+                              >
+                                ${invoice.total.toLocaleString()}
+                              </p>
+                              <span
+                                className={`text-xs px-2 py-1 rounded font-medium capitalize mt-1 inline-block ${
+                                  invoice.status === 'paid'
+                                    ? isDark
+                                      ? 'bg-emerald-900 text-emerald-200'
+                                      : 'bg-emerald-100 text-emerald-700'
+                                    : invoice.status === 'overdue'
+                                    ? isDark
+                                      ? 'bg-red-900 text-red-200'
+                                      : 'bg-red-100 text-red-700'
+                                    : isDark
+                                    ? 'bg-slate-700 text-slate-200'
+                                    : 'bg-slate-100 text-slate-700'
+                                }`}
+                              >
+                                {invoice.status}
+                              </span>
+                            </div>
                           </div>
-                          {index < contactActivities.length - 1 && (
-                            <div
-                              className={`w-0.5 h-8 ${
-                                isDark ? 'bg-slate-700' : 'bg-slate-200'
-                              } mt-2`}
-                            />
-                          )}
-                        </div>
-                        <div className="flex-1 pb-4">
-                          <p
-                            className={`text-sm font-semibold capitalize ${
-                              isDark ? 'text-white' : 'text-slate-900'
-                            }`}
-                          >
-                            {activity.type}
-                          </p>
                           <p
                             className={`text-sm ${
                               isDark ? 'text-slate-400' : 'text-slate-600'
-                            } mt-1`}
+                            }`}
                           >
-                            {activity.description}
-                          </p>
-                          <p
-                            className={`text-xs ${
-                              isDark ? 'text-slate-500' : 'text-slate-500'
-                            } mt-2`}
-                          >
-                            {new Date(activity.createdAt).toLocaleDateString()}{' '}
-                            {new Date(activity.createdAt).toLocaleTimeString([], {
-                              hour: '2-digit',
-                              minute: '2-digit',
-                            })}
+                            Paid: ${invoice.amountPaid.toLocaleString()}
                           </p>
                         </div>
-                      </div>
-                    );
-                  })
-                ) : (
-                  <p
-                    className={`text-center py-8 ${
-                      isDark ? 'text-slate-400' : 'text-slate-600'
-                    }`}
-                  >
-                    No activities found
-                  </p>
-                )}
-              </div>
-            )}
-
-            {/* Notes Tab */}
-            {activeTab === 'notes' && (
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <h3
-                    className={`font-semibold ${
-                      isDark ? 'text-white' : 'text-slate-900'
-                    }`}
-                  >
-                    Notes
-                  </h3>
-                  {!editingNotes && (
-                    <button
-                      onClick={() => setEditingNotes(true)}
-                      className={`text-sm font-medium ${
-                        isDark
-                          ? 'text-blue-400 hover:text-blue-300'
-                          : 'text-blue-600 hover:text-blue-700'
-                      }`}
-                    >
-                      Edit
-                    </button>
-                  )}
-                </div>
-
-                {editingNotes ? (
-                  <div className="space-y-3">
-                    <textarea
-                      value={notes}
-                      onChange={(e) => setNotes(e.target.value)}
-                      className={`w-full px-4 py-3 rounded-lg text-sm border ${
-                        isDark
-                          ? 'bg-slate-800 border-slate-700 text-white placeholder-slate-500 focus:border-blue-500'
-                          : 'bg-white border-slate-300 text-slate-900 placeholder-slate-400 focus:border-blue-500'
-                      } focus:outline-none focus:ring-2 focus:ring-blue-500/20`}
-                      rows={8}
-                      placeholder="Add notes about this contact..."
-                    />
-                    <div className="flex gap-2 justify-end">
-                      <button
-                        onClick={() => {
-                          setEditingNotes(false);
-                          setNotes(contact.notes);
-                        }}
-                        className={`px-3 py-2 rounded-lg text-sm font-medium border ${
-                          isDark
-                            ? 'border-slate-600 text-slate-300 hover:bg-slate-800'
-                            : 'border-slate-300 text-slate-700 hover:bg-slate-50'
+                      ))
+                    ) : (
+                      <p
+                        className={`text-center py-4 ${
+                          isDark ? 'text-slate-400' : 'text-slate-600'
                         }`}
                       >
-                        Cancel
-                      </button>
-                      <button
-                        onClick={handleSaveNotes}
-                        disabled={isSavingNotes}
-                        className={`px-3 py-2 rounded-lg text-sm font-medium text-white ${
-                          isDark
-                            ? 'bg-emerald-600 hover:bg-emerald-700'
-                            : 'bg-emerald-600 hover:bg-emerald-700'
-                        } disabled:opacity-50`}
-                      >
-                        {isSavingNotes ? 'Saving...' : 'Save'}
-                      </button>
+                        No invoices found
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                {/* Payment Activity Section */}
+                {contactActivities.some((a) => a.type === 'payment') && (
+                  <div className={`border-t ${isDark ? 'border-slate-700' : 'border-slate-200'} pt-6`}>
+                    <h3
+                      className={`text-sm font-semibold mb-4 ${
+                        isDark ? 'text-slate-200' : 'text-slate-900'
+                      }`}
+                    >
+                      Payment Activity
+                    </h3>
+                    <div className="space-y-3">
+                      {contactActivities
+                        .filter((a) => a.type === 'payment')
+                        .slice(0, 10)
+                        .map((activity) => {
+                          const IconComponent = ACTIVITY_ICONS[activity.type];
+                          return (
+                            <div key={activity.id} className="flex gap-3">
+                              <div
+                                className={`p-2 rounded-lg flex-shrink-0 ${
+                                  isDark ? 'bg-slate-800' : 'bg-slate-100'
+                                }`}
+                              >
+                                <IconComponent
+                                  className={`w-4 h-4 ${
+                                    isDark
+                                      ? 'text-slate-400'
+                                      : 'text-slate-600'
+                                  }`}
+                                />
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <p
+                                  className={`text-sm font-medium capitalize ${
+                                    isDark ? 'text-white' : 'text-slate-900'
+                                  }`}
+                                >
+                                  {activity.type}
+                                </p>
+                                <p
+                                  className={`text-sm ${
+                                    isDark ? 'text-slate-400' : 'text-slate-600'
+                                  } truncate`}
+                                >
+                                  {activity.description}
+                                </p>
+                                <p
+                                  className={`text-xs ${
+                                    isDark ? 'text-slate-500' : 'text-slate-500'
+                                  } mt-1`}
+                                >
+                                  {new Date(activity.createdAt).toLocaleDateString()}
+                                </p>
+                              </div>
+                            </div>
+                          );
+                        })}
                     </div>
                   </div>
-                ) : (
-                  <p
-                    className={`whitespace-pre-wrap text-sm ${
-                      isDark
-                        ? 'text-slate-300'
-                        : 'text-slate-700'
-                    }`}
-                  >
-                    {notes || 'No notes yet. Click Edit to add notes about this contact.'}
-                  </p>
                 )}
               </div>
             )}

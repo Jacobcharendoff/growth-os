@@ -37,7 +37,7 @@ export default function EstimatePage() {
     const fetchEstimate = async () => {
       try {
         const response = await fetch(`/api/portal/${token}`);
-        const json: ApiResponse = await response.json();
+        const json = await response.json();
 
         if (!json.success) {
           setError(json.error || 'Failed to load estimate');
@@ -46,7 +46,16 @@ export default function EstimatePage() {
         }
 
         if (json.data) {
-          const estimate = json.data.estimate || json.data;
+          // Find the specific estimate from the array by ID
+          const estimates = json.data.estimates || [];
+          const estimate = estimates.find((e: Estimate) => e.id === id);
+
+          if (!estimate) {
+            setError('Estimate not found');
+            setLoading(false);
+            return;
+          }
+
           setData({
             contact: json.data.contact,
             estimate: estimate as Estimate,
@@ -59,10 +68,10 @@ export default function EstimatePage() {
       }
     };
 
-    if (token) {
+    if (token && id) {
       fetchEstimate();
     }
-  }, [token]);
+  }, [token, id]);
 
   const handleApprove = async () => {
     setActionLoading(true);

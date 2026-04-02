@@ -358,7 +358,7 @@ export default function PipelinePage() {
                     <button
                       key={stage}
                       onClick={() => setMobileSelectedStage(stage)}
-                      className={`flex-shrink-0 px-4 py-3 text-xs font-semibold border-b-2 transition-colors whitespace-nowrap ${
+                      className={`flex-shrink-0 px-4 py-3 text-sm font-semibold border-b-2 transition-colors whitespace-nowrap ${
                         mobileSelectedStage === stage
                           ? 'border-[#27AE60] text-[#27AE60] bg-emerald-50 dark:bg-emerald-950'
                           : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white'
@@ -439,10 +439,10 @@ export default function PipelinePage() {
                             <h3 className="font-bold text-slate-900 dark:text-white">{label}</h3>
                             <button
                               onClick={() => setIsAddDealOpen(true)}
-                              className="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded p-1"
+                              className="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded p-2"
                               aria-label={`Add job to ${label} stage`}
                             >
-                              <Plus className="w-4 h-4" />
+                              <Plus className="w-5 h-5" />
                             </button>
                           </div>
                           <div className="flex justify-between text-xs">
@@ -491,15 +491,14 @@ export default function PipelinePage() {
                                       {deal.assignedTo}
                                     </div>
 
-                                    {/* Quick Actions on Hover */}
-                                    {isHovered && (
-                                      <div className="absolute top-2 right-2 flex gap-1 bg-white dark:bg-slate-700 rounded-lg shadow-md border border-slate-200 dark:border-slate-600 p-1">
+                                    {/* Quick Actions — visible on hover (desktop) or always (touch) */}
+                                    <div className={`absolute top-2 right-2 flex gap-1 bg-white dark:bg-slate-700 rounded-lg shadow-md border border-slate-200 dark:border-slate-600 p-1 ${isHovered ? 'flex' : 'hidden'} group-hover:flex`}>
                                         <button
                                           onClick={(e) => {
                                             e.preventDefault();
                                             handleOpenEdit(deal);
                                           }}
-                                          className="p-1 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-600 rounded transition-colors"
+                                          className="p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-600 rounded transition-colors"
                                           title="Edit job"
                                         >
                                           <Edit className="w-4 h-4" />
@@ -508,7 +507,7 @@ export default function PipelinePage() {
                                           onClick={(e) => {
                                             e.preventDefault();
                                           }}
-                                          className="p-1 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-600 rounded transition-colors"
+                                          className="p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-600 rounded transition-colors"
                                           title="Call contact"
                                         >
                                           <Phone className="w-4 h-4" />
@@ -517,13 +516,12 @@ export default function PipelinePage() {
                                           onClick={(e) => {
                                             e.preventDefault();
                                           }}
-                                          className="p-1 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-600 rounded transition-colors"
+                                          className="p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-600 rounded transition-colors"
                                           title="Add note"
                                         >
                                           <MessageSquare className="w-4 h-4" />
                                         </button>
                                       </div>
-                                    )}
                                   </div>
                                 )}
                               </Draggable>
@@ -544,8 +542,8 @@ export default function PipelinePage() {
 
       {/* List View */}
       {viewMode === 'list' && (
-        <div className="flex-1 overflow-auto p-6">
-          <table className="w-full text-sm">
+        <div className="flex-1 overflow-auto p-3 sm:p-6">
+          <table className="w-full text-sm min-w-[600px]">
             <thead className="bg-slate-100 dark:bg-slate-800 sticky top-0">
               <tr>
                 <th className="text-left px-4 py-3 font-semibold text-slate-900 dark:text-white cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">

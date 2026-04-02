@@ -86,7 +86,7 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
           </div>
         </div>
         {onClose && (
-          <button onClick={onClose} className={`lg:hidden p-1 ${mobileCloseBtn}`}>
+          <button onClick={onClose} className={`lg:hidden p-2 -mr-1 ${mobileCloseBtn}`}>
             <X className="w-5 h-5" />
           </button>
         )}
@@ -273,7 +273,7 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
             className="lg:hidden fixed inset-0 bg-black/50 z-40"
             onClick={onClose}
           />
-          <aside className={`lg:hidden fixed inset-y-0 left-0 z-50 w-72 ${sidebarBg} border-r ${sidebarBorder} flex flex-col animate-[slideIn_0.2s_ease-out] transition-colors duration-200`} role="navigation" aria-label="Mobile sidebar navigation">
+          <aside className={`lg:hidden fixed inset-y-0 left-0 z-50 w-[85vw] max-w-72 ${sidebarBg} border-r ${sidebarBorder} flex flex-col animate-[slideIn_0.2s_ease-out] transition-colors duration-200`} role="navigation" aria-label="Mobile sidebar navigation">
             {sidebarContent}
           </aside>
         </>

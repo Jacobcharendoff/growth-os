@@ -710,7 +710,7 @@ export default function EstimatesPage() {
                   setModal({ type: null });
                   resetForm();
                 }}
-                className={`p-1 ${isDark ? 'hover:bg-slate-700' : 'hover:bg-slate-100'} rounded-lg transition`}
+                className={`p-2 ${isDark ? 'hover:bg-slate-700' : 'hover:bg-slate-100'} rounded-lg transition`}
               >
                 <X className={`w-6 h-6 ${isDark ? 'text-slate-400' : 'text-slate-600'}`} />
               </button>
@@ -1011,7 +1011,7 @@ export default function EstimatesPage() {
               <h2 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Convert to Invoice</h2>
               <button
                 onClick={() => setModal({ type: null })}
-                className={`p-1 ${isDark ? 'hover:bg-slate-700' : 'hover:bg-slate-100'} rounded-lg transition`}
+                className={`p-2 ${isDark ? 'hover:bg-slate-700' : 'hover:bg-slate-100'} rounded-lg transition`}
               >
                 <X className={`w-6 h-6 ${isDark ? 'text-slate-400' : 'text-slate-600'}`} />
               </button>

@@ -71,7 +71,7 @@ export default function LandscapingPage() {
     <MarketingLayout>
       {/* HERO */}
       <section ref={heroReveal.ref} className={`pt-32 pb-20 bg-gradient-to-br from-emerald-700 via-emerald-800 to-slate-900 relative overflow-hidden transition-opacity duration-1000 ${heroReveal.isVisible ? 'opacity-100' : 'opacity-0'}`}>
-        <div className="absolute top-20 right-0 opacity-10 pointer-events-none">
+        <div className="absolute top-20 right-0 opacity-10 pointer-events-none hidden md:block">
           <Leaf className="w-96 h-96 text-emerald-300" />
         </div>
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -79,7 +79,7 @@ export default function LandscapingPage() {
             <Leaf className="w-4 h-4" />
             {t('landscapingPage.heroBadge') }
           </div>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
             {t('landscapingPage.heroTitle') }
           </h1>
           <p className="text-lg sm:text-xl text-emerald-100 mb-10 max-w-2xl leading-relaxed">
@@ -101,7 +101,7 @@ export default function LandscapingPage() {
       {/* STATS */}
       <section ref={statsReveal.ref} className={`py-16 bg-gradient-to-r from-slate-900 to-slate-800 text-white transition-opacity duration-1000 ${statsReveal.isVisible ? 'opacity-100' : 'opacity-0'}`}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
             <div className="text-center">
               <div className="text-3xl sm:text-4xl font-bold text-emerald-400 mb-2">
                 <AnimatedCounter end={158900} suffix="M CAD" />

@@ -108,7 +108,7 @@ export default function ElectricalPage() {
           heroReveal.isVisible ? 'opacity-100' : 'opacity-0'
         }`}
       >
-        <div className="absolute top-20 right-0 opacity-10 pointer-events-none">
+        <div className="absolute top-20 right-0 opacity-10 pointer-events-none hidden md:block">
           <Zap className="w-96 h-96 text-yellow-300" />
         </div>
 
@@ -118,7 +118,7 @@ export default function ElectricalPage() {
             {t('electricalPage.heroBadge') }
           </div>
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
             {t('electricalPage.heroTitle') }
           </h1>
 
@@ -153,7 +153,7 @@ export default function ElectricalPage() {
         }`}
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
             <div className="text-center">
               <div className="text-3xl sm:text-4xl font-bold text-yellow-400 mb-2">
                 <AnimatedCounter end={29800} suffix="M CAD" />

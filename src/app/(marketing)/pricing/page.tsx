@@ -173,7 +173,7 @@ export default function PricingPage() {
             <Zap className="w-4 h-4 text-[#27AE60]" />
             <span className="text-xs font-semibold text-[#27AE60] uppercase tracking-wider">Pricing</span>
           </div>
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-[#2C3E50] tracking-tight mb-6">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-[#2C3E50] tracking-tight mb-6">
             {t('pricing.pageTitle')}
           </h1>
           <p className="text-xl sm:text-2xl text-gray-600 max-w-2xl mx-auto mb-8">
@@ -214,7 +214,7 @@ export default function PricingPage() {
       {/* Pricing Cards */}
       <section className="py-12 sm:py-20 bg-gradient-to-b from-white via-slate-50 to-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {plans.map((plan, idx) => {
               const displayPrice = currentPriceNum(plan.price, plan.annualPrice);
               return (

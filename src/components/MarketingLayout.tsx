@@ -158,10 +158,10 @@ export function Navigation() {
         {/* Mobile Navigation */}
         {mobileOpen && (
           <div className="lg:hidden pb-6 pt-2 border-t border-gray-100">
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-1">
               <Link
                 href="/#product"
-                className="text-sm font-medium text-gray-600"
+                className="text-sm font-medium text-gray-600 py-2"
                 onClick={() => setMobileOpen(false)}
               >
                 {t('nav.product')}
@@ -171,7 +171,7 @@ export function Navigation() {
               <div>
                 <button
                   onClick={() => setMobileTradeOpen(!mobileTradeOpen)}
-                  className="flex items-center gap-2 text-sm font-medium text-gray-600 w-full"
+                  className="flex items-center gap-2 text-sm font-medium text-gray-600 w-full py-2"
                 >
                   {t('nav.forYourTrade')}
                   <ChevronDown className={`w-4 h-4 transition-transform ${mobileTradeOpen ? 'rotate-180' : ''}`} />
@@ -198,7 +198,7 @@ export function Navigation() {
 
               <Link
                 href="/pricing"
-                className="text-sm font-medium text-gray-600"
+                className="text-sm font-medium text-gray-600 py-2"
                 onClick={() => setMobileOpen(false)}
               >
                 {t('marketing.pricing')}
@@ -206,7 +206,7 @@ export function Navigation() {
 
               <Link
                 href="/switch"
-                className="text-sm font-medium text-gray-600"
+                className="text-sm font-medium text-gray-600 py-2"
                 onClick={() => setMobileOpen(false)}
               >
                 {t('nav.whyGrowthOS')}

@@ -113,7 +113,7 @@ export default function PlumbingPage() {
         }`}
       >
         {/* Background icon */}
-        <div className="absolute top-20 right-0 opacity-10 pointer-events-none">
+        <div className="absolute top-20 right-0 opacity-10 pointer-events-none hidden md:block">
           <Droplet className="w-96 h-96 text-blue-400" />
         </div>
 
@@ -125,7 +125,7 @@ export default function PlumbingPage() {
           </div>
 
           {/* H1 Headline */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
             {t('plumbingPage.heroTitle') }
           </h1>
 
@@ -162,7 +162,7 @@ export default function PlumbingPage() {
         }`}
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
             {/* Stat 1 */}
             <div className="text-center">
               <div className="text-3xl sm:text-4xl font-bold text-blue-400 mb-2">

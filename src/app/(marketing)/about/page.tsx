@@ -12,7 +12,7 @@ export default function AboutPage() {
       {/* Hero Section */}
       <section className="pt-24 pb-16 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
             {t('aboutPage.heroTitle')} <span className="text-blue-600">{t('aboutPage.heroTitleHighlight')}</span>
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl">
@@ -55,7 +55,7 @@ export default function AboutPage() {
       <section className="py-16 bg-gray-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-gray-900 mb-12">{t('aboutPage.ourValues')}</h2>
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Value 1: Built for Canada */}
             <div className="bg-white rounded-2xl p-8 shadow-sm">
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">

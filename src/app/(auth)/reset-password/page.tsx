@@ -114,8 +114,8 @@ export default function ResetPasswordPage() {
             <Zap className="w-6 h-6 text-[#27AE60]" strokeWidth={3} />
           </div>
           <div className="flex items-baseline gap-1">
-            <span className="text-2xl font-bold text-[#2C3E50]">Growth</span>
-            <span className="text-2xl font-bold text-[#27AE60]">OS</span>
+            <span className="text-2xl font-bold text-[#2C3E50]">Stay</span>
+            <span className="text-2xl font-bold text-[#27AE60]">bookt</span>
           </div>
         </div>
         <p className="text-sm text-slate-600 mt-2">

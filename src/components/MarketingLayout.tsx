@@ -77,7 +77,7 @@ export function Navigation() {
               <Zap className="w-5 h-5 text-white" />
             </div>
             <span className="text-xl font-bold tracking-tight">
-              <span className="text-gray-900">Growth</span><span className="text-[#27AE60]">OS</span>
+              <span className="text-gray-900">Stay</span><span className="text-[#27AE60]">bookt</span>
             </span>
           </Link>
 
@@ -285,7 +285,7 @@ export function Footer() {
               <div className="w-9 h-9 rounded-xl bg-[#2C3E50] flex items-center justify-center">
                 <Zap className="w-5 h-5 text-white" />
               </div>
-              <span className="text-lg font-bold text-white"><span className="text-white">Growth</span><span className="text-[#27AE60]">OS</span></span>
+              <span className="text-lg font-bold text-white"><span className="text-white">Stay</span><span className="text-[#27AE60]">bookt</span></span>
             </Link>
             <p className="text-sm leading-relaxed">Stay booked. Stay paid. Purpose-built for the trades.</p>
             <div className="mt-3 flex items-center gap-1.5">

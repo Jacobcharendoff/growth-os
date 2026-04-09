@@ -81,7 +81,7 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
           <Zap className={`w-7 h-7 ${brandAccent}`} />
           <div className="flex flex-col">
             <span className={`font-bold text-lg tracking-tight ${brandText}`}>
-              Growth<span className={brandAccent}>OS</span>
+              Stay<span className={brandAccent}>bookt</span>
             </span>
           </div>
         </div>

@@ -13,8 +13,8 @@ export async function POST() {
   try {
     const supabase = createServiceClient();
 
-    const testEmail = 'demo@growthosapp.com';
-    const testPassword = 'GrowthOS2026!';
+    const testEmail = 'demo@staybooktapp.com';
+    const testPassword = 'Staybookt2026!';
     const testName = 'Demo User';
 
     // Check if user already exists

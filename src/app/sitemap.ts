@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://growth-os-three-pied.vercel.app';
+  const baseUrl = 'https://staybookt-pied.vercel.app';
   const now = new Date();
 
   return [

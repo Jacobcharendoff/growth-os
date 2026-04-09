@@ -28,7 +28,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>('en');
 
   useEffect(() => {
-    const saved = window.localStorage?.getItem('growth-os-locale') as Locale;
+    const saved = window.localStorage?.getItem('staybookt-locale') as Locale;
     if (saved && (saved === 'en' || saved === 'fr')) {
       setLocaleState(saved);
     }
@@ -37,7 +37,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const setLocale = useCallback((newLocale: Locale) => {
     setLocaleState(newLocale);
     try {
-      window.localStorage?.setItem('growth-os-locale', newLocale);
+      window.localStorage?.setItem('staybookt-locale', newLocale);
     } catch {}
     // Update html lang attribute
     document.documentElement.lang = newLocale;

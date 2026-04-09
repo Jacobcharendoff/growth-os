@@ -27,7 +27,7 @@ export default function MessagesPage() {
             SMS &amp; Email Messaging
           </h1>
           <p className="text-slate-600 dark:text-slate-400 mb-6 text-base leading-relaxed">
-            Send texts and emails directly from GrowthOS. Automated follow-ups, appointment reminders, and review requests — all in one place.
+            Send texts and emails directly from Staybookt. Automated follow-ups, appointment reminders, and review requests — all in one place.
           </p>
 
           <div className="inline-flex items-center gap-2 bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300 px-4 py-2 rounded-lg text-sm font-medium border border-amber-200 dark:border-amber-800">

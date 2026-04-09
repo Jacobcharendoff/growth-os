@@ -35,7 +35,7 @@ export default function ServiceWorkerRegistration() {
               if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
                 // New service worker is ready
                 setUpdateAvailable(true);
-                toast.info('GrowthOS has been updated. Reload to see the latest version.');
+                toast.info('Staybookt has been updated. Reload to see the latest version.');
               }
             });
           }
@@ -53,7 +53,7 @@ export default function ServiceWorkerRegistration() {
     navigator.serviceWorker.addEventListener('message', (event) => {
       if (event.data && event.data.type === 'UPDATE_AVAILABLE') {
         setUpdateAvailable(true);
-        toast.info('GrowthOS has been updated. Reload to see the latest version.');
+        toast.info('Staybookt has been updated. Reload to see the latest version.');
       }
     });
   }, [toast]);

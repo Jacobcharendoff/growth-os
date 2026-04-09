@@ -20,21 +20,13 @@ export const metadata: Metadata = {
     title: "Staybookt — The CRM Built for Canadian Service Businesses",
     description: "Bilingual CRM with pipeline management, automations, and Canadian tax compliance. Built for plumbers, HVAC techs, electricians, and more.",
     type: "website",
-    url: "https://staybookt-pied.vercel.app",
-    images: [
-      {
-        url: "https://staybookt-pied.vercel.app/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Staybookt",
-      },
-    ],
+    url: "https://staybookt.com",
   },
   twitter: {
     card: "summary_large_image",
   },
   alternates: {
-    canonical: "https://staybookt-pied.vercel.app",
+    canonical: "https://staybookt.com",
   },
 };
 
@@ -50,7 +42,7 @@ export default function RootLayout({
     applicationCategory: "BusinessApplication",
     operatingSystem: "Web",
     description: "Bilingual CRM built for Canadian home service businesses. Pipeline management, automations, invoicing with provincial tax compliance.",
-    url: "https://staybookt-pied.vercel.app",
+    url: "https://staybookt.com",
     offers: {
       "@type": "AggregateOffer",
       priceCurrency: "CAD",
@@ -61,7 +53,7 @@ export default function RootLayout({
     creator: {
       "@type": "Organization",
       name: "Staybookt",
-      url: "https://staybookt-pied.vercel.app",
+      url: "https://staybookt.com",
       address: {
         "@type": "PostalAddress",
         addressCountry: "CA",
@@ -75,7 +67,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#27AE60" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <link rel="apple-touch-icon" href="/icons/icon.svg" />
+        
         <link rel="manifest" href="/manifest.json" />
         <script
           type="application/ld+json"

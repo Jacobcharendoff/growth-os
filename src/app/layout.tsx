@@ -5,7 +5,7 @@ import PWAInstallPrompt from "@/components/PWAInstallPrompt";
 import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
 
 export const metadata: Metadata = {
-  title: "GrowthOS - The Operating System for Service Business Growth",
+  title: "Staybookt - The Operating System for Service Business Growth",
   description: "The all-in-one CRM and pipeline management platform built for service businesses. Manage leads, automate follow-ups, and grow revenue.",
   keywords: "CRM, field service software, plumbing software, HVAC software, electrical software, contractor management, pipeline management, Canadian CRM",
   robots: "index, follow",
@@ -14,19 +14,19 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "GrowthOS",
+    title: "Staybookt",
   },
   openGraph: {
-    title: "GrowthOS — The CRM Built for Canadian Service Businesses",
+    title: "Staybookt — The CRM Built for Canadian Service Businesses",
     description: "Bilingual CRM with pipeline management, automations, and Canadian tax compliance. Built for plumbers, HVAC techs, electricians, and more.",
     type: "website",
-    url: "https://growth-os-three-pied.vercel.app",
+    url: "https://staybookt-pied.vercel.app",
     images: [
       {
-        url: "https://growth-os-three-pied.vercel.app/og-image.png",
+        url: "https://staybookt-pied.vercel.app/og-image.png",
         width: 1200,
         height: 630,
-        alt: "GrowthOS",
+        alt: "Staybookt",
       },
     ],
   },
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
   },
   alternates: {
-    canonical: "https://growth-os-three-pied.vercel.app",
+    canonical: "https://staybookt-pied.vercel.app",
   },
 };
 
@@ -46,11 +46,11 @@ export default function RootLayout({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    name: "GrowthOS",
+    name: "Staybookt",
     applicationCategory: "BusinessApplication",
     operatingSystem: "Web",
     description: "Bilingual CRM built for Canadian home service businesses. Pipeline management, automations, invoicing with provincial tax compliance.",
-    url: "https://growth-os-three-pied.vercel.app",
+    url: "https://staybookt-pied.vercel.app",
     offers: {
       "@type": "AggregateOffer",
       priceCurrency: "CAD",
@@ -60,8 +60,8 @@ export default function RootLayout({
     },
     creator: {
       "@type": "Organization",
-      name: "GrowthOS",
-      url: "https://growth-os-three-pied.vercel.app",
+      name: "Staybookt",
+      url: "https://staybookt-pied.vercel.app",
       address: {
         "@type": "PostalAddress",
         addressCountry: "CA",

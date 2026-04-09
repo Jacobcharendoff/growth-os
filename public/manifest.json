@@ -1,7 +1,7 @@
 {
-  "name": "GrowthOS",
-  "short_name": "GrowthOS",
-  "description": "The operating system for service business growth",
+  "name": "Staybookt",
+  "short_name": "Staybookt",
+  "description": "Stay booked. Stay paid. The booking engine for service businesses.",
   "start_url": "/dashboard",
   "display": "standalone",
   "background_color": "#0f172a",

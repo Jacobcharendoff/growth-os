@@ -250,10 +250,10 @@ function Hero() {
       </div>
 
       {/* Main content */}
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-24 lg:py-32 z-10">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-32 z-10">
         <div className="text-center max-w-4xl mx-auto">
           {/* Badge */}
-          <div className="hero-reveal hero-reveal-delay-1 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 mb-8">
+          <div className="hero-reveal hero-reveal-delay-1 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 mb-6 sm:mb-8">
             <Sparkles className="w-4 h-4 text-blue-500" />
             <span className="text-sm font-medium text-blue-700">{t('hero.freeForFourteen')}</span>
           </div>
@@ -304,14 +304,14 @@ function Hero() {
           <div className="hero-reveal hero-reveal-delay-4 mt-8 flex justify-center gap-4 flex-wrap">
             <Link
               href="/login?tab=signup"
-              className="inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-[#27AE60] hover:bg-[#229954] text-white text-base font-semibold rounded-2xl transition-all shadow-lg shadow-emerald-600/25 hover:shadow-emerald-500/40 hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center gap-2.5 px-6 sm:px-8 py-3 sm:py-4 bg-[#27AE60] hover:bg-[#229954] text-white text-base font-semibold rounded-2xl transition-all shadow-lg shadow-emerald-600/25 hover:shadow-emerald-500/40 hover:-translate-y-0.5"
             >
               Start your free 14-day trial
               <ArrowRight className="w-5 h-5" />
             </Link>
             <Link
               href="/dashboard"
-              className="inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-white hover:bg-gray-50 text-gray-900 text-base font-semibold rounded-2xl transition-all border border-gray-300 shadow-sm hover:shadow-md"
+              className="inline-flex items-center justify-center gap-2.5 px-6 sm:px-8 py-3 sm:py-4 bg-white hover:bg-gray-50 text-gray-900 text-base font-semibold rounded-2xl transition-all border border-gray-300 shadow-sm hover:shadow-md"
             >
               See Staybookt in action
             </Link>
@@ -350,7 +350,7 @@ function Hero() {
           </div>
 
           {/* Mobile persona cards — horizontal scroll */}
-          <div className="lg:hidden mt-10 -mx-6 px-6 flex gap-3 overflow-x-auto pb-4 scrollbar-hide">
+          <div className="lg:hidden mt-10 -mx-4 px-4 sm:-mx-6 sm:px-6 flex gap-3 overflow-x-auto pb-4 scrollbar-hide">
             {personaCards.slice(0, 4).map((card) => (
               <div key={card.initials} className="flex-shrink-0 bg-white rounded-xl p-3 shadow-md border border-gray-100 w-48">
                 <div className="flex items-center gap-2.5 mb-2">
@@ -380,7 +380,7 @@ function ProblemSection() {
   const { t } = useLanguage();
   return (
     <section className="py-16 lg:py-20 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900">
-      <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="scroll-fade-up text-2xl sm:text-3xl font-bold text-white mb-8">{t('problem.soundFamiliar')}</h2>
         <div className="stagger-children scroll-fade-up grid gap-4 text-left max-w-2xl mx-auto">
           {[
@@ -409,7 +409,7 @@ function ProblemSection() {
             { value: 8500, suffix: "", prefix: "$", label: t('stats.extraRevenue') },
           ].map((stat) => (
             <div key={stat.label} className="scroll-fade-up">
-              <div className="text-3xl lg:text-4xl font-bold text-white">
+              <div className="text-3xl lg:text-2xl sm:text-4xl font-bold text-white">
                 <AnimatedCounter end={stat.value} suffix={stat.suffix} prefix={stat.prefix || ""} />
               </div>
               <p className="mt-2 text-xs lg:text-sm text-slate-400 font-medium">{stat.label}</p>
@@ -784,7 +784,7 @@ function InteractiveExplorer() {
         <div className="hidden sm:block absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-blue-500/5 rounded-full blur-3xl" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-6">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
         {/* Section header */}
         <div className="text-center mb-12 sm:mb-16">
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight">
@@ -873,7 +873,7 @@ function InteractiveExplorer() {
 
         {/* CTA below the explorer — clearly separated */}
         <div className="mt-10 text-center">
-          <Link href="/dashboard" className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold text-white bg-[#27AE60] hover:bg-[#229954] shadow-lg shadow-emerald-600/25 transition-all">
+          <Link href="/dashboard" className="inline-flex items-center gap-2 px-4 sm:px-6 py-3 rounded-full text-sm font-semibold text-white bg-[#27AE60] hover:bg-[#229954] shadow-lg shadow-emerald-600/25 transition-all">
             Explore all features
             <ArrowRight className="w-4 h-4" />
           </Link>
@@ -940,7 +940,7 @@ function Features() {
 
   return (
     <section id="features" className="py-24 lg:py-32 bg-gradient-to-b from-white to-slate-50">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="scroll-fade-up text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-100 mb-6">
             <span className="text-xs font-semibold text-blue-600 uppercase tracking-wider">Everything You Need</span>
@@ -991,9 +991,9 @@ function AutopilotSection() {
 
   return (
     <section data-section="automations" className="py-12 lg:py-16 bg-white">
-      <div className="max-w-4xl mx-auto px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="scroll-fade-up text-center mb-10">
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">
+          <h2 className="text-3xl sm:text-2xl sm:text-4xl font-bold text-gray-900 tracking-tight">
             {t('autopilot.title')}{" "}
             <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
               {t('autopilot.subtitle')}
@@ -1171,7 +1171,7 @@ function AdvisorDemo() {
 
   return (
     <section id="advisor-demo" ref={sectionRef} className="py-24 lg:py-32 bg-gradient-to-b from-slate-50 to-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Left: Copy */}
           <div ref={leftColRef} className="parallax-left-column scroll-fade-left text-center lg:text-left">
@@ -1208,7 +1208,7 @@ function AdvisorDemo() {
             <div className="mt-10">
               <Link
                 href="/advisor"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white text-sm font-semibold rounded-xl hover:from-purple-700 hover:to-blue-700 transition-all shadow-lg shadow-purple-600/20"
+                className="inline-flex items-center gap-2 px-4 sm:px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white text-sm font-semibold rounded-xl hover:from-purple-700 hover:to-blue-700 transition-all shadow-lg shadow-purple-600/20"
               >
                 {t('advisor.tryAdvisor')} <ArrowRight className="w-4 h-4" />
               </Link>
@@ -1220,7 +1220,7 @@ function AdvisorDemo() {
             {/* Phone frame */}
             <div className="mx-auto max-w-[340px] bg-white rounded-[2.5rem] shadow-2xl shadow-slate-900/10 border border-gray-200 overflow-hidden">
               {/* Status bar */}
-              <div className="bg-white px-6 pt-4 pb-0">
+              <div className="bg-white px-4 sm:px-6 pt-4 pb-0">
                 <div className="flex justify-between items-center text-xs text-gray-500 font-medium">
                   <span>9:41 AM</span>
                   <div className="flex gap-1">
@@ -1329,7 +1329,7 @@ function SocialProof() {
 
   return (
     <section data-section="proof" className="py-16 lg:py-20 bg-gradient-to-b from-white to-slate-50">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Testimonials section header */}
         <div className="scroll-fade-up text-center max-w-3xl mx-auto mb-12">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight">
@@ -1411,7 +1411,7 @@ function PricingTeaser() {
 
   return (
     <section data-section="pricing" className="py-12 lg:py-16 bg-gradient-to-b from-white to-slate-50">
-      <div className="max-w-3xl mx-auto px-6 lg:px-8 text-center">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="scroll-fade-up">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight mb-4">
             Flexible plans that grow with you.
@@ -1419,7 +1419,7 @@ function PricingTeaser() {
           <p className="text-lg text-gray-600 mb-8">
             Plans starting at <span className="text-blue-600 font-semibold">$79/mo CAD</span>. Try free for 14 days — no credit card required.
           </p>
-          <Link href="/pricing" className="inline-flex items-center gap-2 px-6 py-3 bg-[#27AE60] hover:bg-[#229954] text-white font-semibold rounded-xl transition-all shadow-lg">
+          <Link href="/pricing" className="inline-flex items-center gap-2 px-4 sm:px-6 py-3 bg-[#27AE60] hover:bg-[#229954] text-white font-semibold rounded-xl transition-all shadow-lg">
             View all pricing plans <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -1460,7 +1460,7 @@ function Pricing() {
 
   return (
     <section id="pricing" className="py-16 lg:py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="scroll-fade-up text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 mb-6">
             <span className="text-xs font-semibold text-emerald-600 uppercase tracking-wider">{t('pricing.title')}</span>
@@ -1491,7 +1491,7 @@ function Pricing() {
               <h3 className={`text-lg font-semibold ${plan.highlighted ? "text-slate-100" : "text-gray-900"}`}>{plan.name}</h3>
               <div className="mt-4 flex items-baseline gap-1">
                 <span className={`text-sm ${plan.highlighted ? "text-slate-300" : "text-gray-400"}`}>$</span>
-                <span className="text-4xl font-bold">{plan.price}</span>
+                <span className="text-2xl sm:text-4xl font-bold">{plan.price}</span>
                 <span className={`text-sm ${plan.highlighted ? "text-slate-300" : "text-gray-400"}`}>/mo CAD</span>
               </div>
               <p className={`mt-2 text-sm ${plan.highlighted ? "text-slate-300" : "text-gray-500"}`}>{plan.description}</p>
@@ -1503,7 +1503,7 @@ function Pricing() {
                   </li>
                 ))}
               </ul>
-              <Link href="/login?tab=signup" className={`mt-8 block text-center px-6 py-3 rounded-xl font-semibold text-sm transition-all ${plan.highlighted ? "bg-white text-[#2C3E50] hover:bg-slate-50 shadow-lg" : "bg-gray-900 text-white hover:bg-gray-800"}`}>
+              <Link href="/login?tab=signup" className={`mt-8 block text-center px-4 sm:px-6 py-3 rounded-xl font-semibold text-sm transition-all ${plan.highlighted ? "bg-white text-[#2C3E50] hover:bg-slate-50 shadow-lg" : "bg-gray-900 text-white hover:bg-gray-800"}`}>
                 {plan.cta}
               </Link>
             </div>

@@ -124,7 +124,7 @@ export function ROICalculator() {
 
   return (
     <section className="relative py-16 lg:py-24 bg-gradient-to-b from-slate-50 via-white to-slate-50">
-      <div className="relative max-w-5xl mx-auto px-6 lg:px-8">
+      <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-10 lg:mb-14">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 tracking-tight mb-3">
@@ -246,7 +246,7 @@ export function ROICalculator() {
         <div className="mt-10 text-center">
           <a
             href="/dashboard"
-            className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#27AE60] hover:bg-[#229954] text-white font-semibold rounded-full transition-all shadow-lg shadow-emerald-600/20 hover:shadow-emerald-500/30 hover:-translate-y-0.5"
+            className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-[#27AE60] hover:bg-[#229954] text-white font-semibold rounded-full transition-all shadow-lg shadow-emerald-600/20 hover:shadow-emerald-500/30 hover:-translate-y-0.5"
           >
             {t('roi.cta')}
             <ArrowRight className="w-5 h-5" />

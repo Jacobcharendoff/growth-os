@@ -88,7 +88,7 @@ export function PipelineBoard({ deals: initialDeals, contacts }: PipelineBoardPr
             return (
               <div
                 key={stage}
-                className="flex flex-col w-80 bg-slate-50 rounded-xl overflow-hidden border border-slate-200"
+                className="flex flex-col w-[75vw] sm:w-72 md:w-80 bg-slate-50 rounded-xl overflow-hidden border border-slate-200"
               >
                 {/* Header */}
                 <div

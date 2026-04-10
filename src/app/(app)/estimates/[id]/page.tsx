@@ -608,7 +608,7 @@ export default function EstimateDetailPage() {
           {/* Company Header */}
           <div className="mb-12 pb-8 border-b border-slate-200">
             <h2 className="text-2xl font-bold text-slate-900 mb-4">{settings.companyName}</h2>
-            <div className="grid grid-cols-2 gap-4 text-sm text-slate-600">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-slate-600">
               <div>
                 <p className="font-medium text-slate-900">{settings.companyAddress}</p>
                 <p>{settings.companyPhone}</p>
@@ -619,8 +619,8 @@ export default function EstimateDetailPage() {
 
           {/* Estimate Title and Number */}
           <div className="mb-8">
-            <h1 className="text-4xl font-bold text-slate-900 mb-2">ESTIMATE</h1>
-            <div className="grid grid-cols-2 gap-8">
+            <h1 className="text-2xl sm:text-4xl font-bold text-slate-900 mb-2">ESTIMATE</h1>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8">
               <div>
                 <p className="text-sm font-medium text-slate-600">Estimate Number</p>
                 <p className="text-lg font-bold text-slate-900">{estimate.number}</p>

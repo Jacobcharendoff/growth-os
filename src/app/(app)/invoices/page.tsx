@@ -428,7 +428,7 @@ export default function InvoicesPage() {
         <div className={`w-full ${isDark ? 'bg-slate-700' : 'bg-slate-200'} rounded-full h-3 overflow-hidden mb-6`}>
           <div className="h-3 rounded-full bg-gradient-to-r from-emerald-500 to-emerald-600 transition-all" style={{ width: `${collectionPercent}%` }} />
         </div>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
           <div>
             <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-600'} mb-1`}>Collected</p>
             <p className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>

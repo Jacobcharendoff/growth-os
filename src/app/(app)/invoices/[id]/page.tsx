@@ -586,7 +586,7 @@ export default function InvoiceDetailPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-3 sm:gap-4 sm:p-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 sm:p-6">
         {/* Main Section - Invoice Document */}
         <div className="col-span-2">
           <div
@@ -713,7 +713,7 @@ export default function InvoiceDetailPage() {
 
             {/* Totals */}
             <div className="flex justify-end mb-8">
-              <div className="w-64">
+              <div className="w-full sm:w-64">
                 <div
                   className={`flex justify-between py-2 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}
                 >
@@ -741,7 +741,7 @@ export default function InvoiceDetailPage() {
 
             {/* Amount Paid & Balance */}
             <div className="flex justify-end mb-8">
-              <div className="w-64">
+              <div className="w-full sm:w-64">
                 <div
                   className={`flex justify-between py-2 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}
                 >

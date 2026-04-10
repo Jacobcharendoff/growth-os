@@ -391,7 +391,7 @@ export function GuidedTour({ tour, onComplete, onClose }: GuidedTourProps) {
           }`}
         >
           {/* Header */}
-          <div className="flex items-center justify-between px-6 pt-6 pb-2">
+          <div className="flex items-center justify-between px-4 sm:px-6 pt-4 sm:pt-6 pb-2">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
                 <MousePointerClick className="w-4 h-4 text-blue-600" />
@@ -410,7 +410,7 @@ export function GuidedTour({ tour, onComplete, onClose }: GuidedTourProps) {
           </div>
 
           {/* Progress Bar */}
-          <div className="px-6 pt-2 pb-4">
+          <div className="px-4 sm:px-6 pt-2 pb-4">
             <div className="w-full bg-slate-100 rounded-full h-1.5">
               <div
                 className="bg-blue-600 h-1.5 rounded-full transition-all duration-500"
@@ -420,7 +420,7 @@ export function GuidedTour({ tour, onComplete, onClose }: GuidedTourProps) {
           </div>
 
           {/* Content */}
-          <div className="px-6 pb-4">
+          <div className="px-4 sm:px-6 pb-4">
             <h3 className="text-xl font-bold text-slate-900 mb-3">{step.title}</h3>
             <p className="text-sm text-slate-600 leading-relaxed whitespace-pre-line">{step.content}</p>
 
@@ -463,7 +463,7 @@ export function GuidedTour({ tour, onComplete, onClose }: GuidedTourProps) {
 
           {/* Action Indicator */}
           {step.action && (
-            <div className="px-6 pb-4">
+            <div className="px-4 sm:px-6 pb-4">
               <div className="flex items-center gap-2 text-sm text-slate-500">
                 <MousePointerClick className="w-4 h-4 text-blue-500" />
                 <span>{step.action}</span>
@@ -472,7 +472,7 @@ export function GuidedTour({ tour, onComplete, onClose }: GuidedTourProps) {
           )}
 
           {/* Footer Navigation */}
-          <div className="px-6 py-4 border-t border-slate-100 flex items-center justify-between">
+          <div className="px-4 sm:px-6 py-3 sm:py-4 border-t border-slate-100 flex items-center justify-between">
             <button
               onClick={goBack}
               disabled={isFirst}

@@ -221,7 +221,7 @@ export default function DealDetailPage() {
           Back to Pipeline
         </button>
         <div className="flex items-center justify-between">
-          <h1 className={`text-2xl sm:text-3xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
+          <h1 className={`text-2xl sm:text-xl sm:text-3xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
             {deal.title}
           </h1>
           <div className="flex gap-2">
@@ -292,7 +292,7 @@ export default function DealDetailPage() {
           {/* Deal Value */}
           <div className="text-center mb-6 pb-6 border-b dark:border-slate-700 border-slate-200">
             <p className={`text-xs font-semibold uppercase ${isDark ? 'text-slate-400' : 'text-slate-600'} mb-2`}>Deal Value</p>
-            <p className={`text-3xl font-bold ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}>
+            <p className={`text-xl sm:text-3xl font-bold ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}>
               ${dealValue.toLocaleString()}
             </p>
           </div>

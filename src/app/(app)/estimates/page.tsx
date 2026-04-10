@@ -109,7 +109,7 @@ export default function EstimatesPage() {
 
   if (!mounted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 p-8 animate-pulse">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 p-4 sm:p-8 animate-pulse">
         <div className="h-8 bg-slate-200 dark:bg-slate-700 rounded w-48 mb-6"></div>
         <div className="grid grid-cols-2 lg:grid-cols-6 gap-4 mb-8">
           {[...Array(6)].map((_, i) => (
@@ -415,21 +415,21 @@ export default function EstimatesPage() {
     <div className={`p-4 sm:p-8 ${isDark ? 'bg-slate-950' : 'bg-slate-50'} min-h-screen`}>
       {/* Header */}
       <div className="mb-8">
-        <h1 className={`text-2xl sm:text-3xl font-bold ${isDark ? 'text-white' : 'text-slate-900'} mb-2`}>
+        <h1 className={`text-2xl sm:text-xl sm:text-3xl font-bold ${isDark ? 'text-white' : 'text-slate-900'} mb-2`}>
           {t('estimates.title')}
         </h1>
         <p className={isDark ? 'text-slate-400' : 'text-slate-600'}>Create and track customer estimates</p>
       </div>
 
       {/* Stats Bar */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-3 sm:gap-4 sm:p-6 mb-6 sm:mb-8">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 sm:p-6 mb-6 sm:mb-8">
         <div className={`${isDark ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200'} rounded-xl shadow-sm border p-4 sm:p-6`}>
           <div className="flex items-center justify-between">
             <div>
               <p className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'} font-medium mb-1`}>
                 {t('estimates.totalEstimates')}
               </p>
-              <p className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>{totalEstimates}</p>
+              <p className={`text-xl sm:text-3xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>{totalEstimates}</p>
             </div>
             <FileText className={`w-12 h-12 ${isDark ? 'text-blue-900' : 'text-blue-100'}`} />
           </div>
@@ -441,7 +441,7 @@ export default function EstimatesPage() {
               <p className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'} font-medium mb-1`}>
                 {t('estimates.pendingApproval')}
               </p>
-              <p className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>{pendingApproval}</p>
+              <p className={`text-xl sm:text-3xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>{pendingApproval}</p>
             </div>
             <Clock className={`w-12 h-12 ${isDark ? 'text-amber-900' : 'text-amber-100'}`} />
           </div>
@@ -453,7 +453,7 @@ export default function EstimatesPage() {
               <p className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'} font-medium mb-1`}>
                 {t('estimates.approvedThisMonth')}
               </p>
-              <p className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>{approvedThisMonth}</p>
+              <p className={`text-xl sm:text-3xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>{approvedThisMonth}</p>
             </div>
             <TrendingUp className={`w-12 h-12 ${isDark ? 'text-emerald-900' : 'text-emerald-100'}`} />
           </div>
@@ -465,7 +465,7 @@ export default function EstimatesPage() {
               <p className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'} font-medium mb-1`}>
                 {t('estimates.conversionRate')}
               </p>
-              <p className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>{conversionRate}%</p>
+              <p className={`text-xl sm:text-3xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>{conversionRate}%</p>
             </div>
             <div className={`w-12 h-12 rounded-lg ${isDark ? 'bg-rose-900' : 'bg-rose-100'} flex items-center justify-center`}>
               <span className="text-xl font-bold text-rose-600">↗</span>
@@ -499,7 +499,7 @@ export default function EstimatesPage() {
               resetForm();
               setModal({ type: 'create' });
             }}
-            className="flex items-center gap-2 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition whitespace-nowrap"
+            className="flex items-center gap-2 px-4 sm:px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition whitespace-nowrap"
           >
             <Plus className="w-4 h-4" />
             {t('estimates.createEstimate')}
@@ -565,7 +565,7 @@ export default function EstimatesPage() {
             ))}
           </div>
         ) : (
-          <div className="px-6 py-8 text-center">
+          <div className="px-4 sm:px-6 py-4 sm:py-8 text-center">
             <p className={isDark ? 'text-slate-400' : 'text-slate-500'}>No estimates found</p>
           </div>
         )}
@@ -965,13 +965,13 @@ export default function EstimatesPage() {
                       setModal({ type: null });
                       resetForm();
                     }}
-                    className={`px-6 py-2 ${isDark ? 'bg-slate-700 text-slate-300 hover:bg-slate-600' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'} rounded-lg font-medium transition`}
+                    className={`px-4 sm:px-6 py-2 ${isDark ? 'bg-slate-700 text-slate-300 hover:bg-slate-600' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'} rounded-lg font-medium transition`}
                   >
                     Cancel
                   </button>
                   <button
                     onClick={modal.type === 'create' ? handleCreateEstimate : handleUpdateEstimate}
-                    className="px-6 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-lg font-medium transition"
+                    className="px-4 sm:px-6 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-lg font-medium transition"
                   >
                     {modal.type === 'create' ? 'Create Estimate' : 'Save Changes'}
                   </button>

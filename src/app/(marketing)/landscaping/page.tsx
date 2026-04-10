@@ -44,12 +44,12 @@ function AnimatedCounter({ end, suffix = '', prefix = '' }: { end: number; suffi
 function FAQItem({ question, answer, isOpen, onToggle }: { question: string; answer: string; isOpen: boolean; onToggle: () => void }) {
   return (
     <div className="border border-gray-200 rounded-xl overflow-hidden">
-      <button onClick={onToggle} className="w-full px-6 py-4 flex items-center justify-between bg-white hover:bg-gray-50 transition-colors">
+      <button onClick={onToggle} className="w-full px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between bg-white hover:bg-gray-50 transition-colors">
         <span className="font-semibold text-gray-900 text-left">{question}</span>
         <ChevronDown className={`w-5 h-5 text-emerald-600 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </button>
       {isOpen && (
-        <div className="px-6 py-4 bg-gray-50 border-t border-gray-200">
+        <div className="px-4 sm:px-6 py-3 sm:py-4 bg-gray-50 border-t border-gray-200">
           <p className="text-gray-700 leading-relaxed">{answer}</p>
         </div>
       )}
@@ -137,22 +137,22 @@ export default function LandscapingPage() {
             {t('landscapingPage.painTitle') }
           </h2>
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="p-8 bg-white rounded-2xl border-l-4 border-emerald-600 shadow-sm hover:shadow-md transition-shadow animate-in fade-in duration-500">
+            <div className="p-5 sm:p-8 bg-white rounded-2xl border-l-4 border-emerald-600 shadow-sm hover:shadow-md transition-shadow animate-in fade-in duration-500">
               <Calendar className="w-6 h-6 text-emerald-600 mb-3 flex-shrink-0 mt-1" />
               <h3 className="text-xl font-bold text-gray-900 mb-2">{t('landscapingPage.pain1Title') }</h3>
               <p className="text-gray-600 leading-relaxed">{t('landscapingPage.pain1Desc') }</p>
             </div>
-            <div className="p-8 bg-white rounded-2xl border-l-4 border-emerald-600 shadow-sm hover:shadow-md transition-shadow animate-in fade-in duration-500 delay-100">
+            <div className="p-5 sm:p-8 bg-white rounded-2xl border-l-4 border-emerald-600 shadow-sm hover:shadow-md transition-shadow animate-in fade-in duration-500 delay-100">
               <Truck className="w-6 h-6 text-emerald-600 mb-3" />
               <h3 className="text-xl font-bold text-gray-900 mb-2">{t('landscapingPage.pain2Title') }</h3>
               <p className="text-gray-600 leading-relaxed">{t('landscapingPage.pain2Desc')}</p>
             </div>
-            <div className="p-8 bg-white rounded-2xl border-l-4 border-emerald-600 shadow-sm hover:shadow-md transition-shadow animate-in fade-in duration-500 delay-200">
+            <div className="p-5 sm:p-8 bg-white rounded-2xl border-l-4 border-emerald-600 shadow-sm hover:shadow-md transition-shadow animate-in fade-in duration-500 delay-200">
               <AlertCircle className="w-6 h-6 text-emerald-600 mb-3" />
               <h3 className="text-xl font-bold text-gray-900 mb-2">{t('landscapingPage.pain3Title') }</h3>
               <p className="text-gray-600 leading-relaxed">{t('landscapingPage.pain3Desc')}</p>
             </div>
-            <div className="p-8 bg-white rounded-2xl border-l-4 border-emerald-600 shadow-sm hover:shadow-md transition-shadow animate-in fade-in duration-500 delay-300">
+            <div className="p-5 sm:p-8 bg-white rounded-2xl border-l-4 border-emerald-600 shadow-sm hover:shadow-md transition-shadow animate-in fade-in duration-500 delay-300">
               <Clock className="w-6 h-6 text-emerald-600 mb-3" />
               <h3 className="text-xl font-bold text-gray-900 mb-2">{t('landscapingPage.pain4Title') }</h3>
               <p className="text-gray-600 leading-relaxed">{t('landscapingPage.pain4Desc') }</p>
@@ -167,7 +167,7 @@ export default function LandscapingPage() {
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-white mb-4">{t('landscapingPage.solutionTitle') }</h2>
           <p className="text-center text-slate-300 text-lg mb-16 max-w-2xl mx-auto">Built for landscaping's unique challenges.</p>
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="p-8 bg-white/5 rounded-2xl border border-emerald-500/20 hover:border-emerald-500/50 hover:bg-white/10 transition-all group">
+            <div className="p-5 sm:p-8 bg-white/5 rounded-2xl border border-emerald-500/20 hover:border-emerald-500/50 hover:bg-white/10 transition-all group">
               <div className="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-600 to-emerald-500 flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:shadow-emerald-600/50 transition-all">
                 <Truck className="w-6 h-6 text-white" />
               </div>
@@ -180,7 +180,7 @@ export default function LandscapingPage() {
               </ul>
             </div>
 
-            <div className="p-8 bg-white/5 rounded-2xl border border-emerald-500/20 hover:border-emerald-500/50 hover:bg-white/10 transition-all group">
+            <div className="p-5 sm:p-8 bg-white/5 rounded-2xl border border-emerald-500/20 hover:border-emerald-500/50 hover:bg-white/10 transition-all group">
               <div className="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-600 to-emerald-500 flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:shadow-emerald-600/50 transition-all">
                 <TrendingUp className="w-6 h-6 text-white" />
               </div>
@@ -193,7 +193,7 @@ export default function LandscapingPage() {
               </ul>
             </div>
 
-            <div className="p-8 bg-white/5 rounded-2xl border border-emerald-500/20 hover:border-emerald-500/50 hover:bg-white/10 transition-all group">
+            <div className="p-5 sm:p-8 bg-white/5 rounded-2xl border border-emerald-500/20 hover:border-emerald-500/50 hover:bg-white/10 transition-all group">
               <div className="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-600 to-emerald-500 flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:shadow-emerald-600/50 transition-all">
                 <Users className="w-6 h-6 text-white" />
               </div>
@@ -206,7 +206,7 @@ export default function LandscapingPage() {
               </ul>
             </div>
 
-            <div className="p-8 bg-white/5 rounded-2xl border border-emerald-500/20 hover:border-emerald-500/50 hover:bg-white/10 transition-all group">
+            <div className="p-5 sm:p-8 bg-white/5 rounded-2xl border border-emerald-500/20 hover:border-emerald-500/50 hover:bg-white/10 transition-all group">
               <div className="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-600 to-emerald-500 flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:shadow-emerald-600/50 transition-all">
                 <Calendar className="w-6 h-6 text-white" />
               </div>
@@ -266,7 +266,7 @@ export default function LandscapingPage() {
               <h3 className="text-lg font-semibold text-gray-900 mb-3">Starter</h3>
               <div className="flex items-baseline gap-1 mb-4"><span className="text-4xl font-bold text-gray-900">$79</span><span className="text-gray-600">/mo CAD</span></div>
               <p className="text-sm text-gray-600 mb-6">For solo operators</p>
-              <Link href="/login?tab=signup" className="block w-full px-6 py-3 rounded-xl bg-gray-900 text-white text-sm font-semibold hover:bg-gray-800 transition-colors text-center mb-6">Start Free Trial</Link>
+              <Link href="/login?tab=signup" className="block w-full px-4 sm:px-6 py-3 rounded-xl bg-gray-900 text-white text-sm font-semibold hover:bg-gray-800 transition-colors text-center mb-6">Start Free Trial</Link>
               <ul className="space-y-3 text-sm text-gray-700">
                 <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500" />Call & scheduling</li>
                 <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500" />GPS tracking</li>
@@ -279,7 +279,7 @@ export default function LandscapingPage() {
               <h3 className="text-lg font-semibold text-gray-900 mb-3">Growth</h3>
               <div className="flex items-baseline gap-1 mb-4"><span className="text-4xl font-bold text-gray-900">$149</span><span className="text-gray-600">/mo CAD</span></div>
               <p className="text-sm text-gray-600 mb-6">For growing crews</p>
-              <Link href="/login?tab=signup" className="block w-full px-6 py-3 rounded-xl bg-emerald-600 text-white text-sm font-semibold hover:bg-emerald-700 transition-colors text-center mb-6">Start Free Trial</Link>
+              <Link href="/login?tab=signup" className="block w-full px-4 sm:px-6 py-3 rounded-xl bg-emerald-600 text-white text-sm font-semibold hover:bg-emerald-700 transition-colors text-center mb-6">Start Free Trial</Link>
               <ul className="space-y-3 text-sm text-gray-700">
                 <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500" />Everything in Starter</li>
                 <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500" />Recurring billing</li>
@@ -292,7 +292,7 @@ export default function LandscapingPage() {
               <h3 className="text-lg font-semibold text-gray-900 mb-3">Scale</h3>
               <div className="flex items-baseline gap-1 mb-4"><span className="text-4xl font-bold text-gray-900">$299</span><span className="text-gray-600">/mo CAD</span></div>
               <p className="text-sm text-gray-600 mb-6">For multi-crew operations</p>
-              <Link href="/login?tab=signup" className="block w-full px-6 py-3 rounded-xl bg-gray-900 text-white text-sm font-semibold hover:bg-gray-800 transition-colors text-center mb-6">Start Free Trial</Link>
+              <Link href="/login?tab=signup" className="block w-full px-4 sm:px-6 py-3 rounded-xl bg-gray-900 text-white text-sm font-semibold hover:bg-gray-800 transition-colors text-center mb-6">Start Free Trial</Link>
               <ul className="space-y-3 text-sm text-gray-700">
                 <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500" />Everything in Growth</li>
                 <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500" />Unlimited users</li>

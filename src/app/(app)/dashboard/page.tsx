@@ -127,7 +127,7 @@ export default function Dashboard() {
 
   if (!mounted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 p-8 animate-pulse">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 p-4 sm:p-8 animate-pulse">
         <div className="h-8 bg-slate-200 dark:bg-slate-700 rounded w-48 mb-6"></div>
         <div className="grid grid-cols-2 lg:grid-cols-6 gap-4 mb-8">
           {[...Array(6)].map((_, i) => <div key={i} className="bg-white dark:bg-slate-800 rounded-xl h-28 shadow-sm"></div>)}
@@ -602,10 +602,10 @@ export default function Dashboard() {
       {/* Charts Row 1: Pipeline Funnel & Revenue by Source */}
       {deals.length === 0 ? (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:p-6 mb-8">
-          <div className="bg-white dark:bg-slate-800 rounded-xl p-8 text-center border border-slate-200 dark:border-slate-700">
+          <div className="bg-white dark:bg-slate-800 rounded-xl p-4 sm:p-8 text-center border border-slate-200 dark:border-slate-700">
             <p className="text-slate-500 dark:text-slate-400">Charts will appear once you add your first job</p>
           </div>
-          <div className="bg-white dark:bg-slate-800 rounded-xl p-8 text-center border border-slate-200 dark:border-slate-700">
+          <div className="bg-white dark:bg-slate-800 rounded-xl p-4 sm:p-8 text-center border border-slate-200 dark:border-slate-700">
             <p className="text-slate-500 dark:text-slate-400">Charts will appear once you add your first job</p>
           </div>
         </div>
@@ -666,10 +666,10 @@ export default function Dashboard() {
       {/* Charts Row 2: Monthly Trend & Stage Duration */}
       {deals.length === 0 ? (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:p-6 mb-8">
-          <div className="bg-white dark:bg-slate-800 rounded-xl p-8 text-center border border-slate-200 dark:border-slate-700">
+          <div className="bg-white dark:bg-slate-800 rounded-xl p-4 sm:p-8 text-center border border-slate-200 dark:border-slate-700">
             <p className="text-slate-500 dark:text-slate-400">Charts will appear once you add your first job</p>
           </div>
-          <div className="bg-white dark:bg-slate-800 rounded-xl p-8 text-center border border-slate-200 dark:border-slate-700">
+          <div className="bg-white dark:bg-slate-800 rounded-xl p-4 sm:p-8 text-center border border-slate-200 dark:border-slate-700">
             <p className="text-slate-500 dark:text-slate-400">Charts will appear once you add your first job</p>
           </div>
         </div>

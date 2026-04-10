@@ -206,7 +206,7 @@ export default function SetupPage() {
             <div className="space-y-12 animate-fade-in">
               <div className="space-y-4">
                 <h1
-                  className={`text-5xl font-bold tracking-tight ${
+                  className={`text-3xl sm:text-5xl font-bold tracking-tight ${
                     isDark ? 'text-white' : 'text-gray-900'
                   }`}
                 >
@@ -348,7 +348,7 @@ export default function SetupPage() {
             <div className="space-y-12 animate-fade-in">
               <div className="space-y-4">
                 <h1
-                  className={`text-5xl font-bold tracking-tight ${
+                  className={`text-3xl sm:text-5xl font-bold tracking-tight ${
                     isDark ? 'text-gray-50' : 'text-gray-900'
                   }`}
                 >
@@ -465,7 +465,7 @@ export default function SetupPage() {
                     <div className="text-7xl mb-4">🎉</div>
                   </div>
                   <h1
-                    className={`text-5xl font-bold tracking-tight ${
+                    className={`text-3xl sm:text-5xl font-bold tracking-tight ${
                       isDark ? 'text-white' : 'text-gray-900'
                     }`}
                   >

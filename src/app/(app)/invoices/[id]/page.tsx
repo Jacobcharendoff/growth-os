@@ -595,7 +595,7 @@ export default function InvoiceDetailPage() {
           >
             {/* Company Header */}
             <div className="mb-8">
-              <h2 className={`text-3xl font-bold ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>
+              <h2 className={`text-xl sm:text-3xl font-bold ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>
                 {settings.companyName}
               </h2>
               <p className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'} mt-2`}>
@@ -609,7 +609,7 @@ export default function InvoiceDetailPage() {
             {/* Invoice Title & Details */}
             <div className="flex justify-between items-start mb-8 pb-8 border-b border-slate-200 dark:border-slate-700">
               <div>
-                <h3 className={`text-3xl font-bold ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>
+                <h3 className={`text-xl sm:text-3xl font-bold ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>
                   INVOICE
                 </h3>
               </div>

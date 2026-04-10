@@ -80,7 +80,7 @@ export default function ContactsPage() {
 
   if (!mounted) {
     return (
-      <div className={`min-h-screen ${isDark ? 'bg-slate-950' : 'bg-slate-50'} p-8 animate-pulse`}>
+      <div className={`min-h-screen ${isDark ? 'bg-slate-950' : 'bg-slate-50'} p-4 sm:p-8 animate-pulse`}>
         <div className={`h-8 ${isDark ? 'bg-slate-700' : 'bg-slate-200'} rounded w-48 mb-6`}></div>
         <div className="grid grid-cols-2 lg:grid-cols-6 gap-4 mb-8">
           {[...Array(6)].map((_, i) => (
@@ -370,7 +370,7 @@ export default function ContactsPage() {
             />
           ))
         ) : (
-          <div className="px-6 py-8 text-center">
+          <div className="px-4 sm:px-6 py-4 sm:py-8 text-center">
             <p className={isDark ? 'text-slate-400' : 'text-slate-500'}>
               {searchQuery || filterType !== 'all' || filterSource !== 'all'
                 ? t('contacts.notFound')
@@ -431,7 +431,7 @@ export default function ContactsPage() {
               ))
             ) : (
               <tr>
-                <td colSpan={7} className={`px-6 py-8 text-center`}>
+                <td colSpan={7} className={`px-4 sm:px-6 py-4 sm:py-8 text-center`}>
                   <p className={isDark ? 'text-slate-400' : 'text-slate-500'}>
                     {searchQuery || filterType !== 'all' || filterSource !== 'all'
                       ? t('contacts.notFound')
@@ -625,7 +625,7 @@ function AddContactModal({ isOpen, onClose, onSubmit, isDark }: AddContactModalP
         aria-modal="true"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className={`flex items-center justify-between px-6 py-4 border-b ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
+        <div className={`flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
           <h2 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>
             Add New Contact
           </h2>
@@ -638,7 +638,7 @@ function AddContactModal({ isOpen, onClose, onSubmit, isDark }: AddContactModalP
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="px-6 py-6 space-y-4">
+        <form onSubmit={handleSubmit} className="px-4 sm:px-6 py-4 sm:py-6 space-y-4">
           <div>
             <label className={`block text-sm font-medium mb-1 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
               Name *
@@ -959,7 +959,7 @@ function EditContactModal({
         aria-modal="true"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className={`flex items-center justify-between px-6 py-4 border-b ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
+        <div className={`flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
           <h2 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>
             Edit Contact
           </h2>
@@ -972,7 +972,7 @@ function EditContactModal({
           </button>
         </div>
 
-        <form onSubmit={onSubmit} className="px-6 py-6 space-y-4">
+        <form onSubmit={onSubmit} className="px-4 sm:px-6 py-4 sm:py-6 space-y-4">
           <div>
             <label className={`block text-sm font-medium mb-1 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
               Name *
@@ -1169,7 +1169,7 @@ function DeleteConfirmDialog({
         aria-modal="true"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className={`flex items-center justify-between px-6 py-4 border-b ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
+        <div className={`flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
           <h2 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>
             Delete Contact
           </h2>
@@ -1182,7 +1182,7 @@ function DeleteConfirmDialog({
           </button>
         </div>
 
-        <div className="px-6 py-6">
+        <div className="px-4 sm:px-6 py-4 sm:py-6">
           <p className={`mb-4 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
             Are you sure you want to delete <strong>{contact.name}</strong>? This action cannot be undone.
           </p>
@@ -1239,7 +1239,7 @@ function BulkDeleteConfirmDialog({
         aria-modal="true"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className={`flex items-center justify-between px-6 py-4 border-b ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
+        <div className={`flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
           <h2 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>
             Delete Contacts
           </h2>
@@ -1252,7 +1252,7 @@ function BulkDeleteConfirmDialog({
           </button>
         </div>
 
-        <div className="px-6 py-6">
+        <div className="px-4 sm:px-6 py-4 sm:py-6">
           <p className={`mb-4 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
             Are you sure you want to delete <strong>{count} {count === 1 ? 'contact' : 'contacts'}</strong>? This action cannot be undone.
           </p>

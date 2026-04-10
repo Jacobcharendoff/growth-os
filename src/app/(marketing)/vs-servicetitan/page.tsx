@@ -35,109 +35,109 @@ export default function VsServiceTitanPage() {
             <table className="w-full">
               <tbody>
                 <tr className="border-b border-gray-200">
-                  <td className="px-6 py-4 font-semibold text-gray-900 bg-gray-50 w-1/3">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-gray-900 bg-gray-50 w-1/3">
                     {t('vsServicetitan.monthlyPlan')}
                   </td>
-                  <td className="px-6 py-4 text-lg font-bold text-blue-600">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-lg font-bold text-blue-600">
                     {t('vsServicetitan.monthlyStaybookt')}
                   </td>
-                  <td className="px-6 py-4 text-lg font-bold text-red-600">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-lg font-bold text-red-600">
                     {t('vsServicetitan.monthlyServiceTitan')}
                   </td>
                 </tr>
 
                 <tr className="border-b border-gray-200">
-                  <td className="px-6 py-4 font-semibold text-gray-900 bg-gray-50 w-1/3">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-gray-900 bg-gray-50 w-1/3">
                     {t('vsServicetitan.setupFee')}
                   </td>
-                  <td className="px-6 py-4 text-lg font-bold text-blue-600">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-lg font-bold text-blue-600">
                     {t('vsServicetitan.setupStaybookt')}
                   </td>
-                  <td className="px-6 py-4 text-lg font-bold text-red-600">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-lg font-bold text-red-600">
                     {t('vsServicetitan.setupServiceTitan')}
                   </td>
                 </tr>
 
                 <tr className="border-b border-gray-200">
-                  <td className="px-6 py-4 font-semibold text-gray-900 bg-gray-50 w-1/3">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-gray-900 bg-gray-50 w-1/3">
                     {t('vsServicetitan.contractTerms')}
                   </td>
-                  <td className="px-6 py-4 text-lg font-bold text-blue-600">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-lg font-bold text-blue-600">
                     {t('vsServicetitan.contractStaybookt')}
                   </td>
-                  <td className="px-6 py-4 text-lg font-bold text-red-600">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-lg font-bold text-red-600">
                     {t('vsServicetitan.contractServiceTitan')}
                   </td>
                 </tr>
 
                 <tr className="border-b border-gray-200">
-                  <td className="px-6 py-4 font-semibold text-gray-900 bg-gray-50 w-1/3">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-gray-900 bg-gray-50 w-1/3">
                     {t('vsServicetitan.earlyExit')}
                   </td>
-                  <td className="px-6 py-4 text-lg font-bold text-blue-600">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-lg font-bold text-blue-600">
                     {t('vsServicetitan.exitStaybookt')}
                   </td>
-                  <td className="px-6 py-4 text-lg font-bold text-red-600">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-lg font-bold text-red-600">
                     {t('vsServicetitan.exitServiceTitan')}
                   </td>
                 </tr>
 
                 <tr className="border-b border-gray-200">
-                  <td className="px-6 py-4 font-semibold text-gray-900 bg-gray-50 w-1/3">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-gray-900 bg-gray-50 w-1/3">
                     {t('vsServicetitan.setupTime')}
                   </td>
-                  <td className="px-6 py-4 text-lg font-bold text-blue-600">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-lg font-bold text-blue-600">
                     {t('vsServicetitan.timeStaybookt')}
                   </td>
-                  <td className="px-6 py-4 text-lg font-bold text-red-600">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-lg font-bold text-red-600">
                     {t('vsServicetitan.timeServiceTitan')}
                   </td>
                 </tr>
 
                 <tr className="border-b border-gray-200">
-                  <td className="px-6 py-4 font-semibold text-gray-900 bg-gray-50 w-1/3">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-gray-900 bg-gray-50 w-1/3">
                     {t('vsServicetitan.canadianTaxes')}
                   </td>
-                  <td className="px-6 py-4 text-lg font-bold text-blue-600">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-lg font-bold text-blue-600">
                     {t('vsServicetitan.taxesStaybookt')}
                   </td>
-                  <td className="px-6 py-4 text-lg font-bold text-red-600">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-lg font-bold text-red-600">
                     {t('vsServicetitan.taxesServiceTitan')}
                   </td>
                 </tr>
 
                 <tr className="border-b border-gray-200">
-                  <td className="px-6 py-4 font-semibold text-gray-900 bg-gray-50 w-1/3">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-gray-900 bg-gray-50 w-1/3">
                     {t('vsServicetitan.frenchSupport')}
                   </td>
-                  <td className="px-6 py-4 text-lg font-bold text-blue-600">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-lg font-bold text-blue-600">
                     {t('vsServicetitan.frenchStaybookt')}
                   </td>
-                  <td className="px-6 py-4 text-lg font-bold text-red-600">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-lg font-bold text-red-600">
                     {t('vsServicetitan.frenchServiceTitan')}
                   </td>
                 </tr>
 
                 <tr className="border-b border-gray-200">
-                  <td className="px-6 py-4 font-semibold text-gray-900 bg-gray-50 w-1/3">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-gray-900 bg-gray-50 w-1/3">
                     {t('vsServicetitan.homeStars')}
                   </td>
-                  <td className="px-6 py-4 text-lg font-bold text-blue-600">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-lg font-bold text-blue-600">
                     {t('vsServicetitan.homeStarsStaybookt')}
                   </td>
-                  <td className="px-6 py-4 text-lg font-bold text-red-600">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-lg font-bold text-red-600">
                     {t('vsServicetitan.homeStarsServiceTitan')}
                   </td>
                 </tr>
 
                 <tr>
-                  <td className="px-6 py-4 font-semibold text-gray-900 bg-gray-50 w-1/3">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-gray-900 bg-gray-50 w-1/3">
                     {t('vsServicetitan.support')}
                   </td>
-                  <td className="px-6 py-4 text-lg font-bold text-blue-600">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-lg font-bold text-blue-600">
                     {t('vsServicetitan.supportStaybookt')}
                   </td>
-                  <td className="px-6 py-4 text-lg font-bold text-red-600">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-lg font-bold text-red-600">
                     {t('vsServicetitan.supportServiceTitan')}
                   </td>
                 </tr>
@@ -283,7 +283,7 @@ export default function VsServiceTitanPage() {
             </div>
           </div>
 
-          <div className="p-8 bg-[#2C3E50] rounded-2xl border border-[#2C3E50]">
+          <div className="p-5 sm:p-8 bg-[#2C3E50] rounded-2xl border border-[#2C3E50]">
             <h4 className="text-lg font-bold text-white mb-3">
               Real Example: 5-Person Crew
             </h4>

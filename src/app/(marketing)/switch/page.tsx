@@ -477,7 +477,7 @@ export default function WhyStaybooktPage() {
               {/* Gain 1: Bilingual */}
               <div
                 ref={gainCard1.ref}
-                className={`reveal reveal-delay-1 reveal-scale p-8 bg-slate-900/50 border border-slate-800/50 rounded-2xl backdrop-blur-sm glow-hover ${
+                className={`reveal reveal-delay-1 reveal-scale p-5 sm:p-8 bg-slate-900/50 border border-slate-800/50 rounded-2xl backdrop-blur-sm glow-hover ${
                   gainCard1.isVisible ? 'visible' : ''
                 }`}
               >
@@ -495,7 +495,7 @@ export default function WhyStaybooktPage() {
               {/* Gain 2: Canadian Tax */}
               <div
                 ref={gainCard2.ref}
-                className={`reveal reveal-delay-2 reveal-scale p-8 bg-slate-900/50 border border-slate-800/50 rounded-2xl backdrop-blur-sm glow-hover ${
+                className={`reveal reveal-delay-2 reveal-scale p-5 sm:p-8 bg-slate-900/50 border border-slate-800/50 rounded-2xl backdrop-blur-sm glow-hover ${
                   gainCard2.isVisible ? 'visible' : ''
                 }`}
               >
@@ -513,7 +513,7 @@ export default function WhyStaybooktPage() {
               {/* Gain 3: Automations */}
               <div
                 ref={gainCard3.ref}
-                className={`reveal reveal-delay-3 reveal-scale p-8 bg-slate-900/50 border border-slate-800/50 rounded-2xl backdrop-blur-sm glow-hover ${
+                className={`reveal reveal-delay-3 reveal-scale p-5 sm:p-8 bg-slate-900/50 border border-slate-800/50 rounded-2xl backdrop-blur-sm glow-hover ${
                   gainCard3.isVisible ? 'visible' : ''
                 }`}
               >
@@ -531,7 +531,7 @@ export default function WhyStaybooktPage() {
               {/* Gain 4: Cost */}
               <div
                 ref={gainCard4.ref}
-                className={`reveal reveal-delay-4 reveal-scale p-8 bg-slate-900/50 border border-slate-800/50 rounded-2xl backdrop-blur-sm glow-hover ${
+                className={`reveal reveal-delay-4 reveal-scale p-5 sm:p-8 bg-slate-900/50 border border-slate-800/50 rounded-2xl backdrop-blur-sm glow-hover ${
                   gainCard4.isVisible ? 'visible' : ''
                 }`}
               >
@@ -549,7 +549,7 @@ export default function WhyStaybooktPage() {
               {/* Gain 5: HomeStars */}
               <div
                 ref={gainCard5.ref}
-                className={`reveal reveal-delay-5 reveal-scale p-8 bg-slate-900/50 border border-slate-800/50 rounded-2xl backdrop-blur-sm glow-hover ${
+                className={`reveal reveal-delay-5 reveal-scale p-5 sm:p-8 bg-slate-900/50 border border-slate-800/50 rounded-2xl backdrop-blur-sm glow-hover ${
                   gainCard5.isVisible ? 'visible' : ''
                 }`}
               >
@@ -566,7 +566,7 @@ export default function WhyStaybooktPage() {
 
               {/* Gain 6: Built for Your Trade */}
               <div
-                className={`reveal reveal-delay-1 reveal-scale p-8 bg-slate-900/50 border border-slate-800/50 rounded-2xl backdrop-blur-sm glow-hover ${
+                className={`reveal reveal-delay-1 reveal-scale p-5 sm:p-8 bg-slate-900/50 border border-slate-800/50 rounded-2xl backdrop-blur-sm glow-hover ${
                   gainCard6.isVisible ? 'visible' : ''
                 }`}
                 ref={gainCard6.ref}
@@ -673,7 +673,7 @@ export default function WhyStaybooktPage() {
             {/* Competitor Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
               {/* ServiceTitan */}
-              <div className="p-8 bg-slate-900/50 border border-slate-800/50 rounded-2xl backdrop-blur-sm hover:border-emerald-500/50 transition-all group">
+              <div className="p-5 sm:p-8 bg-slate-900/50 border border-slate-800/50 rounded-2xl backdrop-blur-sm hover:border-emerald-500/50 transition-all group">
                 <h3 className="text-xl font-bold text-white mb-4 group-hover:text-emerald-300 transition-colors">
                   {t('whyStaybookt.fromST')}
                 </h3>
@@ -690,7 +690,7 @@ export default function WhyStaybooktPage() {
               </div>
 
               {/* Jobber */}
-              <div className="p-8 bg-slate-900/50 border border-slate-800/50 rounded-2xl backdrop-blur-sm hover:border-emerald-500/50 transition-all group">
+              <div className="p-5 sm:p-8 bg-slate-900/50 border border-slate-800/50 rounded-2xl backdrop-blur-sm hover:border-emerald-500/50 transition-all group">
                 <h3 className="text-xl font-bold text-white mb-4 group-hover:text-emerald-300 transition-colors">
                   {t('whyStaybookt.fromJobber')}
                 </h3>
@@ -707,7 +707,7 @@ export default function WhyStaybooktPage() {
               </div>
 
               {/* Housecall Pro */}
-              <div className="p-8 bg-slate-900/50 border border-slate-800/50 rounded-2xl backdrop-blur-sm hover:border-emerald-500/50 transition-all group">
+              <div className="p-5 sm:p-8 bg-slate-900/50 border border-slate-800/50 rounded-2xl backdrop-blur-sm hover:border-emerald-500/50 transition-all group">
                 <h3 className="text-xl font-bold text-white mb-4 group-hover:text-emerald-300 transition-colors">
                   {t('whyStaybookt.fromHCP')}
                 </h3>

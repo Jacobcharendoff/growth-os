@@ -414,7 +414,7 @@ function LoginPageInner() {
       {/* Card */}
       <div className="relative bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden" style={{ zIndex: 10 }}>
         {signupComplete ? (
-          <div className="p-8 text-center">
+          <div className="p-4 sm:p-8 text-center">
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle2 className="w-8 h-8 text-[#27AE60]" />
             </div>
@@ -487,7 +487,7 @@ function LoginPageInner() {
             )}
 
             {/* Content */}
-            <div className="p-6">
+            <div className="p-4 sm:p-6">
               {tab === 'signin' ? (
                 <form onSubmit={handleSignIn} className="space-y-4">
                   <div>
@@ -779,7 +779,7 @@ function LoginPageInner() {
             )}
 
             {/* Content */}
-            <div className="p-6">
+            <div className="p-4 sm:p-6">
               <form onSubmit={handleForgotPassword} className="space-y-4">
                 <div>
                   <label

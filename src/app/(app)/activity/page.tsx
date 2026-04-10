@@ -213,7 +213,7 @@ export default function ActivityPage() {
       <div className="px-4 sm:px-8 py-6 border-b border-slate-200 dark:border-slate-700 bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-700">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">
               Activity Timeline
             </h1>
             <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">

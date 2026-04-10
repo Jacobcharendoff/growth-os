@@ -172,7 +172,7 @@ export default function SettingsPage() {
     initializeSeedData();
   }, []);
 
-  if (!mounted) return <div className="p-8">Loading...</div>;
+  if (!mounted) return <div className="p-4 sm:p-8">Loading...</div>;
 
   const tabs: { id: TabType; label: string; icon: React.ReactNode }[] = [
     { id: 'profile', label: t('settings.profile'), icon: <Building2 className="w-5 h-5" /> },
@@ -330,7 +330,7 @@ export default function SettingsPage() {
                   <div className="w-16 h-16 sm:w-24 sm:h-24 bg-slate-100 dark:bg-slate-800 rounded-lg flex items-center justify-center border-2 border-dashed border-slate-300 dark:border-slate-600">
                     <Building2 className="w-8 h-8 text-slate-400 dark:text-slate-500" />
                   </div>
-                  <button className="flex items-center gap-2 px-6 py-2 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 rounded-lg font-medium hover:bg-slate-50 dark:hover:bg-slate-700 transition">
+                  <button className="flex items-center gap-2 px-4 sm:px-6 py-2 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 rounded-lg font-medium hover:bg-slate-50 dark:hover:bg-slate-700 transition">
                     <Upload className="w-4 h-4" />
                     Upload Logo
                   </button>
@@ -338,10 +338,10 @@ export default function SettingsPage() {
               </div>
 
               <div className="flex gap-4 pt-4">
-                <button className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition">
+                <button className="px-4 sm:px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition">
                   Save Changes
                 </button>
-                <button className="px-6 py-2 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 rounded-lg font-medium hover:bg-slate-50 dark:hover:bg-slate-700 transition">
+                <button className="px-4 sm:px-6 py-2 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 rounded-lg font-medium hover:bg-slate-50 dark:hover:bg-slate-700 transition">
                   Cancel
                 </button>
               </div>

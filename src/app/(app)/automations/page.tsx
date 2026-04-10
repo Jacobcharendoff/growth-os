@@ -418,7 +418,7 @@ export default function AutomationsPage() {
     setMounted(true);
   }, []);
 
-  if (!mounted) return <div className="p-8">{t('common.loading')}</div>;
+  if (!mounted) return <div className="p-4 sm:p-8">{t('common.loading')}</div>;
 
   // Helper function to simulate playbook actions
   const simulatePlaybookActions = (playbookId: string, playbookName: string) => {
@@ -796,7 +796,7 @@ export default function AutomationsPage() {
               </div>
 
               {/* Workflow steps preview */}
-              <div className="border-t border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/30 px-6 py-4">
+              <div className="border-t border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/30 px-4 sm:px-6 py-3 sm:py-4">
                 <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mb-3">Workflow Preview:</p>
                 <div className="flex items-center gap-2 flex-wrap">
                   {playbook.steps.slice(0, 4).map((step, i) => (
@@ -815,7 +815,7 @@ export default function AutomationsPage() {
 
               {/* Template Preview Modal - shown when expanded */}
               {isExpanded && (
-                <div className="border-t border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-900 px-6 py-6">
+                <div className="border-t border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 sm:px-6 py-4 sm:py-6">
                   <h4 className="font-semibold text-slate-900 dark:text-white mb-4">Message Templates</h4>
                   <div className="space-y-4">
                     {playbook.templates.map((template, idx) => (
@@ -907,7 +907,7 @@ export default function AutomationsPage() {
           {/* Activity Feed */}
           <div className="max-h-96 overflow-y-auto">
             {filteredActions.length === 0 ? (
-              <div className="p-8 text-center">
+              <div className="p-4 sm:p-8 text-center">
                 <Bell className="w-12 h-12 text-slate-300 dark:text-slate-600 mx-auto mb-3 opacity-50" />
                 <p className="text-slate-600 dark:text-slate-400 text-sm font-medium">
                   No automation activity yet. Activate a playbook to see simulated actions.
@@ -982,7 +982,7 @@ export default function AutomationsPage() {
       {/* Activate All CTA */}
       {activeCount === 0 && (
         <div className="text-center">
-          <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-2xl border border-blue-200 dark:border-blue-800 p-8 max-w-2xl mx-auto">
+          <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-2xl border border-blue-200 dark:border-blue-800 p-4 sm:p-8 max-w-2xl mx-auto">
             <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-xl flex items-center justify-center mx-auto mb-4">
               <Zap className="w-6 h-6 text-blue-600 dark:text-blue-400" />
             </div>
@@ -993,7 +993,7 @@ export default function AutomationsPage() {
             </p>
             <button
               onClick={activateAll}
-              className="px-6 py-3 bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 text-white rounded-xl font-semibold transition-colors"
+              className="px-4 sm:px-6 py-3 bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 text-white rounded-xl font-semibold transition-colors"
             >
               Activate All Free Playbooks
             </button>

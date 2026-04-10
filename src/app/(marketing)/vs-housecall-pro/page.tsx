@@ -142,7 +142,7 @@ export default function VsHousecallProPage() {
               <tbody>
                 {/* Pricing */}
                 <tr className="border-b hover:bg-slate-50">
-                  <td className="px-6 py-4 font-semibold text-slate-900">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-900">
                     Monthly Cost (5 users, full features)
                   </td>
                   <td className="px-6 py-4 text-center text-green-700 font-bold">
@@ -155,7 +155,7 @@ export default function VsHousecallProPage() {
 
                 {/* Proposals */}
                 <tr className="border-b hover:bg-slate-50">
-                  <td className="px-6 py-4 font-semibold text-slate-900">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-900">
                     Proposals & Estimates
                   </td>
                   <td className="px-6 py-4 text-center">
@@ -168,7 +168,7 @@ export default function VsHousecallProPage() {
 
                 {/* Service Plans */}
                 <tr className="border-b hover:bg-slate-50">
-                  <td className="px-6 py-4 font-semibold text-slate-900">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-900">
                     Recurring Service Plans
                   </td>
                   <td className="px-6 py-4 text-center">
@@ -181,7 +181,7 @@ export default function VsHousecallProPage() {
 
                 {/* Price Book */}
                 <tr className="border-b hover:bg-slate-50">
-                  <td className="px-6 py-4 font-semibold text-slate-900">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-900">
                     Smart Price Book
                   </td>
                   <td className="px-6 py-4 text-center">
@@ -194,7 +194,7 @@ export default function VsHousecallProPage() {
 
                 {/* Canadian Tax */}
                 <tr className="border-b hover:bg-slate-50 bg-blue-50">
-                  <td className="px-6 py-4 font-semibold text-slate-900">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-900">
                     Canadian Tax (HST/GST/QST)
                   </td>
                   <td className="px-6 py-4 text-center">
@@ -209,7 +209,7 @@ export default function VsHousecallProPage() {
 
                 {/* French Support */}
                 <tr className="border-b hover:bg-slate-50">
-                  <td className="px-6 py-4 font-semibold text-slate-900">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-900">
                     French Templates & UI
                   </td>
                   <td className="px-6 py-4 text-center">
@@ -222,7 +222,7 @@ export default function VsHousecallProPage() {
 
                 {/* HomeStars */}
                 <tr className="border-b hover:bg-slate-50">
-                  <td className="px-6 py-4 font-semibold text-slate-900">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-900">
                     HomeStars Review Sync
                   </td>
                   <td className="px-6 py-4 text-center">
@@ -235,7 +235,7 @@ export default function VsHousecallProPage() {
 
                 {/* Phone Support */}
                 <tr className="border-b hover:bg-slate-50">
-                  <td className="px-6 py-4 font-semibold text-slate-900">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-900">
                     Phone Support
                   </td>
                   <td className="px-6 py-4 text-center">
@@ -249,7 +249,7 @@ export default function VsHousecallProPage() {
 
                 {/* Auto Lead Response */}
                 <tr className="border-b hover:bg-slate-50">
-                  <td className="px-6 py-4 font-semibold text-slate-900">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-900">
                     Auto Lead Response
                   </td>
                   <td className="px-6 py-4 text-center">
@@ -263,7 +263,7 @@ export default function VsHousecallProPage() {
 
                 {/* Billing */}
                 <tr className="border-b hover:bg-slate-50 bg-red-50">
-                  <td className="px-6 py-4 font-semibold text-slate-900">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-900">
                     Billing Transparency
                   </td>
                   <td className="px-6 py-4 text-center">
@@ -277,7 +277,7 @@ export default function VsHousecallProPage() {
 
                 {/* QuickBooks */}
                 <tr className="border-b hover:bg-slate-50">
-                  <td className="px-6 py-4 font-semibold text-slate-900">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-900">
                     QuickBooks Integration
                   </td>
                   <td className="px-6 py-4 text-center">
@@ -291,7 +291,7 @@ export default function VsHousecallProPage() {
 
                 {/* Feature Stability */}
                 <tr className="border-b hover:bg-slate-50">
-                  <td className="px-6 py-4 font-semibold text-slate-900">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-900">
                     Feature Stability
                   </td>
                   <td className="px-6 py-4 text-center">
@@ -305,7 +305,7 @@ export default function VsHousecallProPage() {
 
                 {/* Contract */}
                 <tr className="hover:bg-slate-50">
-                  <td className="px-6 py-4 font-semibold text-slate-900">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-900">
                     Contract
                   </td>
                   <td className="px-6 py-4 text-center">

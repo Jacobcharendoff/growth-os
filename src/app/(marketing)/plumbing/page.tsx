@@ -76,7 +76,7 @@ function FAQItem({ question, answer, isOpen, onToggle }: { question: string; ans
     <div className="border border-gray-200 rounded-xl overflow-hidden">
       <button
         onClick={onToggle}
-        className="w-full px-6 py-4 flex items-center justify-between bg-white hover:bg-gray-50 transition-colors"
+        className="w-full px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between bg-white hover:bg-gray-50 transition-colors"
       >
         <span className="font-semibold text-gray-900 text-left">{question}</span>
         <ChevronDown
@@ -84,7 +84,7 @@ function FAQItem({ question, answer, isOpen, onToggle }: { question: string; ans
         />
       </button>
       {isOpen && (
-        <div className="px-6 py-4 bg-gray-50 border-t border-gray-200">
+        <div className="px-4 sm:px-6 py-3 sm:py-4 bg-gray-50 border-t border-gray-200">
           <p className="text-gray-700 leading-relaxed">{answer}</p>
         </div>
       )}
@@ -218,7 +218,7 @@ export default function PlumbingPage() {
 
           <div className="grid md:grid-cols-2 gap-8">
             {/* Pain 1: Missed Calls */}
-            <div className="p-8 bg-white rounded-2xl border-l-4 border-blue-600 shadow-sm hover:shadow-md transition-shadow animate-in fade-in duration-500">
+            <div className="p-5 sm:p-8 bg-white rounded-2xl border-l-4 border-blue-600 shadow-sm hover:shadow-md transition-shadow animate-in fade-in duration-500">
               <div className="flex items-start gap-4">
                 <Phone className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
                 <div>
@@ -233,7 +233,7 @@ export default function PlumbingPage() {
             </div>
 
             {/* Pain 2: Slow Estimates */}
-            <div className="p-8 bg-white rounded-2xl border-l-4 border-blue-600 shadow-sm hover:shadow-md transition-shadow animate-in fade-in duration-500 delay-100">
+            <div className="p-5 sm:p-8 bg-white rounded-2xl border-l-4 border-blue-600 shadow-sm hover:shadow-md transition-shadow animate-in fade-in duration-500 delay-100">
               <div className="flex items-start gap-4">
                 <Clock className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
                 <div>
@@ -248,7 +248,7 @@ export default function PlumbingPage() {
             </div>
 
             {/* Pain 3: Unpaid Invoices */}
-            <div className="p-8 bg-white rounded-2xl border-l-4 border-blue-600 shadow-sm hover:shadow-md transition-shadow animate-in fade-in duration-500 delay-200">
+            <div className="p-5 sm:p-8 bg-white rounded-2xl border-l-4 border-blue-600 shadow-sm hover:shadow-md transition-shadow animate-in fade-in duration-500 delay-200">
               <div className="flex items-start gap-4">
                 <AlertCircle className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
                 <div>
@@ -263,7 +263,7 @@ export default function PlumbingPage() {
             </div>
 
             {/* Pain 4: Dispatch Chaos */}
-            <div className="p-8 bg-white rounded-2xl border-l-4 border-blue-600 shadow-sm hover:shadow-md transition-shadow animate-in fade-in duration-500 delay-300">
+            <div className="p-5 sm:p-8 bg-white rounded-2xl border-l-4 border-blue-600 shadow-sm hover:shadow-md transition-shadow animate-in fade-in duration-500 delay-300">
               <div className="flex items-start gap-4">
                 <Users className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
                 <div>
@@ -297,7 +297,7 @@ export default function PlumbingPage() {
 
           <div className="grid md:grid-cols-2 gap-8">
             {/* Feature 1 */}
-            <div className="p-8 bg-white/5 rounded-2xl border border-blue-500/20 hover:border-blue-500/50 hover:bg-white/10 transition-all group">
+            <div className="p-5 sm:p-8 bg-white/5 rounded-2xl border border-blue-500/20 hover:border-blue-500/50 hover:bg-white/10 transition-all group">
               <div className="w-12 h-12 rounded-full bg-[#2C3E50] flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:shadow-[#2C3E50]/50 transition-all">
                 <Phone className="w-6 h-6 text-white" />
               </div>
@@ -324,7 +324,7 @@ export default function PlumbingPage() {
             </div>
 
             {/* Feature 2 */}
-            <div className="p-8 bg-white/5 rounded-2xl border border-blue-500/20 hover:border-blue-500/50 hover:bg-white/10 transition-all group">
+            <div className="p-5 sm:p-8 bg-white/5 rounded-2xl border border-blue-500/20 hover:border-blue-500/50 hover:bg-white/10 transition-all group">
               <div className="w-12 h-12 rounded-full bg-[#2C3E50] flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:shadow-[#2C3E50]/50 transition-all">
                 <Zap className="w-6 h-6 text-white" />
               </div>
@@ -351,7 +351,7 @@ export default function PlumbingPage() {
             </div>
 
             {/* Feature 3 */}
-            <div className="p-8 bg-white/5 rounded-2xl border border-blue-500/20 hover:border-blue-500/50 hover:bg-white/10 transition-all group">
+            <div className="p-5 sm:p-8 bg-white/5 rounded-2xl border border-blue-500/20 hover:border-blue-500/50 hover:bg-white/10 transition-all group">
               <div className="w-12 h-12 rounded-full bg-[#2C3E50] flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:shadow-[#2C3E50]/50 transition-all">
                 <CreditCard className="w-6 h-6 text-white" />
               </div>
@@ -378,7 +378,7 @@ export default function PlumbingPage() {
             </div>
 
             {/* Feature 4 */}
-            <div className="p-8 bg-white/5 rounded-2xl border border-blue-500/20 hover:border-blue-500/50 hover:bg-white/10 transition-all group">
+            <div className="p-5 sm:p-8 bg-white/5 rounded-2xl border border-blue-500/20 hover:border-blue-500/50 hover:bg-white/10 transition-all group">
               <div className="w-12 h-12 rounded-full bg-[#2C3E50] flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:shadow-[#2C3E50]/50 transition-all">
                 <TrendingUp className="w-6 h-6 text-white" />
               </div>
@@ -497,7 +497,7 @@ export default function PlumbingPage() {
               <p className="text-sm text-gray-600 mb-6">For solo operators and small teams</p>
               <Link
                 href="/login?tab=signup"
-                className="block w-full px-6 py-3 rounded-xl bg-[#27AE60] text-white text-sm font-semibold hover:bg-[#229954] transition-colors text-center mb-6"
+                className="block w-full px-4 sm:px-6 py-3 rounded-xl bg-[#27AE60] text-white text-sm font-semibold hover:bg-[#229954] transition-colors text-center mb-6"
               >
                 Start Free Trial
               </Link>
@@ -530,7 +530,7 @@ export default function PlumbingPage() {
               <p className="text-sm text-gray-600 mb-6">For growing service businesses</p>
               <Link
                 href="/login?tab=signup"
-                className="block w-full px-6 py-3 rounded-xl bg-[#27AE60] text-white text-sm font-semibold hover:bg-[#229954] transition-colors text-center mb-6"
+                className="block w-full px-4 sm:px-6 py-3 rounded-xl bg-[#27AE60] text-white text-sm font-semibold hover:bg-[#229954] transition-colors text-center mb-6"
               >
                 Start Free Trial
               </Link>
@@ -564,7 +564,7 @@ export default function PlumbingPage() {
               <p className="text-sm text-gray-600 mb-6">For multi-team operations</p>
               <Link
                 href="/login?tab=signup"
-                className="block w-full px-6 py-3 rounded-xl bg-[#27AE60] text-white text-sm font-semibold hover:bg-[#229954] transition-colors text-center mb-6"
+                className="block w-full px-4 sm:px-6 py-3 rounded-xl bg-[#27AE60] text-white text-sm font-semibold hover:bg-[#229954] transition-colors text-center mb-6"
               >
                 Start Free Trial
               </Link>

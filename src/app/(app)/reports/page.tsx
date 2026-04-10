@@ -77,7 +77,7 @@ export default function ReportsPage() {
 
   if (!mounted) {
     return (
-      <div className={`min-h-screen ${isDark ? 'bg-slate-950' : 'bg-slate-50'} p-8 animate-pulse`}>
+      <div className={`min-h-screen ${isDark ? 'bg-slate-950' : 'bg-slate-50'} p-4 sm:p-8 animate-pulse`}>
         <div className={`h-8 ${isDark ? 'bg-slate-700' : 'bg-slate-200'} rounded w-48 mb-6`}></div>
       </div>
     );
@@ -390,7 +390,7 @@ export default function ReportsPage() {
             <div className="flex items-center gap-3">
               <BarChart3 className="w-7 h-7 sm:w-8 sm:h-8 shrink-0" style={{ color: '#27AE60' }} />
               <div>
-                <h1 className={`text-xl sm:text-2xl md:text-3xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Reports & Analytics</h1>
+                <h1 className={`text-xl sm:text-2xl md:text-xl sm:text-3xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Reports & Analytics</h1>
                 <p className={`text-sm ${cardText} hidden sm:block`}>Business performance metrics and insights</p>
               </div>
             </div>
@@ -437,28 +437,28 @@ export default function ReportsPage() {
           {/* Total Revenue */}
           <div className={`${cardBg} border rounded-xl p-4 sm:p-6`}>
             <p className={`text-sm font-medium ${cardText} mb-2`}>Total Revenue</p>
-            <p className="text-3xl font-bold text-[#27AE60]">${totalRevenue.toLocaleString('en-US', { maximumFractionDigits: 0 })}</p>
+            <p className="text-xl sm:text-3xl font-bold text-[#27AE60]">${totalRevenue.toLocaleString('en-US', { maximumFractionDigits: 0 })}</p>
             <p className={`text-xs ${cardText} mt-2`}>Paid invoices</p>
           </div>
 
           {/* Pipeline Value */}
           <div className={`${cardBg} border rounded-xl p-4 sm:p-6`}>
             <p className={`text-sm font-medium ${cardText} mb-2`}>Pipeline Value</p>
-            <p className="text-3xl font-bold text-[#3B82F6]">${pipelineValue.toLocaleString('en-US', { maximumFractionDigits: 0 })}</p>
+            <p className="text-xl sm:text-3xl font-bold text-[#3B82F6]">${pipelineValue.toLocaleString('en-US', { maximumFractionDigits: 0 })}</p>
             <p className={`text-xs ${cardText} mt-2`}>{filteredDeals.filter(d => d.stage !== 'completed' && d.stage !== 'invoiced').length} active deals</p>
           </div>
 
           {/* Conversion Rate */}
           <div className={`${cardBg} border rounded-xl p-4 sm:p-6`}>
             <p className={`text-sm font-medium ${cardText} mb-2`}>Conversion Rate</p>
-            <p className="text-3xl font-bold text-[#F59E0B]">{conversionRate}%</p>
+            <p className="text-xl sm:text-3xl font-bold text-[#F59E0B]">{conversionRate}%</p>
             <p className={`text-xs ${cardText} mt-2`}>{dealsWon} of {totalLeads} leads</p>
           </div>
 
           {/* Average Job Value */}
           <div className={`${cardBg} border rounded-xl p-4 sm:p-6`}>
             <p className={`text-sm font-medium ${cardText} mb-2`}>Avg Job Value</p>
-            <p className="text-3xl font-bold text-[#10B981]">${avgJobValue.toLocaleString('en-US', { maximumFractionDigits: 0 })}</p>
+            <p className="text-xl sm:text-3xl font-bold text-[#10B981]">${avgJobValue.toLocaleString('en-US', { maximumFractionDigits: 0 })}</p>
             <p className={`text-xs ${cardText} mt-2`}>Based on {filteredDeals.length} deals</p>
           </div>
         </div>
@@ -594,7 +594,7 @@ export default function ReportsPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-4 sm:p-6">
           {/* Top Performing Services */}
           <div className={`${cardBg} border rounded-xl overflow-hidden`}>
-            <div className="px-6 py-4 border-b border-inherit bg-opacity-50">
+            <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-inherit bg-opacity-50">
               <h2 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>Top Performing Services</h2>
             </div>
             <div className="overflow-x-auto">
@@ -627,7 +627,7 @@ export default function ReportsPage() {
 
           {/* Aging Estimates */}
           <div className={`${cardBg} border rounded-xl overflow-hidden`}>
-            <div className="px-6 py-4 border-b border-inherit bg-opacity-50">
+            <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-inherit bg-opacity-50">
               <h2 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>Aging Estimates</h2>
             </div>
             <div className="overflow-x-auto">
@@ -663,7 +663,7 @@ export default function ReportsPage() {
 
           {/* Outstanding Invoices */}
           <div className={`${cardBg} border rounded-xl overflow-hidden`}>
-            <div className="px-6 py-4 border-b border-inherit bg-opacity-50">
+            <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-inherit bg-opacity-50">
               <h2 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>Outstanding Invoices</h2>
             </div>
             <div className="overflow-x-auto">

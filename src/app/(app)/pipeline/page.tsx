@@ -283,7 +283,7 @@ export default function PipelinePage() {
 
   if (!mounted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 p-8 animate-pulse">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 p-4 sm:p-8 animate-pulse">
         <div className="h-8 bg-slate-200 dark:bg-slate-700 rounded w-48 mb-6"></div>
         <div className="grid grid-cols-2 lg:grid-cols-6 gap-4 mb-8">
           {[...Array(6)].map((_, i) => <div key={i} className="bg-white dark:bg-slate-800 rounded-xl h-28 shadow-sm"></div>)}

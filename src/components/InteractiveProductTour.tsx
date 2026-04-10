@@ -102,7 +102,7 @@ export function InteractiveProductTour() {
       {/* Phone animation */}
       <div className="relative mb-8">
         <div className="absolute inset-0 bg-[#2C3E50]/30 rounded-3xl blur-2xl animate-pulse" />
-        <div className="relative bg-[#2C3E50] rounded-3xl p-8 shadow-2xl">
+        <div className="relative bg-[#2C3E50] rounded-3xl p-5 sm:p-8 shadow-2xl">
           <Phone className="w-16 h-16 text-white animate-bounce" />
         </div>
       </div>

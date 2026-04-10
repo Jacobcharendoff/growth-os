@@ -42,7 +42,7 @@ export function ContactDetailPanel({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className={`sticky top-0 px-4 sm:px-4 sm:px-6 py-3 sm:py-4 border-b ${isDark ? 'border-slate-700 bg-slate-800' : 'border-slate-200 bg-white'}`}>
+        <div className={`sticky top-0 px-4 sm:px-6 py-3 sm:py-4 border-b ${isDark ? 'border-slate-700 bg-slate-800' : 'border-slate-200 bg-white'}`}>
           <div className="flex items-center justify-between">
             <div>
               <h2 className={`text-xl font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>
@@ -63,7 +63,7 @@ export function ContactDetailPanel({
         </div>
 
         {/* Contact Info */}
-        <div className={`px-4 sm:px-4 sm:px-6 py-3 sm:py-4 border-b ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
+        <div className={`px-4 sm:px-6 py-3 sm:py-4 border-b ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
           <h3 className={`text-sm font-semibold mb-3 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
             Contact Information
           </h3>
@@ -111,7 +111,7 @@ export function ContactDetailPanel({
 
         {/* Personal Details */}
         {(contact.occupation || contact.kids || contact.pets || contact.interests || contact.personalNotes) && (
-          <div className={`px-4 sm:px-4 sm:px-6 py-3 sm:py-4 border-b ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
+          <div className={`px-4 sm:px-6 py-3 sm:py-4 border-b ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
             <h3 className={`text-sm font-semibold mb-3 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
               Personal Details
             </h3>
@@ -176,7 +176,7 @@ export function ContactDetailPanel({
         )}
 
         {/* KPI Cards */}
-        <div className={`px-4 sm:px-4 sm:px-6 py-3 sm:py-4 border-b ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
+        <div className={`px-4 sm:px-6 py-3 sm:py-4 border-b ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className={`p-3 rounded-lg ${isDark ? 'bg-slate-700' : 'bg-slate-100'}`}>
               <div className="flex items-center gap-2 mb-1">
@@ -201,7 +201,7 @@ export function ContactDetailPanel({
 
         {/* Deals */}
         {deals.length > 0 && (
-          <div className={`px-4 sm:px-4 sm:px-6 py-3 sm:py-4 border-b ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
+          <div className={`px-4 sm:px-6 py-3 sm:py-4 border-b ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
             <h3 className={`text-sm font-semibold mb-3 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
               Linked Deals ({deals.length})
             </h3>
@@ -230,7 +230,7 @@ export function ContactDetailPanel({
 
         {/* Estimates */}
         {estimates.length > 0 && (
-          <div className={`px-4 sm:px-4 sm:px-6 py-3 sm:py-4 border-b ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
+          <div className={`px-4 sm:px-6 py-3 sm:py-4 border-b ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
             <h3 className={`text-sm font-semibold mb-3 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
               Estimates ({estimates.length})
             </h3>
@@ -267,7 +267,7 @@ export function ContactDetailPanel({
 
         {/* Invoices */}
         {invoices.length > 0 && (
-          <div className={`px-4 sm:px-4 sm:px-6 py-3 sm:py-4 ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
+          <div className={`px-4 sm:px-6 py-3 sm:py-4 ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
             <h3 className={`text-sm font-semibold mb-3 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
               Invoices ({invoices.length})
             </h3>

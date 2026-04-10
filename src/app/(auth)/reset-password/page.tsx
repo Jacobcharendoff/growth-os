@@ -154,7 +154,7 @@ export default function ResetPasswordPage() {
         )}
 
         {/* Content */}
-        <div className="p-6">
+        <div className="p-4 sm:p-6">
           {!hasToken ? (
             <div className="space-y-4">
               <p className="text-slate-700">

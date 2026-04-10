@@ -381,7 +381,7 @@ export default function AdvisorPage() {
       <div className="h-full flex flex-col bg-white dark:bg-slate-900">
         {/* Header */}
         <div className="flex-shrink-0 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 backdrop-blur-xl">
-          <div className="flex items-center gap-3 px-6 py-4">
+          <div className="flex items-center gap-3 px-4 sm:px-6 py-3 sm:py-4">
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
               <Sparkles className="w-5 h-5 text-white" />
             </div>
@@ -398,7 +398,7 @@ export default function AdvisorPage() {
         </div>
 
         {/* Welcome Content */}
-        <div className="flex-1 flex flex-col items-center justify-center px-6">
+        <div className="flex-1 flex flex-col items-center justify-center px-4 sm:px-6">
           <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center mb-6 shadow-lg shadow-blue-500/20">
             <Sparkles className="w-10 h-10 text-white" />
           </div>
@@ -462,7 +462,7 @@ export default function AdvisorPage() {
     <div className="h-full flex flex-col bg-white dark:bg-slate-900">
       {/* Header */}
       <div className="flex-shrink-0 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 backdrop-blur-xl z-10">
-        <div className="flex items-center gap-3 px-6 py-4">
+        <div className="flex items-center gap-3 px-4 sm:px-6 py-3 sm:py-4">
           <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
             <Sparkles className="w-5 h-5 text-white" />
           </div>

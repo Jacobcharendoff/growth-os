@@ -123,7 +123,7 @@ document.getElementById('staybooktForm')?.querySelector('form')?.addEventListene
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex items-center gap-3 mb-2">
             <FileInput className="w-8 h-8 text-[#27AE60]" />
-            <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">
               Lead Capture Form
             </h1>
           </div>

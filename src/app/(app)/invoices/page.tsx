@@ -98,7 +98,7 @@ export default function InvoicesPage() {
 
   if (!mounted) {
     return (
-      <div className={`p-8 ${isDark ? 'dark:text-white' : 'text-slate-900'}`}>
+      <div className={`p-4 sm:p-8 ${isDark ? 'dark:text-white' : 'text-slate-900'}`}>
         Loading...
       </div>
     );
@@ -360,14 +360,14 @@ export default function InvoicesPage() {
     <div className={`p-4 sm:p-8 ${isDark ? 'bg-slate-950' : 'bg-slate-50'} min-h-screen`}>
       {/* Header */}
       <div className="mb-6 sm:mb-8">
-        <h1 className={`text-2xl sm:text-3xl font-bold ${isDark ? 'text-white' : 'text-slate-900'} mb-2`}>
+        <h1 className={`text-2xl sm:text-xl sm:text-3xl font-bold ${isDark ? 'text-white' : 'text-slate-900'} mb-2`}>
           {t('invoices.title')}
         </h1>
         <p className={isDark ? 'text-slate-400' : 'text-slate-600'}>Manage invoices and track payments</p>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-3 sm:gap-4 sm:p-6 mb-6 sm:mb-8">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 sm:p-6 mb-6 sm:mb-8">
         <div className={`${isDark ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200'} rounded-xl shadow-sm border p-4 sm:p-6`}>
           <div className="flex items-center justify-between mb-3 sm:mb-4">
             <p className={`text-xs sm:text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'} font-medium`}>
@@ -375,7 +375,7 @@ export default function InvoicesPage() {
             </p>
             <CheckCircle className="w-5 h-5 text-blue-500" />
           </div>
-          <p className={`text-2xl sm:text-3xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>{invoices.length}</p>
+          <p className={`text-2xl sm:text-xl sm:text-3xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>{invoices.length}</p>
           <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'} mt-2`}>All time</p>
         </div>
 
@@ -386,7 +386,7 @@ export default function InvoicesPage() {
             </p>
             <AlertCircle className="w-5 h-5 text-amber-500" />
           </div>
-          <p className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
+          <p className={`text-xl sm:text-3xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
             ${outstandingAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </p>
           <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'} mt-2`}>
@@ -401,7 +401,7 @@ export default function InvoicesPage() {
             </p>
             <CheckCircle className="w-5 h-5 text-emerald-500" />
           </div>
-          <p className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
+          <p className={`text-xl sm:text-3xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
             ${paidThisMonth.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </p>
           <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'} mt-2`}>{paidInvoices.length} paid</p>
@@ -414,7 +414,7 @@ export default function InvoicesPage() {
             </p>
             <TrendingUp className="w-5 h-5 text-emerald-500" />
           </div>
-          <p className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>{collectionPercent}%</p>
+          <p className={`text-xl sm:text-3xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>{collectionPercent}%</p>
           <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'} mt-2`}>of total invoiced</p>
         </div>
       </div>
@@ -471,7 +471,7 @@ export default function InvoicesPage() {
           <div className="flex items-center gap-2">
             <button
               onClick={handleExportInvoicesCSV}
-              className={`flex items-center gap-2 px-6 py-2 rounded-lg font-medium transition whitespace-nowrap border ${
+              className={`flex items-center gap-2 px-4 sm:px-6 py-2 rounded-lg font-medium transition whitespace-nowrap border ${
                 isDark
                   ? 'border-slate-600 text-slate-300 hover:bg-slate-700'
                   : 'border-slate-300 text-slate-700 hover:bg-slate-100'
@@ -485,7 +485,7 @@ export default function InvoicesPage() {
                 resetForm();
                 setModal({ type: 'create' });
               }}
-              className="flex items-center gap-2 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition whitespace-nowrap"
+              className="flex items-center gap-2 px-4 sm:px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition whitespace-nowrap"
             >
               <Plus className="w-4 h-4" />
               {t('invoices.createInvoice')}
@@ -560,7 +560,7 @@ export default function InvoicesPage() {
             ))}
           </div>
         ) : (
-          <div className="px-6 py-8 text-center">
+          <div className="px-4 sm:px-6 py-4 sm:py-8 text-center">
             <p className={isDark ? 'text-slate-400' : 'text-slate-500'}>No invoices found</p>
           </div>
         )}
@@ -572,25 +572,25 @@ export default function InvoicesPage() {
           <table className="w-full">
             <thead className={`${isDark ? 'bg-slate-700 border-slate-600' : 'bg-slate-50 border-slate-200'} border-b`}>
               <tr>
-                <th className={`px-6 py-4 text-left text-xs font-semibold ${isDark ? 'text-slate-300' : 'text-slate-600'} uppercase tracking-wide`}>
+                <th className={`px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold ${isDark ? 'text-slate-300' : 'text-slate-600'} uppercase tracking-wide`}>
                   Invoice #
                 </th>
-                <th className={`px-6 py-4 text-left text-xs font-semibold ${isDark ? 'text-slate-300' : 'text-slate-600'} uppercase tracking-wide`}>
+                <th className={`px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold ${isDark ? 'text-slate-300' : 'text-slate-600'} uppercase tracking-wide`}>
                   Customer
                 </th>
-                <th className={`px-6 py-4 text-left text-xs font-semibold ${isDark ? 'text-slate-300' : 'text-slate-600'} uppercase tracking-wide`}>
+                <th className={`px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold ${isDark ? 'text-slate-300' : 'text-slate-600'} uppercase tracking-wide`}>
                   Total
                 </th>
-                <th className={`px-6 py-4 text-left text-xs font-semibold ${isDark ? 'text-slate-300' : 'text-slate-600'} uppercase tracking-wide`}>
+                <th className={`px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold ${isDark ? 'text-slate-300' : 'text-slate-600'} uppercase tracking-wide`}>
                   Paid
                 </th>
-                <th className={`px-6 py-4 text-left text-xs font-semibold ${isDark ? 'text-slate-300' : 'text-slate-600'} uppercase tracking-wide`}>
+                <th className={`px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold ${isDark ? 'text-slate-300' : 'text-slate-600'} uppercase tracking-wide`}>
                   Status
                 </th>
-                <th className={`px-6 py-4 text-left text-xs font-semibold ${isDark ? 'text-slate-300' : 'text-slate-600'} uppercase tracking-wide`}>
+                <th className={`px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold ${isDark ? 'text-slate-300' : 'text-slate-600'} uppercase tracking-wide`}>
                   Due Date
                 </th>
-                <th className={`px-6 py-4 text-right text-xs font-semibold ${isDark ? 'text-slate-300' : 'text-slate-600'} uppercase tracking-wide`}>
+                <th className={`px-3 sm:px-6 py-3 sm:py-4 text-right text-xs font-semibold ${isDark ? 'text-slate-300' : 'text-slate-600'} uppercase tracking-wide`}>
                   Actions
                 </th>
               </tr>
@@ -607,30 +607,30 @@ export default function InvoicesPage() {
                     }`}
                     onClick={() => router.push(`/invoices/${invoice.id}`)}
                   >
-                    <td className={`px-6 py-4 whitespace-nowrap text-sm font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                    <td className={`px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-sm font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>
                       {invoice.number}
                     </td>
-                    <td className={`px-6 py-4 whitespace-nowrap text-sm ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                    <td className={`px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-sm ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                       {invoice.customerName}
                     </td>
-                    <td className={`px-6 py-4 whitespace-nowrap text-sm font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                    <td className={`px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-sm font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>
                       ${invoice.total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-sm font-semibold text-emerald-600 dark:text-emerald-400">
                       ${invoice.amountPaid.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
                       <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold border ${STATUS_COLORS[invoice.status]}`}>
                         {invoice.status.charAt(0).toUpperCase() + invoice.status.slice(1)}
                       </span>
                     </td>
-                    <td className={`px-6 py-4 whitespace-nowrap text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                    <td className={`px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                       {new Date(invoice.dueDate).toLocaleDateString('en-US', {
                         month: 'short',
                         day: 'numeric',
                       })}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right">
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-right">
                       <div className="flex justify-end gap-2">
                         <button
                           onClick={(e) => {
@@ -701,7 +701,7 @@ export default function InvoicesPage() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={7} className={`px-6 py-12 text-center`}>
+                  <td colSpan={7} className={`px-4 sm:px-6 py-8 sm:py-12 text-center`}>
                     <p className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>No invoices found</p>
                   </td>
                 </tr>

@@ -361,7 +361,7 @@ export default function ContactsImportPage() {
             className="hidden"
           />
           <span
-            className="inline-block px-6 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition cursor-pointer"
+            className="inline-block px-4 sm:px-6 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition cursor-pointer"
             onClick={(e) => {
               (e.currentTarget as HTMLElement).parentElement?.querySelector('input')?.click();
             }}
@@ -666,7 +666,7 @@ export default function ContactsImportPage() {
               <FileSpreadsheet className="h-8 w-8 text-green-600" />
             </div>
             <div>
-              <h1 className={`text-3xl font-bold ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>
+              <h1 className={`text-xl sm:text-3xl font-bold ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>
                 Import Contacts
               </h1>
               <p className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
@@ -743,7 +743,7 @@ export default function ContactsImportPage() {
             <>
               <button
                 onClick={() => setStep('upload')}
-                className={`flex-1 px-6 py-3 rounded-lg font-medium transition ${
+                className={`flex-1 px-4 sm:px-6 py-3 rounded-lg font-medium transition ${
                   isDark
                     ? 'bg-slate-700 text-slate-200 hover:bg-slate-600'
                     : 'bg-slate-200 text-slate-900 hover:bg-slate-300'
@@ -754,7 +754,7 @@ export default function ContactsImportPage() {
               <button
                 onClick={handleImport}
                 disabled={isImporting}
-                className="flex-1 px-6 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition disabled:opacity-50 flex items-center justify-center gap-2"
+                className="flex-1 px-4 sm:px-6 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 {isImporting ? (
                   <>
@@ -775,7 +775,7 @@ export default function ContactsImportPage() {
             <>
               <button
                 onClick={() => router.push('/contacts')}
-                className="flex-1 px-6 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition"
+                className="flex-1 px-4 sm:px-6 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition"
               >
                 View Contacts
               </button>
@@ -787,7 +787,7 @@ export default function ContactsImportPage() {
                   setFileName('');
                   setStep('upload');
                 }}
-                className={`flex-1 px-6 py-3 rounded-lg font-medium transition ${
+                className={`flex-1 px-4 sm:px-6 py-3 rounded-lg font-medium transition ${
                   isDark
                     ? 'bg-slate-700 text-slate-200 hover:bg-slate-600'
                     : 'bg-slate-200 text-slate-900 hover:bg-slate-300'

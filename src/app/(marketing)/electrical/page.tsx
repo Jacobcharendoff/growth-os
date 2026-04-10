@@ -72,7 +72,7 @@ function FAQItem({ question, answer, isOpen, onToggle }: { question: string; ans
     <div className="border border-gray-200 rounded-xl overflow-hidden">
       <button
         onClick={onToggle}
-        className="w-full px-6 py-4 flex items-center justify-between bg-white hover:bg-gray-50 transition-colors"
+        className="w-full px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between bg-white hover:bg-gray-50 transition-colors"
       >
         <span className="font-semibold text-gray-900 text-left">{question}</span>
         <ChevronDown
@@ -80,7 +80,7 @@ function FAQItem({ question, answer, isOpen, onToggle }: { question: string; ans
         />
       </button>
       {isOpen && (
-        <div className="px-6 py-4 bg-gray-50 border-t border-gray-200">
+        <div className="px-4 sm:px-6 py-3 sm:py-4 bg-gray-50 border-t border-gray-200">
           <p className="text-gray-700 leading-relaxed">{answer}</p>
         </div>
       )}
@@ -204,7 +204,7 @@ export default function ElectricalPage() {
           </h2>
 
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="p-8 bg-white rounded-2xl border-l-4 border-yellow-600 shadow-sm hover:shadow-md transition-shadow animate-in fade-in duration-500">
+            <div className="p-5 sm:p-8 bg-white rounded-2xl border-l-4 border-yellow-600 shadow-sm hover:shadow-md transition-shadow animate-in fade-in duration-500">
               <div className="flex items-start gap-4">
                 <FileText className="w-6 h-6 text-yellow-600 flex-shrink-0 mt-1" />
                 <div>
@@ -218,7 +218,7 @@ export default function ElectricalPage() {
               </div>
             </div>
 
-            <div className="p-8 bg-white rounded-2xl border-l-4 border-yellow-600 shadow-sm hover:shadow-md transition-shadow animate-in fade-in duration-500 delay-100">
+            <div className="p-5 sm:p-8 bg-white rounded-2xl border-l-4 border-yellow-600 shadow-sm hover:shadow-md transition-shadow animate-in fade-in duration-500 delay-100">
               <div className="flex items-start gap-4">
                 <Phone className="w-6 h-6 text-yellow-600 flex-shrink-0 mt-1" />
                 <div>
@@ -232,7 +232,7 @@ export default function ElectricalPage() {
               </div>
             </div>
 
-            <div className="p-8 bg-white rounded-2xl border-l-4 border-yellow-600 shadow-sm hover:shadow-md transition-shadow animate-in fade-in duration-500 delay-200">
+            <div className="p-5 sm:p-8 bg-white rounded-2xl border-l-4 border-yellow-600 shadow-sm hover:shadow-md transition-shadow animate-in fade-in duration-500 delay-200">
               <div className="flex items-start gap-4">
                 <Shield className="w-6 h-6 text-yellow-600 flex-shrink-0 mt-1" />
                 <div>
@@ -246,7 +246,7 @@ export default function ElectricalPage() {
               </div>
             </div>
 
-            <div className="p-8 bg-white rounded-2xl border-l-4 border-yellow-600 shadow-sm hover:shadow-md transition-shadow animate-in fade-in duration-500 delay-300">
+            <div className="p-5 sm:p-8 bg-white rounded-2xl border-l-4 border-yellow-600 shadow-sm hover:shadow-md transition-shadow animate-in fade-in duration-500 delay-300">
               <div className="flex items-start gap-4">
                 <AlertCircle className="w-6 h-6 text-yellow-600 flex-shrink-0 mt-1" />
                 <div>
@@ -279,7 +279,7 @@ export default function ElectricalPage() {
           </p>
 
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="p-8 bg-white/5 rounded-2xl border border-yellow-500/20 hover:border-yellow-500/50 hover:bg-white/10 transition-all group">
+            <div className="p-5 sm:p-8 bg-white/5 rounded-2xl border border-yellow-500/20 hover:border-yellow-500/50 hover:bg-white/10 transition-all group">
               <div className="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-600 to-yellow-500 flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:shadow-yellow-600/50 transition-all">
                 <FileText className="w-6 h-6 text-white" />
               </div>
@@ -305,7 +305,7 @@ export default function ElectricalPage() {
               </ul>
             </div>
 
-            <div className="p-8 bg-white/5 rounded-2xl border border-yellow-500/20 hover:border-yellow-500/50 hover:bg-white/10 transition-all group">
+            <div className="p-5 sm:p-8 bg-white/5 rounded-2xl border border-yellow-500/20 hover:border-yellow-500/50 hover:bg-white/10 transition-all group">
               <div className="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-600 to-yellow-500 flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:shadow-yellow-600/50 transition-all">
                 <Phone className="w-6 h-6 text-white" />
               </div>
@@ -331,7 +331,7 @@ export default function ElectricalPage() {
               </ul>
             </div>
 
-            <div className="p-8 bg-white/5 rounded-2xl border border-yellow-500/20 hover:border-yellow-500/50 hover:bg-white/10 transition-all group">
+            <div className="p-5 sm:p-8 bg-white/5 rounded-2xl border border-yellow-500/20 hover:border-yellow-500/50 hover:bg-white/10 transition-all group">
               <div className="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-600 to-yellow-500 flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:shadow-yellow-600/50 transition-all">
                 <Shield className="w-6 h-6 text-white" />
               </div>
@@ -357,7 +357,7 @@ export default function ElectricalPage() {
               </ul>
             </div>
 
-            <div className="p-8 bg-white/5 rounded-2xl border border-yellow-500/20 hover:border-yellow-500/50 hover:bg-white/10 transition-all group">
+            <div className="p-5 sm:p-8 bg-white/5 rounded-2xl border border-yellow-500/20 hover:border-yellow-500/50 hover:bg-white/10 transition-all group">
               <div className="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-600 to-yellow-500 flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:shadow-yellow-600/50 transition-all">
                 <Clock className="w-6 h-6 text-white" />
               </div>
@@ -475,7 +475,7 @@ export default function ElectricalPage() {
               <p className="text-sm text-gray-600 mb-6">For solo electricians</p>
               <Link
                 href="/login?tab=signup"
-                className="block w-full px-6 py-3 rounded-xl bg-gray-900 text-white text-sm font-semibold hover:bg-gray-800 transition-colors text-center mb-6"
+                className="block w-full px-4 sm:px-6 py-3 rounded-xl bg-gray-900 text-white text-sm font-semibold hover:bg-gray-800 transition-colors text-center mb-6"
               >
                 Start Free Trial
               </Link>
@@ -507,7 +507,7 @@ export default function ElectricalPage() {
               <p className="text-sm text-gray-600 mb-6">For growing electrical teams</p>
               <Link
                 href="/login?tab=signup"
-                className="block w-full px-6 py-3 rounded-xl bg-yellow-600 text-white text-sm font-semibold hover:bg-yellow-700 transition-colors text-center mb-6"
+                className="block w-full px-4 sm:px-6 py-3 rounded-xl bg-yellow-600 text-white text-sm font-semibold hover:bg-yellow-700 transition-colors text-center mb-6"
               >
                 Start Free Trial
               </Link>
@@ -540,7 +540,7 @@ export default function ElectricalPage() {
               <p className="text-sm text-gray-600 mb-6">For large electrical operations</p>
               <Link
                 href="/login?tab=signup"
-                className="block w-full px-6 py-3 rounded-xl bg-gray-900 text-white text-sm font-semibold hover:bg-gray-800 transition-colors text-center mb-6"
+                className="block w-full px-4 sm:px-6 py-3 rounded-xl bg-gray-900 text-white text-sm font-semibold hover:bg-gray-800 transition-colors text-center mb-6"
               >
                 Start Free Trial
               </Link>

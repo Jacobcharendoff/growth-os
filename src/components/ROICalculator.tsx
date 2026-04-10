@@ -246,7 +246,7 @@ export function ROICalculator() {
         <div className="mt-10 text-center">
           <a
             href="/dashboard"
-            className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-[#27AE60] hover:bg-[#229954] text-white font-semibold rounded-full transition-all shadow-lg shadow-emerald-600/20 hover:shadow-emerald-500/30 hover:-translate-y-0.5"
+            className="inline-flex items-center justify-center gap-2 px-4 sm:px-6 sm:px-8 py-3 sm:py-4 bg-[#27AE60] hover:bg-[#229954] text-white font-semibold rounded-full transition-all shadow-lg shadow-emerald-600/20 hover:shadow-emerald-500/30 hover:-translate-y-0.5"
           >
             {t('roi.cta')}
             <ArrowRight className="w-5 h-5" />

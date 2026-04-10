@@ -264,7 +264,7 @@ export function KeyboardShortcuts() {
             >
               {/* Header */}
               <div
-                className={`px-6 py-4 border-b flex items-center justify-between ${
+                className={`px-4 sm:px-6 py-4 border-b flex items-center justify-between ${
                   isDark ? 'bg-slate-800 border-slate-700' : 'bg-slate-50 border-slate-200'
                 }`}
               >
@@ -360,7 +360,7 @@ export function KeyboardShortcuts() {
 
               {/* Footer */}
               <div
-                className={`px-6 py-4 border-t text-center text-xs ${
+                className={`px-4 sm:px-6 py-4 border-t text-center text-xs ${
                   isDark
                     ? 'bg-slate-800 border-slate-700 text-slate-400'
                     : 'bg-slate-50 border-slate-200 text-slate-500'

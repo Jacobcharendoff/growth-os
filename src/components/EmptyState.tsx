@@ -30,7 +30,7 @@ export function EmptyState({
     <div className="flex items-center justify-center min-h-[500px] py-12 px-4 sm:px-6 lg:px-8">
       <div className="relative max-w-md w-full">
         {/* Animated fade-in container with dotted border */}
-        <div className="border border-dashed border-slate-300 dark:border-slate-600 rounded-2xl p-8 sm:p-12 bg-gradient-to-br from-slate-50 to-white dark:from-slate-800 dark:to-slate-900 animate-in fade-in duration-500">
+        <div className="border border-dashed border-slate-300 dark:border-slate-600 rounded-2xl p-4 sm:p-8 sm:p-12 bg-gradient-to-br from-slate-50 to-white dark:from-slate-800 dark:to-slate-900 animate-in fade-in duration-500">
           {/* Icon container with subtle background circle */}
           <div className="flex justify-center mb-6">
             <div className="relative">

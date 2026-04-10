@@ -92,7 +92,7 @@ export function PipelineBoard({ deals: initialDeals, contacts }: PipelineBoardPr
               >
                 {/* Header */}
                 <div
-                  className={`bg-gradient-to-r ${color} px-6 py-4 text-white`}
+                  className={`bg-gradient-to-r ${color} px-4 sm:px-6 py-4 text-white`}
                 >
                   <h3 className="font-semibold text-sm">{label}</h3>
                   <p className="text-xs opacity-90 mt-1">

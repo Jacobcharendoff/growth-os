@@ -260,7 +260,7 @@ export function InteractiveProductTour() {
       <div className="max-w-sm w-full animate-fade-in">
         {/* Paid stamp with animation */}
         <div className="relative mb-6 perspective">
-          <div className="absolute -top-4 -right-4 bg-emerald-500 text-white px-6 py-2 rounded-2xl font-bold text-xl transform rotate-12 shadow-lg animate-scale-up">
+          <div className="absolute -top-4 -right-4 bg-emerald-500 text-white px-4 sm:px-6 py-2 rounded-2xl font-bold text-xl transform rotate-12 shadow-lg animate-scale-up">
             {t('tour.mockup5PaidStamp')}
           </div>
 
@@ -334,7 +334,7 @@ export function InteractiveProductTour() {
         <div className="hidden sm:block absolute bottom-1/4 -left-48 w-[500px] h-[500px] bg-emerald-100/20 rounded-full blur-3xl" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section heading */}
         <div className="text-center mb-16 sm:mb-20">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight mb-3">
@@ -397,7 +397,7 @@ export function InteractiveProductTour() {
           <div className="lg:col-span-3">
             <div className="rounded-2xl overflow-hidden bg-white shadow-2xl shadow-black/10 ring-1 ring-black/5 flex flex-col h-[480px] sm:h-[520px] lg:h-[560px]">
               {/* Header */}
-              <div className="bg-gradient-to-r from-slate-800 to-slate-900 px-6 py-3 flex items-center justify-between border-b border-slate-700/50 flex-shrink-0">
+              <div className="bg-gradient-to-r from-slate-800 to-slate-900 px-4 sm:px-6 py-3 flex items-center justify-between border-b border-slate-700/50 flex-shrink-0">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#2C3E50] to-[#34495E] flex items-center justify-center">
                     <span className="text-xs font-bold text-white">GO</span>

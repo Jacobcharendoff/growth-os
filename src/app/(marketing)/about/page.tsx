@@ -42,7 +42,7 @@ export default function AboutPage() {
       {/* Mission Section */}
       <section className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-blue-50 border border-blue-100 rounded-2xl p-8 md:p-12">
+          <div className="bg-blue-50 border border-blue-100 rounded-2xl p-5 sm:p-8 md:p-12">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">{t('aboutPage.mission')}</h2>
             <p className="text-xl text-blue-700 font-semibold">
               {t('aboutPage.missionStatement')}
@@ -57,7 +57,7 @@ export default function AboutPage() {
           <h2 className="text-3xl font-bold text-gray-900 mb-12">{t('aboutPage.ourValues')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Value 1: Built for Canada */}
-            <div className="bg-white rounded-2xl p-8 shadow-sm">
+            <div className="bg-white rounded-2xl p-5 sm:p-8 shadow-sm">
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                 <MapPin className="w-6 h-6 text-blue-600" />
               </div>
@@ -68,7 +68,7 @@ export default function AboutPage() {
             </div>
 
             {/* Value 2: Simplicity First */}
-            <div className="bg-white rounded-2xl p-8 shadow-sm">
+            <div className="bg-white rounded-2xl p-5 sm:p-8 shadow-sm">
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                 <Zap className="w-6 h-6 text-blue-600" />
               </div>
@@ -79,7 +79,7 @@ export default function AboutPage() {
             </div>
 
             {/* Value 3: Revenue-Focused */}
-            <div className="bg-white rounded-2xl p-8 shadow-sm">
+            <div className="bg-white rounded-2xl p-5 sm:p-8 shadow-sm">
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                 <Target className="w-6 h-6 text-blue-600" />
               </div>
@@ -90,7 +90,7 @@ export default function AboutPage() {
             </div>
 
             {/* Value 4: Operator-Led */}
-            <div className="bg-white rounded-2xl p-8 shadow-sm">
+            <div className="bg-white rounded-2xl p-5 sm:p-8 shadow-sm">
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                 <Users className="w-6 h-6 text-blue-600" />
               </div>
@@ -107,7 +107,7 @@ export default function AboutPage() {
       <section className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-gray-900 mb-8">{t('aboutPage.ourTeam')}</h2>
-          <div className="bg-gray-50 rounded-2xl p-8 md:p-12">
+          <div className="bg-gray-50 rounded-2xl p-5 sm:p-8 md:p-12">
             <p className="text-lg text-gray-700 mb-6">
               {t('aboutPage.teamDesc1')}
             </p>

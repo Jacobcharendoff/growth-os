@@ -127,7 +127,7 @@ export default function ResetPasswordPage() {
       {/* Card */}
       <div className="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden">
         {/* Header */}
-        <div className="px-6 pt-6 pb-4 border-b border-slate-200">
+        <div className="px-4 sm:px-6 pt-6 pb-4 border-b border-slate-200">
           <h2 className="text-lg font-semibold text-slate-900">Set New Password</h2>
           <p className="text-sm text-slate-600 mt-1">
             Enter a new password to reset your account access.
@@ -137,7 +137,7 @@ export default function ResetPasswordPage() {
         {/* Message Area */}
         {message.type && (
           <div
-            className={`px-6 pt-4 ${
+            className={`px-4 sm:px-6 pt-4 ${
               message.type === 'error'
                 ? 'bg-red-50 border-l-4 border-red-500'
                 : 'bg-green-50 border-l-4 border-green-500'

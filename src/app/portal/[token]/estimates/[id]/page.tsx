@@ -253,7 +253,7 @@ export default function EstimatePage() {
       )}
 
       {/* Estimate Details */}
-      <div className="bg-gray-50 rounded-lg p-8 mb-8">
+      <div className="bg-gray-50 rounded-lg p-4 sm:p-8 mb-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           <div>
             <h3 className="text-sm font-semibold text-gray-600 uppercase">
@@ -390,7 +390,7 @@ export default function EstimatePage() {
             <button
               onClick={handleApprove}
               disabled={actionLoading}
-              className="w-full md:w-auto px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 disabled:bg-gray-400 transition"
+              className="w-full md:w-auto px-4 sm:px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 disabled:bg-gray-400 transition"
             >
               {actionLoading ? 'Processing...' : 'Approve Estimate'}
             </button>
@@ -398,7 +398,7 @@ export default function EstimatePage() {
             <button
               onClick={() => setRequestChangesOpen(!requestChangesOpen)}
               disabled={actionLoading}
-              className="w-full md:w-auto px-6 py-3 border border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 disabled:opacity-50 transition ml-0 md:ml-3"
+              className="w-full md:w-auto px-4 sm:px-6 py-3 border border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 disabled:opacity-50 transition ml-0 md:ml-3"
             >
               Request Changes
             </button>

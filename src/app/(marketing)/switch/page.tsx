@@ -400,7 +400,7 @@ export default function WhyStaybooktPage() {
               {/* Card 1: Manual Tax */}
               <div
                 ref={painCard1.ref}
-                className={`reveal reveal-delay-1 p-8 bg-gradient-to-br from-white to-slate-50 border border-slate-200 rounded-2xl hover:border-rose-300 transition-all ${
+                className={`reveal reveal-delay-1 p-5 sm:p-8 bg-gradient-to-br from-white to-slate-50 border border-slate-200 rounded-2xl hover:border-rose-300 transition-all ${
                   painCard1.isVisible ? 'visible' : ''
                 }`}
               >
@@ -418,7 +418,7 @@ export default function WhyStaybooktPage() {
               {/* Card 2: No French */}
               <div
                 ref={painCard2.ref}
-                className={`reveal reveal-delay-2 p-8 bg-gradient-to-br from-white to-slate-50 border border-slate-200 rounded-2xl hover:border-rose-300 transition-all ${
+                className={`reveal reveal-delay-2 p-5 sm:p-8 bg-gradient-to-br from-white to-slate-50 border border-slate-200 rounded-2xl hover:border-rose-300 transition-all ${
                   painCard2.isVisible ? 'visible' : ''
                 }`}
               >
@@ -436,7 +436,7 @@ export default function WhyStaybooktPage() {
               {/* Card 3: Paying Too Much */}
               <div
                 ref={painCard3.ref}
-                className={`reveal reveal-delay-3 p-8 bg-gradient-to-br from-white to-slate-50 border border-slate-200 rounded-2xl hover:border-rose-300 transition-all ${
+                className={`reveal reveal-delay-3 p-5 sm:p-8 bg-gradient-to-br from-white to-slate-50 border border-slate-200 rounded-2xl hover:border-rose-300 transition-all ${
                   painCard3.isVisible ? 'visible' : ''
                 }`}
               >
@@ -755,7 +755,7 @@ export default function WhyStaybooktPage() {
               {/* Testimonial 1 */}
               <div
                 ref={testimonial1.ref}
-                className={`reveal reveal-delay-1 p-8 bg-gradient-to-br from-slate-50 to-white border border-slate-200 rounded-2xl hover:border-emerald-300 transition-all ${
+                className={`reveal reveal-delay-1 p-5 sm:p-8 bg-gradient-to-br from-slate-50 to-white border border-slate-200 rounded-2xl hover:border-emerald-300 transition-all ${
                   testimonial1.isVisible ? 'visible' : ''
                 }`}
               >
@@ -783,7 +783,7 @@ export default function WhyStaybooktPage() {
               {/* Testimonial 2 */}
               <div
                 ref={testimonial2.ref}
-                className={`reveal reveal-delay-2 p-8 bg-gradient-to-br from-slate-50 to-white border border-slate-200 rounded-2xl hover:border-emerald-300 transition-all ${
+                className={`reveal reveal-delay-2 p-5 sm:p-8 bg-gradient-to-br from-slate-50 to-white border border-slate-200 rounded-2xl hover:border-emerald-300 transition-all ${
                   testimonial2.isVisible ? 'visible' : ''
                 }`}
               >
@@ -811,7 +811,7 @@ export default function WhyStaybooktPage() {
               {/* Testimonial 3 */}
               <div
                 ref={testimonial3.ref}
-                className={`reveal reveal-delay-3 p-8 bg-gradient-to-br from-slate-50 to-white border border-slate-200 rounded-2xl hover:border-emerald-300 transition-all ${
+                className={`reveal reveal-delay-3 p-5 sm:p-8 bg-gradient-to-br from-slate-50 to-white border border-slate-200 rounded-2xl hover:border-emerald-300 transition-all ${
                   testimonial3.isVisible ? 'visible' : ''
                 }`}
               >

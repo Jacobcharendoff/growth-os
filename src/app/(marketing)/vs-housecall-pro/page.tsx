@@ -33,7 +33,7 @@ export default function VsHousecallProPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
             {/* Staybookt */}
-            <div className="bg-white rounded-lg shadow-lg p-8 border-2 border-[#27AE60]">
+            <div className="bg-white rounded-lg shadow-lg p-5 sm:p-8 border-2 border-[#27AE60]">
               <h3 className="text-2xl font-bold text-[#27AE60] mb-6">Staybookt</h3>
               <div className="text-4xl font-bold text-slate-900 mb-2">$149/mo</div>
               <p className="text-slate-600 mb-8">{t('vsHousecallPro.plus')}</p>
@@ -75,7 +75,7 @@ export default function VsHousecallProPage() {
             </div>
 
             {/* Housecall Pro */}
-            <div className="bg-white rounded-lg shadow-lg p-8">
+            <div className="bg-white rounded-lg shadow-lg p-5 sm:p-8">
               <h3 className="text-2xl font-bold text-slate-700 mb-6">Housecall Pro</h3>
               <div className="text-4xl font-bold text-slate-900 mb-2">$229+/mo</div>
               <p className="text-slate-600 mb-8">{t('vsHousecallPro.essentials')})</p>
@@ -134,9 +134,9 @@ export default function VsHousecallProPage() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="bg-slate-900 text-white">
-                  <th className="px-6 py-4 text-left font-semibold">Feature</th>
-                  <th className="px-6 py-4 text-center font-semibold">Staybookt</th>
-                  <th className="px-6 py-4 text-center font-semibold">Housecall Pro</th>
+                  <th className="px-4 sm:px-6 py-4 text-left font-semibold">Feature</th>
+                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-center font-semibold">Staybookt</th>
+                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-center font-semibold">Housecall Pro</th>
                 </tr>
               </thead>
               <tbody>
@@ -145,10 +145,10 @@ export default function VsHousecallProPage() {
                   <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-900">
                     Monthly Cost (5 users, full features)
                   </td>
-                  <td className="px-6 py-4 text-center text-green-700 font-bold">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-center text-green-700 font-bold">
                     $149/mo
                   </td>
-                  <td className="px-6 py-4 text-center text-orange-700 font-bold">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-center text-orange-700 font-bold">
                     $229+/mo
                   </td>
                 </tr>
@@ -158,10 +158,10 @@ export default function VsHousecallProPage() {
                   <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-900">
                     Proposals & Estimates
                   </td>
-                  <td className="px-6 py-4 text-center">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-center">
                     <span className="text-green-600 font-bold">Included</span>
                   </td>
-                  <td className="px-6 py-4 text-center">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-center">
                     <span className="text-slate-600">$40/mo extra</span>
                   </td>
                 </tr>
@@ -171,10 +171,10 @@ export default function VsHousecallProPage() {
                   <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-900">
                     Recurring Service Plans
                   </td>
-                  <td className="px-6 py-4 text-center">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-center">
                     <span className="text-green-600 font-bold">Included</span>
                   </td>
-                  <td className="px-6 py-4 text-center">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-center">
                     <span className="text-slate-600">$40/mo extra</span>
                   </td>
                 </tr>
@@ -184,10 +184,10 @@ export default function VsHousecallProPage() {
                   <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-900">
                     Smart Price Book
                   </td>
-                  <td className="px-6 py-4 text-center">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-center">
                     <span className="text-green-600 font-bold">Included</span>
                   </td>
-                  <td className="px-6 py-4 text-center">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-center">
                     <span className="text-slate-600">$149/mo extra</span>
                   </td>
                 </tr>
@@ -197,11 +197,11 @@ export default function VsHousecallProPage() {
                   <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-900">
                     Canadian Tax (HST/GST/QST)
                   </td>
-                  <td className="px-6 py-4 text-center">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-center">
                     <span className="text-green-600 font-bold">Auto-calculated</span>
                     <p className="text-xs text-slate-600">Pre-configured by province</p>
                   </td>
-                  <td className="px-6 py-4 text-center">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-center">
                     <span className="text-slate-600">Manual setup</span>
                     <p className="text-xs text-slate-600">Custom rates only</p>
                   </td>
@@ -212,10 +212,10 @@ export default function VsHousecallProPage() {
                   <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-900">
                     French Templates & UI
                   </td>
-                  <td className="px-6 py-4 text-center">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-center">
                     <span className="text-green-600 font-bold">Built-in</span>
                   </td>
-                  <td className="px-6 py-4 text-center">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-center">
                     <span className="text-red-600">Not available</span>
                   </td>
                 </tr>
@@ -225,10 +225,10 @@ export default function VsHousecallProPage() {
                   <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-900">
                     HomeStars Review Sync
                   </td>
-                  <td className="px-6 py-4 text-center">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-center">
                     <span className="text-green-600 font-bold">Included</span>
                   </td>
-                  <td className="px-6 py-4 text-center">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-center">
                     <span className="text-red-600">Not available</span>
                   </td>
                 </tr>
@@ -238,10 +238,10 @@ export default function VsHousecallProPage() {
                   <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-900">
                     Phone Support
                   </td>
-                  <td className="px-6 py-4 text-center">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-center">
                     <span className="text-green-600 font-bold">24/7 Available</span>
                   </td>
-                  <td className="px-6 py-4 text-center">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-center">
                     <span className="text-slate-600">Chat only</span>
                     <p className="text-xs text-slate-600">(discontinued early 2025)</p>
                   </td>
@@ -252,11 +252,11 @@ export default function VsHousecallProPage() {
                   <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-900">
                     Auto Lead Response
                   </td>
-                  <td className="px-6 py-4 text-center">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-center">
                     <span className="text-green-600 font-bold">60 seconds</span>
                     <p className="text-xs text-slate-600">AI-powered</p>
                   </td>
-                  <td className="px-6 py-4 text-center">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-center">
                     <span className="text-slate-600">Not built-in</span>
                   </td>
                 </tr>
@@ -266,10 +266,10 @@ export default function VsHousecallProPage() {
                   <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-900">
                     Billing Transparency
                   </td>
-                  <td className="px-6 py-4 text-center">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-center">
                     <span className="text-green-600 font-bold">Simple, cancel anytime</span>
                   </td>
-                  <td className="px-6 py-4 text-center">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-center">
                     <span className="text-red-600">Reports of post-cancel charges</span>
                     <p className="text-xs text-slate-600">3+ months after cancellation</p>
                   </td>
@@ -280,10 +280,10 @@ export default function VsHousecallProPage() {
                   <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-900">
                     QuickBooks Integration
                   </td>
-                  <td className="px-6 py-4 text-center">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-center">
                     <span className="text-green-600 font-bold">Reliable sync</span>
                   </td>
-                  <td className="px-6 py-4 text-center">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-center">
                     <span className="text-slate-600">Known issues</span>
                     <p className="text-xs text-slate-600">Estimates incorrectly convert</p>
                   </td>
@@ -294,10 +294,10 @@ export default function VsHousecallProPage() {
                   <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-900">
                     Feature Stability
                   </td>
-                  <td className="px-6 py-4 text-center">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-center">
                     <span className="text-green-600 font-bold">Tested before release</span>
                   </td>
-                  <td className="px-6 py-4 text-center">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-center">
                     <span className="text-slate-600">Critical features break</span>
                     <p className="text-xs text-slate-600">Without warning; support often unaware</p>
                   </td>
@@ -308,10 +308,10 @@ export default function VsHousecallProPage() {
                   <td className="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-900">
                     Contract
                   </td>
-                  <td className="px-6 py-4 text-center">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-center">
                     <span className="text-green-600 font-bold">Month-to-month</span>
                   </td>
-                  <td className="px-6 py-4 text-center">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-center">
                     <span className="text-green-600 font-bold">Month-to-month</span>
                   </td>
                 </tr>
@@ -418,7 +418,7 @@ export default function VsHousecallProPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {/* Starter */}
-            <div className="bg-white rounded-lg shadow-lg p-8">
+            <div className="bg-white rounded-lg shadow-lg p-5 sm:p-8">
               <h3 className="text-xl font-bold text-slate-900 mb-2">Starter</h3>
               <p className="text-slate-600 mb-6 text-sm">{t('vsHousecallPro.soloLabel')}</p>
               <div className="text-3xl font-bold text-slate-900 mb-6">
@@ -451,7 +451,7 @@ export default function VsHousecallProPage() {
             </div>
 
             {/* Plus (Recommended) */}
-            <div className="bg-white rounded-lg shadow-lg p-8 border-2 border-blue-600 relative">
+            <div className="bg-white rounded-lg shadow-lg p-5 sm:p-8 border-2 border-blue-600 relative">
               <div className="absolute top-0 left-6 bg-blue-600 text-white px-4 py-1 rounded-b text-sm font-semibold">
                 {t('vsHousecallPro.recommended')}
               </div>
@@ -495,7 +495,7 @@ export default function VsHousecallProPage() {
             </div>
 
             {/* Enterprise */}
-            <div className="bg-white rounded-lg shadow-lg p-8">
+            <div className="bg-white rounded-lg shadow-lg p-5 sm:p-8">
               <h3 className="text-xl font-bold text-slate-900 mb-2">Enterprise</h3>
               <p className="text-slate-600 mb-6 text-sm">{t('vsHousecallPro.scalingFast')}</p>
               <div className="text-3xl font-bold text-slate-900 mb-6">

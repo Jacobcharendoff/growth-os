@@ -71,7 +71,7 @@ export function LogoWall() {
                   className="flex-shrink-0 group"
                 >
                   <div
-                    className={`${company.bgColor} px-6 py-4 rounded-xl border border-gray-200 transition-all duration-300 group-hover:border-gray-300 group-hover:shadow-md`}
+                    className={`${company.bgColor} px-4 sm:px-6 py-4 rounded-xl border border-gray-200 transition-all duration-300 group-hover:border-gray-300 group-hover:shadow-md`}
                   >
                     <div className="flex items-center gap-3">
                       <div

@@ -728,7 +728,7 @@ export default function ContactsImportPage() {
 
         {/* Step Content */}
         <div
-          className={`rounded-lg p-8 ${
+          className={`rounded-lg p-4 sm:p-8 ${
             isDark ? 'bg-slate-800 border border-slate-700' : 'bg-white border border-slate-200'
           }`}
         >

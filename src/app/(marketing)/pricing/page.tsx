@@ -168,7 +168,7 @@ export default function PricingPage() {
       {/* Hero Section */}
       <section className="relative pt-32 pb-16 sm:pt-40 sm:pb-20 bg-white overflow-hidden">
         <div className="absolute inset-0 -z-10" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(39, 174, 96, 0.05) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(44, 62, 80, 0.03) 0%, transparent 50%)' }} />
-        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 mb-8">
             <Zap className="w-4 h-4 text-[#27AE60]" />
             <span className="text-xs font-semibold text-[#27AE60] uppercase tracking-wider">Pricing</span>
@@ -184,7 +184,7 @@ export default function PricingPage() {
           <div className="flex items-center justify-center gap-6">
             <button
               onClick={() => setIsAnnual(false)}
-              className={`px-6 py-2.5 rounded-lg font-semibold transition-all ${
+              className={`px-4 sm:px-6 py-2.5 rounded-lg font-semibold transition-all ${
                 !isAnnual
                   ? 'bg-[#27AE60] text-white shadow-lg shadow-green-600/25'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -194,7 +194,7 @@ export default function PricingPage() {
             </button>
             <button
               onClick={() => setIsAnnual(true)}
-              className={`px-6 py-2.5 rounded-lg font-semibold transition-all ${
+              className={`px-4 sm:px-6 py-2.5 rounded-lg font-semibold transition-all ${
                 isAnnual
                   ? 'bg-[#27AE60] text-white shadow-lg shadow-green-600/25'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -213,7 +213,7 @@ export default function PricingPage() {
 
       {/* Pricing Cards */}
       <section className="py-12 sm:py-20 bg-gradient-to-b from-white via-slate-50 to-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {plans.map((plan, idx) => {
               const displayPrice = currentPriceNum(plan.price, plan.annualPrice);
@@ -259,7 +259,7 @@ export default function PricingPage() {
                     {/* CTA Button */}
                     <Link
                       href={plan.href}
-                      className={`w-full py-3 px-6 rounded-xl font-semibold text-base transition-all mb-8 flex items-center justify-center gap-2 ${
+                      className={`w-full py-3 px-4 sm:px-6 rounded-xl font-semibold text-base transition-all mb-8 flex items-center justify-center gap-2 ${
                         plan.highlighted
                           ? 'bg-[#27AE60] text-white hover:bg-[#229954] shadow-lg shadow-green-600/25 hover:shadow-green-700/40'
                           : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
@@ -303,7 +303,7 @@ export default function PricingPage() {
 
       {/* Competitor Comparison Section */}
       <section className="py-16 sm:py-24 bg-white">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold text-[#2C3E50] mb-4">{t('pricing.comparisonHeading')}</h2>
           </div>
@@ -332,7 +332,7 @@ export default function PricingPage() {
 
       {/* Feature Comparison Table */}
       <section className="py-16 sm:py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl sm:text-5xl font-bold text-[#2C3E50] mb-4">{t('pricing.featureComparison')}</h2>
             <p className="text-lg text-gray-600">{t('pricing.featureComparisonSubtitle')}</p>
@@ -344,13 +344,13 @@ export default function PricingPage() {
               <div key={idx} className="bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
                 <button
                   onClick={() => setExpandedFaq(expandedFaq === idx ? null : idx)}
-                  className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-100 transition-colors"
+                  className="w-full px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between hover:bg-gray-100 transition-colors"
                 >
                   <h3 className="font-semibold text-[#2C3E50]">{t(category.nameKey)}</h3>
                   <ChevronDown className={`w-5 h-5 text-gray-600 transition-transform ${expandedFaq === idx ? 'rotate-180' : ''}`} />
                 </button>
                 {expandedFaq === idx && (
-                  <div className="px-6 py-4 border-t border-gray-200 space-y-3">
+                  <div className="px-4 sm:px-6 py-3 sm:py-4 border-t border-gray-200 space-y-3">
                     {category.features.map((f, fidx) => (
                       <div key={fidx} className="flex justify-between items-center text-sm">
                         <span className="text-gray-700">{t(f.textKey)}</span>
@@ -378,16 +378,16 @@ export default function PricingPage() {
             <table className="w-full">
               <thead>
                 <tr className="border-b-2 border-gray-200">
-                  <th className="text-left py-4 px-6 font-semibold text-[#2C3E50]">{t('pricing.featureHeaderFeature')}</th>
-                  <th className="text-center py-4 px-6 font-semibold text-gray-700">{t('pricing.featureHeaderStarter')}</th>
-                  <th className="text-center py-4 px-6 font-semibold text-[#27AE60] bg-emerald-50">{t('pricing.featureHeaderGrowth')}</th>
-                  <th className="text-center py-4 px-6 font-semibold text-gray-700">{t('pricing.featureHeaderScale')}</th>
+                  <th className="text-left py-3 sm:py-4 px-3 sm:px-6 font-semibold text-[#2C3E50]">{t('pricing.featureHeaderFeature')}</th>
+                  <th className="text-center py-3 sm:py-4 px-3 sm:px-6 font-semibold text-gray-700">{t('pricing.featureHeaderStarter')}</th>
+                  <th className="text-center py-3 sm:py-4 px-3 sm:px-6 font-semibold text-[#27AE60] bg-emerald-50">{t('pricing.featureHeaderGrowth')}</th>
+                  <th className="text-center py-3 sm:py-4 px-3 sm:px-6 font-semibold text-gray-700">{t('pricing.featureHeaderScale')}</th>
                 </tr>
               </thead>
               <tbody>
                 {comparisonCategories.map((category, cidx) => (
                   <tr key={cidx} className="border-b border-gray-200 bg-gray-50">
-                    <td colSpan={4} className="py-3 px-6 font-semibold text-[#2C3E50] text-sm">
+                    <td colSpan={4} className="py-3 px-3 sm:px-6 font-semibold text-[#2C3E50] text-sm">
                       {t(category.nameKey)}
                     </td>
                   </tr>
@@ -395,22 +395,22 @@ export default function PricingPage() {
                 {comparisonCategories.map((category) =>
                   category.features.map((feature, fidx) => (
                     <tr key={`${t(category.nameKey)}-${fidx}`} className="border-b border-gray-100 hover:bg-gray-50">
-                      <td className="py-4 px-6 text-sm font-medium text-gray-700">{t(feature.textKey)}</td>
-                      <td className="py-4 px-6 text-center">
+                      <td className="py-3 sm:py-4 px-3 sm:px-6 text-sm font-medium text-gray-700">{t(feature.textKey)}</td>
+                      <td className="py-3 sm:py-4 px-3 sm:px-6 text-center">
                         {feature.starter ? (
                           <Check className="w-5 h-5 text-[#27AE60] mx-auto" />
                         ) : (
                           <Minus className="w-5 h-5 text-gray-300 mx-auto" />
                         )}
                       </td>
-                      <td className="py-4 px-6 text-center bg-emerald-50">
+                      <td className="py-3 sm:py-4 px-3 sm:px-6 text-center bg-emerald-50">
                         {feature.pro ? (
                           <Check className="w-5 h-5 text-[#27AE60] mx-auto" />
                         ) : (
                           <Minus className="w-5 h-5 text-gray-300 mx-auto" />
                         )}
                       </td>
-                      <td className="py-4 px-6 text-center">
+                      <td className="py-3 sm:py-4 px-3 sm:px-6 text-center">
                         {feature.enterprise ? (
                           <Check className="w-5 h-5 text-[#27AE60] mx-auto" />
                         ) : (
@@ -428,7 +428,7 @@ export default function PricingPage() {
 
       {/* FAQ Section */}
       <section className="py-16 sm:py-24 bg-gradient-to-b from-white to-slate-50">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl sm:text-5xl font-bold text-[#2C3E50] mb-4">{t('pricing.faqTitle')}</h2>
             <p className="text-lg text-gray-600">{t('pricing.faqSubtitle')}</p>
@@ -463,7 +463,7 @@ export default function PricingPage() {
       {/* Bottom CTA */}
       <section className="py-16 sm:py-24 bg-gradient-to-r from-[#2C3E50] via-slate-700 to-[#2C3E50] relative overflow-hidden">
         <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(255,255,255,0.05) 0%, transparent 50%)' }} />
-        <div className="relative max-w-3xl mx-auto px-6 lg:px-8 text-center">
+        <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">{t('pricing.ctaHeading')}</h2>
           <p className="text-xl text-blue-100 mb-10 max-w-xl mx-auto">
             {t('pricing.ctaDescription')}

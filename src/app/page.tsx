@@ -304,14 +304,14 @@ function Hero() {
           <div className="hero-reveal hero-reveal-delay-4 mt-8 flex justify-center gap-4 flex-wrap">
             <Link
               href="/login?tab=signup"
-              className="inline-flex items-center justify-center gap-2.5 px-6 sm:px-8 py-3 sm:py-4 bg-[#27AE60] hover:bg-[#229954] text-white text-base font-semibold rounded-2xl transition-all shadow-lg shadow-emerald-600/25 hover:shadow-emerald-500/40 hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center gap-2.5 px-4 sm:px-6 sm:px-8 py-3 sm:py-4 bg-[#27AE60] hover:bg-[#229954] text-white text-base font-semibold rounded-2xl transition-all shadow-lg shadow-emerald-600/25 hover:shadow-emerald-500/40 hover:-translate-y-0.5"
             >
               Start your free 14-day trial
               <ArrowRight className="w-5 h-5" />
             </Link>
             <Link
               href="/dashboard"
-              className="inline-flex items-center justify-center gap-2.5 px-6 sm:px-8 py-3 sm:py-4 bg-white hover:bg-gray-50 text-gray-900 text-base font-semibold rounded-2xl transition-all border border-gray-300 shadow-sm hover:shadow-md"
+              className="inline-flex items-center justify-center gap-2.5 px-4 sm:px-6 sm:px-8 py-3 sm:py-4 bg-white hover:bg-gray-50 text-gray-900 text-base font-semibold rounded-2xl transition-all border border-gray-300 shadow-sm hover:shadow-md"
             >
               See Staybookt in action
             </Link>
@@ -960,7 +960,7 @@ function Features() {
           {features.map((feature) => (
             <div
               key={feature.title}
-              className="scroll-fade-up tilt-card group relative p-8 rounded-2xl bg-white border border-gray-100 hover:border-gray-200 hover:shadow-xl hover:shadow-gray-100/50 transition-all duration-300 hover:-translate-y-1"
+              className="scroll-fade-up tilt-card group relative p-5 sm:p-8 rounded-2xl bg-white border border-gray-100 hover:border-gray-200 hover:shadow-xl hover:shadow-gray-100/50 transition-all duration-300 hover:-translate-y-1"
               onMouseMove={handleTiltMouseMove}
               onMouseLeave={handleTiltMouseLeave}
             >

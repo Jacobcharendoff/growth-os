@@ -466,7 +466,7 @@ export default function ElectricalPage() {
           </p>
 
           <div className="grid md:grid-cols-3 gap-6">
-            <div className="rounded-2xl border border-gray-200 p-8 text-left hover:shadow-lg transition-shadow">
+            <div className="rounded-2xl border border-gray-200 p-5 sm:p-8 text-left hover:shadow-lg transition-shadow">
               <h3 className="text-lg font-semibold text-gray-900 mb-3">Starter</h3>
               <div className="flex items-baseline gap-1 mb-4">
                 <span className="text-4xl font-bold text-gray-900">$79</span>
@@ -495,7 +495,7 @@ export default function ElectricalPage() {
               </ul>
             </div>
 
-            <div className="rounded-2xl border-2 border-yellow-600 p-8 text-left shadow-lg relative">
+            <div className="rounded-2xl border-2 border-yellow-600 p-5 sm:p-8 text-left shadow-lg relative">
               <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-yellow-600 text-white text-xs font-bold rounded-full">
                 Most Popular
               </div>
@@ -531,7 +531,7 @@ export default function ElectricalPage() {
               </ul>
             </div>
 
-            <div className="rounded-2xl border border-gray-200 p-8 text-left hover:shadow-lg transition-shadow">
+            <div className="rounded-2xl border border-gray-200 p-5 sm:p-8 text-left hover:shadow-lg transition-shadow">
               <h3 className="text-lg font-semibold text-gray-900 mb-3">Scale</h3>
               <div className="flex items-baseline gap-1 mb-4">
                 <span className="text-4xl font-bold text-gray-900">$299</span>

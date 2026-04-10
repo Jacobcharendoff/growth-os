@@ -82,7 +82,7 @@ export function Navigation() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-6 sm:gap-8">
             <Link href="/#product" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
               {t('nav.product')}
             </Link>

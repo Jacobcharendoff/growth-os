@@ -187,7 +187,7 @@ export default function InvoicePage() {
       )}
 
       {/* Invoice Details */}
-      <div className="bg-gray-50 rounded-lg p-8 mb-8">
+      <div className="bg-gray-50 rounded-lg p-4 sm:p-8 mb-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           <div>
             <h3 className="text-sm font-semibold text-gray-600 uppercase">
@@ -365,7 +365,7 @@ export default function InvoicePage() {
             <button
               onClick={() => handlePayment('stripe')}
               disabled={paymentLoading}
-              className="w-full px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 disabled:bg-gray-400 transition text-left"
+              className="w-full px-4 sm:px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 disabled:bg-gray-400 transition text-left"
             >
               <div className="flex items-center justify-between">
                 <span>
@@ -380,7 +380,7 @@ export default function InvoicePage() {
             <button
               onClick={() => handlePayment('bank_transfer')}
               disabled={paymentLoading}
-              className="w-full px-6 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 disabled:opacity-50 transition text-left"
+              className="w-full px-4 sm:px-6 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 disabled:opacity-50 transition text-left"
             >
               <div className="flex items-center justify-between">
                 <span>

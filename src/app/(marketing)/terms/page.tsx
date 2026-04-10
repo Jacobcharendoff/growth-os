@@ -19,7 +19,7 @@ export default function TermsPage() {
       {/* Content */}
       <section className="py-12 bg-gray-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-2xl p-8 md:p-12 shadow-sm prose prose-lg max-w-none">
+          <div className="bg-white rounded-2xl p-5 sm:p-8 md:p-12 shadow-sm prose prose-lg max-w-none">
             <h2>1. Acceptance of Terms</h2>
             <p>
               These Terms of Service ("Terms") govern your access to and use of Staybookt, a web-based customer relationship management platform provided by Staybookt Inc. ("Company," "we," "us," or "our"), a company based in Toronto, Ontario, Canada.

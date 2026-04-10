@@ -394,22 +394,22 @@ export default function ContactsPage() {
                   aria-label="Select all contacts"
                 />
               </th>
-              <th className={`px-2 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 text-left text-sm font-semibold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+              <th className={`px-2 sm:px-4 md:px-4 sm:px-6 py-2 sm:py-3 md:py-4 text-left text-sm font-semibold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                 {t('contacts.nameAddress')}
               </th>
-              <th className={`px-2 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 text-left text-sm font-semibold hidden sm:table-cell ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+              <th className={`px-2 sm:px-4 md:px-4 sm:px-6 py-2 sm:py-3 md:py-4 text-left text-sm font-semibold hidden sm:table-cell ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                 {t('contacts.type')}
               </th>
-              <th className={`px-2 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 text-left text-sm font-semibold hidden sm:table-cell ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+              <th className={`px-2 sm:px-4 md:px-4 sm:px-6 py-2 sm:py-3 md:py-4 text-left text-sm font-semibold hidden sm:table-cell ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                 {t('contacts.source')}
               </th>
-              <th className={`px-2 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 text-left text-sm font-semibold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+              <th className={`px-2 sm:px-4 md:px-4 sm:px-6 py-2 sm:py-3 md:py-4 text-left text-sm font-semibold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                 {t('contacts.contact')}
               </th>
-              <th className={`px-2 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 text-right text-sm font-semibold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+              <th className={`px-2 sm:px-4 md:px-4 sm:px-6 py-2 sm:py-3 md:py-4 text-right text-sm font-semibold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                 {t('contacts.deals')}
               </th>
-              <th className={`px-2 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 text-right text-sm font-semibold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+              <th className={`px-2 sm:px-4 md:px-4 sm:px-6 py-2 sm:py-3 md:py-4 text-right text-sm font-semibold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                 Actions
               </th>
             </tr>

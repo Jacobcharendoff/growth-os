@@ -444,7 +444,7 @@ function LoginPageInner() {
                   setTab('signin');
                   clearMessage();
                 }}
-                className={`flex-1 py-4 px-6 font-medium text-center transition-colors ${
+                className={`flex-1 py-4 px-4 sm:px-6 font-medium text-center transition-colors ${
                   tab === 'signin'
                     ? 'text-[#27AE60] border-b-2 border-[#27AE60] bg-slate-50'
                     : 'text-slate-600 hover:text-slate-900'
@@ -457,7 +457,7 @@ function LoginPageInner() {
                   setTab('signup');
                   clearMessage();
                 }}
-                className={`flex-1 py-4 px-6 font-medium text-center transition-colors ${
+                className={`flex-1 py-4 px-4 sm:px-6 font-medium text-center transition-colors ${
                   tab === 'signup'
                     ? 'text-[#27AE60] border-b-2 border-[#27AE60] bg-slate-50'
                     : 'text-slate-600 hover:text-slate-900'
@@ -470,7 +470,7 @@ function LoginPageInner() {
             {/* Message Area */}
             {message.type && (
               <div
-                className={`px-6 pt-4 ${
+                className={`px-4 sm:px-6 pt-4 ${
                   message.type === 'error'
                     ? 'bg-red-50 border-l-4 border-red-500'
                     : 'bg-green-50 border-l-4 border-green-500'
@@ -728,7 +728,7 @@ function LoginPageInner() {
             </div>
 
             {/* Footer */}
-            <div className="px-6 py-4 bg-slate-50 border-t border-slate-200">
+            <div className="px-4 sm:px-6 py-3 sm:py-4 bg-slate-50 border-t border-slate-200">
               <p className="text-xs text-center text-slate-600 leading-relaxed">
                 {t('auth.termsPrefix')} {tab === 'signup' ? t('auth.signingUpAgreement') : t('auth.signingInAgreement')} {t('auth.youAgree')}{' '}
                 <a
@@ -752,7 +752,7 @@ function LoginPageInner() {
         {view === 'forgotPassword' && (
           <>
             {/* Header */}
-            <div className="px-6 pt-6 pb-4 border-b border-slate-200">
+            <div className="px-4 sm:px-6 pt-4 sm:pt-6 pb-4 border-b border-slate-200">
               <h2 className="text-lg font-semibold text-slate-900">{t('auth.resetPassword')}</h2>
               <p className="text-sm text-slate-600 mt-1">
                 {t('auth.resetPasswordDesc')}
@@ -762,7 +762,7 @@ function LoginPageInner() {
             {/* Message Area */}
             {message.type && (
               <div
-                className={`px-6 pt-4 ${
+                className={`px-4 sm:px-6 pt-4 ${
                   message.type === 'error'
                     ? 'bg-red-50 border-l-4 border-red-500'
                     : 'bg-green-50 border-l-4 border-green-500'

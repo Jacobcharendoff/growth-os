@@ -21,6 +21,19 @@ const sendTemplateSchema = z.object({
 
 type SendTemplateRequest = z.infer<typeof sendTemplateSchema>;
 
+interface ResendResponse {
+  data?: { id: string };
+  error?: { message: string };
+}
+
+interface ActivityInsert {
+  org_id: string;
+  contact_id: string;
+  type: string;
+  description: string;
+  deal_id?: string;
+}
+
 export async function POST(request: NextRequest) {
   try {
     const supabase = await createServerComponentClient();
@@ -33,13 +46,11 @@ export async function POST(request: NextRequest) {
 
     const { templateId, contactId, variables: customVariables, dealId } = validation.data;
 
-    // Get the template
     const template = getEmailTemplate(templateId);
     if (!template) {
       return apiError(`Template "${templateId}" not found`, 404);
     }
 
-    // Get contact details
     const { data: contact, error: contactError } = await supabase
       .from('contacts')
       .select('email, name, phone')
@@ -51,7 +62,6 @@ export async function POST(request: NextRequest) {
       return apiError('Contact not found', 404);
     }
 
-    // Get org settings
     const { data: orgSettings } = await supabase
       .from('org_settings')
       .select('company_name, company_phone')
@@ -61,10 +71,8 @@ export async function POST(request: NextRequest) {
     const companyName = orgSettings?.company_name || 'Staybookt';
     const companyPhone = orgSettings?.company_phone || '';
 
-    // Extract first name from contact name
     const firstName = contact.name.split(' ')[0];
 
-    // Build variables for template rendering
     const variables = {
       firstName,
       companyName,
@@ -72,13 +80,11 @@ export async function POST(request: NextRequest) {
       ...customVariables,
     };
 
-    // Render template with variables
     const renderedTemplate = renderTemplate(template, variables);
 
-    // Try to send via Resend
     const resend = getResend();
     let emailSent = false;
-    let resendResponse: any = null;
+    let resendResponse: ResendResponse | null = null;
 
     if (resend) {
       try {
@@ -104,8 +110,7 @@ export async function POST(request: NextRequest) {
       emailSent = false;
     }
 
-    // Log as activity
-    const activityData: any = {
+    const activityData: ActivityInsert = {
       org_id: user.orgId,
       contact_id: contactId,
       type: 'email',
@@ -126,7 +131,6 @@ export async function POST(request: NextRequest) {
       console.error('Failed to log email activity:', activityError);
     }
 
-    // Return response
     if (emailSent && resendResponse) {
       return apiSuccess(
         {
@@ -141,7 +145,6 @@ export async function POST(request: NextRequest) {
         200
       );
     } else if (!resend) {
-      // Resend not configured, but activity was logged
       return apiSuccess(
         {
           templateId,
@@ -155,7 +158,6 @@ export async function POST(request: NextRequest) {
         200
       );
     } else {
-      // Resend error
       return apiError(
         `Failed to send email: ${resendResponse?.error?.message || 'Unknown error'}`,
         500

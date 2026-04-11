@@ -23,6 +23,19 @@ const sendEmailSchema = z.object({
 
 type SendEmailRequest = z.infer<typeof sendEmailSchema>;
 
+interface ResendResponse {
+  data?: { id: string };
+  error?: { message: string };
+}
+
+interface ActivityInsert {
+  org_id: string;
+  type: string;
+  description: string;
+  contact_id?: string;
+  deal_id?: string;
+}
+
 export async function POST(request: NextRequest) {
   try {
     const supabase = await createServerComponentClient();
@@ -35,7 +48,6 @@ export async function POST(request: NextRequest) {
 
     const { to, subject, html, from, replyTo, contactId, dealId } = validation.data;
 
-    // Get org settings for default from address
     const { data: orgSettings } = await supabase
       .from('org_settings')
       .select('company_name')
@@ -45,10 +57,9 @@ export async function POST(request: NextRequest) {
     const companyName = orgSettings?.company_name || 'Staybookt';
     const fromAddress = from || `notifications@${fromDomain}`;
 
-    // Try to send via Resend
     const resend = getResend();
     let emailSent = false;
-    let resendResponse: any = null;
+    let resendResponse: ResendResponse | null = null;
 
     if (resend) {
       try {
@@ -62,7 +73,6 @@ export async function POST(request: NextRequest) {
 
         if (resendResponse.error) {
           console.error('Resend error:', resendResponse.error);
-          // Still log the activity, but note it failed
           emailSent = false;
         } else {
           emailSent = true;
@@ -76,8 +86,7 @@ export async function POST(request: NextRequest) {
       emailSent = false;
     }
 
-    // Log as activity
-    const activityData: any = {
+    const activityData: ActivityInsert = {
       org_id: user.orgId,
       type: 'email',
       description: `Email sent to ${to}: ${subject}`,
@@ -100,7 +109,6 @@ export async function POST(request: NextRequest) {
       console.error('Failed to log email activity:', activityError);
     }
 
-    // Return response
     if (emailSent && resendResponse) {
       return apiSuccess(
         {
@@ -113,7 +121,6 @@ export async function POST(request: NextRequest) {
         200
       );
     } else if (!resend) {
-      // Resend not configured, but activity was logged
       return apiSuccess(
         {
           to,
@@ -125,7 +132,6 @@ export async function POST(request: NextRequest) {
         200
       );
     } else {
-      // Resend error
       return apiError(
         `Failed to send email: ${resendResponse?.error?.message || 'Unknown error'}`,
         500

@@ -14,6 +14,11 @@ const lineItemSchema = z.object({
   unit_price: z.number().min(0),
 });
 
+interface LineItem {
+  quantity: number;
+  unit_price: number;
+}
+
 const updateInvoiceSchema = z.object({
   customer_name: z.string().min(1).optional(),
   customer_email: z.string().email().optional(),
@@ -72,9 +77,8 @@ export async function PATCH(
       return apiError(validation.error, 400);
     }
 
-    const updates: Record<string, any> = { ...validation.data };
+    const updates: Record<string, unknown> = { ...validation.data };
 
-    // Recalculate totals if line items or tax rate changed
     if (validation.data.line_items || validation.data.tax_rate) {
       const { data: currentInvoice } = await supabase
         .from('invoices')
@@ -87,7 +91,7 @@ export async function PATCH(
       const taxRate = validation.data.tax_rate ?? currentInvoice?.tax_rate ?? 0;
 
       const subtotal = lineItems.reduce(
-        (sum: number, item: any) => sum + item.quantity * item.unit_price,
+        (sum: number, item: LineItem) => sum + item.quantity * item.unit_price,
         0
       );
       const taxAmount = subtotal * taxRate;
@@ -98,7 +102,6 @@ export async function PATCH(
       updates.total = total;
     }
 
-    // Handle status transitions
     if (validation.data.status === 'sent' && !updates.sent_at) {
       updates.sent_at = new Date().toISOString();
     }

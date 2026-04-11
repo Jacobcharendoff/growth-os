@@ -15,20 +15,25 @@ const sendSmsSchema = z.object({
   contactId: z.string().optional(),
 });
 
-// Validate phone number format
+interface ActivityInsert {
+  org_id: string;
+  type: string;
+  description: string;
+  metadata?: Record<string, unknown>;
+  contact_id?: string;
+  deal_id?: string;
+}
+
 function isValidPhoneNumber(phone: string): boolean {
-  // Must start with + or be 10-digit North American format
   const internationalPattern = /^\+\d{10,15}$/;
   const northAmericanPattern = /^\d{10}$/;
   return internationalPattern.test(phone) || northAmericanPattern.test(phone);
 }
 
-// Normalize phone number for Twilio
 function normalizePhoneNumber(phone: string): string {
   if (phone.startsWith('+')) {
     return phone;
   }
-  // Add North American country code if not present
   return `+1${phone}`;
 }
 
@@ -44,7 +49,6 @@ export async function POST(request: NextRequest) {
 
     const { to, body, contactId } = validation.data;
 
-    // Validate phone number
     if (!isValidPhoneNumber(to)) {
       return apiError(
         'Invalid phone number format. Must be +[country code][number] or 10-digit North American format.',
@@ -52,7 +56,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check if Twilio is configured
     const twilioClient = getTwilio();
     const twilioPhoneNumber = getTwilioPhoneNumber();
 
@@ -62,7 +65,6 @@ export async function POST(request: NextRequest) {
 
     const normalizedPhone = normalizePhoneNumber(to);
 
-    // Send SMS via Twilio
     let twilioSid: string | null = null;
     try {
       const message = await twilioClient.messages.create({
@@ -76,8 +78,7 @@ export async function POST(request: NextRequest) {
       return apiError(`Failed to send SMS: ${errorMessage}`, 503);
     }
 
-    // Log as activity
-    const activityData: any = {
+    const activityData: ActivityInsert = {
       org_id: user.orgId,
       type: 'sms',
       description: body,
@@ -92,14 +93,12 @@ export async function POST(request: NextRequest) {
       activityData.contact_id = contactId;
     }
 
-    // Insert activity record (if sms type is supported; if not, fall back to 'note')
     const { data: activity, error: activityError } = await supabase
       .from('activities')
       .insert(activityData)
       .select()
       .single();
 
-    // If SMS type is not supported, try as a note
     if (activityError && activityError.message.includes('sms')) {
       activityData.type = 'note';
       await supabase.from('activities').insert(activityData).select().single();

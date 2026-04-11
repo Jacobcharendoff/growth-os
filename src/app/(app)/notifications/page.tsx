@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useStore } from '@/store';
 import { useLanguage } from '@/components/LanguageProvider';
+import type { TranslationKey } from '@/i18n/translations';
 import {
   Bell,
   CheckCircle2,
@@ -119,23 +120,21 @@ function getNotificationType(
   ) {
     return 'deals_payments';
   }
-  // All other types (contact_added, estimate_sent, system) don't match the new filter
   return null;
 }
 
 export default function NotificationsPage() {
-  const { t } = useLanguage() as { t: (key: any) => string };
+  const { t } = useLanguage() as { t: (key: TranslationKey) => string };
   const store = useStore();
   const [filterTab, setFilterTab] = useState<FilterTab>('all');
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [notifications, setNotifications] = useState(store.notifications);
 
-  // Initialize sample notifications if store is empty
   useEffect(() => {
     if (store.notifications.length === 0 && typeof window !== 'undefined') {
       SAMPLE_NOTIFICATIONS.forEach((notif) => {
         store.addNotification({
-          type: notif.type as any,
+          type: notif.type as 'deal_created' | 'deal_moved' | 'estimate_sent' | 'invoice_paid' | 'contact_added' | 'payment_received' | 'system',
           title: notif.title,
           description: notif.description,
           linkTo: notif.linkTo,
@@ -144,7 +143,6 @@ export default function NotificationsPage() {
     }
   }, [store]);
 
-  // Sync notifications from store
   useEffect(() => {
     const updateNotifications = () => {
       setNotifications([...store.notifications]);
@@ -173,8 +171,6 @@ export default function NotificationsPage() {
 
   const handleClearAll = () => {
     if (showDeleteConfirm) {
-      // In a real app, you'd have a deleteAllNotifications method
-      // For now, we'll just clear the unread ones for demo
       setShowDeleteConfirm(false);
     }
   };
@@ -185,7 +181,17 @@ export default function NotificationsPage() {
     { id: 'deals_payments', label: 'Deals & Payments' },
   ];
 
-  const renderNotificationCard = (notif: any) => {
+  interface Notification {
+    id: string;
+    type: 'deal_created' | 'deal_moved' | 'estimate_sent' | 'invoice_paid' | 'contact_added' | 'payment_received' | 'system';
+    title: string;
+    description: string;
+    read: boolean;
+    createdAt: number;
+    linkTo?: string;
+  }
+
+  const renderNotificationCard = (notif: Notification) => {
     const config = typeConfig[notif.type] || typeConfig.system;
     const IconComponent = config.icon;
 
@@ -205,12 +211,10 @@ export default function NotificationsPage() {
         `}
       >
         <div className="flex gap-3 sm:gap-4">
-          {/* Icon */}
           <div className={`${config.bgColor} rounded-lg p-3 flex-shrink-0 h-fit`}>
             <IconComponent className={`w-5 h-5 ${config.color}`} />
           </div>
 
-          {/* Content */}
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-2">
               <div className="flex-1 min-w-0">
@@ -232,7 +236,6 @@ export default function NotificationsPage() {
               </span>
             </div>
 
-            {/* Action button if available */}
             {notif.linkTo && (
               <a
                 href={notif.linkTo}
@@ -248,7 +251,6 @@ export default function NotificationsPage() {
             )}
           </div>
 
-          {/* Unread indicator */}
           {!notif.read && (
             <div className="w-2.5 h-2.5 rounded-full bg-blue-600 dark:bg-blue-400 flex-shrink-0 mt-1.5" />
           )}
@@ -259,7 +261,6 @@ export default function NotificationsPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 p-4 sm:p-8">
-      {/* Header Section */}
       <div className="mb-8">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 mb-6">
           <div>
@@ -277,7 +278,6 @@ export default function NotificationsPage() {
             )}
           </div>
 
-          {/* Header Actions */}
           <div className="flex gap-2 w-full sm:w-auto">
             {unreadCount > 0 && (
               <button
@@ -311,7 +311,6 @@ export default function NotificationsPage() {
           </div>
         </div>
 
-        {/* Notification Count Badge */}
         {notifications.length > 0 && (
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-emerald-600 dark:bg-emerald-400" />
@@ -323,7 +322,6 @@ export default function NotificationsPage() {
         )}
       </div>
 
-      {/* Filter Tabs */}
       <div className="mb-8 border-b border-slate-200 dark:border-slate-700 overflow-x-auto">
         <div className="flex gap-1">
           {filterTabs.map((tab) => (
@@ -351,7 +349,6 @@ export default function NotificationsPage() {
         </div>
       </div>
 
-      {/* Delete Confirmation Modal */}
       {showDeleteConfirm && (
         <div className="fixed inset-0 bg-black/50 dark:bg-black/70 flex items-center justify-center z-50 p-4">
           <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg max-w-sm w-full p-4 sm:p-6">
@@ -393,14 +390,12 @@ export default function NotificationsPage() {
         </div>
       )}
 
-      {/* Notifications List */}
       <div className="space-y-3 max-w-3xl">
         {filteredNotifications.length > 0 ? (
           <>
             {filteredNotifications.map((notif) => renderNotificationCard(notif))}
           </>
         ) : (
-          /* Empty State */
           <div className="text-center py-16">
             <div className="mb-4 flex justify-center">
               <div className="w-16 h-16 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
@@ -424,7 +419,6 @@ export default function NotificationsPage() {
         )}
       </div>
 
-      {/* Info Section */}
       {notifications.length > 0 && (
         <div className="mt-12 max-w-3xl">
           <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">

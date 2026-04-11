@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useStore } from '@/store';
 import { useLanguage } from '@/components/LanguageProvider';
 import { Activity as ActivityType } from '@/types';
+import type { TranslationKey } from '@/i18n/translations';
 import {
   Phone,
   Mail,
@@ -82,7 +83,7 @@ function formatRelativeTime(timestamp: number): string {
 
 export default function ActivityPage() {
   const { activities, deals, contacts, initializeSeedData } = useStore();
-  const { t, locale } = useLanguage();
+  const { t } = useLanguage() as { t: (key: TranslationKey) => string };
   const [mounted, setMounted] = useState(false);
   const [selectedType, setSelectedType] = useState<ActivityTypeFilter>('all');
   const [selectedDateRange, setSelectedDateRange] = useState<DateRangeFilter>('all');
@@ -127,7 +128,6 @@ export default function ActivityPage() {
 
   const filteredActivities = useMemo(() => {
     return activities.filter((activity) => {
-      // Type filter
       if (selectedType === 'calls_meetings') {
         if (activity.type !== 'call' && activity.type !== 'meeting') {
           return false;
@@ -137,25 +137,18 @@ export default function ActivityPage() {
           return false;
         }
       }
-      // 'all' shows everything, no type filter needed
 
-      // Date range filter
       if (activity.createdAt < filterStartDate) {
         return false;
       }
 
-      // Search filter
       if (searchQuery.trim()) {
         const query = searchQuery.toLowerCase();
         const descriptionMatch = activity.description.toLowerCase().includes(query);
-
-        // Check contact name
         const contact = getContactById(
           activity.contactId || getDealById(activity.dealId)?.contactId
         );
         const contactNameMatch = contact?.name.toLowerCase().includes(query);
-
-        // Check deal title
         const deal = getDealById(activity.dealId);
         const dealTitleMatch = deal?.title.toLowerCase().includes(query);
 
@@ -202,14 +195,13 @@ export default function ActivityPage() {
   if (!mounted) {
     return (
       <div className="flex items-center justify-center h-full bg-white dark:bg-slate-900">
-        <p className="text-slate-600 dark:text-slate-400">{t('common.loading' as any)}</p>
+        <p className="text-slate-600 dark:text-slate-400">{t('common.loading' as TranslationKey)}</p>
       </div>
     );
   }
 
   return (
     <div className="flex flex-col h-full bg-white dark:bg-slate-900">
-      {/* Header */}
       <div className="px-4 sm:px-8 py-6 border-b border-slate-200 dark:border-slate-700 bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-700">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
@@ -230,10 +222,8 @@ export default function ActivityPage() {
         </div>
       </div>
 
-      {/* Filter Bar */}
       <div className="sticky top-0 z-40 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-4 sm:px-8 py-4">
         <div className="space-y-4">
-          {/* Type Filter Tabs */}
           <div className="flex flex-wrap gap-2">
             {(Object.keys(ACTIVITY_TYPE_LABELS) as ActivityTypeFilter[]).map((type) => (
               <button
@@ -250,9 +240,7 @@ export default function ActivityPage() {
             ))}
           </div>
 
-          {/* Date Range and Search Row */}
           <div className="flex flex-col sm:flex-row gap-3">
-            {/* Date Range Dropdown */}
             <div className="relative">
               <select
                 value={selectedDateRange}
@@ -267,7 +255,6 @@ export default function ActivityPage() {
               <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-600 dark:text-slate-400 pointer-events-none" />
             </div>
 
-            {/* Search Input */}
             <div className="flex-1 relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 dark:text-slate-500" />
               <input
@@ -282,14 +269,12 @@ export default function ActivityPage() {
         </div>
       </div>
 
-      {/* Activity Feed */}
       <div className="flex-1 overflow-auto">
         {sortedActivities.length > 0 ? (
           <div className="px-4 sm:px-8 py-8">
             <div className="space-y-8 max-w-4xl">
               {groupedActivities.map((group) => (
                 <div key={group.date.toDateString()}>
-                  {/* Date Section Header */}
                   <div className="flex items-center gap-3 mb-6">
                     <h2 className="text-lg font-semibold text-slate-900 dark:text-white">
                       {group.dateLabel}
@@ -301,7 +286,6 @@ export default function ActivityPage() {
                     </span>
                   </div>
 
-                  {/* Activity Items for this date */}
                   <div className="space-y-4">
                     {group.activities.map((activity, index) => {
                       const contact = getContactById(
@@ -312,24 +296,19 @@ export default function ActivityPage() {
 
                       return (
                         <div key={activity.id} className="relative">
-                          {/* Timeline connector (vertical line) */}
                           {!isLast && (
                             <div className="absolute left-7 top-14 bottom-0 w-0.5 bg-gradient-to-b from-slate-300 to-slate-200 dark:from-slate-600 dark:to-slate-700" />
                           )}
 
-                          {/* Activity Card */}
                           <div className="flex gap-3 sm:gap-4 md:gap-4 sm:p-6 group">
-                            {/* Icon Circle */}
                             <div className="relative z-10 flex items-center justify-center w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-slate-100 to-slate-50 dark:from-slate-700 dark:to-slate-800 border border-slate-200 dark:border-slate-600 flex-shrink-0 shadow-sm group-hover:shadow-md transition-shadow">
                               {ACTIVITY_ICONS[activity.type] || (
                                 <FileText className="w-5 h-5" />
                               )}
                             </div>
 
-                            {/* Content Card */}
                             <div className="flex-1 pt-1.5">
                               <div className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-5 border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 hover:shadow-md dark:hover:shadow-slate-900/50 transition-all">
-                                {/* Header Row */}
                                 <div className="flex items-start justify-between gap-3 mb-3">
                                   <div className="flex-1 min-w-0">
                                     <div className="inline-flex items-center gap-2 mb-2">
@@ -346,7 +325,6 @@ export default function ActivityPage() {
                                   </div>
                                 </div>
 
-                                {/* Links Row */}
                                 {(contact || deal) && (
                                   <div className="flex flex-wrap gap-2 pt-3 border-t border-slate-200 dark:border-slate-700/50">
                                     {contact && (

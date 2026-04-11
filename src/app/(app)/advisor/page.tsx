@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useLanguage } from '@/components/LanguageProvider';
 import { useTheme } from '@/components/ThemeProvider';
 import { useStore } from '@/store';
+import { Deal, Invoice, Estimate, Activity } from '@/types';
 import {
   Send,
   Sparkles,
@@ -29,20 +30,64 @@ interface QuickAction {
   prompt: string;
 }
 
+interface OverdueEstimate {
+  name: string;
+  value: number;
+  daysSince: number;
+}
+
+interface RecentWin {
+  name: string;
+  value: number;
+}
+
+interface AccountData {
+  ownerName: string;
+  businessName: string;
+  pipelineValue: number;
+  openDeals: number;
+  totalDeals: number;
+  closedThisMonth: number;
+  revenueThisMonth: number;
+  revenueTrend: string;
+  overdueEstimates: OverdueEstimate[];
+  recentWins: RecentWin[];
+  missedCalls: number;
+  reviewScore: number;
+  reviewCount: number;
+  autopilotActive: number;
+  topSource: string;
+  avgTicket: number;
+  seasonalTip: string;
+  recentActivitiesCount: number;
+}
+
+interface Store {
+  deals: Deal[];
+  invoices: Invoice[];
+  estimates: Estimate[];
+  activities?: Activity[];
+  settings: {
+    companyName?: string;
+  };
+  getContact?: (contactId: string) => { name?: string } | undefined;
+  getActivities?: (limit: number) => Activity[];
+}
+
 // ─── Dynamic Account Data Builder ──────────────────────────
-function buildAccountData(store: any) {
+function buildAccountData(store: Store): AccountData {
   const now = Date.now();
   const thisMonth = new Date(now);
   const monthStart = new Date(thisMonth.getFullYear(), thisMonth.getMonth(), 1).getTime();
 
   // Calculate pipeline value from open deals (not invoiced or completed)
-  const openDeals = store.deals.filter((d: any) =>
+  const openDeals = store.deals.filter((d: Deal) =>
     d.stage !== 'completed' && d.stage !== 'invoiced'
   );
-  const pipelineValue = openDeals.reduce((sum: number, deal: any) => sum + deal.value, 0);
+  const pipelineValue = openDeals.reduce((sum: number, deal: Deal) => sum + deal.value, 0);
 
   // Count closed deals (completed or invoiced) this month
-  const closedThisMonth = store.deals.filter((d: any) => {
+  const closedThisMonth = store.deals.filter((d: Deal) => {
     if (d.stage === 'completed' || d.stage === 'invoiced') {
       const updatedAt = d.updatedAt || d.createdAt;
       return updatedAt >= monthStart;
@@ -52,23 +97,23 @@ function buildAccountData(store: any) {
 
   // Sum revenue from paid invoices this month
   const revenueThisMonth = store.invoices
-    .filter((inv: any) => inv.status === 'paid' && (inv.paidAt || 0) >= monthStart)
-    .reduce((sum: number, inv: any) => sum + inv.total, 0);
+    .filter((inv: Invoice) => inv.status === 'paid' && (inv.paidAt || 0) >= monthStart)
+    .reduce((sum: number, inv: Invoice) => sum + inv.total, 0);
 
   // Calculate average ticket size from all deals
   const avgTicket = store.deals.length > 0
-    ? Math.round(store.deals.reduce((sum: number, d: any) => sum + d.value, 0) / store.deals.length)
+    ? Math.round(store.deals.reduce((sum: number, d: Deal) => sum + d.value, 0) / store.deals.length)
     : 0;
 
   // Find overdue estimates (sent but not approved/rejected, older than 7 days)
   const sevenDaysAgo = now - (7 * 86400000);
   const overdueEstimates = store.estimates
-    .filter((est: any) => {
+    .filter((est: Estimate) => {
       if (est.status !== 'sent' && est.status !== 'viewed') return false;
       if (!est.sentAt) return false;
       return est.sentAt < sevenDaysAgo;
     })
-    .map((est: any) => {
+    .map((est: Estimate) => {
       const daysSince = Math.floor((now - (est.sentAt || 0)) / 86400000);
       return {
         name: est.customerName,
@@ -80,10 +125,10 @@ function buildAccountData(store: any) {
   // Recent wins (deals moved to completed/invoiced in last 14 days)
   const twoWeeksAgo = now - (14 * 86400000);
   const recentWins = store.deals
-    .filter((d: any) => (d.stage === 'completed' || d.stage === 'invoiced') && (d.updatedAt || d.createdAt) >= twoWeeksAgo)
+    .filter((d: Deal) => (d.stage === 'completed' || d.stage === 'invoiced') && (d.updatedAt || d.createdAt) >= twoWeeksAgo)
     .slice(0, 5)
-    .map((d: any) => ({
-      name: `${store.getContact(d.contactId)?.name || 'Unknown'} - ${d.title}`,
+    .map((d: Deal) => ({
+      name: `${store.getContact?.(d.contactId)?.name || 'Unknown'} - ${d.title}`,
       value: d.value,
     }));
 
@@ -116,7 +161,7 @@ function buildAccountData(store: any) {
 }
 
 // ─── Pre-built Advisor Responses ─────────────────────────────
-function getAdvisorResponse(prompt: string, accountData: ReturnType<typeof buildAccountData>): string[] {
+function getAdvisorResponse(prompt: string, accountData: AccountData): string[] {
   const d = accountData;
   const lower = prompt.toLowerCase();
 
@@ -132,8 +177,8 @@ function getAdvisorResponse(prompt: string, accountData: ReturnType<typeof build
       ];
     }
     return [
-      `Good news — you closed ${d.closedThisMonth} job${d.closedThisMonth !== 1 ? 's' : ''} this month for $${d.revenueThisMonth.toLocaleString()}. That's solid work! 💪`,
-      `The thing I'd watch: you've got ${d.overdueEstimates.length} estimate${d.overdueEstimates.length !== 1 ? 's' : ''} worth $${d.overdueEstimates.reduce((a: number, e: any) => a + e.value, 0).toLocaleString()} that haven't been touched in over a week. That money's going cold.`,
+      `Good news — you closed ${d.closedThisMonth} job${d.closedThisMonth !== 1 ? 's' : ''} this month for $${d.revenueThisMonth.toLocaleString()}. That's solid work!`,
+      `The thing I'd watch: you've got ${d.overdueEstimates.length} estimate${d.overdueEstimates.length !== 1 ? 's' : ''} worth $${d.overdueEstimates.reduce((a: number, e: OverdueEstimate) => a + e.value, 0).toLocaleString()} that haven't been touched in over a week. That money's going cold.`,
       `Want me to help you follow up on those?`,
     ];
   }
@@ -147,8 +192,8 @@ function getAdvisorResponse(prompt: string, accountData: ReturnType<typeof build
     }
     return [
       `You've got ${d.overdueEstimates.length} estimate${d.overdueEstimates.length !== 1 ? 's' : ''} going stale:`,
-      `${d.overdueEstimates.map((e: any, i: number) => `${i + 1}. ${e.name} — $${e.value.toLocaleString()} (${e.daysSince} days)`).join('\n')}`,
-      `That's $${d.overdueEstimates.reduce((a: number, e: any) => a + e.value, 0).toLocaleString()} on the table. I'd prioritize the biggest one. Want me to suggest next steps?`,
+      `${d.overdueEstimates.map((e: OverdueEstimate, i: number) => `${i + 1}. ${e.name} — $${e.value.toLocaleString()} (${e.daysSince} days)`).join('\n')}`,
+      `That's $${d.overdueEstimates.reduce((a: number, e: OverdueEstimate) => a + e.value, 0).toLocaleString()} on the table. I'd prioritize the biggest one. Want me to suggest next steps?`,
     ];
   }
 
@@ -228,16 +273,16 @@ function getAdvisorResponse(prompt: string, accountData: ReturnType<typeof build
   // Default response
   const topMetrics = [];
   if (d.pipelineValue > 0) {
-    topMetrics.push(`📊 Pipeline: $${d.pipelineValue.toLocaleString()} (${d.openDeals} jobs)`);
+    topMetrics.push(`Pipeline: $${d.pipelineValue.toLocaleString()} (${d.openDeals} jobs)`);
   }
   if (d.revenueThisMonth > 0) {
-    topMetrics.push(`💰 Revenue this month: $${d.revenueThisMonth.toLocaleString()}`);
+    topMetrics.push(`Revenue this month: $${d.revenueThisMonth.toLocaleString()}`);
   }
   if (d.overdueEstimates.length > 0) {
-    topMetrics.push(`📋 ${d.overdueEstimates.length} stale estimate${d.overdueEstimates.length !== 1 ? 's' : ''} ($${d.overdueEstimates.reduce((a: number, e: any) => a + e.value, 0).toLocaleString()})`);
+    topMetrics.push(`${d.overdueEstimates.length} stale estimate${d.overdueEstimates.length !== 1 ? 's' : ''} ($${d.overdueEstimates.reduce((a: number, e: OverdueEstimate) => a + e.value, 0).toLocaleString()})`);
   }
   if (topMetrics.length === 0) {
-    topMetrics.push(`👋 Welcome! Let's add some data to get started.`);
+    topMetrics.push(`Welcome! Let's add some data to get started.`);
   }
 
   return [
@@ -253,7 +298,11 @@ function formatTime(date: Date): string {
 }
 
 // ─── Quick Actions ───────────────────────────────────────────
-const getQuickActions = (t: any): QuickAction[] => [
+interface TranslationFunction {
+  (key: string, options?: Record<string, string | number>): string;
+}
+
+const getQuickActions = (t: TranslationFunction): QuickAction[] => [
   { label: t('advisor.businessDoing'), icon: TrendingUp, prompt: 'How is my business doing?' },
   { label: t('advisor.staleEstimates'), icon: AlertTriangle, prompt: 'Show me estimates that need follow-up' },
   { label: t('advisor.revenueThisMonth'), icon: DollarSign, prompt: 'What are my revenue numbers?' },

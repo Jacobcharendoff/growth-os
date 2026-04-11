@@ -104,7 +104,12 @@ export async function POST(request: NextRequest) {
     } else {
       // Log unmatched inbound SMS to a default org context
       // This would need to be handled differently in production
-      console.log(`Unmatched inbound SMS from ${from}: ${messageBody}`);
+      console.warn('Unmatched inbound SMS received', {
+        from,
+        to,
+        messageSid,
+        timestamp: new Date().toISOString(),
+      });
     }
 
     // Return TwiML response

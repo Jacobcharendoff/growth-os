@@ -3,7 +3,7 @@ import crypto from 'crypto';
 export interface WebhookPayload {
   event: string;
   timestamp: string;
-  data: Record<string, any>;
+  data: Record<string, unknown>;
   orgId: string;
 }
 
@@ -29,12 +29,8 @@ export const SUPPORTED_EVENTS = [
   'estimate.approved',
 ] as const;
 
-// In-memory webhook registry (will be migrated to database)
 const webhookRegistry = new Map<string, WebhookConfig[]>();
 
-/**
- * Register a webhook for an organization
- */
 export function registerWebhook(
   orgId: string,
   url: string,
@@ -61,16 +57,10 @@ export function registerWebhook(
   return config;
 }
 
-/**
- * List all webhooks for an organization
- */
 export function getWebhooks(orgId: string): WebhookConfig[] {
   return webhookRegistry.get(orgId) || [];
 }
 
-/**
- * Remove a webhook by ID
- */
 export function removeWebhook(orgId: string, webhookId: string): boolean {
   const webhooks = webhookRegistry.get(orgId);
   if (!webhooks) return false;
@@ -82,23 +72,16 @@ export function removeWebhook(orgId: string, webhookId: string): boolean {
   return true;
 }
 
-/**
- * Generate HMAC signature for webhook payload
- */
 export function generateSignature(payload: WebhookPayload, secret: string): string {
   const hmac = crypto.createHmac('sha256', secret);
   hmac.update(JSON.stringify(payload));
   return hmac.digest('hex');
 }
 
-/**
- * Dispatch webhooks to all registered endpoints for an event
- * Fire-and-forget: returns immediately without waiting for responses
- */
 export async function dispatchWebhooks(
   orgId: string,
   event: string,
-  data: Record<string, any>
+  data: Record<string, unknown>
 ): Promise<void> {
   const webhooks = getWebhooks(orgId).filter((w) => w.active && w.events.includes(event));
 
@@ -113,7 +96,6 @@ export async function dispatchWebhooks(
     orgId,
   };
 
-  // Fire-and-forget: dispatch all webhooks without waiting
   webhooks.forEach((webhook) => {
     dispatchWebhook(webhook, payload).catch((error) => {
       console.error(`Failed to dispatch webhook ${webhook.id}:`, error);
@@ -121,16 +103,12 @@ export async function dispatchWebhooks(
   });
 }
 
-/**
- * Send a webhook to a single endpoint
- */
 async function dispatchWebhook(webhook: WebhookConfig, payload: WebhookPayload): Promise<void> {
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
     'User-Agent': 'Staybookt/1.0',
   };
 
-  // Add HMAC signature if secret is provided
   if (webhook.secret) {
     const signature = generateSignature(payload, webhook.secret);
     headers['X-Staybookt-Signature'] = signature;
@@ -138,7 +116,7 @@ async function dispatchWebhook(webhook: WebhookConfig, payload: WebhookPayload):
 
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+    const timeoutId = setTimeout(() => controller.abort(), 30000);
 
     try {
       const response = await fetch(webhook.url, {
@@ -154,7 +132,6 @@ async function dispatchWebhook(webhook: WebhookConfig, payload: WebhookPayload):
         );
       }
 
-      // Update last triggered timestamp
       updateWebhookLastTriggered(webhook.orgId, webhook.id);
     } finally {
       clearTimeout(timeoutId);
@@ -165,9 +142,6 @@ async function dispatchWebhook(webhook: WebhookConfig, payload: WebhookPayload):
   }
 }
 
-/**
- * Update the last triggered timestamp for a webhook
- */
 function updateWebhookLastTriggered(orgId: string, webhookId: string): void {
   const webhooks = webhookRegistry.get(orgId);
   if (!webhooks) return;

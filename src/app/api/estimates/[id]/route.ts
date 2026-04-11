@@ -73,9 +73,8 @@ export async function PATCH(
       return apiError(validation.error, 400);
     }
 
-    const updates: Record<string, any> = { ...validation.data };
+    const updates: Record<string, unknown> = { ...validation.data };
 
-    // Handle status transitions
     if (validation.data.status === 'sent' && !updates.sent_at) {
       updates.sent_at = new Date().toISOString();
     }

@@ -17,7 +17,7 @@ const recordPaymentSchema = z.object({
 });
 
 interface PaymentResponse {
-  invoice?: Record<string, any>;
+  invoice?: Record<string, unknown>;
   clientSecret?: string;
   paymentIntentId?: string;
 }
@@ -36,7 +36,6 @@ export async function POST(
       return apiError(validation.error, 400);
     }
 
-    // Get current invoice
     const { data: invoice, error: getError } = await supabase
       .from('invoices')
       .select('amount_paid, total, status')
@@ -48,11 +47,10 @@ export async function POST(
       return apiError('Invoice not found', 404);
     }
 
-    // If Stripe is configured and requested, create a payment intent instead
     const stripe = getStripe();
     if (validation.data.useStripe && stripe) {
       const paymentIntent = await stripe.paymentIntents.create({
-        amount: Math.round(validation.data.amount * 100), // Convert to cents
+        amount: Math.round(validation.data.amount * 100),
         currency: (validation.data.currency || 'cad').toLowerCase(),
         metadata: {
           invoiceId: id,
@@ -68,11 +66,9 @@ export async function POST(
       return apiSuccess(response, 200);
     }
 
-    // Otherwise, fall back to recording manual payment
     const newAmountPaid = parseFloat(invoice.amount_paid.toString()) + validation.data.amount;
     let newStatus = invoice.status;
 
-    // Auto-update status
     if (newAmountPaid >= parseFloat(invoice.total.toString())) {
       newStatus = 'paid';
     } else if (newAmountPaid > 0) {

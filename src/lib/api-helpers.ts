@@ -22,11 +22,7 @@ export interface ApiErrorResponse {
 
 export type ApiResponse<T> = ApiSuccessResponse<T> | ApiErrorResponse;
 
-/**
- * Get current authenticated user and their org_id and role
- */
 export async function getCurrentUser(supabase: SupabaseClient) {
-  // Get auth user
   const {
     data: { user },
     error: authError,
@@ -36,7 +32,6 @@ export async function getCurrentUser(supabase: SupabaseClient) {
     throw new Error('Not authenticated');
   }
 
-  // Get org_id and role from users table
   const { data: userData, error: userError } = await supabase
     .from('users')
     .select('org_id, role')
@@ -55,9 +50,6 @@ export async function getCurrentUser(supabase: SupabaseClient) {
   };
 }
 
-/**
- * Return an error response
- */
 export function apiError(message: string, status: number = 400) {
   return NextResponse.json(
     {
@@ -68,9 +60,6 @@ export function apiError(message: string, status: number = 400) {
   );
 }
 
-/**
- * Return a success response
- */
 export function apiSuccess<T>(
   data: T,
   status: number = 200,
@@ -86,9 +75,16 @@ export function apiSuccess<T>(
   return NextResponse.json(response, { status });
 }
 
-/**
- * Validate request body against a Zod schema
- */
+interface ZodIssue {
+  path?: string[];
+  message: string;
+}
+
+interface ZodErrorLike {
+  issues?: ZodIssue[];
+  message?: string;
+}
+
 export async function validateRequest<T>(
   request: Request,
   schema: z.ZodSchema<T>
@@ -99,10 +95,9 @@ export async function validateRequest<T>(
     return { valid: true, data: parsed };
   } catch (error) {
     if (error instanceof z.ZodError) {
-      // Zod v4 uses .issues instead of .errors
-      const issues = (error as any).issues || [];
+      const issues = (error as ZodErrorLike).issues || [];
       const message = issues
-        .map((e: any) => `${(e.path || []).join('.')}: ${e.message}`)
+        .map((e: ZodIssue) => `${(e.path || []).join('.')}: ${e.message}`)
         .join('; ');
       return { valid: false, error: message || error.message };
     }

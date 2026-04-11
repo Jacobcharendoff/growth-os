@@ -1,6 +1,6 @@
 'use client';
 
-import { Contact } from '@/types';
+import { Contact, Deal, Estimate, Invoice } from '@/types';
 import { LeadSourceBadge } from '@/components/LeadSourceBadge';
 import { X, DollarSign, FileText, Briefcase, Baby, PawPrint, Heart, StickyNote } from 'lucide-react';
 
@@ -8,9 +8,9 @@ interface ContactDetailPanelProps {
   isOpen: boolean;
   onClose: () => void;
   contact: Contact;
-  deals: any[];
-  estimates: any[];
-  invoices: any[];
+  deals: Deal[];
+  estimates: Estimate[];
+  invoices: Invoice[];
   isDark: boolean;
 }
 

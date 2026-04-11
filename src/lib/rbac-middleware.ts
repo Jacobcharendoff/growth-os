@@ -14,6 +14,16 @@ export interface AuthenticatedUser {
   role: Role;
 }
 
+export class HttpError extends Error {
+  status: number;
+
+  constructor(message: string, status: number) {
+    super(message);
+    this.status = status;
+    this.name = 'HttpError';
+  }
+}
+
 /**
  * Middleware to check if a user has permission to perform an action.
  * Throws an error with status code if permission is denied.
@@ -37,9 +47,7 @@ export async function requirePermission(
 ): Promise<void> {
   if (!checkPermission(user.role as Role, resource, action)) {
     const message = `You do not have permission to ${action} ${resource}`;
-    const error = new Error(message);
-    (error as any).status = 403;
-    throw error;
+    throw new HttpError(message, 403);
   }
 }
 
@@ -55,9 +63,7 @@ export async function requireAccess(
 ): Promise<void> {
   if (!checkPermission(user.role as Role, resource, 'read')) {
     const message = `You do not have permission to access ${resource}`;
-    const error = new Error(message);
-    (error as any).status = 403;
-    throw error;
+    throw new HttpError(message, 403);
   }
 }
 
@@ -76,12 +82,12 @@ export async function requireAccess(
  * );
  * ```
  */
-export function withPermissionCheck<T>(
-  handler: (user: AuthenticatedUser, ...args: any[]) => Promise<T>,
+export function withPermissionCheck<T, Args extends unknown[]>(
+  handler: (user: AuthenticatedUser, ...args: Args) => Promise<T>,
   resource: Resource,
   action: Action
 ) {
-  return async (user: AuthenticatedUser, ...args: any[]): Promise<T> => {
+  return async (user: AuthenticatedUser, ...args: Args): Promise<T> => {
     await requirePermission(user, resource, action);
     return handler(user, ...args);
   };
@@ -90,6 +96,6 @@ export function withPermissionCheck<T>(
 /**
  * Type guard to check if an error has a status code.
  */
-export function isAuthError(error: unknown): error is Error & { status: number } {
-  return error instanceof Error && typeof (error as any).status === 'number';
+export function isAuthError(error: unknown): error is HttpError {
+  return error instanceof HttpError;
 }

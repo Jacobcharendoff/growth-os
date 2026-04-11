@@ -11,7 +11,97 @@
  * is unavailable (no auth, offline), it falls back to localStorage gracefully.
  */
 
-import { Contact, Deal, Activity, Estimate, Invoice, PipelineStage, EstimateStatus, InvoiceStatus } from '@/types';
+import { Contact, Deal, Activity, Estimate, Invoice, PipelineStage, EstimateStatus, InvoiceStatus, LeadSource, ContactType, ActivityType } from '@/types';
+
+// ==================== API Row Interfaces ====================
+// These represent the snake_case data coming from the API
+
+interface ApiContactRow {
+  id: string;
+  name: string;
+  email: string | null;
+  phone: string | null;
+  address: string | null;
+  type: ContactType;
+  source: LeadSource;
+  notes: string | null;
+  created_at: string;
+}
+
+interface ApiDealRow {
+  id: string;
+  contact_id: string;
+  title: string;
+  value: string;
+  stage: PipelineStage;
+  source: LeadSource;
+  assigned_to_id: string | null;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+  scheduled_date: string | null;
+}
+
+interface ApiActivityRow {
+  id: string;
+  deal_id: string | null;
+  contact_id: string | null;
+  type: ActivityType;
+  description: string;
+  created_at: string;
+}
+
+interface ApiEstimateRow {
+  id: string;
+  estimate_number: string;
+  contact_id: string;
+  deal_id: string | null;
+  customer_name: string | null;
+  customer_email: string | null;
+  customer_phone: string | null;
+  service: string | null;
+  description: string | null;
+  line_items: unknown[];
+  selected_tier: string | null;
+  status: EstimateStatus;
+  notes: string | null;
+  valid_days: number | null;
+  created_at: string;
+  sent_at: string | null;
+  viewed_at: string | null;
+  responded_at: string | null;
+}
+
+interface ApiInvoiceRow {
+  id: string;
+  invoice_number: string;
+  contact_id: string;
+  deal_id: string | null;
+  estimate_id: string | null;
+  customer_name: string | null;
+  customer_email: string | null;
+  customer_address: string | null;
+  line_items: unknown[];
+  subtotal: string;
+  tax_rate: string;
+  tax_amount: string;
+  total: string;
+  amount_paid: string;
+  status: InvoiceStatus;
+  notes: string | null;
+  due_date: string | null;
+  province: string | null;
+  tax_type: string | null;
+  created_at: string;
+  sent_at: string | null;
+  paid_at: string | null;
+}
+
+interface CurrentUser {
+  id: string;
+  email: string;
+  role: string;
+}
 
 // ==================== API Client ====================
 
@@ -51,7 +141,7 @@ async function apiFetch<T>(
 // ==================== Data Mappers ====================
 // Convert between API (snake_case) and frontend (camelCase) formats
 
-function mapContactFromApi(c: any): Contact {
+function mapContactFromApi(c: ApiContactRow): Contact {
   return {
     id: c.id,
     name: c.name,
@@ -66,7 +156,7 @@ function mapContactFromApi(c: any): Contact {
 }
 
 function mapContactToApi(c: Partial<Contact>) {
-  const mapped: any = {};
+  const mapped: Record<string, unknown> = {};
   if (c.name !== undefined) mapped.name = c.name;
   if (c.email !== undefined) mapped.email = c.email;
   if (c.phone !== undefined) mapped.phone = c.phone;
@@ -77,7 +167,7 @@ function mapContactToApi(c: Partial<Contact>) {
   return mapped;
 }
 
-function mapDealFromApi(d: any): Deal {
+function mapDealFromApi(d: ApiDealRow): Deal {
   return {
     id: d.id,
     contactId: d.contact_id,
@@ -94,7 +184,7 @@ function mapDealFromApi(d: any): Deal {
 }
 
 function mapDealToApi(d: Partial<Deal>) {
-  const mapped: any = {};
+  const mapped: Record<string, unknown> = {};
   if (d.contactId !== undefined) mapped.contact_id = d.contactId;
   if (d.title !== undefined) mapped.title = d.title;
   if (d.value !== undefined) mapped.value = d.value.toString();
@@ -106,7 +196,7 @@ function mapDealToApi(d: Partial<Deal>) {
   return mapped;
 }
 
-function mapActivityFromApi(a: any): Activity {
+function mapActivityFromApi(a: ApiActivityRow): Activity {
   return {
     id: a.id,
     dealId: a.deal_id || undefined,
@@ -117,7 +207,7 @@ function mapActivityFromApi(a: any): Activity {
   };
 }
 
-function mapEstimateFromApi(e: any): Estimate {
+function mapEstimateFromApi(e: ApiEstimateRow): Estimate {
   return {
     id: e.id,
     number: e.estimate_number,
@@ -128,8 +218,8 @@ function mapEstimateFromApi(e: any): Estimate {
     customerPhone: e.customer_phone || '',
     service: e.service || '',
     description: e.description || '',
-    tiers: e.line_items || [],
-    selectedTier: e.selected_tier || undefined,
+    tiers: e.line_items as unknown[],
+    selectedTier: (e.selected_tier as 'Good' | 'Better' | 'Best' | null) || undefined,
     status: e.status,
     notes: e.notes || '',
     validDays: e.valid_days || 30,
@@ -141,7 +231,7 @@ function mapEstimateFromApi(e: any): Estimate {
 }
 
 function mapEstimateToApi(e: Partial<Estimate>) {
-  const mapped: any = {};
+  const mapped: Record<string, unknown> = {};
   if (e.contactId !== undefined) mapped.contact_id = e.contactId;
   if (e.dealId !== undefined) mapped.deal_id = e.dealId;
   if (e.tiers !== undefined) mapped.line_items = e.tiers;
@@ -152,7 +242,7 @@ function mapEstimateToApi(e: Partial<Estimate>) {
   return mapped;
 }
 
-function mapInvoiceFromApi(inv: any): Invoice {
+function mapInvoiceFromApi(inv: ApiInvoiceRow): Invoice {
   return {
     id: inv.id,
     number: inv.invoice_number,
@@ -162,7 +252,7 @@ function mapInvoiceFromApi(inv: any): Invoice {
     customerName: inv.customer_name || '',
     customerEmail: inv.customer_email || '',
     customerAddress: inv.customer_address || '',
-    lineItems: inv.line_items || [],
+    lineItems: inv.line_items as unknown[],
     subtotal: parseFloat(inv.subtotal) || 0,
     taxRate: parseFloat(inv.tax_rate) || 0,
     taxAmount: parseFloat(inv.tax_amount) || 0,
@@ -180,7 +270,7 @@ function mapInvoiceFromApi(inv: any): Invoice {
 }
 
 function mapInvoiceToApi(inv: Partial<Invoice>) {
-  const mapped: any = {};
+  const mapped: Record<string, unknown> = {};
   if (inv.contactId !== undefined) mapped.contact_id = inv.contactId;
   if (inv.dealId !== undefined) mapped.deal_id = inv.dealId;
   if (inv.estimateId !== undefined) mapped.estimate_id = inv.estimateId;
@@ -208,19 +298,19 @@ export const dataService = {
     if (params?.page) query.set('page', params.page.toString());
     if (params?.limit) query.set('limit', params.limit.toString());
     const qs = query.toString();
-    const res = await apiFetch<any[]>(`/contacts${qs ? `?${qs}` : ''}`);
+    const res = await apiFetch<ApiContactRow[]>(`/contacts${qs ? `?${qs}` : ''}`);
     if (res.error) throw new Error(res.error);
     return { data: (res.data || []).map(mapContactFromApi), meta: res.meta };
   },
 
   async getContact(id: string) {
-    const res = await apiFetch<any>(`/contacts/${id}`);
+    const res = await apiFetch<ApiContactRow>(`/contacts/${id}`);
     if (res.error) throw new Error(res.error);
     return mapContactFromApi(res.data);
   },
 
   async createContact(contact: Omit<Contact, 'id' | 'createdAt'>) {
-    const res = await apiFetch<any>('/contacts', {
+    const res = await apiFetch<ApiContactRow>('/contacts', {
       method: 'POST',
       body: JSON.stringify(mapContactToApi(contact)),
     });
@@ -229,7 +319,7 @@ export const dataService = {
   },
 
   async updateContact(id: string, updates: Partial<Contact>) {
-    const res = await apiFetch<any>(`/contacts/${id}`, {
+    const res = await apiFetch<ApiContactRow>(`/contacts/${id}`, {
       method: 'PATCH',
       body: JSON.stringify(mapContactToApi(updates)),
     });
@@ -238,7 +328,7 @@ export const dataService = {
   },
 
   async deleteContact(id: string) {
-    const res = await apiFetch<any>(`/contacts/${id}`, { method: 'DELETE' });
+    const res = await apiFetch<Record<string, unknown>>(`/contacts/${id}`, { method: 'DELETE' });
     if (res.error) throw new Error(res.error);
   },
 
@@ -250,19 +340,19 @@ export const dataService = {
     if (params?.page) query.set('page', params.page.toString());
     if (params?.limit) query.set('limit', params.limit.toString());
     const qs = query.toString();
-    const res = await apiFetch<any[]>(`/deals${qs ? `?${qs}` : ''}`);
+    const res = await apiFetch<ApiDealRow[]>(`/deals${qs ? `?${qs}` : ''}`);
     if (res.error) throw new Error(res.error);
     return { data: (res.data || []).map(mapDealFromApi), meta: res.meta };
   },
 
   async getDeal(id: string) {
-    const res = await apiFetch<any>(`/deals/${id}`);
+    const res = await apiFetch<ApiDealRow>(`/deals/${id}`);
     if (res.error) throw new Error(res.error);
     return mapDealFromApi(res.data);
   },
 
   async createDeal(deal: Omit<Deal, 'id' | 'createdAt' | 'updatedAt'>) {
-    const res = await apiFetch<any>('/deals', {
+    const res = await apiFetch<ApiDealRow>('/deals', {
       method: 'POST',
       body: JSON.stringify(mapDealToApi(deal)),
     });
@@ -271,7 +361,7 @@ export const dataService = {
   },
 
   async updateDeal(id: string, updates: Partial<Deal>) {
-    const res = await apiFetch<any>(`/deals/${id}`, {
+    const res = await apiFetch<ApiDealRow>(`/deals/${id}`, {
       method: 'PATCH',
       body: JSON.stringify(mapDealToApi(updates)),
     });
@@ -280,7 +370,7 @@ export const dataService = {
   },
 
   async deleteDeal(id: string) {
-    const res = await apiFetch<any>(`/deals/${id}`, { method: 'DELETE' });
+    const res = await apiFetch<Record<string, unknown>>(`/deals/${id}`, { method: 'DELETE' });
     if (res.error) throw new Error(res.error);
   },
 
@@ -292,19 +382,19 @@ export const dataService = {
     if (params?.type) query.set('type', params.type);
     if (params?.limit) query.set('limit', params.limit.toString());
     const qs = query.toString();
-    const res = await apiFetch<any[]>(`/activities${qs ? `?${qs}` : ''}`);
+    const res = await apiFetch<ApiActivityRow[]>(`/activities${qs ? `?${qs}` : ''}`);
     if (res.error) throw new Error(res.error);
     return { data: (res.data || []).map(mapActivityFromApi), meta: res.meta };
   },
 
   async createActivity(activity: Omit<Activity, 'id' | 'createdAt'>) {
-    const mapped: any = {
+    const mapped: Record<string, unknown> = {
       type: activity.type,
       description: activity.description,
     };
     if (activity.dealId) mapped.deal_id = activity.dealId;
     if (activity.contactId) mapped.contact_id = activity.contactId;
-    const res = await apiFetch<any>('/activities', {
+    const res = await apiFetch<ApiActivityRow>('/activities', {
       method: 'POST',
       body: JSON.stringify(mapped),
     });
@@ -320,19 +410,19 @@ export const dataService = {
     if (params?.page) query.set('page', params.page.toString());
     if (params?.limit) query.set('limit', params.limit.toString());
     const qs = query.toString();
-    const res = await apiFetch<any[]>(`/estimates${qs ? `?${qs}` : ''}`);
+    const res = await apiFetch<ApiEstimateRow[]>(`/estimates${qs ? `?${qs}` : ''}`);
     if (res.error) throw new Error(res.error);
     return { data: (res.data || []).map(mapEstimateFromApi), meta: res.meta };
   },
 
   async getEstimate(id: string) {
-    const res = await apiFetch<any>(`/estimates/${id}`);
+    const res = await apiFetch<ApiEstimateRow>(`/estimates/${id}`);
     if (res.error) throw new Error(res.error);
     return mapEstimateFromApi(res.data);
   },
 
   async createEstimate(estimate: Omit<Estimate, 'id' | 'number' | 'createdAt'>) {
-    const res = await apiFetch<any>('/estimates', {
+    const res = await apiFetch<ApiEstimateRow>('/estimates', {
       method: 'POST',
       body: JSON.stringify(mapEstimateToApi(estimate)),
     });
@@ -341,7 +431,7 @@ export const dataService = {
   },
 
   async updateEstimate(id: string, updates: Partial<Estimate>) {
-    const res = await apiFetch<any>(`/estimates/${id}`, {
+    const res = await apiFetch<ApiEstimateRow>(`/estimates/${id}`, {
       method: 'PATCH',
       body: JSON.stringify(mapEstimateToApi(updates)),
     });
@@ -350,7 +440,7 @@ export const dataService = {
   },
 
   async deleteEstimate(id: string) {
-    const res = await apiFetch<any>(`/estimates/${id}`, { method: 'DELETE' });
+    const res = await apiFetch<Record<string, unknown>>(`/estimates/${id}`, { method: 'DELETE' });
     if (res.error) throw new Error(res.error);
   },
 
@@ -362,19 +452,19 @@ export const dataService = {
     if (params?.page) query.set('page', params.page.toString());
     if (params?.limit) query.set('limit', params.limit.toString());
     const qs = query.toString();
-    const res = await apiFetch<any[]>(`/invoices${qs ? `?${qs}` : ''}`);
+    const res = await apiFetch<ApiInvoiceRow[]>(`/invoices${qs ? `?${qs}` : ''}`);
     if (res.error) throw new Error(res.error);
     return { data: (res.data || []).map(mapInvoiceFromApi), meta: res.meta };
   },
 
   async getInvoice(id: string) {
-    const res = await apiFetch<any>(`/invoices/${id}`);
+    const res = await apiFetch<ApiInvoiceRow>(`/invoices/${id}`);
     if (res.error) throw new Error(res.error);
     return mapInvoiceFromApi(res.data);
   },
 
   async createInvoice(invoice: Omit<Invoice, 'id' | 'number' | 'createdAt'>) {
-    const res = await apiFetch<any>('/invoices', {
+    const res = await apiFetch<ApiInvoiceRow>('/invoices', {
       method: 'POST',
       body: JSON.stringify(mapInvoiceToApi(invoice)),
     });
@@ -383,7 +473,7 @@ export const dataService = {
   },
 
   async updateInvoice(id: string, updates: Partial<Invoice>) {
-    const res = await apiFetch<any>(`/invoices/${id}`, {
+    const res = await apiFetch<ApiInvoiceRow>(`/invoices/${id}`, {
       method: 'PATCH',
       body: JSON.stringify(mapInvoiceToApi(updates)),
     });
@@ -392,12 +482,12 @@ export const dataService = {
   },
 
   async deleteInvoice(id: string) {
-    const res = await apiFetch<any>(`/invoices/${id}`, { method: 'DELETE' });
+    const res = await apiFetch<Record<string, unknown>>(`/invoices/${id}`, { method: 'DELETE' });
     if (res.error) throw new Error(res.error);
   },
 
   async recordPayment(invoiceId: string, amount: number) {
-    const res = await apiFetch<any>(`/invoices/${invoiceId}/payment`, {
+    const res = await apiFetch<ApiInvoiceRow>(`/invoices/${invoiceId}/payment`, {
       method: 'POST',
       body: JSON.stringify({ amount }),
     });
@@ -407,13 +497,13 @@ export const dataService = {
 
   // ---------- Settings ----------
   async getSettings() {
-    const res = await apiFetch<any>('/settings');
+    const res = await apiFetch<Record<string, unknown>>('/settings');
     if (res.error) throw new Error(res.error);
     return res.data;
   },
 
-  async updateSettings(updates: Record<string, any>) {
-    const res = await apiFetch<any>('/settings', {
+  async updateSettings(updates: Record<string, unknown>) {
+    const res = await apiFetch<Record<string, unknown>>('/settings', {
       method: 'PATCH',
       body: JSON.stringify(updates),
     });
@@ -423,7 +513,7 @@ export const dataService = {
 
   // ---------- Auth ----------
   async getCurrentUser() {
-    const res = await apiFetch<any>('/auth/me');
+    const res = await apiFetch<CurrentUser>('/auth/me');
     if (res.error) throw new Error(res.error);
     return res.data;
   },

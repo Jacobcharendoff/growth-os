@@ -53,9 +53,9 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
     { href: '/messages', label: t('nav.messages'), icon: MessageSquare },
     { href: '/notifications', label: t('nav.notifications'), icon: Bell, badge: unreadCount > 0 ? unreadCount : undefined },
     { href: '/activity', label: t('nav.activity'), icon: ActivitySquare },
-    { href: '/leads', label: 'Lead Capture', icon: FileInput },
-    { href: '/templates', label: 'Templates', icon: Mail },
-    { href: '/reports', label: 'Reports', icon: BarChart3 },
+    { href: '/leads', label: t('nav.leadCapture'), icon: FileInput },
+    { href: '/templates', label: t('nav.templates'), icon: Mail },
+    { href: '/reports', label: t('nav.reports'), icon: BarChart3 },
   ];
 
   const settingsItem = { href: '/settings', label: t('nav.settings'), icon: Settings };
@@ -79,8 +79,8 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
       <div className={`px-4 py-4 lg:px-6 lg:py-6 border-b ${sectionBorder} flex items-center justify-between`} role="banner">
         <Link href="/" className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-[#2C3E50] flex items-center justify-center">
-            <Zap className="w-5 h-5 text-white" />
-          </div>
+              <Zap className="w-5 h-5 text-white" />
+            </div>
           <div className="flex flex-col">
             <span className={`font-bold text-lg tracking-tight ${brandText}`}>
               Stay<span className={brandAccent}>bookt</span>

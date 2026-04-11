@@ -1,6 +1,24 @@
 import crypto from 'crypto';
 
-const PORTAL_SECRET = process.env.PORTAL_SECRET || 'staybookt-portal-default';
+// Initialize PORTAL_SECRET based on environment
+const PORTAL_SECRET = (() => {
+  const envSecret = process.env.PORTAL_SECRET;
+
+  // Production: secret must be set
+  if (process.env.NODE_ENV === 'production') {
+    if (!envSecret) {
+      throw new Error('PORTAL_SECRET environment variable is required in production');
+    }
+    return envSecret;
+  }
+
+  // Development: generate random per-process secret if not set
+  if (!envSecret) {
+    return crypto.randomBytes(32).toString('hex');
+  }
+
+  return envSecret;
+})();
 
 /**
  * Generate a portal token for a customer

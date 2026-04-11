@@ -19,6 +19,14 @@ export interface CalendarEventListResponse {
   nextPageToken?: string;
 }
 
+export interface GoogleCalendarErrorResponse {
+  error?: {
+    message: string;
+    [key: string]: unknown;
+  };
+  [key: string]: unknown;
+}
+
 /**
  * List calendar events within a time range
  */
@@ -43,7 +51,7 @@ export async function listEvents(
   });
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ error: { message: 'Unknown error' } })) as any;
+    const error = await response.json().catch(() => ({ error: { message: 'Unknown error' } })) as GoogleCalendarErrorResponse;
     throw new Error(`Google Calendar API error: ${error.error?.message || response.statusText}`);
   }
 
@@ -72,7 +80,7 @@ export async function createEvent(
   );
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ error: { message: 'Unknown error' } })) as any;
+    const error = await response.json().catch(() => ({ error: { message: 'Unknown error' } })) as GoogleCalendarErrorResponse;
     throw new Error(`Google Calendar API error: ${error.error?.message || response.statusText}`);
   }
 
@@ -102,7 +110,7 @@ export async function updateEvent(
   );
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ error: { message: 'Unknown error' } })) as any;
+    const error = await response.json().catch(() => ({ error: { message: 'Unknown error' } })) as GoogleCalendarErrorResponse;
     throw new Error(`Google Calendar API error: ${error.error?.message || response.statusText}`);
   }
 
@@ -130,7 +138,7 @@ export async function deleteEvent(
   );
 
   if (!response.ok && response.status !== 204) {
-    const error = await response.json().catch(() => ({ error: { message: 'Unknown error' } })) as any;
+    const error = await response.json().catch(() => ({ error: { message: 'Unknown error' } })) as GoogleCalendarErrorResponse;
     throw new Error(`Google Calendar API error: ${error.error?.message || response.statusText}`);
   }
 }
